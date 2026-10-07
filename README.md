@@ -6,21 +6,19 @@ The interface is intentionally built as a functional Victorian steampunk machine
 
 ## Current milestone
 
-**PR 3 — Portfolio domain model**
+**PR 4 — Global responsive shell**
 
-This milestone makes repositories, projects, development plans, milestones, and individual planned PRs first-class domain records.
+This milestone turns the route set into one coherent responsive application:
 
-It adds:
+- persistent desktop sidebar with active-route machine lamps;
+- sticky global top control bar;
+- compact tablet instrument rail;
+- smartphone off-canvas navigation drawer;
+- mobile-safe portfolio progress rows;
+- accessible active-route, drawer, search, notification, and account controls;
+- shared shell coverage for every current dashboard route.
 
-- a PostgreSQL persistence schema for portfolio roadmap entities;
-- support for one primary and optional supporting repositories per project;
-- explicit approved plan and milestone PR totals;
-- planned-PR-to-GitHub-PR linkage;
-- domain validation for roadmap consistency;
-- the canonical progress rule: only merged **planned** PRs advance roadmap completion;
-- tests for count integrity, merge state, milestone totals, and the 3/40 Engine Room state.
-
-The branch shows the target post-merge self-tracking state for Engine Room as **3 / 40 planned PRs (7.5%)**. Live GitHub-derived state arrives later in the roadmap.
+The branch shows the target post-merge self-tracking state for Engine Room as **4 / 40 planned PRs = 10%**.
 
 ## Development
 
@@ -40,4 +38,4 @@ npm run test
 npm run build
 ```
 
-See [docs/development-plan.md](docs/development-plan.md), [docs/architecture.md](docs/architecture.md), and [docs/domain-model.md](docs/domain-model.md).
+See [docs/development-plan.md](docs/development-plan.md), [docs/architecture.md](docs/architecture.md), [docs/domain-model.md](docs/domain-model.md), and [docs/responsive-shell.md](docs/responsive-shell.md).
