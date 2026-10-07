@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const roadmap = [
   { name: "Engine Room", completed: 0, planned: 40 },
   { name: "RAM Marketplace", completed: 20, planned: 20 },
@@ -14,15 +16,15 @@ export default function Home() {
       <aside className="sidebar" aria-label="Primary navigation">
         <div className="brand">ENGINE ROOM</div>
         <nav>
-          <a className="active" href="/">Home</a>
-          <a href="/projects">Projects</a>
-          <a href="/finance">Finance</a>
-          <a href="/users">Users</a>
-          <a href="/operations">Operations</a>
-          <a href="/releases">Releases</a>
-          <a href="/alerts">Alerts</a>
-          <a href="/about">About</a>
-          <a href="/settings">Settings</a>
+          <Link className="active" href="/">Home</Link>
+          <Link href="/projects">Projects</Link>
+          <Link href="/finance">Finance</Link>
+          <Link href="/users">Users</Link>
+          <Link href="/operations">Operations</Link>
+          <Link href="/releases">Releases</Link>
+          <Link href="/alerts">Alerts</Link>
+          <Link href="/about">About</Link>
+          <Link href="/settings">Settings</Link>
         </nav>
       </aside>
 
