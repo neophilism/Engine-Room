@@ -1,0 +1,199 @@
+:root {
+  color-scheme: dark;
+
+  /* Raw palette */
+  --er-coal-1000: #020607;
+  --er-coal-950: #040a0b;
+  --er-coal-900: #071113;
+  --er-coal-850: #0a1718;
+  --er-coal-800: #0d1d1f;
+  --er-coal-750: #112628;
+
+  --er-ivory-50: #fff9ee;
+  --er-ivory-100: #f3eadb;
+  --er-ivory-300: #cbbfac;
+  --er-ivory-500: #9e988d;
+
+  --er-brass-900: #4b2e13;
+  --er-brass-800: #6d451b;
+  --er-brass-700: #865b25;
+  --er-brass-600: #a46d29;
+  --er-brass-500: #b87824;
+  --er-brass-400: #cf913d;
+  --er-brass-300: #e3ae58;
+  --er-brass-200: #f2cb7e;
+
+  --er-copper-800: #6f3423;
+  --er-copper-600: #a65737;
+  --er-copper-400: #d17b52;
+
+  --er-patina-800: #164f49;
+  --er-patina-600: #24766d;
+  --er-patina-400: #4ca69a;
+
+  --er-teal-900: #043d39;
+  --er-teal-800: #075d57;
+  --er-teal-600: #0cae9f;
+  --er-teal-400: #20ead2;
+  --er-teal-250: #76f7e7;
+  --er-teal-100: #c8fff7;
+
+  --er-red-700: #7e2d28;
+  --er-red-400: #ef6f61;
+  --er-amber-700: #8b5c15;
+  --er-amber-400: #f0b54a;
+  --er-green-700: #26704f;
+  --er-green-400: #59dc9d;
+  --er-blue-700: #1f5b78;
+  --er-blue-400: #67c8ef;
+
+  /* Semantic color */
+  --er-bg-canvas: var(--er-coal-900);
+  --er-bg-deep: var(--er-coal-1000);
+  --er-surface-1: var(--er-coal-850);
+  --er-surface-2: var(--er-coal-800);
+  --er-surface-raised: var(--er-coal-750);
+  --er-text-primary: var(--er-ivory-100);
+  --er-text-secondary: #a7b5b1;
+  --er-text-tertiary: #7e928e;
+  --er-border-metal: rgba(227, 174, 88, .42);
+  --er-border-metal-strong: rgba(227, 174, 88, .68);
+  --er-border-glass: rgba(190, 255, 246, .2);
+  --er-accent-metal: var(--er-brass-300);
+  --er-accent-light: var(--er-teal-400);
+  --er-accent-light-soft: var(--er-teal-600);
+
+  /* Machine status */
+  --er-status-neutral: #798987;
+  --er-status-live: var(--er-teal-400);
+  --er-status-active: var(--er-blue-400);
+  --er-status-complete: var(--er-green-400);
+  --er-status-warning: var(--er-amber-400);
+  --er-status-blocked: var(--er-red-400);
+  --er-status-offline: #665f58;
+
+  /* Typography */
+  --er-font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --er-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --er-font-instrument: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+
+  --er-text-xs: .68rem;
+  --er-text-sm: .78rem;
+  --er-text-md: 1rem;
+  --er-text-lg: 1.125rem;
+  --er-text-xl: 1.35rem;
+  --er-text-2xl: 1.75rem;
+  --er-text-hero: clamp(2.5rem, 6vw, 5.5rem);
+
+  --er-letter-label: .14em;
+  --er-letter-engraved: .1em;
+
+  /* Spacing */
+  --er-space-1: 4px;
+  --er-space-2: 8px;
+  --er-space-3: 12px;
+  --er-space-4: 16px;
+  --er-space-5: 20px;
+  --er-space-6: 24px;
+  --er-space-8: 32px;
+  --er-space-10: 40px;
+  --er-space-12: 48px;
+  --er-space-16: 64px;
+
+  /* Geometry */
+  --er-radius-xs: 5px;
+  --er-radius-sm: 8px;
+  --er-radius-md: 12px;
+  --er-radius-lg: 18px;
+  --er-radius-xl: 26px;
+  --er-radius-round: 999px;
+
+  --er-control-min: 44px;
+  --er-pipe-thin: 4px;
+  --er-pipe-medium: 8px;
+  --er-pipe-heavy: 14px;
+  --er-lamp-sm: 8px;
+  --er-lamp-md: 12px;
+  --er-lamp-lg: 22px;
+
+  /* Lighting / depth */
+  --er-shadow-low: 0 8px 24px rgba(0, 0, 0, .22);
+  --er-shadow-medium: 0 18px 46px rgba(0, 0, 0, .34);
+  --er-shadow-high: 0 28px 80px rgba(0, 0, 0, .48);
+  --er-inset-metal: inset 0 0 0 1px rgba(255, 222, 160, .08), inset 0 0 22px rgba(84, 44, 12, .18);
+  --er-inset-glass: inset 0 1px 3px rgba(255, 255, 255, .2), inset 0 -6px 12px rgba(0, 0, 0, .34);
+  --er-glow-teal-sm: 0 0 10px rgba(32, 234, 210, .42);
+  --er-glow-teal-md: 0 0 18px rgba(32, 234, 210, .62);
+  --er-glow-teal-lg: 0 0 34px rgba(32, 234, 210, .7);
+  --er-glow-amber: 0 0 16px rgba(240, 181, 74, .48);
+  --er-glow-red: 0 0 16px rgba(239, 111, 97, .48);
+
+  /* Materials */
+  --er-material-cast-iron:
+    radial-gradient(circle at 22% 18%, rgba(255,255,255,.025), transparent 18%),
+    radial-gradient(circle at 70% 74%, rgba(181,116,36,.04), transparent 20%),
+    linear-gradient(145deg, #111719, #071011 55%, #0b1617);
+
+  --er-material-brass:
+    linear-gradient(100deg,
+      var(--er-brass-900) 0%,
+      var(--er-brass-500) 18%,
+      var(--er-brass-200) 38%,
+      var(--er-brass-500) 55%,
+      var(--er-brass-800) 78%,
+      var(--er-brass-300) 100%);
+
+  --er-material-brass-dark:
+    linear-gradient(180deg,
+      rgba(111,69,27,.96),
+      rgba(46,28,13,.98));
+
+  --er-material-glass:
+    linear-gradient(180deg,
+      rgba(221,255,249,.12),
+      rgba(62,115,110,.045) 45%,
+      rgba(0,0,0,.22));
+
+  --er-material-smoked-glass:
+    linear-gradient(180deg,
+      rgba(26,61,62,.72),
+      rgba(4,15,16,.9));
+
+  --er-material-patina:
+    radial-gradient(circle at 18% 28%, rgba(76,166,154,.16) 0 1px, transparent 2px),
+    radial-gradient(circle at 72% 67%, rgba(36,118,109,.13) 0 1px, transparent 2px);
+
+  --er-machine-backdrop:
+    radial-gradient(circle at 78% 10%, rgba(32,234,210,.075), transparent 25rem),
+    radial-gradient(circle at 20% 80%, rgba(184,120,36,.055), transparent 28rem),
+    linear-gradient(140deg, var(--er-coal-900), var(--er-coal-950) 55%, #091517);
+
+  /* Motion */
+  --er-duration-fast: 120ms;
+  --er-duration-standard: 180ms;
+  --er-duration-slow: 320ms;
+  --er-ease-mechanical: cubic-bezier(.2, .75, .2, 1);
+  --er-ease-valve: cubic-bezier(.34, 1.2, .64, 1);
+
+  /* Layout */
+  --er-content-max: 1560px;
+  --sidebar-width: 258px;
+  --topbar-height: 74px;
+
+  /* Focus */
+  --er-focus-ring: 0 0 0 2px var(--er-bg-deep), 0 0 0 4px var(--er-teal-250), var(--er-glow-teal-sm);
+
+  /* Backwards-compatible semantic aliases used by PR 1–4 */
+  --ink: var(--er-bg-canvas);
+  --ink-deep: var(--er-bg-deep);
+  --panel: var(--er-surface-1);
+  --panel-2: var(--er-surface-2);
+  --brass: var(--er-brass-500);
+  --brass-deep: var(--er-brass-800);
+  --brass-hi: var(--er-brass-300);
+  --teal: var(--er-teal-400);
+  --teal-soft: var(--er-teal-600);
+  --teal-deep: var(--er-teal-800);
+  --text: var(--er-text-primary);
+  --muted: var(--er-text-secondary);
+}
