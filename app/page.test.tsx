@@ -10,9 +10,10 @@ describe("portfolio home", () => {
     expect(names[0]).toHaveTextContent("Engine Room");
   });
 
-  it("starts Engine Room at zero of forty planned PRs", () => {
+  it("shows the target merged state for PR 2", () => {
     render(<Home />);
-    expect(screen.getByText("0/40 PRs")).toBeInTheDocument();
-    expect(screen.getByRole("progressbar", { name: "Engine Room roadmap progress" })).toHaveAttribute("aria-valuemax", "40");
+    expect(screen.getByText("2/40 PRs")).toBeInTheDocument();
+    expect(screen.getByRole("progressbar", { name: "Engine Room roadmap progress" }))
+      .toHaveAttribute("aria-valuenow", "2");
   });
 });
