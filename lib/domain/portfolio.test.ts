@@ -59,10 +59,9 @@ describe("portfolio domain model", () => {
 
   it("does not treat skipped planned PRs as completed work", () => {
     const graph = buildGraph({ plannedPrTotal: 2, merged: 1 });
-    graph.plannedPullRequests[1] = {
-      ...graph.plannedPullRequests[1],
-      status: "skipped"
-    };
+    graph.plannedPullRequests = graph.plannedPullRequests.map((plannedPr, index) =>
+      index === 1 ? { ...plannedPr, status: "skipped" } : plannedPr
+    );
 
     expect(calculateRoadmapProgress(graph).completed).toBe(1);
   });
