@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AppShell } from "../components/app-shell";
 import "./design-tokens.css";
 import "./globals.css";
+import "../components/machine/machine.css";
 
 export const metadata: Metadata = {
   title: {

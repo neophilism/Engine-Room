@@ -2,23 +2,15 @@
 
 Engine Room is a responsive executive software-portfolio control room for tracking projects from an approved development plan through active development, deployment, operations, finance, usage, and lifecycle management.
 
-The interface is built as a functional Victorian steampunk machine rather than a static themed image: progress is represented by live glass tubes, milestones by status lamps, and related data flows can be connected by responsive SVG pipework.
+The interface is built as a functional Victorian steampunk machine rather than a static themed image.
 
 ## Current milestone
 
-**PR 5 — Machine design system**
+**PR 6 — Mechanical component library**
 
-This milestone establishes the visual/material grammar used by all later dashboard components:
+This milestone adds reusable `BrassPanel`, `GlassTube`, `IndicatorLamp`, `Gauge`, `Valve`, and `Pipe` components, plus accessibility semantics and component tests. The portfolio homepage now uses the real brass housing, glass progress tubes, and status lamp instead of provisional markup.
 
-- coal/cast-iron, aged brass, copper, patina, teal illumination, and semantic status palettes;
-- responsive glass, brass, cast-iron, patina, and backdrop material tokens;
-- display/body/instrument typography roles;
-- spacing, geometry, pipe thickness, lamp size, focus, depth, glow, and motion tokens;
-- canonical machine states for neutral/live/active/complete/warning/blocked/offline;
-- accessible focus and selection styling;
-- migration of the existing shell and portfolio controls onto the token system.
-
-The branch shows the target post-merge self-tracking state for Engine Room as **5 / 40 planned PRs = 12.5%**.
+Target post-merge progress: **6 / 40 planned PRs = 15%**.
 
 ## Development
 
@@ -26,8 +18,6 @@ The branch shows the target post-merge self-tracking state for Engine Room as **
 npm install
 npm run dev
 ```
-
-Copy `.env.example` to `.env.local` when local database access is needed.
 
 Quality gates:
 
@@ -38,4 +28,4 @@ npm run test
 npm run build
 ```
 
-See `docs/design-system.md` for the machine visual grammar and `docs/development-plan.md` for the complete roadmap.
+See `docs/mechanical-components.md`, `docs/design-system.md`, and `docs/development-plan.md`.
