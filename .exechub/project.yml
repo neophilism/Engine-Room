@@ -1,0 +1,28 @@
+project:
+  name: Engine-Room
+  display_name: Engine Room
+  repository: neophilism/Engine-Room
+  status: active-development
+
+roadmap:
+  version: 1
+  planned_prs: 40
+  approved: true
+
+milestones:
+  - name: Foundation and visual machine system
+    prs: 8
+  - name: GitHub and roadmap engine
+    prs: 8
+  - name: Portfolio home
+    prs: 6
+  - name: Project intelligence
+    prs: 6
+  - name: Operational dashboards
+    prs: 4
+  - name: People and money
+    prs: 4
+  - name: Administration and onboarding
+    prs: 2
+  - name: Production release
+    prs: 2
