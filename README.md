@@ -6,20 +6,21 @@ The interface is intentionally built as a functional Victorian steampunk machine
 
 ## Current milestone
 
-**PR 2 — Core application architecture**
+**PR 3 — Portfolio domain model**
 
-This milestone adds:
+This milestone makes repositories, projects, development plans, milestones, and individual planned PRs first-class domain records.
 
-- the canonical dashboard route registry and working routes for every main menu destination;
-- reusable route scaffolding for later machine dashboards;
-- a PostgreSQL connection layer with lazy initialization;
-- a migration directory and bootstrap migration ledger;
-- centralized runtime/environment configuration;
-- a health endpoint at `/api/health`;
-- architecture and configuration documentation;
-- tests for routes, environment behavior, and application health.
+It adds:
 
-The branch shows the target post-merge self-tracking state for Engine Room as **2 / 40 planned PRs**. Later roadmap work replaces this temporary seeded progress with live GitHub-derived state.
+- a PostgreSQL persistence schema for portfolio roadmap entities;
+- support for one primary and optional supporting repositories per project;
+- explicit approved plan and milestone PR totals;
+- planned-PR-to-GitHub-PR linkage;
+- domain validation for roadmap consistency;
+- the canonical progress rule: only merged **planned** PRs advance roadmap completion;
+- tests for count integrity, merge state, milestone totals, and the 3/40 Engine Room state.
+
+The branch shows the target post-merge self-tracking state for Engine Room as **3 / 40 planned PRs (7.5%)**. Live GitHub-derived state arrives later in the roadmap.
 
 ## Development
 
@@ -39,4 +40,4 @@ npm run test
 npm run build
 ```
 
-See [docs/development-plan.md](docs/development-plan.md) for the roadmap and [docs/architecture.md](docs/architecture.md) for architecture boundaries.
+See [docs/development-plan.md](docs/development-plan.md), [docs/architecture.md](docs/architecture.md), and [docs/domain-model.md](docs/domain-model.md).
