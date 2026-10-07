@@ -1,8 +1,8 @@
 import React from "react";
-import { BrassPanel, GlassTube, IndicatorLamp } from "../components/machine";
+import { BrassPanel, FlowStation, GlassTube, IndicatorLamp, MachineFlow } from "../components/machine";
 
 const roadmap = [
-  { name: "Engine Room", completed: 6, planned: 40 },
+  { name: "Engine Room", completed: 7, planned: 40 },
   { name: "RAM Marketplace", completed: 20, planned: 20 },
   { name: "Compliance Engine", completed: 21, planned: 21 }
 ];
@@ -20,11 +20,7 @@ export default function Home() {
         <p>Portfolio-wide control from approved development plan through production operations.</p>
       </header>
 
-      <BrassPanel
-        eyebrow="Live roadmap"
-        title="Portfolio progress"
-        status={<IndicatorLamp state="live" label="Portfolio system" />}
-      >
+      <BrassPanel eyebrow="Live roadmap" title="Portfolio progress" status={<IndicatorLamp state="live" label="Portfolio system" />}>
         <div className="project-list">
           {roadmap.map((project) => {
             const value = percent(project.completed, project.planned);
@@ -46,6 +42,16 @@ export default function Home() {
               </article>
             );
           })}
+        </div>
+
+        <div className="home-machine-flow">
+          <p className="machine-engraved-label">Roadmap signal path</p>
+          <MachineFlow label="Roadmap progress data path">
+            <FlowStation eyebrow="01" title="Approved Plan" detail="Defines the denominator." />
+            <FlowStation eyebrow="02" title="Planned PRs" detail="Roadmap work units." />
+            <FlowStation eyebrow="03" title="Merge Events" detail="Advance completed work." />
+            <FlowStation eyebrow="04" title="Machine State" detail="Drives tubes and lamps." />
+          </MachineFlow>
         </div>
       </BrassPanel>
     </main>
