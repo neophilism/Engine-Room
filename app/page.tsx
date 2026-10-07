@@ -1,7 +1,8 @@
 import React from "react";
+import { BrassPanel, GlassTube, IndicatorLamp } from "../components/machine";
 
 const roadmap = [
-  { name: "Engine Room", completed: 5, planned: 40 },
+  { name: "Engine Room", completed: 6, planned: 40 },
   { name: "RAM Marketplace", completed: 20, planned: 20 },
   { name: "Compliance Engine", completed: 21, planned: 21 }
 ];
@@ -19,39 +20,34 @@ export default function Home() {
         <p>Portfolio-wide control from approved development plan through production operations.</p>
       </header>
 
-      <section className="panel" aria-labelledby="portfolio-progress">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">Live roadmap</p>
-            <h2 id="portfolio-progress">Portfolio progress</h2>
-          </div>
-          <span className="status-lamp" aria-label="System online" />
-        </div>
-
+      <BrassPanel
+        eyebrow="Live roadmap"
+        title="Portfolio progress"
+        status={<IndicatorLamp state="live" label="Portfolio system" />}
+      >
         <div className="project-list">
           {roadmap.map((project) => {
             const value = percent(project.completed, project.planned);
+            const state = project.completed === project.planned ? "complete" : "live";
+
             return (
               <article className="project-row" key={project.name}>
                 <button className="disclosure" aria-label={`Expand ${project.name}`}>▶</button>
                 <strong>{project.name}</strong>
-                <div
-                  className="glass-tube"
-                  role="progressbar"
-                  aria-valuemin={0}
-                  aria-valuemax={project.planned}
-                  aria-valuenow={project.completed}
-                  aria-label={`${project.name} roadmap progress`}
-                >
-                  <span className="glass-fill" style={{ width: `${value}%` }} />
-                </div>
+                <GlassTube
+                  value={project.completed}
+                  max={project.planned}
+                  label={`${project.name} roadmap progress`}
+                  state={state}
+                  showScale
+                />
                 <span className="count">{project.completed}/{project.planned} PRs</span>
                 <span className="percentage">{value}%</span>
               </article>
             );
           })}
         </div>
-      </section>
+      </BrassPanel>
     </main>
   );
 }
