@@ -2,23 +2,23 @@
 
 Engine Room is a responsive executive software-portfolio control room for tracking projects from an approved development plan through active development, deployment, operations, finance, usage, and lifecycle management.
 
-The interface is intentionally built as a functional Victorian steampunk machine rather than a static themed image: progress is represented by live glass tubes, milestones by status lamps, and related data flows can be connected by responsive SVG pipework.
+The interface is built as a functional Victorian steampunk machine rather than a static themed image: progress is represented by live glass tubes, milestones by status lamps, and related data flows can be connected by responsive SVG pipework.
 
 ## Current milestone
 
-**PR 4 — Global responsive shell**
+**PR 5 — Machine design system**
 
-This milestone turns the route set into one coherent responsive application:
+This milestone establishes the visual/material grammar used by all later dashboard components:
 
-- persistent desktop sidebar with active-route machine lamps;
-- sticky global top control bar;
-- compact tablet instrument rail;
-- smartphone off-canvas navigation drawer;
-- mobile-safe portfolio progress rows;
-- accessible active-route, drawer, search, notification, and account controls;
-- shared shell coverage for every current dashboard route.
+- coal/cast-iron, aged brass, copper, patina, teal illumination, and semantic status palettes;
+- responsive glass, brass, cast-iron, patina, and backdrop material tokens;
+- display/body/instrument typography roles;
+- spacing, geometry, pipe thickness, lamp size, focus, depth, glow, and motion tokens;
+- canonical machine states for neutral/live/active/complete/warning/blocked/offline;
+- accessible focus and selection styling;
+- migration of the existing shell and portfolio controls onto the token system.
 
-The branch shows the target post-merge self-tracking state for Engine Room as **4 / 40 planned PRs = 10%**.
+The branch shows the target post-merge self-tracking state for Engine Room as **5 / 40 planned PRs = 12.5%**.
 
 ## Development
 
@@ -38,4 +38,4 @@ npm run test
 npm run build
 ```
 
-See [docs/development-plan.md](docs/development-plan.md), [docs/architecture.md](docs/architecture.md), [docs/domain-model.md](docs/domain-model.md), and [docs/responsive-shell.md](docs/responsive-shell.md).
+See `docs/design-system.md` for the machine visual grammar and `docs/development-plan.md` for the complete roadmap.
