@@ -1,8 +1,9 @@
 import React from "react";
 import Link from "next/link";
+import { dashboardRoutes } from "../lib/navigation";
 
 const roadmap = [
-  { name: "Engine Room", completed: 0, planned: 40 },
+  { name: "Engine Room", completed: 2, planned: 40 },
   { name: "RAM Marketplace", completed: 20, planned: 20 },
   { name: "Compliance Engine", completed: 21, planned: 21 }
 ];
@@ -17,15 +18,15 @@ export default function Home() {
       <aside className="sidebar" aria-label="Primary navigation">
         <div className="brand">ENGINE ROOM</div>
         <nav>
-          <Link className="active" href="/">Home</Link>
-          <Link href="/projects">Projects</Link>
-          <Link href="/finance">Finance</Link>
-          <Link href="/users">Users</Link>
-          <Link href="/operations">Operations</Link>
-          <Link href="/releases">Releases</Link>
-          <Link href="/alerts">Alerts</Link>
-          <Link href="/about">About</Link>
-          <Link href="/settings">Settings</Link>
+          {dashboardRoutes.map((route) => (
+            <Link
+              className={route.href === "/" ? "active" : undefined}
+              href={route.href}
+              key={route.href}
+            >
+              {route.label}
+            </Link>
+          ))}
         </nav>
       </aside>
 

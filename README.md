@@ -6,17 +6,20 @@ The interface is intentionally built as a functional Victorian steampunk machine
 
 ## Current milestone
 
-**PR 1 — Repository foundation**
+**PR 2 — Core application architecture**
 
-This milestone establishes:
+This milestone adds:
 
-- Next.js + React + strict TypeScript;
-- linting, type checking, tests, and production-build CI;
-- the first responsive Engine Room shell;
-- the initial machine-inspired visual language;
-- Engine Room itself as the first portfolio project at **0 / 40 planned PRs**;
-- the approved 40-PR development plan;
-- `.exechub/project.yml` as the machine-readable self-tracking manifest.
+- the canonical dashboard route registry and working routes for every main menu destination;
+- reusable route scaffolding for later machine dashboards;
+- a PostgreSQL connection layer with lazy initialization;
+- a migration directory and bootstrap migration ledger;
+- centralized runtime/environment configuration;
+- a health endpoint at `/api/health`;
+- architecture and configuration documentation;
+- tests for routes, environment behavior, and application health.
+
+The branch shows the target post-merge self-tracking state for Engine Room as **2 / 40 planned PRs**. Later roadmap work replaces this temporary seeded progress with live GitHub-derived state.
 
 ## Development
 
@@ -24,6 +27,8 @@ This milestone establishes:
 npm install
 npm run dev
 ```
+
+Copy `.env.example` to `.env.local` when local database access is needed.
 
 Quality gates:
 
@@ -34,4 +39,4 @@ npm run test
 npm run build
 ```
 
-See [docs/development-plan.md](docs/development-plan.md) for the full roadmap.
+See [docs/development-plan.md](docs/development-plan.md) for the roadmap and [docs/architecture.md](docs/architecture.md) for architecture boundaries.
