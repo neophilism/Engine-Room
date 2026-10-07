@@ -1,3 +1,4 @@
+import React from "react";
 import type { CSSProperties } from "react";
 import type { MachineState } from "../../lib/design/theme";
 import { machineStateStyle } from "./utils";
