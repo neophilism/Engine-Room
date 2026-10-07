@@ -28,7 +28,7 @@ describe("AppShell", () => {
     const openButton = screen.getByRole("button", { name: "Open navigation" });
     fireEvent.click(openButton);
 
-    expect(screen.getByRole("button", { name: "Close navigation" })).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: "Close navigation" })).toHaveLength(3);
     expect(screen.getByLabelText("Mobile navigation")).toBeInTheDocument();
 
     fireEvent.click(screen.getAllByRole("button", { name: "Close navigation" })[0]);
