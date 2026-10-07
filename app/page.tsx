@@ -3,7 +3,7 @@ import Link from "next/link";
 import { dashboardRoutes } from "../lib/navigation";
 
 const roadmap = [
-  { name: "Engine Room", completed: 2, planned: 40 },
+  { name: "Engine Room", completed: 3, planned: 40 },
   { name: "RAM Marketplace", completed: 20, planned: 20 },
   { name: "Compliance Engine", completed: 21, planned: 21 }
 ];
