@@ -12,6 +12,9 @@ import { registerProjectRisk, setProjectReleaseTarget, recordProjectReleaseEvide
 import { recordOperationSamples, loadOperationsOverview } from "../../lib/server/operations";
 import { createRelease, transitionRelease, loadReleasesOverview } from "../../lib/server/releases";
 import { recordIncident, transitionIncident, loadIncidentsOverview } from "../../lib/server/incidents";
+import { ingestTelemetry, loadTelemetryFeeds } from "../../lib/server/telemetry";
+import { normalizeTelemetry } from "../../lib/telemetry/adapters";
+import type { TelemetryCredential } from "../../lib/telemetry/types";
 
 const url = process.env.ENGINE_ROOM_TEST_DATABASE_URL;
 const source = { NODE_ENV: "test", DATABASE_URL: url };
@@ -116,5 +119,24 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     await transitionIncident(id, { ...event, key: "contain", from: "acknowledged", to: "mitigated", note: "Provider recovered", occurredAt: new Date().toISOString() });
     await transitionIncident(id, { ...event, key: "recover", from: "mitigated", to: "resolved", note: "Recovery verified", occurredAt: new Date().toISOString() });
     expect((await loadIncidentsOverview(source)).incidents[0].resolvedAt).not.toBeNull();
+  });
+  it("ingests batches atomically, deduplicates receipts, and keeps source targets isolated", async () => {
+    const data = await loadProjectDashboard("database-fixture", source), pool = getDatabasePool(source);
+    const credential: TelemetryCredential = { id: "integration-monitor", secret: "test-secret-with-at-least-32-bytes", projectId: data.project!.id, environment: "staging", source: "batch-monitor", adapter: "engine-room-v1", capabilities: ["metric", "incident", "incident-event", "release", "release-event"], evidenceTransitions: [] };
+    const encode = (deliveryId: string, records: unknown[]) => normalizeTelemetry(Buffer.from(JSON.stringify({ version: 1, deliveryId, records })), credential);
+    const at = new Date().toISOString(), metric = { kind: "metric", externalId: "cpu-batch", metric: "cpu-percent", value: 30, observedAt: at };
+    const batch = encode("batch-1", [metric, { kind: "incident", externalId: "batch-alert", title: "Staging errors", severity: "high", occurredAt: at }, { kind: "release", key: "v1", commitSha: "b".repeat(40) }]);
+    expect(await ingestTelemetry(credential, batch, "1".repeat(64))).toBe("accepted");
+    expect(await ingestTelemetry(credential, batch, "1".repeat(64))).toBe("duplicate");
+    await expect(ingestTelemetry(credential, batch, "2".repeat(64))).rejects.toMatchObject({ status: 409 });
+    const conflict = encode("batch-rollback", [{ ...metric, externalId: "must-rollback" }, { kind: "incident-event", externalId: "outage-1", event: { key: "wrong-source", from: "detected", to: "acknowledged", occurredAt: at, note: "Wrong scope" } }]);
+    await expect(ingestTelemetry(credential, conflict, "3".repeat(64))).rejects.toMatchObject({ status: 409 });
+    expect((await pool.query("select 1 from project_operation_samples where external_id='must-rollback'")).rows).toHaveLength(0);
+    expect((await pool.query("select 1 from telemetry_deliveries where delivery_id='batch-rollback'")).rows).toHaveLength(0);
+    expect((await loadTelemetryFeeds(source)).feeds).toHaveLength(1);
+    expect((await loadReleasesOverview(source)).releases).toHaveLength(2);
+    const ack = encode("batch-response", [{ kind: "incident-event", externalId: "batch-alert", event: { key: "ack", from: "detected", to: "acknowledged", occurredAt: at, note: "Staging owner responding" } }]);
+    expect(await ingestTelemetry(credential, ack, "4".repeat(64))).toBe("accepted");
+    expect((await loadIncidentsOverview(source)).incidents.find((incident) => incident.externalId === "batch-alert")?.state).toBe("acknowledged");
   });
 });

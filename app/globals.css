@@ -1011,3 +1011,5 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
   }
 }
 .incident-controls { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+.telemetry-feed-list { list-style: none; padding: 0; display: grid; gap: var(--space-4); }
+.telemetry-feed-list li { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); overflow-wrap: anywhere; }
