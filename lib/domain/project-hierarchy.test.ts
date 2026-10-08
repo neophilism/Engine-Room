@@ -48,7 +48,7 @@ describe("engine implementation hierarchy", () => {
   });
   it("preserves every project without inventing parent links for unrelated projects", () => {
     const unrelated=project("Music_Video_Wizard");
-    const arr=orderProjectsByHierarchy([unrelated,algo,algo]);
+    const arr=orderProjectsByHierarchy([unrelated,algo,civic]);
     expect(arr).toHaveLength(3);
     expect(parentEngineKey(unrelated)).toBeUndefined();
   });
