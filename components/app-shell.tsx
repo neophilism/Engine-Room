@@ -164,13 +164,13 @@ export function AppShell({ children }: AppShellProps) {
             <button className="topbar-icon-button" type="button" aria-label="Notifications">
               <span aria-hidden="true">♢</span>
             </button>
-            <button className="profile-control" type="button" aria-label="Open account menu">
+            <Link className="profile-control" href="/account" aria-label="Manage registered-user account">
               <span className="profile-monogram" aria-hidden="true">ER</span>
               <span className="profile-copy">
-                <strong>Executive</strong>
-                <small>Portfolio Admin</small>
+                <strong>Account</strong>
+                <small>Registered access</small>
               </span>
-            </button>
+            </Link>
           </div>
         </header>
 
