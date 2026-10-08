@@ -1,6 +1,6 @@
 import { createHash, randomBytes, scrypt, timingSafeEqual } from "node:crypto";
 const OPTIONS = { N: 16384, r: 8, p: 1, maxmem: 64 * 1024 * 1024 };
-export const SESSION_COOKIE = process.env.NODE_ENV === "production" ? "__Host-engine-room-session" : "engine_room_session";
+export const SESSION_COOKIE = process.env.ENGINE_ROOM_TEST_SERVER === "1" ? "engine_room_session" : (process.env.NODE_ENV === "production" ? "__Host-engine-room-session" : "engine_room_session");
 export const SESSION_AGE_SECONDS = 12 * 60 * 60;
 function derive(password:string,salt:Buffer):Promise<Buffer> {
  return new Promise((resolve,reject)=>scrypt(password,salt,64,OPTIONS,(error,out)=>error?reject(error):resolve(out)));
