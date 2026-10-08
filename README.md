@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 16 — Automatic project registration from approved development plans**
+**PR 17 — Portfolio Overview foundation and live portfolio statistics**
 
-This milestone completes Phase II. An approved `.exechub/project.yml` can atomically register its GitHub repository, portfolio project, primary repository relationship, immutable plan version, milestones, and exact planned-PR roadmap units. Count-only manifests never guess GitHub PR mappings.
+This milestone replaces static demonstration roadmap data with a live PostgreSQL-backed portfolio overview. It reports tracked projects, active systems, merged/approved roadmap PRs, aggregate completion, and per-project progress while degrading truthfully when the database is unconfigured or unavailable.
 
-Target post-merge progress: **16 / 40 planned PRs = 40%**.
+Target post-merge progress: **17 / 40 planned PRs = 42.5%**.
 
 Quality gates:
 
@@ -21,4 +21,4 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-See `docs/project-registration.md`, `docs/approved-plan-versioning.md`, and the approved 40-PR `docs/development-plan.md`.
+See the approved 40-PR `docs/development-plan.md`.
