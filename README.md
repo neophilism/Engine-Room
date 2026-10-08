@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 15 — Milestone completion and lifecycle-state calculation**
+**PR 16 — Automatic project registration from approved development plans**
 
-This milestone derives milestone progress/status from the immutable approved plan and merged planned PRs, then derives conservative project development lifecycle state without overwriting explicit operational or administrative states.
+This milestone completes Phase II. An approved `.exechub/project.yml` can atomically register its GitHub repository, portfolio project, primary repository relationship, immutable plan version, milestones, and exact planned-PR roadmap units. Count-only manifests never guess GitHub PR mappings.
 
-Target post-merge progress: **15 / 40 planned PRs = 37.5%**.
+Target post-merge progress: **16 / 40 planned PRs = 40%**.
 
 Quality gates:
 
@@ -21,4 +21,4 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-See `docs/milestone-lifecycle.md`, `docs/planned-pr-completion.md`, and the approved 40-PR `docs/development-plan.md`.
+See `docs/project-registration.md`, `docs/approved-plan-versioning.md`, and the approved 40-PR `docs/development-plan.md`.
