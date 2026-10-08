@@ -9,6 +9,7 @@ import { loadProjectDashboard } from "../../lib/server/project-dashboard";
 import { registerProjectFeatures } from "../../lib/server/project-features";
 import { persistDevelopmentActivity } from "../../lib/server/development-activity";
 import { registerProjectRisk, setProjectReleaseTarget, recordProjectReleaseEvidence } from "../../lib/server/project-readiness";
+import { recordOperationSamples, loadOperationsOverview } from "../../lib/server/operations";
 
 const url = process.env.ENGINE_ROOM_TEST_DATABASE_URL;
 const source = { NODE_ENV: "test", DATABASE_URL: url };
@@ -78,5 +79,14 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     expect(updated.readiness?.gates.find((gate) => gate.gate === "tests")?.status).toBe("passed");
     expect(updated.readiness?.gates.find((gate) => gate.gate === "deployment")?.status).toBe("unknown");
     expect(updated.readiness?.risks[0].title).toBe("Open launch blocker");
+  });
+  it("persists measured operational samples idempotently with environment isolation", async () => {
+    const data = await loadProjectDashboard("database-fixture", source);
+    const sample = { projectId: data.project!.id, environment: "production", metric: "cpu-percent" as const, value: 10, source: "fixture-monitor", externalId: "cpu-1", observedAt: new Date().toISOString() };
+    await recordOperationSamples([sample]); await recordOperationSamples([{ ...sample, value: 20 }]);
+    const overview = await loadOperationsOverview(source);
+    expect(overview.source).toBe("database");
+    expect(overview.samples).toHaveLength(1);
+    expect(overview.samples[0]).toMatchObject({ value: 20, environment: "production" });
   });
 });
