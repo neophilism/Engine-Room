@@ -25,3 +25,7 @@ When NODE_ENV=production and ENGINE_ROOM_TEST_SERVER is unset, the Engine Room w
 ## Fireside Chat public archive metrics
 
 Engine Room now reads real, public (not administrative) archive statistics from `https://fireside-chat-preview.onrender.com/api/archive-stats`, an existing endpoint in `neophilism/FiresideChat`. The counts of active shows, episodes and integer total hours are validated and displayed as source observations with explicit timestamps, refreshed at most every five minutes while the Engine Room homepage is open. A failed call is shown as `Unverified`, not zero. No podcasts or listening activity are invented, and this feed does not expose private user analytics. Publicly available archive hours are the sum of episode durations, not the number of hours individual visitors listened. Private usage and revenue integration require consented scoped credentials and separate security gates.
+
+## Public GitHub import freshness readout
+
+The portfolio home checks `/api/public-github-status` against Engine Room's own PostgreSQL database. It reports the count of observed public repositories, observed real PR records, verified PR merge timestamps and latest PR observation time for the configured owner. These are persisted observations, not an assertion that the last complete import succeeded or that every repository is currently synchronized. The readout explicitly distinguishes no observed records, missing DB configuration and query failure. It does not expose private repository names or confidential operational metadata.
