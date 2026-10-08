@@ -10,6 +10,7 @@ import { registerProjectFeatures } from "../../lib/server/project-features";
 import { persistDevelopmentActivity } from "../../lib/server/development-activity";
 import { registerProjectRisk, setProjectReleaseTarget, recordProjectReleaseEvidence } from "../../lib/server/project-readiness";
 import { recordOperationSamples, loadOperationsOverview } from "../../lib/server/operations";
+import { createRelease, transitionRelease, loadReleasesOverview } from "../../lib/server/releases";
 
 const url = process.env.ENGINE_ROOM_TEST_DATABASE_URL;
 const source = { NODE_ENV: "test", DATABASE_URL: url };
@@ -88,5 +89,16 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     expect(overview.source).toBe("database");
     expect(overview.samples).toHaveLength(1);
     expect(overview.samples[0]).toMatchObject({ value: 20, environment: "production" });
+  });
+  it("applies release transitions atomically and handles identical replay without advancing twice", async () => {
+    const data = await loadProjectDashboard("database-fixture", source);
+    const target = { commitSha: "a".repeat(40), environment: "production" };
+    const id = await createRelease(data.project!.id, "v1", target);
+    expect(await createRelease(data.project!.id, "v1", target)).toBe(id);
+    const event = { key: "start", from: "draft" as const, to: "building" as const, actor: "fixture-ci", occurredAt: new Date().toISOString() };
+    expect((await transitionRelease(id, event)).applied).toBe(true);
+    expect((await transitionRelease(id, event)).applied).toBe(false);
+    await expect(transitionRelease(id, { ...event, key: "bad", from: "approved", to: "deploying" })).rejects.toThrow("precondition");
+    expect((await loadReleasesOverview(source)).releases[0].state).toBe("building");
   });
 });

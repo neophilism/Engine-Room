@@ -1,11 +1,11 @@
 import React from "react";
-import { DashboardPage } from "../../components/dashboard-page";
+import { ReleasesDashboard } from "../../components/operations/releases-dashboard";
+import { PortfolioRefresh } from "../../components/portfolio/portfolio-refresh";
+import { loadReleasesOverview } from "../../lib/server/releases";
 
-export default function ReleasesPage() {
-  return <DashboardPage
-    eyebrow="Delivery"
-    title="Releases"
-    description="Follow releases from build through approval, rollout, production, and rollback."
-    signals={["Release pipeline", "Readiness", "Approvals", "Production rollout"]}
-  />;
+export const dynamic = "force-dynamic";
+export default async function ReleasesPage() {
+  const overview = await loadReleasesOverview();
+  return <main className="content"><header className="hero"><p className="eyebrow">Delivery</p><h1>Releases</h1><p>Follow recorded build, approval, rollout, production, and rollback events.</p></header>
+    <PortfolioRefresh /><ReleasesDashboard overview={overview} /></main>;
 }
