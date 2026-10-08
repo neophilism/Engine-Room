@@ -2,6 +2,7 @@ import { operationMetrics, validateOperationSample } from "../domain/operations"
 import { incidentSeverities, incidentStates, validateIncidentEvent, validateIncidentSignal } from "../domain/incidents";
 import { releaseStates, validateReleaseEvent } from "../domain/releases";
 import { normalizeFinancialAdapter, normalizeFinanceRecord } from "../finance/adapters";
+import { normalizeAccessRecord } from "../access/adapter";
 import { TelemetryError, type TelemetryCredential, type TelemetryEnvelope, type TelemetryRecord } from "./types";
 
 function object(value: unknown, keys: string[]): Record<string, unknown> {
@@ -28,6 +29,7 @@ export function assertTelemetryScope(credential: TelemetryCredential, records: T
   }
 }
 function normalizeRecord(value: unknown, credential: TelemetryCredential): TelemetryRecord {
+  if (value && typeof value === "object" && "kind" in value && value.kind === "access-observation") return normalizeAccessRecord(value, credential);
   if (value && typeof value === "object" && "kind" in value && (value.kind === "financial-entry" || value.kind === "financial-forecast")) return normalizeFinanceRecord(value, credential);
   const item = object(value, ["kind", "externalId", "metric", "value", "observedAt", "title", "severity", "occurredAt", "evidenceUrl", "event", "key", "commitSha"]);
   if (item.kind === "metric") {

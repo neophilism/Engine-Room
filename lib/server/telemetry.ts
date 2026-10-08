@@ -6,6 +6,7 @@ import { persistOperationSamples } from "./operations";
 import { applyIncidentTransition, persistIncident } from "./incidents";
 import { applyReleaseTransition, persistRelease } from "./releases";
 import { persistFinancialEntries, persistFinancialForecasts } from "./finance";
+import { persistAccessObservations } from "./access";
 
 export async function ingestTelemetry(credential: TelemetryCredential, envelope: TelemetryEnvelope, payloadHash: string) {
   assertTelemetryScope(credential, envelope.records);
@@ -25,6 +26,7 @@ export async function ingestTelemetry(credential: TelemetryCredential, envelope:
       const scope = { projectId: credential.projectId, environment: credential.environment, source: credential.source };
       try {
         if (record.kind === "metric") await persistOperationSamples(client, [{ ...scope, externalId: record.externalId, metric: record.metric, value: record.value, observedAt: record.observedAt }]);
+        else if (record.kind === "access-observation") await persistAccessObservations(client, [{ ...scope, ...record.observation }]);
         else if (record.kind === "financial-entry") await persistFinancialEntries(client, [{ ...scope, ...record.entry }]);
         else if (record.kind === "financial-forecast") await persistFinancialForecasts(client, [{ ...scope, ...record.forecast }]);
         else if (record.kind === "incident") await persistIncident(client, { ...scope, ...record.signal });

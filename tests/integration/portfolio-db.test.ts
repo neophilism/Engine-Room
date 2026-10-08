@@ -16,6 +16,7 @@ import { ingestTelemetry, loadTelemetryFeeds } from "../../lib/server/telemetry"
 import { normalizeTelemetry } from "../../lib/telemetry/adapters";
 import type { TelemetryCredential } from "../../lib/telemetry/types";
 import { recordFinancialData, loadFinanceOverview } from "../../lib/server/finance";
+import { recordAccessObservations, loadAccessOverview } from "../../lib/server/access";
 
 const url = process.env.ENGINE_ROOM_TEST_DATABASE_URL;
 const source = { NODE_ENV: "test", DATABASE_URL: url };
@@ -163,5 +164,15 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     await expect(ingestTelemetry(credential, normalize("financial-adapter-conflict", [{ ...entry, id: "must-rollback" }, { ...entry, amount: "1.00" }]), "6".repeat(64))).rejects.toMatchObject({ status: 409 });
     expect((await pool.query("select 1 from project_financial_entries where external_id='must-rollback'")).rows).toHaveLength(0);
     expect((await pool.query("select 1 from telemetry_deliveries where delivery_id='financial-adapter-conflict'")).rows).toHaveLength(0);
+  });
+  it("loads latest identity observations, deduplicates replay, and ignores late older status", async () => {
+    const data = await loadProjectDashboard("database-fixture", source);
+    const record = { projectId: data.project!.id, environment: "production", source: "fixture-identity", externalId: "user-current", principalId: "operator", displayName: "Operator", principalKind: "person" as const, status: "suspended" as const, roles: ["admin"], privileged: true, mfaEnabled: null, lastActiveAt: null, credentialExpiresAt: null, observedAt: new Date().toISOString() };
+    await recordAccessObservations([record]); await recordAccessObservations([record]);
+    await recordAccessObservations([{ ...record, externalId: "user-older", status: "active", observedAt: new Date(Date.now()-60_000).toISOString() }]);
+    const overview = await loadAccessOverview(source);
+    expect(overview.source).toBe("database"); expect(overview.principals).toHaveLength(1);
+    expect(overview.principals[0]).toMatchObject({ status: "suspended", mfaEnabled: null, roles: ["admin"] });
+    await expect(recordAccessObservations([{ ...record, status: "active" }])).rejects.toThrow("different content");
   });
 });
