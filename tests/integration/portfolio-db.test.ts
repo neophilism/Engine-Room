@@ -20,7 +20,7 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     const repository = (await pool.query<{ id: string }>("select id from repositories where full_name = 'test/core'")).rows[0].id;
     await pool.query("update planned_pull_requests set github_pr_number = ordinal");
     for (const number of [1, 2, 3]) await pool.query(`insert into github_pull_requests (github_pull_request_id, repository_id, number, title, state, draft, html_url, created_at, updated_at, merged_at)
-      values ($1, $2, $1, $3, $4, false, $5, now(), now(), $6)`, [number, repository, `PR ${number}`, number === 2 ? "open" : "closed", `https://github.com/test/core/pull/${number}`, number === 1 ? new Date() : null]);
+      values ($1, $2, $7, $3, $4, false, $5, now(), now(), $6)`, [number, repository, `PR ${number}`, number === 2 ? "open" : "closed", `https://github.com/test/core/pull/${number}`, number === 1 ? new Date() : null, number]);
     await pool.query(`insert into repositories (id, github_repository_id, owner_login, name, full_name, html_url, visibility) values ($1, 100, 'test', 'other', 'test/other', 'https://github.com/test/other', 'public')`, [randomUUID()]);
     const other = (await pool.query<{ id: string }>("select id from repositories where full_name = 'test/other'")).rows[0].id;
     await pool.query(`insert into github_pull_requests (github_pull_request_id, repository_id, number, title, state, draft, html_url, created_at, updated_at, merged_at)
