@@ -7,6 +7,7 @@ import {
 } from "../machine";
 import { MachinePreview } from "../machine/machine-preview";
 import { ProjectProgressStack } from "./project-progress-stack";
+import { PortfolioProgressMachine } from "./portfolio-progress-machine";
 import type { PortfolioOverviewData } from "../../lib/domain/portfolio-overview";
 
 function sourceLabel(source: PortfolioOverviewData["source"]) {
@@ -53,6 +54,8 @@ export function PortfolioHome({
           <strong>{statistics.percent}%</strong>
         </article>
       </section>
+
+      <PortfolioProgressMachine projects={projects} />
 
       <BrassPanel
         eyebrow="Live roadmap"

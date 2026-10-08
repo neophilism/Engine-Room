@@ -645,6 +645,14 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
   margin: 0 0 18px;
 }
 
+.portfolio-total-machine { margin-bottom: 22px; }
+.portfolio-total-readout { display: grid; align-content: center; gap: 12px; }
+.portfolio-total-readout strong { font: 700 clamp(1.3rem, 3vw, 2rem) var(--er-font-instrument); color: var(--brass-hi); }
+.portfolio-total-readout > span:last-child, .portfolio-calculation-note { color: var(--muted); font-size: .8rem; }
+.portfolio-workload { display: grid; align-content: center; gap: 18px; margin: 0; }
+.portfolio-workload dt { color: var(--muted); font-size: .8rem; }
+.portfolio-workload dd { margin: 4px 0 0; font: 700 1.8rem var(--er-font-instrument); color: var(--teal); }
+
 .portfolio-stat {
   min-width: 0;
   padding: 16px 18px;
