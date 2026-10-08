@@ -2,6 +2,8 @@ import type { GitHubAppConfig } from "../config/env";
 import { buildGitHubReconciliationSnapshot } from "../github/sync";
 import type { GitHubFetcher } from "../github/client";
 import { getDatabasePool } from "./database";
+import { discoverInstallationManifests } from "../github/manifest-discovery";
+import { applyDiscoveredManifests } from "./github-portfolio";
 
 export async function reconcileGitHubInstallation(
   config: GitHubAppConfig,
@@ -93,7 +95,11 @@ export async function reconcileGitHubInstallation(
     client.release();
   }
 
+  const approved = await discoverInstallationManifests(config, installationId, snapshot.repositories, fetcher);
+  const registration = await applyDiscoveredManifests(snapshot.repositories, approved);
+
   return {
+    registration,
     repositories: snapshot.repositories.length,
     pullRequests: snapshot.pullRequests.length,
     reconciledAt: snapshot.reconciledAt
