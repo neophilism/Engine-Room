@@ -29,10 +29,10 @@ async function paginate(path) {
   throw new Error("GitHub pagination limit exceeded");
 }
 const excluded = new Set((process.env.ENGINE_ROOM_EXCLUDE_REPOSITORIES || "datasciencecoursera,opencv,pupil,facerec").split(",").map(x => x.trim().toLowerCase()));
-const all = await paginate(`/users/${encodeURIComponent(owner)}/repos?type=owner&sort=updated`);
-const repositories = all.filter(repo => !repo.private && !repo.archived && !repo.fork && !excluded.has(repo.name.toLowerCase()));
 let projectsUpdated = 0, prsUpdated = 0;
 try {
+  const all = await paginate(`/users/${encodeURIComponent(owner)}/repos?type=owner&sort=updated`);
+  const repositories = all.filter(repo => !repo.private && !repo.archived && !repo.fork && !excluded.has(repo.name.toLowerCase()));
   for (const repo of repositories) {
     const fullName = repo.full_name;
     const pullRequests = await paginate(`/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo.name)}/pulls?state=all`);

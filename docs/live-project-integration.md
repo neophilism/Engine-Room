@@ -17,3 +17,7 @@ An approved manifest defines project plan counts. Merged counts require a mapped
 ## Other live platforms
 
 The infrastructure and finance/user/telemetry adapters can only ingest real measurements after each platform issues its own scoped credential and source configuration. GitHub App access does not authorize reading Render, Neon, billing, customer data, or analytics from unrelated services. Those integrations are separate production acceptance tasks; never label them verified until a signed delivery has been received and displayed.
+
+## Production public GitHub import default
+
+When NODE_ENV=production and ENGINE_ROOM_TEST_SERVER is unset, the Engine Room web process automatically imports the owner's public non-fork repositories and their real pull requests shortly after startup, then once every two hours while the instance is awake. This does not need GitHub App secrets or a paid cron service, but is best effort on sleeping free-tier services and GitHub rate limits. Set ENGINE_ROOM_PUBLIC_GITHUB_SYNC=0 to opt out, or ENGINE_ROOM_PUBLIC_GITHUB_SYNC=1 to enable explicitly in development. Errors leave prior data intact and are logged. The approved Engine Room PR mapping is imported only after a successful GitHub synchronization. Reconciliation is not equivalent to production service monitoring.
