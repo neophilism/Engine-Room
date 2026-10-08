@@ -48,11 +48,20 @@ if (!testServer && process.env.ENGINE_ROOM_PUBLIC_GITHUB_SYNC === "1") {
     });
     run.once("exit", code => {
       syncing = false;
-      if (code !== 0) console.error("Public GitHub synchronization failed; existing records remain visible.");
+      if (code !== 0) {
+        console.error("Public GitHub synchronization failed; existing records remain visible.");
+        return;
+      }
+      // Apply the reviewed original 40-PR Engine Room mapping only after real PR records arrive.
+      const roadmap = spawn(process.execPath, ["scripts/sync-approved-roadmap.mjs"], { stdio: "inherit", env: process.env });
+      roadmap.once("error", error => console.error("Approved roadmap importer failed to start:", error.message));
+      roadmap.once("exit", result => {
+        if (result !== 0) console.error("Approved roadmap import failed; other real source records remain intact.");
+      });
     });
   };
   const startup = setTimeout(refresh, 15000);
   startup.unref();
-  const interval = setInterval(refresh, 12 * 60 * 60 * 1000);
+  const interval = setInterval(refresh, 2 * 60 * 60 * 1000);
   interval.unref();
 }
