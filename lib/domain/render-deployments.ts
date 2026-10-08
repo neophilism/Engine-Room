@@ -17,6 +17,13 @@ export const verifiedRenderServices: readonly VerifiedRenderService[] = [
   { id: "srv-db23s33bc2fs73f4ui10", name: "FOIA Aggregator", repository: "neophilism/FOIA_Aggregator", website: "https://foia-aggregator.onrender.com", deployStatus: "live", deployedCommit: "12e802d53348ae01d1bfe3bb400f64b2b4a7a136", lastObservedAt: "2026-10-07T19:52:43Z" }
 ];
 
+export type PublicSiteObservation = {
+  serviceId: string;
+  httpStatus: number | null;
+  checkedAt: string;
+  observation: "http-response" | "no-response";
+};
+
 export type RenderReadout = VerifiedRenderService & {
   source: "render-api" | "verified-snapshot";
   checkedAt?: string;

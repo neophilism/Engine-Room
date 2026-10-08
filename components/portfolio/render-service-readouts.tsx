@@ -1,7 +1,28 @@
-import React from "react";
-import type { RenderReadout } from "../../lib/domain/render-deployments";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import type { RenderReadout, PublicSiteObservation } from "../../lib/domain/render-deployments";
 
 export function RenderServiceReadouts({ services }: { services: readonly RenderReadout[] }) {
+  const [observations, setObservations] = useState<Record<string, PublicSiteObservation>>({});
+  useEffect(() => {
+    let active = true;
+    const refresh = async () => {
+      try {
+        const response = await fetch("/api/public-sites", { cache: "no-store" });
+        if (!response.ok) return;
+        const payload: { observations?: PublicSiteObservation[] } = await response.json();
+        if (active && Array.isArray(payload.observations)) {
+          setObservations(Object.fromEntries(payload.observations.map(item => [item.serviceId, item])));
+        }
+      } catch {
+        // A failed probe request does not establish an outage for any platform.
+      }
+    };
+    void refresh();
+    const interval = setInterval(() => { void refresh(); }, 10 * 60 * 1000);
+    return () => { active = false; clearInterval(interval); };
+  }, []);
   if (services.length === 0) return null;
   const live = services.filter(s => s.deployStatus === "live").length;
   const refreshed = services.filter(s => s.source === "render-api").length;
@@ -22,10 +43,17 @@ export function RenderServiceReadouts({ services }: { services: readonly RenderR
           <a href={service.website} target="_blank" rel="noopener noreferrer">Open website ↗</a>
           <a href={`https://github.com/${service.repository}`} target="_blank" rel="noopener noreferrer">Repository ↗</a>
         </div>
+        <p className="render-readout-timestamp">
+          {observations[service.id]
+            ? observations[service.id].observation === "http-response"
+              ? `Public-site check: HTTP ${observations[service.id].httpStatus} at ${observations[service.id].checkedAt.slice(0,16).replace("T"," ")} UTC`
+              : `Public-site check: no response within probe timeout at ${observations[service.id].checkedAt.slice(0,16).replace("T"," ")} UTC`
+            : "Public-site check: pending or unavailable"}
+        </p>
         <p className="render-readout-timestamp">Latest recorded: <time dateTime={service.lastObservedAt}>{service.lastObservedAt.slice(0,16).replace("T"," ")} UTC</time>
           <span>{service.source === "render-api" ? " · Provider API" : " · Snapshot, not refreshed"}</span></p>
       </article>)}
     </div>
-    <p className="render-readouts-disclaimer">Provider-linked services may share a repository and represent previews. A past `live` deployment does not establish current reachability. Direct Render API updates require a server-side API key.</p>
+    <p className="render-readouts-disclaimer">Provider-linked services may share a repository and represent previews. A past `live` deployment does not establish current reachability. HTTP responses measure only public website response, not full application health; a timeout may mean a sleeping service. Direct Render API updates require a server-side API key.</p>
   </section>;
 }
