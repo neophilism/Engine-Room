@@ -1,3 +1,4 @@
+import { selectMigrationFiles } from "./migration-files.mjs";
 import { readdir, readFile } from "node:fs/promises";
 import { Pool } from "pg";
 
@@ -8,8 +9,9 @@ if (!url) {
   process.exit(1);
 }
 const pool = new Pool({ connectionString: url, max: 1, connectionTimeoutMillis: 15000 });
-const client = await pool.connect();
+let client;
 try {
+  client = await pool.connect();
   // One transaction and an advisory lock keep parallel instances from racing.
   await client.query("BEGIN");
   await client.query("SELECT pg_advisory_xact_lock(hashtext('engine_room_schema_migrations'))");
@@ -20,7 +22,9 @@ try {
   )`);
   const applied = await client.query("SELECT version FROM engine_room_schema_migrations");
   const versions = new Set(applied.rows.map(row => row.version));
-  const files = (await readdir("db/migrations")).filter(name => /^\\d{4}_[a-z0-9_]+\\.sql$/.test(name)).sort();
+  const files = selectMigrationFiles(await readdir("db/migrations"));
+  if (files.length === 0) throw new Error("No migration files were found. Refusing to start with an uninitialized schema.");
+  if (new Set(files.map(file => file.slice(0,4))).size !== files.length) throw new Error("Duplicate migration versions.");
   for (const file of files) {
     const version = file.split("_")[0];
     if (versions.has(version)) continue;
@@ -35,10 +39,10 @@ try {
   await client.query("COMMIT");
   console.info("Database migrations current.");
 } catch (error) {
-  await client.query("ROLLBACK");
+  if (client) await client.query("ROLLBACK").catch(() => undefined);
   console.error("Database migration failed:", error instanceof Error ? error.message : "unknown error");
   process.exitCode = 1;
 } finally {
-  client.release();
+  client?.release();
   await pool.end();
 }

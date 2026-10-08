@@ -5,12 +5,14 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "node scripts/start.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:browser": "playwright test",
-    "check": "npm run typecheck && npm run lint && npm run test && npm run build"
+    "check": "npm run typecheck && npm run lint && npm run test:migrations && npm run test && npm run build",
+    "migrate": "node scripts/migrate.mjs",
+    "test:migrations": "node scripts/test-migration-files.mjs"
   },
   "dependencies": {
     "next": "^15.5.4",
