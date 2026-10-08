@@ -10,4 +10,6 @@ The Render API refresh is independent of GitHub repository/PR synchronization. A
 
 ## Public GitHub ingestion without a paid cron service
 
-With `ENGINE_ROOM_PUBLIC_GITHUB_SYNC=1`, the deployed web process starts a best-effort public-repository import 15 seconds after startup and again every 12 hours while the instance remains awake. This mode costs no dedicated scheduler instance, but may pause during free-tier sleep, does not include private repositories, and has GitHub's low anonymous rate limit unless `GITHUB_READ_TOKEN` is supplied. Configure GitHub App events and an authenticated scheduler for faster and more reliable updates. The source script never inserts guessed approved roadmap progress.
+With `ENGINE_ROOM_PUBLIC_GITHUB_SYNC=1`, the deployed web process starts a best-effort public-repository import 15 seconds after startup and again every two hours while the instance remains awake. This mode costs no dedicated scheduler instance, but may pause during free-tier sleep, does not include private repositories, and has GitHub's low anonymous rate limit unless `GITHUB_READ_TOKEN` is supplied. Configure GitHub App events and an authenticated scheduler for faster and more reliable updates. The source script never inserts guessed approved roadmap progress.
+
+Public GitHub import now defaults on when NODE_ENV=production unless explicitly disabled with ENGINE_ROOM_PUBLIC_GITHUB_SYNC=0. Service wake-ups may restart the best-effort job, and this does not replace an externally scheduled ingestion process.

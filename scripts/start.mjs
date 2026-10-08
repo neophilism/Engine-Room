@@ -1,4 +1,5 @@
 import { spawn, spawnSync } from "node:child_process";
+import { shouldRunPublicSync, PUBLIC_SYNC_INTERVAL_MS } from "./public-sync-policy.mjs";
 
 const testServer = process.env.ENGINE_ROOM_TEST_SERVER === "1";
 if (!testServer) {
@@ -36,7 +37,7 @@ server.on("exit", (code, signal) => {
  * instance is awake. Official GitHub App webhooks remain the preferred
  * low-latency production source.
  */
-if (!testServer && process.env.ENGINE_ROOM_PUBLIC_GITHUB_SYNC === "1") {
+if (shouldRunPublicSync(process.env, testServer)) {
   let syncing = false;
   const refresh = () => {
     if (syncing) return;
@@ -62,6 +63,6 @@ if (!testServer && process.env.ENGINE_ROOM_PUBLIC_GITHUB_SYNC === "1") {
   };
   const startup = setTimeout(refresh, 15000);
   startup.unref();
-  const interval = setInterval(refresh, 2 * 60 * 60 * 1000);
+  const interval = setInterval(refresh, PUBLIC_SYNC_INTERVAL_MS);
   interval.unref();
 }
