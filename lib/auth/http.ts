@@ -13,10 +13,10 @@ export async function readJson(request:Request):Promise<Record<string,unknown>|n
  catch{return null;}
 }
 export function setSession(response:NextResponse,token:string){
- response.cookies.set(SESSION_COOKIE,token,{httpOnly:true,secure:process.env.NODE_ENV==="production",sameSite:"strict",path:"/",maxAge:SESSION_AGE_SECONDS});
+ response.cookies.set(SESSION_COOKIE,token,{httpOnly:true,secure:process.env.NODE_ENV==="production" && process.env.ENGINE_ROOM_TEST_SERVER!=="1",sameSite:"strict",path:"/",maxAge:SESSION_AGE_SECONDS});
  response.headers.set("Cache-Control","no-store");
 }
 export function clearSession(response:NextResponse){
- response.cookies.set(SESSION_COOKIE,"",{httpOnly:true,secure:process.env.NODE_ENV==="production",sameSite:"strict",path:"/",maxAge:0});
+ response.cookies.set(SESSION_COOKIE,"",{httpOnly:true,secure:process.env.NODE_ENV==="production" && process.env.ENGINE_ROOM_TEST_SERVER!=="1",sameSite:"strict",path:"/",maxAge:0});
  response.headers.set("Cache-Control","no-store");
 }
