@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 12 — .exechub/project.yml development-plan manifest parser**
+**PR 13 — Versioned approved-development-plan model**
 
-This milestone adds a strict parser for Engine Room's controlled repository manifest. It validates project identity, roadmap approval/version/counts, milestone structure, repository coordinates, and the approved planned-PR denominator.
+This milestone makes approved roadmaps durable and auditable. Exact approved manifest snapshots are fingerprinted, versioned, and protected from identity mutation; importing the same approval twice is idempotent, while a material change creates a new version and supersedes the prior current plan.
 
-Target post-merge progress: **12 / 40 planned PRs = 30%**.
+Target post-merge progress: **13 / 40 planned PRs = 32.5%**.
 
 Quality gates:
 
@@ -21,4 +21,4 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-See `docs/project-manifest.md` and the approved 40-PR `docs/development-plan.md`.
+See `docs/approved-plan-versioning.md` and the approved 40-PR `docs/development-plan.md`.
