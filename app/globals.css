@@ -648,6 +648,16 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 .portfolio-total-machine { margin-bottom: 22px; }
 .comparison-table-scroll { max-width: 100%; overflow-x: auto; border-radius: var(--er-radius-sm); }
 .project-dashboard-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.release-gates { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 0; }
+.release-gates li { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; border: 1px solid var(--er-border-metal); border-radius: var(--er-radius-sm); font-size: .8rem; }
+.release-gates span { margin-left: auto; color: var(--teal); }
+.release-gates li[data-gate-state="failed"] span { color: var(--er-status-blocked); }
+.release-gates li[data-gate-state="unknown"] span { color: var(--muted); }
+.release-gates a { color: var(--brass-hi); text-underline-offset: 3px; }
+.project-readiness-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.project-readiness-columns h3 { color: var(--brass-hi); font-size: 1rem; }
+.project-readiness-columns li { margin-bottom: 8px; overflow-wrap: anywhere; font-size: .85rem; }
+@media (max-width: 760px) { .release-gates, .project-readiness-columns { grid-template-columns: minmax(0, 1fr); } }
 .activity-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; color: var(--muted); font-size: .85rem; }
 .activity-filter select { min-height: 44px; background: var(--er-surface-2); color: var(--text); border: 1px solid var(--er-border-metal); border-radius: var(--er-radius-sm); padding: 8px; font: inherit; }
 .development-activity-list { list-style: none; padding: 0; }

@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 27 — Development activity timelines**
+**PR 28 — Risks, next actions, and release readiness**
 
-Project dashboards now show filterable GitHub PR, commit, issue, review, and workflow activity. Provider adapters and idempotent persistence collect bounded recent activity without allowing unrelated events to inflate roadmap progress.
+Project dashboards now show recorded risks, blockers, ordered next actions, and acceptance evidence scoped to an immutable release commit and environment. Missing or expired production evidence stays unknown even when roadmap work is complete.
 
-Target post-merge progress: **27 / 40 planned PRs = 67.5%**.
+Target post-merge progress: **28 / 40 planned PRs = 70%**.
 
 Quality gates:
 
