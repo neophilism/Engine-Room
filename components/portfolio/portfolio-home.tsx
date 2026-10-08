@@ -6,6 +6,7 @@ import {
   IndicatorLamp,
   MachineFlow
 } from "../machine";
+import { MachinePreview } from "../machine/machine-preview";
 import type { PortfolioOverviewData } from "../../lib/server/portfolio-overview";
 
 function sourceLabel(source: PortfolioOverviewData["source"]) {
@@ -132,6 +133,7 @@ export function PortfolioHome({
           </MachineFlow>
         </div>
       </BrassPanel>
+      <MachinePreview />
     </main>
   );
 }
