@@ -1,11 +1,16 @@
 import React from "react";
-import { DashboardPage } from "../../components/dashboard-page";
+import { ProjectComparison } from "../../components/projects/project-comparison";
+import { PortfolioRefresh } from "../../components/portfolio/portfolio-refresh";
+import { loadPortfolioOverview } from "../../lib/server/portfolio-overview";
 
-export default function ProjectsPage() {
-  return <DashboardPage
-    eyebrow="Portfolio Intelligence"
-    title="Projects"
-    description="Compare project roadmaps, lifecycle stages, risks, and delivery status side by side."
-    signals={["Roadmap completion", "Lifecycle stage", "Risk and blockers", "GitHub activity"]}
-  />;
+export const dynamic = "force-dynamic";
+
+export default async function ProjectsPage() {
+  const overview = await loadPortfolioOverview();
+  return <main className="content">
+    <header className="hero"><p className="eyebrow">Portfolio Intelligence</p><h1>Projects</h1>
+      <p>Compare approved roadmaps, current lifecycle stages, and delivery work side by side.</p></header>
+    <PortfolioRefresh />
+    <ProjectComparison overview={overview} />
+  </main>;
 }
