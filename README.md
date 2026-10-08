@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 11 — Repository/PR synchronization and periodic reconciliation**
+**PR 12 — .exechub/project.yml development-plan manifest parser**
 
-This milestone adds normalized pull-request storage and a full-state GitHub reconciliation service. Webhooks remain the low-latency path; reconciliation is the anti-drift path that periodically re-reads authoritative repository and PR state.
+This milestone adds a strict parser for Engine Room's controlled repository manifest. It validates project identity, roadmap approval/version/counts, milestone structure, repository coordinates, and the approved planned-PR denominator.
 
-Target post-merge progress: **11 / 40 planned PRs = 27.5%**.
+Target post-merge progress: **12 / 40 planned PRs = 30%**.
 
 Quality gates:
 
@@ -21,4 +21,4 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-See `docs/github-reconciliation.md`, `docs/github-webhooks.md`, and the approved 40-PR `docs/development-plan.md`.
+See `docs/project-manifest.md` and the approved 40-PR `docs/development-plan.md`.
