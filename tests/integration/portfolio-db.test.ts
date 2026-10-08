@@ -23,7 +23,16 @@ const source = { NODE_ENV: "test", DATABASE_URL: url };
 describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
   beforeAll(async () => {
     const pool = getDatabasePool(source);
-    for (const name of (await readdir("db/migrations")).filter((name) => name.endsWith(".sql")).sort()) await pool.query(await readFile(`db/migrations/${name}`, "utf8"));
+    // Browser tests reuse this PostgreSQL service after integration tests. Record
+    // migrations when applying them so the production runner doesn't attempt
+    // to create the existing enum/table definitions a second time.
+    for (const name of (await readdir("db/migrations")).filter((name) => name.endsWith(".sql")).sort()) {
+      await pool.query(await readFile(`db/migrations/${name}`, "utf8"));
+      await pool.query(
+        "insert into engine_room_schema_migrations(version, description) values($1, $2) on conflict(version) do nothing",
+        [name.split("_")[0], name]
+      );
+    }
     process.env.DATABASE_URL = url;
     await registerApprovedProject({ project: { name: "Database Fixture", displayName: "Database Fixture", repository: "test/core", status: "active-development" },
       roadmap: { version: 1, plannedPrs: 4, approved: true }, milestones: [{ name: "Foundation", prs: 4 }] },
