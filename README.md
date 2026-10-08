@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 14 — Planned-PR completion calculation engine**
+**PR 15 — Milestone completion and lifecycle-state calculation**
 
-This milestone connects synchronized GitHub pull-request state to approved roadmap units. Only mapped PRs with a real GitHub merge timestamp count toward completion; open, closed-unmerged, missing, or unmapped PRs never inflate the numerator.
+This milestone derives milestone progress/status from the immutable approved plan and merged planned PRs, then derives conservative project development lifecycle state without overwriting explicit operational or administrative states.
 
-Target post-merge progress: **14 / 40 planned PRs = 35%**.
+Target post-merge progress: **15 / 40 planned PRs = 37.5%**.
 
 Quality gates:
 
@@ -21,4 +21,4 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-See `docs/planned-pr-completion.md` and the approved 40-PR `docs/development-plan.md`.
+See `docs/milestone-lifecycle.md`, `docs/planned-pr-completion.md`, and the approved 40-PR `docs/development-plan.md`.
