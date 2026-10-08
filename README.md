@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 9 — GitHub App integration foundation and repository discovery**
+**PR 14 — Planned-PR completion calculation engine**
 
-This milestone adds dependency-light GitHub App authentication, installation-token exchange, paginated repository discovery, normalized repository records, and runtime configuration for GitHub.com or compatible enterprise API endpoints.
+This milestone connects synchronized GitHub pull-request state to approved roadmap units. Only mapped PRs with a real GitHub merge timestamp count toward completion; open, closed-unmerged, missing, or unmapped PRs never inflate the numerator.
 
-Target post-merge progress: **9 / 40 planned PRs = 22.5%**.
+Target post-merge progress: **14 / 40 planned PRs = 35%**.
 
 Quality gates:
 
@@ -21,4 +21,4 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-See `docs/github-integration.md` and the approved 40-PR `docs/development-plan.md`.
+See `docs/planned-pr-completion.md` and the approved 40-PR `docs/development-plan.md`.
