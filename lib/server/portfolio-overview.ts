@@ -19,6 +19,7 @@ import { getDatabasePool } from "./database";
 export type PortfolioOverviewRow = {
   id: string;
   display_name: string;
+  slug?: string;
   summary?: string | null;
   status: ProjectStatus;
   repository_full_name: string | null;
@@ -54,6 +55,7 @@ export function normalizePortfolioRows(
     return {
       id: row.id,
       displayName: row.display_name,
+      slug: row.slug,
       summary: row.summary ?? undefined,
       status: row.status,
       repositoryFullName: row.repository_full_name ?? undefined,
@@ -123,19 +125,21 @@ export async function loadPortfolioOverview(
   }
 
   try {
-    const pool = getDatabasePool(source);
-    const [projectResult, repositoryResult] = await Promise.all([
-      pool.query<PortfolioOverviewRow>(
+    const client = await getDatabasePool(source).connect();
+    try {
+      await client.query("begin isolation level repeatable read read only");
+      const projectResult = await client.query<PortfolioOverviewRow>(
         `select
            p.id,
            p.display_name,
+           p.slug,
            p.summary,
            p.status,
            r.full_name as repository_full_name,
            r.html_url as repository_html_url,
            dp.planned_pr_total,
-           count(ppr.id) filter (where ppr.status = 'merged') as completed_count,
-           count(ppr.id) filter (where ppr.status = 'in-progress') as in_progress_count
+           count(ppr.id) filter (where gpr.merged_at is not null) as completed_count,
+           count(ppr.id) filter (where gpr.state = 'open' and gpr.merged_at is null) as in_progress_count
          from projects p
          left join project_repositories pr
            on pr.project_id = p.id
@@ -147,6 +151,8 @@ export async function loadPortfolioOverview(
           and dp.status = 'approved'
          left join planned_pull_requests ppr
            on ppr.development_plan_id = dp.id
+         left join github_pull_requests gpr
+           on gpr.repository_id = ppr.repository_id and gpr.number = ppr.github_pr_number
          group by
            p.id,
            p.display_name,
@@ -159,16 +165,16 @@ export async function loadPortfolioOverview(
          order by
            case when p.slug = 'engine-room' then 0 else 1 end,
            p.display_name`
-      ),
-      pool.query<PortfolioRepositoryRow>(
+      );
+      const repositoryResult = await client.query<PortfolioRepositoryRow>(
         `select
            p.id as project_id,
            r.id as repository_id,
            r.full_name,
            r.html_url,
            count(ppr.id) as planned_count,
-           count(ppr.id) filter (where ppr.status = 'merged') as completed_count,
-           count(ppr.id) filter (where ppr.status = 'in-progress') as in_progress_count
+           count(ppr.id) filter (where gpr.merged_at is not null) as completed_count,
+           count(ppr.id) filter (where gpr.state = 'open' and gpr.merged_at is null) as in_progress_count
          from projects p
          join development_plans dp
            on dp.project_id = p.id
@@ -177,6 +183,8 @@ export async function loadPortfolioOverview(
            on ppr.development_plan_id = dp.id
          join repositories r
            on r.id = ppr.repository_id
+         left join github_pull_requests gpr
+           on gpr.repository_id = ppr.repository_id and gpr.number = ppr.github_pr_number
          group by
            p.id,
            r.id,
@@ -185,19 +193,22 @@ export async function loadPortfolioOverview(
          order by
            p.id,
            r.full_name`
-      )
-    ]);
+      );
 
     const projects = attachRepositoryProgress(
       normalizePortfolioRows(projectResult.rows),
       repositoryResult.rows
     );
 
-    return {
+    const overview: PortfolioOverviewData = {
       source: "database",
       projects,
       statistics: calculatePortfolioStatistics(projects)
     };
+    await client.query("commit");
+    return overview;
+    } catch (error) { await client.query("rollback"); throw error; }
+    finally { client.release(); }
   } catch {
     return emptyOverview("error");
   }

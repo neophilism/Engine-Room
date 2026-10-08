@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useId, useState } from "react";
+import Link from "next/link";
+import { projectDashboardHref } from "../../lib/domain/project-dashboard";
 import type { PortfolioProjectOverview } from "../../lib/domain/portfolio-overview";
 import { GlassTube } from "../machine";
 import { ProjectAccordions } from "./project-accordions";
@@ -52,7 +54,7 @@ export function ProjectProgressStack({
             ▶
           </span>
         </button>
-        <strong>{project.displayName}</strong>
+        <strong><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>
         <span className="count">
           {project.completed}/{project.planned} PRs
         </span>
