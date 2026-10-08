@@ -8,6 +8,7 @@ import { loadPortfolioOverview } from "../../lib/server/portfolio-overview";
 import { loadProjectDashboard } from "../../lib/server/project-dashboard";
 import { registerProjectFeatures } from "../../lib/server/project-features";
 import { persistDevelopmentActivity } from "../../lib/server/development-activity";
+import { registerProjectRisk, setProjectReleaseTarget, recordProjectReleaseEvidence } from "../../lib/server/project-readiness";
 
 const url = process.env.ENGINE_ROOM_TEST_DATABASE_URL;
 const source = { NODE_ENV: "test", DATABASE_URL: url };
@@ -65,5 +66,17 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     expect(data.activities?.filter((record) => record.kind === "workflow")).toHaveLength(1);
     expect(data.activities?.filter((record) => record.kind === "pull-request")).toHaveLength(3);
     expect(data.progress?.completed).toBe(1);
+  });
+  it("persists risks and target-scoped release evidence without declaring incomplete work ready", async () => {
+    const data = await loadProjectDashboard("database-fixture", source), projectId = data.project!.id;
+    const target = { commitSha: "a".repeat(40), environment: "production" };
+    await setProjectReleaseTarget(projectId, target);
+    await registerProjectRisk(projectId, { key: "launch-risk", title: "Open launch blocker", severity: "high", blocking: true, state: "open" });
+    await recordProjectReleaseEvidence(projectId, { ...target, gate: "tests", status: "passed", evidenceUrl: "https://example.org/test-evidence", observedAt: new Date(Date.now() - 1000).toISOString(), expiresAt: new Date(Date.now() + 60_000).toISOString() });
+    const updated = await loadProjectDashboard("database-fixture", source);
+    expect(updated.readiness?.status).toBe("blocked");
+    expect(updated.readiness?.gates.find((gate) => gate.gate === "tests")?.status).toBe("passed");
+    expect(updated.readiness?.gates.find((gate) => gate.gate === "deployment")?.status).toBe("unknown");
+    expect(updated.readiness?.risks[0].title).toBe("Open launch blocker");
   });
 });
