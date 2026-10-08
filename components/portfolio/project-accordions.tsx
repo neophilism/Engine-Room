@@ -6,7 +6,7 @@ export function ProjectAccordions({
 }: {
   project: PortfolioProjectOverview;
 }) {
-  const repositoryCount = project.repositories.length || 1;
+  const repositoryCount = project.repositories.length || (project.repositoryFullName ? 1 : 0);
 
   return (
     <div className="project-accordions">

@@ -90,6 +90,7 @@ export function ProjectProgressStack({
         id={drawerId}
         className={`project-expansion-drawer${expanded ? " open" : ""}`}
         aria-hidden={!expanded}
+        inert={!expanded}
       >
         <div className="project-expansion-inner">
           <ProjectAccordions project={project} />
