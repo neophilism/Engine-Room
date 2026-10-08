@@ -1,4 +1,5 @@
 import type { ProjectStatus } from "../domain/portfolio";
+import { classifyProjectPullRequests, type PortfolioPrActivityRow } from "../domain/repository-pr-activity";
 import type {
   PortfolioOverviewData,
   PortfolioProjectOverview,
@@ -102,6 +103,25 @@ export function attachRepositoryProgress(
 }
 
 
+
+export function attachRepositoryActivity(
+  projects: readonly PortfolioProjectOverview[],
+  rows: readonly PortfolioPrActivityRow[]
+): PortfolioProjectOverview[] {
+  const byProject = new Map(rows.map(row => [row.project_id, row]));
+  return projects.map(project => {
+    const row = byProject.get(project.id);
+    if (!row) return project;
+    const classification = classifyProjectPullRequests(row, project.planned);
+    return {
+      ...project,
+      repositoryActivity: classification.observed,
+      ...(classification.additional ? { additionalActivity: classification.additional } : {}),
+      roadmapMappingComplete: classification.mappingComplete
+    };
+  });
+}
+
 function emptyOverview(
   source: PortfolioOverviewData["source"]
 ): PortfolioOverviewData {
@@ -196,10 +216,48 @@ export async function loadPortfolioOverview(
            r.full_name`
       );
 
+
+      const activityResult = await client.query<PortfolioPrActivityRow>(
+        `with observed as (
+           select association.project_id, gpr.state, gpr.merged_at, gpr.last_synced_at,
+             exists (
+               select 1
+               from development_plans plan
+               join planned_pull_requests mapped on mapped.development_plan_id = plan.id
+               where plan.project_id = association.project_id
+                 and plan.status = 'approved'
+                 and mapped.repository_id = gpr.repository_id
+                 and mapped.github_pr_number = gpr.number
+             ) as belongs_to_roadmap
+           from project_repositories association
+           join github_pull_requests gpr on gpr.repository_id = association.repository_id
+         )
+         select observed.project_id,
+           count(*)::integer as total_count,
+           count(*) filter (where observed.merged_at is not null)::integer as merged_count,
+           count(*) filter (where observed.state = 'open' and observed.merged_at is null)::integer as open_count,
+           count(*) filter (where observed.state = 'closed' and observed.merged_at is null)::integer as closed_unmerged_count,
+           count(*) filter (where not observed.belongs_to_roadmap)::integer as additional_total_count,
+           count(*) filter (where not observed.belongs_to_roadmap and observed.merged_at is not null)::integer as additional_merged_count,
+           count(*) filter (where not observed.belongs_to_roadmap and observed.state = 'open' and observed.merged_at is null)::integer as additional_open_count,
+           count(*) filter (where not observed.belongs_to_roadmap and observed.state = 'closed' and observed.merged_at is null)::integer as additional_closed_unmerged_count,
+           max(observed.last_synced_at) as latest_observation,
+           (select count(*)::integer
+            from development_plans plan
+            join planned_pull_requests mapped on mapped.development_plan_id = plan.id
+            where plan.project_id = observed.project_id
+              and plan.status = 'approved'
+              and mapped.repository_id is not null
+              and mapped.github_pr_number is not null) as mapped_units
+         from observed
+         group by observed.project_id`
+      );
+
     let projects = attachRepositoryProgress(
       normalizePortfolioRows(projectResult.rows),
       repositoryResult.rows
     );
+    projects = attachRepositoryActivity(projects, activityResult.rows);
     const features = await loadCurrentFeatures(client);
     projects = projects.map((project) => ({ ...project, features: features.filter((feature) => feature.projectId === project.id) }));
 

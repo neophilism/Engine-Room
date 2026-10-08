@@ -1,3 +1,4 @@
+import type { PullRequestCounts, RepositoryPrActivity } from "./repository-pr-activity";
 import type { ProjectStatus } from "./portfolio";
 import type { ProjectFeature } from "./project-features";
 
@@ -24,6 +25,11 @@ export type PortfolioProjectOverview = {
   planned: number;
   percent: number;
   repositories: PortfolioRepositoryProgress[];
+  /** Every GitHub PR observed for the linked repositories. */
+  repositoryActivity?: RepositoryPrActivity;
+  /** PRs excluded from fully-mapped approved roadmap units. */
+  additionalActivity?: PullRequestCounts;
+  roadmapMappingComplete?: boolean;
   features?: ProjectFeature[];
 };
 
