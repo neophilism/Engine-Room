@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 18 — Stacked repository progress tubes and PR-count labels**
+**PR 19 — Project expansion control and animated drawer**
 
-This milestone expands each portfolio project into repository-level roadmap progress. Multi-repository projects now render one live glass tube per repository with merged/planned PR labels and completion percentages, while preserving aggregate project totals.
+This milestone turns each project disclosure control into a keyboard-operable right-arrow/down-arrow expander with an animated detail drawer. Repository progress tubes remain continuously visible; the drawer adds lifecycle, repository, underway-PR, and remaining-PR detail without changing roadmap calculations. Global reduced-motion rules remove the transition automatically.
 
-Target post-merge progress: **18 / 40 planned PRs = 45%**.
+Target post-merge progress: **19 / 40 planned PRs = 47.5%**.
 
 Quality gates:
 
