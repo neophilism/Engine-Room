@@ -840,3 +840,88 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
     margin-left: 0;
   }
 }
+
+.project-accordions {
+  display: grid;
+  gap: 8px;
+  margin: 10px 0 0 46px;
+}
+
+.project-accordion {
+  border: 1px solid rgba(227, 174, 88, .18);
+  border-radius: var(--er-radius-sm);
+  background: rgba(6, 20, 21, .38);
+  overflow: hidden;
+}
+
+.project-accordion summary {
+  position: relative;
+  padding: 11px 38px 11px 13px;
+  color: var(--brass-hi);
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: .04em;
+  list-style: none;
+}
+
+.project-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.project-accordion summary::after {
+  content: "+";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--teal);
+  font-size: 1rem;
+}
+
+.project-accordion[open] summary::after {
+  content: "−";
+}
+
+.project-accordion-body {
+  padding: 0 13px 13px;
+  color: var(--muted);
+}
+
+.project-accordion-body p {
+  margin: 4px 0 0;
+}
+
+.project-at-a-glance {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 4px 0 0;
+}
+
+.project-at-a-glance div {
+  min-width: 0;
+}
+
+.project-at-a-glance dt {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .62rem;
+}
+
+.project-at-a-glance dd {
+  margin: 5px 0 0;
+  color: var(--text);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 760px) {
+  .project-accordions {
+    margin-left: 0;
+  }
+
+  .project-at-a-glance {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
