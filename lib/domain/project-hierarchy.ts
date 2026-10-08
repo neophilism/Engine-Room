@@ -22,7 +22,7 @@ export type ProjectHierarchyIdentity = {
 export function hierarchyProjectKey(project: ProjectHierarchyIdentity): string {
   const repository = project.repositoryFullName?.split("/").pop();
   return (repository ?? project.slug ?? project.displayName)
-    .trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    .trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 
 export function parentEngineKey(project: ProjectHierarchyIdentity): string | undefined {
