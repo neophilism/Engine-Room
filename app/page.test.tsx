@@ -1,8 +1,10 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { PortfolioHome } from "../components/portfolio/portfolio-home";
 import type { PortfolioOverviewData } from "../lib/domain/portfolio-overview";
+
+vi.mock("next/navigation", () => ({ useRouter: () => ({ refresh: vi.fn() }) }));
 
 const overview: PortfolioOverviewData = {
   source: "database",
