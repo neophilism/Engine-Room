@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { PortfolioHome } from "./page";
+import { PortfolioHome } from "../components/portfolio/portfolio-home";
 import type { PortfolioOverviewData } from "../lib/server/portfolio-overview";
 
 const overview: PortfolioOverviewData = {
