@@ -1,11 +1,11 @@
 import React from "react";
-import { DashboardPage } from "../../components/dashboard-page";
+import { ControlConsole } from "../../components/settings/control-console";
 
 export default function SettingsPage() {
-  return <DashboardPage
-    eyebrow="Master Controls"
-    title="Settings & Automation"
-    description="Configure integrations, project registration, progress rules, notifications, permissions, and retention."
-    signals={["Integrations", "Automation rules", "Permissions", "Audit history"]}
-  />;
+  return <main className="content">
+    <header className="hero"><p className="eyebrow">Master Controls</p><h1>Settings &amp; Automation</h1>
+      <p>Inspect configured integrations, manage versioned automation policy, manually reconcile GitHub projects, and review audit history.</p>
+    </header>
+    <ControlConsole />
+  </main>;
 }
