@@ -22,6 +22,22 @@ export type GitHubInstallationRepositoriesResponse = {
   repositories: GitHubRepositoryPayload[];
 };
 
+export type GitHubPullRequestPayload = {
+  id: number;
+  number: number;
+  title: string;
+  state: "open" | "closed";
+  draft: boolean;
+  html_url: string;
+  created_at: string;
+  updated_at: string;
+  closed_at: string | null;
+  merged_at: string | null;
+  user: {
+    login: string;
+  } | null;
+};
+
 export type DiscoveredRepository = {
   githubRepositoryId: number;
   ownerLogin: string;
@@ -31,4 +47,19 @@ export type DiscoveredRepository = {
   defaultBranch: string;
   visibility: "public" | "private" | "internal";
   archived: boolean;
+};
+
+export type SynchronizedPullRequest = {
+  githubPullRequestId: number;
+  repositoryFullName: string;
+  number: number;
+  title: string;
+  state: "open" | "closed";
+  draft: boolean;
+  htmlUrl: string;
+  authorLogin?: string;
+  createdAt: string;
+  updatedAt: string;
+  closedAt?: string;
+  mergedAt?: string;
 };
