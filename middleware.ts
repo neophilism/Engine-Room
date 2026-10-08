@@ -10,6 +10,7 @@ export const config={
  matcher:["/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)"]
 };
 const pages=new Set(["/login","/setup","/register"]);
+const adminOnly=["/finance","/users","/operations","/releases","/alerts","/settings","/api/admin"];
 const apis=new Set(["/api/health","/api/ready","/api/auth/login","/api/auth/bootstrap","/api/auth/register","/api/github/webhook","/api/telemetry"]);
 export async function middleware(request:NextRequest){
  const path=request.nextUrl.pathname;
@@ -27,6 +28,10 @@ export async function middleware(request:NextRequest){
   const url=new URL("/login",request.url);
   url.searchParams.set("next",path+request.nextUrl.search);
   return NextResponse.redirect(url);
+ }
+ if(user.role!=="admin" && adminOnly.some(prefix=>path===prefix||path.startsWith(prefix+"/"))){
+  if(path.startsWith("/api/"))return NextResponse.json({error:"Administrator required"},{status:403});
+  return NextResponse.redirect(new URL("/account",request.url));
  }
  const res=NextResponse.next();
  res.headers.set("Cache-Control","private, no-store");
