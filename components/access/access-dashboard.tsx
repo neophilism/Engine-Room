@@ -1,5 +1,7 @@
 "use client";
 
+import { orderProjectsByHierarchy, projectNameIndent } from "../../lib/domain/project-hierarchy";
+
 import React, { useState } from "react";
 import Link from "next/link";
 import { accessFreshness, principalStatuses, summarizeAccess, type AccessOverview } from "../../lib/domain/access";
@@ -7,14 +9,14 @@ import { BrassPanel } from "../machine";
 
 export function AccessDashboard({ overview, evaluatedAt }: { overview: AccessOverview; evaluatedAt: string }) {
   const [query, setQuery] = useState(""), [projectId, setProjectId] = useState("all"), [status, setStatus] = useState("all"), [environment, setEnvironment] = useState("production");
-  const projects = [...new Map(overview.principals.map((record) => [record.projectId, record.projectName])).entries()].sort((a,b) => a[1].localeCompare(b[1]));
+  const projects = orderProjectsByHierarchy([...new Map(overview.principals.map((record) => [record.projectId, { id: record.projectId, slug: record.projectSlug, displayName: record.projectName }])).values()]);
   const environments = [...new Set(["production", ...overview.principals.map((record) => record.environment)])].sort();
   const terms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
   const principals = overview.principals.filter((record) => record.environment === environment && (projectId === "all" || record.projectId === projectId) && (status === "all" || record.status === status) && terms.every((term) => [record.displayName, record.principalId, record.organizationName ?? "", ...record.roles].join(" ").toLowerCase().includes(term)));
   const summary = summarizeAccess(principals, new Date(evaluatedAt));
   return <BrassPanel title="Users & Access" eyebrow="Recorded identities and grants">
     <div className="incident-controls"><label className="activity-filter">Search identities<input type="search" value={query} onChange={(event) => setQuery(event.target.value)} /></label>
-      <label className="activity-filter">Access project<select value={projectId} onChange={(event) => setProjectId(event.target.value)}><option value="all">All projects</option>{projects.map(([id,name]) => <option key={id} value={id}>{name}</option>)}</select></label>
+      <label className="activity-filter">Access project<select value={projectId} onChange={(event) => setProjectId(event.target.value)}><option value="all">All projects</option>{projects.map((project) => <option key={project.id} value={project.id}>{projectNameIndent(project, projects) > 0 ? "\u2003" : ""}{project.displayName}</option>)}</select></label>
       <label className="activity-filter">Identity status<select value={status} onChange={(event) => setStatus(event.target.value)}><option value="all">All states</option>{principalStatuses.map((value) => <option key={value}>{value}</option>)}</select></label>
       <label className="activity-filter">Access environment<select value={environment} onChange={(event) => setEnvironment(event.target.value)}>{environments.map((value) => <option key={value}>{value}</option>)}</select></label></div>
     {overview.source === "database" && <p>{summary.active} active grants · {summary.privileged} privileged · {summary.services} service identities · {summary.mfaDisabled} people with MFA disabled · {summary.mfaUnknown} MFA unknown · {summary.stale} stale or unknown observations</p>}

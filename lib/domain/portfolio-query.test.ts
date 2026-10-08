@@ -23,6 +23,14 @@ describe("portfolio queries", () => {
     expect(queryPortfolio(projects, { ...defaultPortfolioQuery, sort: "completion-asc" }).map((p) => p.id)).toEqual(["b", "engine", "a"]);
     expect(queryPortfolio(projects, { ...defaultPortfolioQuery, sort: "underway" })[0].id).toBe("engine");
   });
+  it("keeps children under the engine in name and numeric sort orders", () => {
+    const parent = { ...projects[0], id: "parent", slug: "civic-registry-transparency-engine", displayName: "Civic Registry Transparency Engine", planned: 10, completed: 1, percent: 10 };
+    const child = { ...projects[1], id: "child", slug: "smart-cities-surveillance-registry", displayName: "Smart Cities Surveillance Registry", repositoryFullName: "neophilism/Smart-Cities-Surveillance-Registry", planned: 10, completed: 9, percent: 90 };
+    const mixed = [child, projects[2], parent];
+    expect(queryPortfolio(mixed, defaultPortfolioQuery).map(p => p.id)).toEqual(["b", "parent", "child"]);
+    expect(queryPortfolio(mixed, { ...defaultPortfolioQuery, sort: "completion-desc" }).map(p => p.id)).toEqual(["parent", "child", "b"]);
+    expect(queryPortfolio(mixed, { ...defaultPortfolioQuery, search: "Surveillance" }).map(p => p.id)).toEqual(["child"]);
+  });
   it("only builds GitHub links from valid repository coordinates", () => {
     expect(githubRepositoryUrl("neophilism/Engine-Room")).toBe("https://github.com/neophilism/Engine-Room");
     for (const value of [undefined, "javascript:alert(1)", "https://evil.test/path", "owner/repo?redirect=x", "../x/y"]) expect(githubRepositoryUrl(value)).toBeUndefined();

@@ -1,5 +1,7 @@
 "use client";
 
+import { projectNameIndent } from "../../lib/domain/project-hierarchy";
+
 import React from "react";
 import type { ProjectStatus } from "../../lib/domain/portfolio";
 import type { PortfolioProjectOverview } from "../../lib/domain/portfolio-overview";
@@ -20,7 +22,7 @@ export function LifecycleLanes({ projects, selectedStatus, onSelect }: {
         <span>{lane.label}</span><strong>{lane.projects.length}</strong>
       </button>
       <p>{lane.description}</p>
-      {lane.projects.length > 0 ? <ul>{lane.projects.map((project) => <li key={project.id}>{project.displayName}</li>)}</ul> : <span className="lifecycle-empty">No projects</span>}
+      {lane.projects.length > 0 ? <ul>{lane.projects.map((project) => <li key={project.id}><span className={projectNameIndent(project, lane.projects) > 0 ? "project-name-indent" : undefined}>{project.displayName}</span></li>)}</ul> : <span className="lifecycle-empty">No projects</span>}
     </article>)}
   </section>;
 }

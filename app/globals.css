@@ -1026,3 +1026,6 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 .access-findings li[data-severity="medium"] { border-color: var(--er-status-warning); }
 .access-findings p { margin: 0; }
 @media (max-width: 900px) { .access-analytics-grid { grid-template-columns: 1fr; } }
+
+/* Hierarchy tabs only the name glyphs, never the progress/metric columns. */
+.project-name-indent { display: inline-block; padding-inline-start: 1.15rem; }
