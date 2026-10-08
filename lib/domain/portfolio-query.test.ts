@@ -25,7 +25,7 @@ describe("portfolio queries", () => {
   });
   it("keeps children under the engine in name and numeric sort orders", () => {
     const parent = { ...projects[0], id: "parent", slug: "civic-registry-transparency-engine", displayName: "Civic Registry Transparency Engine", planned: 10, completed: 1, percent: 10 };
-    const child = { ...projects[1], id: "child", slug: "smart-cities-surveillance-registry", displayName: "Smart Cities Surveillance Registry", planned: 10, completed: 9, percent: 90 };
+    const child = { ...projects[1], id: "child", slug: "smart-cities-surveillance-registry", displayName: "Smart Cities Surveillance Registry", repositoryFullName: "neophilism/Smart-Cities-Surveillance-Registry", planned: 10, completed: 9, percent: 90 };
     const mixed = [child, projects[2], parent];
     expect(queryPortfolio(mixed, defaultPortfolioQuery).map(p => p.id)).toEqual(["b", "parent", "child"]);
     expect(queryPortfolio(mixed, { ...defaultPortfolioQuery, sort: "completion-desc" }).map(p => p.id)).toEqual(["parent", "child", "b"]);
