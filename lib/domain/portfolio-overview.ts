@@ -13,6 +13,7 @@ export type PortfolioRepositoryProgress = {
 export type PortfolioProjectOverview = {
   id: string;
   displayName: string;
+  slug?: string;
   summary?: string;
   status: ProjectStatus;
   repositoryFullName?: string;

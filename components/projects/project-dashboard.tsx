@@ -1,0 +1,47 @@
+import React from "react";
+import Link from "next/link";
+import type { ProjectDashboardData } from "../../lib/domain/project-dashboard";
+import { lifecycleStages } from "../../lib/domain/lifecycle-lanes";
+import { githubRepositoryUrl } from "../../lib/domain/portfolio-query";
+import { BrassPanel, GlassTube, IndicatorLamp } from "../machine";
+
+export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
+  const project = data.project;
+  if (!project) return <main className="content"><header className="hero"><h1>Project data unavailable</h1>
+    <p>{data.source === "unconfigured" ? "Connect portfolio data to load project dashboards." : "The project could not be loaded. Try refreshing."}</p></header><Link href="/projects">← Projects</Link></main>;
+  const stage = lifecycleStages[project.status];
+  const unmapped = data.graph?.plannedPullRequests.filter((pr) => !pr.repositoryId || !pr.githubPrNumber).length ?? 0;
+  return <main className="content">
+    <header className="hero"><p className="eyebrow">Project intelligence</p><h1>{project.displayName}</h1><p>{project.summary || "No project summary has been registered yet."}</p>
+      <Link href="/projects">← Compare projects</Link></header>
+    <div className="project-dashboard-grid">
+      <BrassPanel title="Approved roadmap" status={<IndicatorLamp state={stage.state} label={stage.label} />}>
+        {data.progress && data.graph ? <>
+          <p>Plan version {data.graph.plan.version} · {data.progress.completed}/{data.progress.planned} approved PRs merged</p>
+          <GlassTube label={`${project.displayName} approved roadmap progress`} value={data.progress.completed} max={data.progress.planned} showScale
+            state={data.progress.completed === data.progress.planned ? "complete" : "active"} />
+          <p>{data.progress.percent}% complete · {data.progress.remaining} PRs remaining</p>
+          <p className="portfolio-calculation-note">{unmapped} roadmap PRs await a GitHub mapping.</p>
+        </> : <p>No approved development plan has been registered.</p>}
+      </BrassPanel>
+      <BrassPanel title="Repositories"><ul className="project-repository-links">{data.repositories.map((repository) => <li key={repository.id}>
+        {githubRepositoryUrl(repository.fullName) ? <a href={githubRepositoryUrl(repository.fullName)} target="_blank" rel="noopener noreferrer">{repository.fullName} ↗</a> : repository.fullName}
+        <span>{repository.visibility} · {repository.defaultBranch}{repository.archived ? " · archived" : ""}</span>
+      </li>)}</ul>{data.repositories.length === 0 && <p>No repositories are linked yet.</p>}</BrassPanel>
+    </div>
+    <BrassPanel title="Milestones" eyebrow="Current approved plan">
+      {data.graph ? <ol className="project-milestones">{data.graph.milestones.map((milestone) => {
+        const progress = data.milestones.find((row) => row.milestoneId === milestone.id)!;
+        const state = progress.status === "blocked" ? "blocked" : progress.status === "complete" ? "complete" : progress.status === "active" ? "active" : "neutral";
+        return <li key={milestone.id}><div><IndicatorLamp label={progress.status} state={state} size="small" /><strong>{milestone.name}</strong>
+          <span>{progress.completed}/{progress.planned} PRs · {progress.status}</span></div>
+          {progress.planned > 0 && <GlassTube label={`${milestone.name} milestone progress`} value={progress.completed} max={progress.planned} state={state} />}</li>;
+      })}</ol> : <p>Milestones appear after a development plan is approved.</p>}
+    </BrassPanel>
+    {data.graph && <BrassPanel title="Roadmap work" eyebrow="Mapped units only advance completion">
+      <ol className="project-roadmap-work">{data.graph.plannedPullRequests.map((pr) => <li key={pr.id}>
+        <span>#{pr.ordinal}</span><strong>{pr.title}</strong><span>{pr.status}</span><span>{pr.githubPrNumber ? `GitHub PR #${pr.githubPrNumber}` : "Mapping pending"}</span>
+      </li>)}</ol>
+    </BrassPanel>}
+  </main>;
+}

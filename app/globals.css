@@ -647,6 +647,18 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 
 .portfolio-total-machine { margin-bottom: 22px; }
 .comparison-table-scroll { max-width: 100%; overflow-x: auto; border-radius: var(--er-radius-sm); }
+.project-dashboard-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.project-dashboard-grid .machine-panel { margin-bottom: 18px; }
+.project-repository-links, .project-milestones, .project-roadmap-work { list-style: none; padding: 0; }
+.project-repository-links li { display: grid; gap: 6px; margin-bottom: 16px; overflow-wrap: anywhere; }
+.project-repository-links span { font-size: .78rem; color: var(--muted); }
+.project-repository-links a, .project-progress-heading strong a { color: var(--brass-hi); text-underline-offset: 3px; }
+.project-milestones li { margin-bottom: 18px; }
+.project-milestones li > div { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }
+.project-milestones li > div > span:last-child { margin-left: auto; font-size: .8rem; color: var(--muted); }
+.project-roadmap-work li { display: grid; grid-template-columns: 40px minmax(0, 1fr) 100px 140px; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--er-border-metal); overflow-wrap: anywhere; font-size: .82rem; }
+.project-page-refresh { padding: 0 30px; }
+@media (max-width: 760px) { .project-dashboard-grid { grid-template-columns: minmax(0, 1fr); } .project-roadmap-work li { grid-template-columns: 30px minmax(0, 1fr); } }
 .lifecycle-lanes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 24px; }
 .lifecycle-lane { min-width: 0; padding: 12px; border: 1px solid var(--er-border-metal); border-radius: var(--er-radius-md); background: var(--er-surface-2); }
 .lifecycle-stage-control { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; width: 100%; min-height: 44px; padding: 6px; border: 1px solid transparent; border-radius: var(--er-radius-sm); background: transparent; color: var(--text); font: inherit; text-align: left; cursor: pointer; }

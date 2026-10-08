@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 24 — Lifecycle lanes and stage lights**
+**PR 25 — Individual project dashboards**
 
-Eight live lifecycle cards show stage counts, projects, and mechanical indicator lamps. Stage controls filter the comparison table without confusing roadmap completion with production deployment.
+Projects now have live dashboards for their approved plan, milestones, repositories, and roadmap work. Portfolio counts resolve mapped PRs against real GitHub merge timestamps. Database-backed query regressions run against an isolated PostgreSQL service in CI.
 
-Target post-merge progress: **24 / 40 planned PRs = 60%**.
+Target post-merge progress: **25 / 40 planned PRs = 62.5%**.
 
 Quality gates:
 
