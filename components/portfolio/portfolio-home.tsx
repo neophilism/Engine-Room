@@ -12,6 +12,7 @@ import { PortfolioProgressMachine } from "./portfolio-progress-machine";
 import type { PortfolioOverviewData } from "../../lib/domain/portfolio-overview";
 import type { RenderReadout } from "../../lib/domain/render-deployments";
 import { RenderServiceReadouts } from "./render-service-readouts";
+import { GitHubSourceReadout } from "./github-source-readout";
 import { PlatformMetrics } from "./platform-metrics";
 
 function sourceLabel(source: PortfolioOverviewData["source"]) {
@@ -61,6 +62,7 @@ export function PortfolioHome({
         </article>
       </section>
 
+      <GitHubSourceReadout />
       <PortfolioProgressMachine projects={projects} />
       <RenderServiceReadouts services={renderServices} />
       <PlatformMetrics />
