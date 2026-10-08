@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 30 — Releases dashboard and pipeline machine**
+**PR 31 — Alerts and incidents dashboard**
 
-Immutable release targets move through controlled, audited delivery states. The Releases dashboard renders responsive pipeline machines, while replay protection and source evidence guard approval, live, and rollback transitions.
+Source-scoped incidents move through audited acknowledgement, containment, resolution, and reopening. Response notes, source timestamps, replay protection, and state preconditions preserve a trustworthy incident history.
 
-Target post-merge progress: **30 / 40 planned PRs = 75%**.
+Target post-merge progress: **31 / 40 planned PRs = 77.5%**.
 
 Quality gates:
 

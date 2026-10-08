@@ -1,11 +1,9 @@
 import React from "react";
-import { DashboardPage } from "../../components/dashboard-page";
+import { IncidentsDashboard } from "../../components/operations/incidents-dashboard";
+import { PortfolioRefresh } from "../../components/portfolio/portfolio-refresh";
+import { loadIncidentsOverview } from "../../lib/server/incidents";
 
-export default function AlertsPage() {
-  return <DashboardPage
-    eyebrow="Mission Control"
-    title="Alerts & Incidents"
-    description="Triage live alerts, incidents, escalations, acknowledgement, and resolution across every project."
-    signals={["Live alerts", "Severity", "Escalation", "Resolution"]}
-  />;
+export const dynamic = "force-dynamic";
+export default async function AlertsPage() {
+  return <main className="content"><header className="hero"><p className="eyebrow">Mission Control</p><h1>Alerts &amp; Incidents</h1><p>Follow measured incidents through acknowledgement, containment, and resolution.</p></header><PortfolioRefresh /><IncidentsDashboard overview={await loadIncidentsOverview()} /></main>;
 }
