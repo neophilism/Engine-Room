@@ -1,4 +1,4 @@
-import { createPublicKey, generateKeyPairSync, verify } from "node:crypto";
+import { generateKeyPairSync, verify } from "node:crypto";
 import { describe, expect, it } from "vitest";
 import type { GitHubAppConfig } from "../config/env";
 import { createGitHubAppJwt } from "./app";
@@ -31,7 +31,7 @@ describe("GitHub App authentication", () => {
       verify(
         "RSA-SHA256",
         Buffer.from(`${header}.${payload}`),
-        createPublicKey(publicKey),
+        publicKey,
         Buffer.from(signature, "base64url")
       )
     ).toBe(true);
