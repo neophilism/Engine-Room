@@ -647,6 +647,10 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 
 .portfolio-total-machine { margin-bottom: 22px; }
 .comparison-table-scroll { max-width: 100%; overflow-x: auto; border-radius: var(--er-radius-sm); }
+.release-pipeline-record { margin: 22px 0; padding: 18px; background: var(--er-surface-2); border: 1px solid var(--er-border-metal); border-radius: var(--er-radius-md); }
+.release-pipeline-record > header { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 18px; overflow-wrap: anywhere; }
+.release-pipeline-record > header a { color: var(--brass-hi); text-underline-offset: 3px; }
+.release-pipeline-record > header > span { color: var(--muted); font-size: .8rem; }
 .operational-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
 .operational-summary > div { display: grid; gap: 8px; padding: 16px; border: 1px solid var(--er-border-metal); border-radius: var(--er-radius-md); background: var(--er-surface-2); }
 .operational-summary span { color: var(--muted); font-size: .8rem; text-transform: capitalize; }

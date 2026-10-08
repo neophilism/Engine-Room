@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 29 — Operations and Performance dashboard**
+**PR 30 — Releases dashboard and pipeline machine**
 
-Current operational measurements now show availability, latency, throughput, errors, CPU, and memory by environment. Source identity, freshness, and explicit unknown readings prevent missing or stale telemetry from appearing healthy.
+Immutable release targets move through controlled, audited delivery states. The Releases dashboard renders responsive pipeline machines, while replay protection and source evidence guard approval, live, and rollback transitions.
 
-Target post-merge progress: **29 / 40 planned PRs = 72.5%**.
+Target post-merge progress: **30 / 40 planned PRs = 75%**.
 
 Quality gates:
 
