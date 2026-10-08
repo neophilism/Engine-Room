@@ -648,6 +648,14 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 .portfolio-total-machine { margin-bottom: 22px; }
 .comparison-table-scroll { max-width: 100%; overflow-x: auto; border-radius: var(--er-radius-sm); }
 .project-dashboard-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.activity-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; color: var(--muted); font-size: .85rem; }
+.activity-filter select { min-height: 44px; background: var(--er-surface-2); color: var(--text); border: 1px solid var(--er-border-metal); border-radius: var(--er-radius-sm); padding: 8px; font: inherit; }
+.development-activity-list { list-style: none; padding: 0; }
+.development-activity-list li { display: grid; grid-template-columns: 90px minmax(0, 1fr) 160px; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--er-border-metal); overflow-wrap: anywhere; }
+.development-activity-list a { color: var(--brass-hi); text-underline-offset: 3px; }
+.development-activity-list p, .development-activity-list time, .activity-kind { color: var(--muted); font-size: .75rem; }
+.development-activity-list p { margin: 6px 0 0; }
+@media (max-width: 760px) { .development-activity-list li { grid-template-columns: 70px minmax(0, 1fr); } .development-activity-list time { grid-column: 2; } }
 .project-feature-groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .project-feature-groups section { min-width: 0; border: 1px solid var(--er-border-metal); border-radius: var(--er-radius-sm); padding: 12px; }
 .project-feature-groups h3 { font-size: .95rem; color: var(--brass-hi); margin: 0 0 12px; }
