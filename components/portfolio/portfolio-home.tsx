@@ -2,10 +2,10 @@ import React from "react";
 import {
   BrassPanel,
   FlowStation,
-  GlassTube,
   IndicatorLamp,
   MachineFlow
 } from "../machine";
+import { ProjectProgressStack } from "./project-progress-stack";
 import type { PortfolioOverviewData } from "../../lib/server/portfolio-overview";
 
 function sourceLabel(source: PortfolioOverviewData["source"]) {
@@ -65,37 +65,9 @@ export function PortfolioHome({
       >
         {projects.length > 0 ? (
           <div className="project-list">
-            {projects.map((project) => {
-              const state =
-                project.planned > 0 && project.completed === project.planned
-                  ? "complete"
-                  : project.inProgress > 0
-                    ? "active"
-                    : "live";
-
-              return (
-                <article className="project-row" key={project.id}>
-                  <button
-                    className="disclosure"
-                    aria-label={`Expand ${project.displayName}`}
-                  >
-                    ▶
-                  </button>
-                  <strong>{project.displayName}</strong>
-                  <GlassTube
-                    value={project.completed}
-                    max={Math.max(project.planned, 1)}
-                    label={`${project.displayName} roadmap progress`}
-                    state={state}
-                    showScale
-                  />
-                  <span className="count">
-                    {project.completed}/{project.planned} PRs
-                  </span>
-                  <span className="percentage">{project.percent}%</span>
-                </article>
-              );
-            })}
+            {projects.map((project) => (
+              <ProjectProgressStack project={project} key={project.id} />
+            ))}
           </div>
         ) : (
           <div className="portfolio-empty-state">
@@ -116,8 +88,8 @@ export function PortfolioHome({
             />
             <FlowStation
               eyebrow="02"
-              title="Planned PRs"
-              detail="Roadmap work units."
+              title="Repository Stacks"
+              detail="Split roadmap work by repository."
             />
             <FlowStation
               eyebrow="03"
