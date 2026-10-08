@@ -1,6 +1,6 @@
 {
   "name": "engine-room",
-  "version": "0.1.0",
+  "version": "1.0.0-rc.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,7 +12,9 @@
     "test:browser": "playwright test",
     "check": "npm run typecheck && npm run lint && npm run test:migrations && npm run test && npm run build",
     "migrate": "node scripts/migrate.mjs",
-    "test:migrations": "node scripts/test-migration-files.mjs"
+    "test:migrations": "node scripts/test-migration-files.mjs",
+    "sync:github": "node scripts/sync-github.mjs",
+    "verify:production": "node scripts/verify-production.mjs"
   },
   "dependencies": {
     "next": "^15.5.4",
