@@ -1013,3 +1013,8 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 .incident-controls { display: flex; flex-wrap: wrap; gap: 12px; }
 .telemetry-feed-list { list-style: none; padding: 0; display: grid; gap: 12px; }
 .telemetry-feed-list li { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; overflow-wrap: anywhere; }
+.financial-flow { margin: 20px 0; }
+.financial-drivers { list-style: none; padding: 0; display: grid; gap: 12px; }
+.financial-drivers li { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+.financial-driver-track { grid-column: 1 / -1; height: 10px; border-radius: 5px; background: var(--er-surface-2); overflow: hidden; }
+.financial-driver-track > span { display: block; height: 100%; background: var(--brass-hi); }
