@@ -1,5 +1,6 @@
-import { orderProjectsByHierarchy, projectNameIndent } from "../../lib/domain/project-hierarchy";
 "use client";
+
+import { orderProjectsByHierarchy, projectNameIndent } from "../../lib/domain/project-hierarchy";
 
 import React, { useEffect, useState } from "react";
 import type { RenderReadout, PublicSiteObservation } from "../../lib/domain/render-deployments";
