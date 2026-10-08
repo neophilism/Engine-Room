@@ -10,6 +10,8 @@ import { PortfolioBrowser } from "./portfolio-browser";
 import { PortfolioRefresh } from "./portfolio-refresh";
 import { PortfolioProgressMachine } from "./portfolio-progress-machine";
 import type { PortfolioOverviewData } from "../../lib/domain/portfolio-overview";
+import type { RenderReadout } from "../../lib/domain/render-deployments";
+import { RenderServiceReadouts } from "./render-service-readouts";
 
 function sourceLabel(source: PortfolioOverviewData["source"]) {
   if (source === "database") return "Live portfolio data";
@@ -18,9 +20,11 @@ function sourceLabel(source: PortfolioOverviewData["source"]) {
 }
 
 export function PortfolioHome({
-  overview
+  overview,
+  renderServices = []
 }: {
   overview: PortfolioOverviewData;
+  renderServices?: readonly RenderReadout[];
 }) {
   const { projects, statistics } = overview;
 
@@ -57,6 +61,7 @@ export function PortfolioHome({
       </section>
 
       <PortfolioProgressMachine projects={projects} />
+      <RenderServiceReadouts services={renderServices} />
       <PortfolioRefresh />
 
       <BrassPanel
