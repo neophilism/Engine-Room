@@ -3,6 +3,7 @@
 import React, { useId, useState } from "react";
 import type { PortfolioProjectOverview } from "../../lib/domain/portfolio-overview";
 import { GlassTube } from "../machine";
+import { ProjectAccordions } from "./project-accordions";
 
 function progressState(completed: number, inProgress: number, planned: number) {
   if (planned > 0 && completed === planned) return "complete" as const;
@@ -89,26 +90,10 @@ export function ProjectProgressStack({
         id={drawerId}
         className={`project-expansion-drawer${expanded ? " open" : ""}`}
         aria-hidden={!expanded}
+        inert={!expanded}
       >
         <div className="project-expansion-inner">
-          <dl className="project-expansion-facts">
-            <div>
-              <dt>Lifecycle</dt>
-              <dd>{project.status}</dd>
-            </div>
-            <div>
-              <dt>Repositories</dt>
-              <dd>{project.repositories.length || 1}</dd>
-            </div>
-            <div>
-              <dt>PRs underway</dt>
-              <dd>{project.inProgress}</dd>
-            </div>
-            <div>
-              <dt>PRs remaining</dt>
-              <dd>{Math.max(project.planned - project.completed, 0)}</dd>
-            </div>
-          </dl>
+          <ProjectAccordions project={project} />
         </div>
       </div>
     </article>

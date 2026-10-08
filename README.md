@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 19 — Project expansion control and animated drawer**
+**PR 20 — Summary / Features / At a Glance accordions**
 
-This milestone turns each project disclosure control into a keyboard-operable right-arrow/down-arrow expander with an animated detail drawer. Repository progress tubes remain continuously visible; the drawer adds lifecycle, repository, underway-PR, and remaining-PR detail without changing roadmap calculations. Global reduced-motion rules remove the transition automatically.
+This milestone fills the expandable project drawer with three accessible native accordions. Summary uses registered project copy when available, Features explicitly reports when structured feature data is not yet registered, and At a Glance exposes lifecycle, repository count, active PRs, and remaining roadmap work.
 
-Target post-merge progress: **19 / 40 planned PRs = 47.5%**.
+Target post-merge progress: **20 / 40 planned PRs = 50%**.
 
 Quality gates:
 

@@ -51,6 +51,8 @@ describe("ProjectProgressStack", () => {
 
     const button = screen.getByRole("button", { name: "Expand Multi Repo" });
     expect(button).toHaveAttribute("aria-expanded", "false");
+    expect(document.getElementById(button.getAttribute("aria-controls")!))
+      .toHaveAttribute("inert");
     expect(screen.getByText("Lifecycle").closest(".project-expansion-drawer"))
       .toHaveAttribute("aria-hidden", "true");
 
@@ -58,6 +60,8 @@ describe("ProjectProgressStack", () => {
 
     const collapse = screen.getByRole("button", { name: "Collapse Multi Repo" });
     expect(collapse).toHaveAttribute("aria-expanded", "true");
+    expect(document.getElementById(collapse.getAttribute("aria-controls")!))
+      .not.toHaveAttribute("inert");
     expect(screen.getByText("Lifecycle").closest(".project-expansion-drawer"))
       .toHaveAttribute("aria-hidden", "false");
     expect(screen.getByText("active-development")).toBeInTheDocument();

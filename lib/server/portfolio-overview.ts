@@ -18,6 +18,7 @@ import { getDatabasePool } from "./database";
 export type PortfolioOverviewRow = {
   id: string;
   display_name: string;
+  summary?: string | null;
   status: ProjectStatus;
   repository_full_name: string | null;
   repository_html_url: string | null;
@@ -52,6 +53,7 @@ export function normalizePortfolioRows(
     return {
       id: row.id,
       displayName: row.display_name,
+      summary: row.summary ?? undefined,
       status: row.status,
       repositoryFullName: row.repository_full_name ?? undefined,
       repositoryUrl: row.repository_html_url ?? undefined,
@@ -154,6 +156,7 @@ export async function loadPortfolioOverview(
         `select
            p.id,
            p.display_name,
+           p.summary,
            p.status,
            r.full_name as repository_full_name,
            r.html_url as repository_html_url,
@@ -174,6 +177,7 @@ export async function loadPortfolioOverview(
          group by
            p.id,
            p.display_name,
+           p.summary,
            p.status,
            p.slug,
            r.full_name,
