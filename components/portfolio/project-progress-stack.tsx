@@ -1,5 +1,7 @@
-import React from "react";
-import type { PortfolioProjectOverview } from "../../lib/server/portfolio-overview";
+"use client";
+
+import React, { useId, useState } from "react";
+import type { PortfolioProjectOverview } from "../../lib/domain/portfolio-overview";
 import { GlassTube } from "../machine";
 
 function progressState(completed: number, inProgress: number, planned: number) {
@@ -13,6 +15,8 @@ export function ProjectProgressStack({
 }: {
   project: PortfolioProjectOverview;
 }) {
+  const [expanded, setExpanded] = useState(false);
+  const drawerId = useId();
   const repositories =
     project.repositories.length > 0
       ? project.repositories
@@ -33,9 +37,18 @@ export function ProjectProgressStack({
       <header className="project-progress-heading">
         <button
           className="disclosure"
-          aria-label={`Expand ${project.displayName}`}
+          aria-label={`${expanded ? "Collapse" : "Expand"} ${project.displayName}`}
+          aria-expanded={expanded}
+          aria-controls={drawerId}
+          onClick={() => setExpanded((current) => !current)}
+          type="button"
         >
-          ▶
+          <span
+            className={`disclosure-arrow${expanded ? " expanded" : ""}`}
+            aria-hidden="true"
+          >
+            ▶
+          </span>
         </button>
         <strong>{project.displayName}</strong>
         <span className="count">
@@ -70,6 +83,33 @@ export function ProjectProgressStack({
             <span className="repository-percent">{repository.percent}%</span>
           </div>
         ))}
+      </div>
+
+      <div
+        id={drawerId}
+        className={`project-expansion-drawer${expanded ? " open" : ""}`}
+        aria-hidden={!expanded}
+      >
+        <div className="project-expansion-inner">
+          <dl className="project-expansion-facts">
+            <div>
+              <dt>Lifecycle</dt>
+              <dd>{project.status}</dd>
+            </div>
+            <div>
+              <dt>Repositories</dt>
+              <dd>{project.repositories.length || 1}</dd>
+            </div>
+            <div>
+              <dt>PRs underway</dt>
+              <dd>{project.inProgress}</dd>
+            </div>
+            <div>
+              <dt>PRs remaining</dt>
+              <dd>{Math.max(project.planned - project.completed, 0)}</dd>
+            </div>
+          </dl>
+        </div>
       </div>
     </article>
   );

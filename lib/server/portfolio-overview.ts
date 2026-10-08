@@ -1,43 +1,19 @@
 import type { ProjectStatus } from "../domain/portfolio";
+import type {
+  PortfolioOverviewData,
+  PortfolioProjectOverview,
+  PortfolioRepositoryProgress,
+  PortfolioStatistics
+} from "../domain/portfolio-overview";
+
+export type {
+  PortfolioOverviewData,
+  PortfolioProjectOverview,
+  PortfolioRepositoryProgress,
+  PortfolioStatistics
+} from "../domain/portfolio-overview";
 import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
 import { getDatabasePool } from "./database";
-
-export type PortfolioRepositoryProgress = {
-  id: string;
-  fullName: string;
-  htmlUrl: string;
-  completed: number;
-  inProgress: number;
-  planned: number;
-  percent: number;
-};
-
-export type PortfolioProjectOverview = {
-  id: string;
-  displayName: string;
-  status: ProjectStatus;
-  repositoryFullName?: string;
-  repositoryUrl?: string;
-  completed: number;
-  inProgress: number;
-  planned: number;
-  percent: number;
-  repositories: PortfolioRepositoryProgress[];
-};
-
-export type PortfolioStatistics = {
-  projects: number;
-  activeProjects: number;
-  completedRoadmapPrs: number;
-  plannedRoadmapPrs: number;
-  percent: number;
-};
-
-export type PortfolioOverviewData = {
-  source: "database" | "unconfigured" | "error";
-  projects: PortfolioProjectOverview[];
-  statistics: PortfolioStatistics;
-};
 
 export type PortfolioOverviewRow = {
   id: string;

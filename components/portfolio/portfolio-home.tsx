@@ -6,7 +6,7 @@ import {
   MachineFlow
 } from "../machine";
 import { ProjectProgressStack } from "./project-progress-stack";
-import type { PortfolioOverviewData } from "../../lib/server/portfolio-overview";
+import type { PortfolioOverviewData } from "../../lib/domain/portfolio-overview";
 
 function sourceLabel(source: PortfolioOverviewData["source"]) {
   if (source === "database") return "Live portfolio data";
