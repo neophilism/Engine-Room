@@ -65,6 +65,27 @@ describe("portfolio home", () => {
     expect(names[0]).toHaveTextContent("Engine Room");
   });
 
+  it("never reports zero percent for a repository with no approved plan", () => {
+    const unscored: PortfolioOverviewData = {
+      source: "database",
+      projects: [{
+        id: "discovered", displayName: "Discovered Repository", status: "planned",
+        repositoryFullName: "neophilism/Discovered",
+        repositoryUrl: "https://github.com/neophilism/Discovered",
+        planned: 0, completed: 0, inProgress: 0, percent: 0, repositories: []
+      }],
+      statistics: {
+        projects: 1, activeProjects: 0,
+        completedRoadmapPrs: 0, plannedRoadmapPrs: 0, percent: 0
+      }
+    };
+    render(<PortfolioHome overview={unscored} />);
+    expect(screen.getAllByText("Not measured").length).toBeGreaterThan(0);
+    expect(screen.getByText("Approved plan not mapped")).toBeInTheDocument();
+    expect(screen.queryByText("0/0 PRs")).not.toBeInTheDocument();
+    expect(screen.queryByText("0%")).not.toBeInTheDocument();
+  });
+
   it("shows a truthful empty state instead of static demo projects", () => {
     render(
       <PortfolioHome

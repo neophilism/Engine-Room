@@ -21,8 +21,12 @@ export function queryPortfolio(projects: readonly PortfolioProjectOverview[], qu
       if (engineFirst !== 0) return engineFirst;
     }
     const nameOrder = a.displayName.localeCompare(b.displayName) || a.id.localeCompare(b.id);
-    if (query.sort === "completion-desc") return b.percent - a.percent || nameOrder;
-    if (query.sort === "completion-asc") return a.percent - b.percent || nameOrder;
+    if (query.sort === "completion-desc" || query.sort === "completion-asc") {
+      // Unknown roadmaps are neither 0% complete nor 100% complete.
+      if ((a.planned > 0) !== (b.planned > 0)) return a.planned > 0 ? -1 : 1;
+      if (query.sort === "completion-desc") return b.percent - a.percent || nameOrder;
+      return a.percent - b.percent || nameOrder;
+    }
     if (query.sort === "underway") return b.inProgress - a.inProgress || nameOrder;
     return nameOrder;
   });

@@ -45,18 +45,18 @@ export function PortfolioHome({
           <strong>{statistics.projects}</strong>
         </article>
         <article className="portfolio-stat">
-          <span>Active systems</span>
+          <span>Projects in active stages</span>
           <strong>{statistics.activeProjects}</strong>
         </article>
         <article className="portfolio-stat">
           <span>Roadmap PRs merged</span>
           <strong>
-            {statistics.completedRoadmapPrs}/{statistics.plannedRoadmapPrs}
+            {statistics.plannedRoadmapPrs > 0 ? `${statistics.completedRoadmapPrs}/${statistics.plannedRoadmapPrs}` : "Not measured"}
           </strong>
         </article>
         <article className="portfolio-stat">
           <span>Portfolio completion</span>
-          <strong>{statistics.percent}%</strong>
+          <strong>{statistics.plannedRoadmapPrs > 0 ? `${statistics.percent}%` : "Not measured"}</strong>
         </article>
       </section>
 
