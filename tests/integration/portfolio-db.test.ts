@@ -7,6 +7,7 @@ import { registerApprovedProject } from "../../lib/server/project-registration";
 import { loadPortfolioOverview } from "../../lib/server/portfolio-overview";
 import { loadProjectDashboard } from "../../lib/server/project-dashboard";
 import { registerProjectFeatures } from "../../lib/server/project-features";
+import { persistDevelopmentActivity } from "../../lib/server/development-activity";
 
 const url = process.env.ENGINE_ROOM_TEST_DATABASE_URL;
 const source = { NODE_ENV: "test", DATABASE_URL: url };
@@ -54,5 +55,15 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     expect(updated.features).toHaveLength(3);
     expect((await loadPortfolioOverview(source)).projects[0].features).toHaveLength(3);
     await expect(registerProjectFeatures(planId, [{ key: "bad", title: "Wrong plan ordinal", plannedPrOrdinals: [999] }])).rejects.toThrow("outside this approved plan");
+  });
+  it("combines PR activity with idempotent commit/issue/review/workflow records", async () => {
+    const pool = getDatabasePool(source);
+    const activity = { repositoryFullName: "test/core", kind: "workflow" as const, externalId: "run-1", title: "CI", url: "https://github.com/test/core/actions/runs/1", occurredAt: "2026-10-08T00:00:00Z", state: "completed", conclusion: "success" };
+    const client = await pool.connect();
+    try { await persistDevelopmentActivity(client, [activity]); await persistDevelopmentActivity(client, [activity]); } finally { client.release(); }
+    const data = await loadProjectDashboard("database-fixture", source);
+    expect(data.activities?.filter((record) => record.kind === "workflow")).toHaveLength(1);
+    expect(data.activities?.filter((record) => record.kind === "pull-request")).toHaveLength(3);
+    expect(data.progress?.completed).toBe(1);
   });
 });

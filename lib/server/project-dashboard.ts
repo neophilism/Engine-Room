@@ -5,6 +5,7 @@ import type { ProjectDashboardData } from "../domain/project-dashboard";
 import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
 import { getDatabasePool } from "./database";
 import { loadCurrentFeatures } from "./project-features";
+import { loadProjectActivity } from "./development-activity";
 
 type ProjectRow = { id: string; slug: string; display_name: string; summary: string | null; status: Project["status"] };
 type RepositoryRow = { id: string; github_repository_id: string | number; owner_login: string; name: string; full_name: string; html_url: string; default_branch: string; visibility: Repository["visibility"]; archived: boolean };
@@ -61,6 +62,7 @@ export async function loadProjectDashboard(slug: string, source: EnvironmentSour
       }
       const dashboard = normalizeProjectDashboard(project, repositories.rows, plan, milestones, plannedPrs);
       dashboard.features = await loadCurrentFeatures(client, project.id);
+      dashboard.activities = await loadProjectActivity(client, project.id);
       await client.query("commit");
       return dashboard;
     } catch (error) { await client.query("rollback"); throw error; }

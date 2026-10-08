@@ -2,6 +2,7 @@ import type { DevelopmentPlanGraph, Project, Repository, RoadmapProgress } from 
 import type { MilestoneProgress } from "./milestone-lifecycle";
 import type { PortfolioOverviewData } from "./portfolio-overview";
 import type { ProjectFeature } from "./project-features";
+import type { DevelopmentActivity } from "./development-activity";
 
 export type ProjectDashboardData = {
   source: PortfolioOverviewData["source"];
@@ -11,6 +12,7 @@ export type ProjectDashboardData = {
   progress?: RoadmapProgress;
   milestones: MilestoneProgress[];
   features?: ProjectFeature[];
+  activities?: DevelopmentActivity[];
 };
 
 export function projectDashboardHref(project: { id: string; slug?: string }) {

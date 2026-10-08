@@ -5,6 +5,7 @@ import { lifecycleStages } from "../../lib/domain/lifecycle-lanes";
 import { githubRepositoryUrl } from "../../lib/domain/portfolio-query";
 import { BrassPanel, GlassTube, IndicatorLamp } from "../machine";
 import { ProjectFeatures } from "./project-features";
+import { DevelopmentActivityTimeline } from "./development-activity";
 
 export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
   const project = data.project;
@@ -31,6 +32,7 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
       </li>)}</ul>{data.repositories.length === 0 && <p>No repositories are linked yet.</p>}</BrassPanel>
     </div>
     <BrassPanel title="Features" eyebrow="Delivery against linked approved work"><ProjectFeatures features={data.features ?? []} /></BrassPanel>
+    <BrassPanel title="Development activity" eyebrow="GitHub source records"><DevelopmentActivityTimeline activities={data.activities ?? []} /></BrassPanel>
     <BrassPanel title="Milestones" eyebrow="Current approved plan">
       {data.graph ? <ol className="project-milestones">{data.graph.milestones.map((milestone) => {
         const progress = data.milestones.find((row) => row.milestoneId === milestone.id)!;

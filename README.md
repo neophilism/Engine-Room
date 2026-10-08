@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 26 — Structured feature tracking**
+**PR 27 — Development activity timelines**
 
-Explicit approved-plan feature records are grouped as implemented, underway, or remaining from linked roadmap PR merge evidence. Features appear on individual dashboards, Home accordions, and search; repeated registrations are idempotent and cross-plan links are rejected.
+Project dashboards now show filterable GitHub PR, commit, issue, review, and workflow activity. Provider adapters and idempotent persistence collect bounded recent activity without allowing unrelated events to inflate roadmap progress.
 
-Target post-merge progress: **26 / 40 planned PRs = 65%**.
+Target post-merge progress: **27 / 40 planned PRs = 67.5%**.
 
 Quality gates:
 
