@@ -647,6 +647,15 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 
 .portfolio-total-machine { margin-bottom: 22px; }
 .comparison-table-scroll { max-width: 100%; overflow-x: auto; border-radius: var(--er-radius-sm); }
+.lifecycle-lanes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 24px; }
+.lifecycle-lane { min-width: 0; padding: 12px; border: 1px solid var(--er-border-metal); border-radius: var(--er-radius-md); background: var(--er-surface-2); }
+.lifecycle-stage-control { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; width: 100%; min-height: 44px; padding: 6px; border: 1px solid transparent; border-radius: var(--er-radius-sm); background: transparent; color: var(--text); font: inherit; text-align: left; cursor: pointer; }
+.lifecycle-stage-control[aria-pressed="true"] { border-color: var(--brass-hi); background: rgba(227, 174, 88, .1); }
+.lifecycle-stage-control strong { margin-left: auto; font: 700 1.5rem var(--er-font-instrument); color: var(--brass-hi); }
+.lifecycle-lane p, .lifecycle-empty { font-size: .75rem; color: var(--muted); line-height: 1.5; }
+.lifecycle-lane ul { padding-left: 18px; font-size: .8rem; overflow-wrap: anywhere; }
+@media (max-width: 1100px) { .lifecycle-lanes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .lifecycle-lanes { grid-template-columns: minmax(0, 1fr); } }
 .comparison-table { width: 100%; border-collapse: collapse; min-width: 760px; font-size: .86rem; }
 .comparison-table caption { text-align: left; color: var(--muted); padding: 12px 0; }
 .comparison-table th, .comparison-table td { text-align: left; vertical-align: middle; padding: 14px 12px; border-bottom: 1px solid var(--er-border-metal); }

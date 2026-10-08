@@ -5,11 +5,13 @@ import type { PortfolioOverviewData } from "../../lib/domain/portfolio-overview"
 import { defaultPortfolioQuery, githubRepositoryUrl, queryPortfolio } from "../../lib/domain/portfolio-query";
 import { BrassPanel, GlassTube } from "../machine";
 import { PortfolioControls } from "../portfolio/portfolio-controls";
+import { LifecycleLanes } from "./lifecycle-lanes";
 
 export function ProjectComparison({ overview }: { overview: PortfolioOverviewData }) {
   const [query, setQuery] = useState(defaultPortfolioQuery);
   const visible = queryPortfolio(overview.projects, query);
   return <BrassPanel title="Project comparison" eyebrow="Approved roadmap work">
+    <LifecycleLanes projects={overview.projects} selectedStatus={query.status} onSelect={(status) => setQuery({ ...query, status })} />
     <PortfolioControls query={query} onChange={setQuery} />
     <p className="portfolio-result-count" aria-live="polite">Showing {visible.length} of {overview.projects.length} projects</p>
     {visible.length > 0 ? <div className="comparison-table-scroll" tabIndex={0} role="region" aria-label="Scrollable project comparison">
