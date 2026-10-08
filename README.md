@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 25 — Individual project dashboards**
+**PR 26 — Structured feature tracking**
 
-Projects now have live dashboards for their approved plan, milestones, repositories, and roadmap work. Portfolio counts resolve mapped PRs against real GitHub merge timestamps. Database-backed query regressions run against an isolated PostgreSQL service in CI.
+Explicit approved-plan feature records are grouped as implemented, underway, or remaining from linked roadmap PR merge evidence. Features appear on individual dashboards, Home accordions, and search; repeated registrations are idempotent and cross-plan links are rejected.
 
-Target post-merge progress: **25 / 40 planned PRs = 62.5%**.
+Target post-merge progress: **26 / 40 planned PRs = 65%**.
 
 Quality gates:
 

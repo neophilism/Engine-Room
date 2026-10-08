@@ -1,5 +1,6 @@
 import React from "react";
 import type { PortfolioProjectOverview } from "../../lib/domain/portfolio-overview";
+import { ProjectFeatures } from "../projects/project-features";
 
 export function ProjectAccordions({
   project
@@ -23,9 +24,7 @@ export function ProjectAccordions({
       <details className="project-accordion">
         <summary>Features</summary>
         <div className="project-accordion-body">
-          <p>
-            No structured feature records have been registered for this project yet.
-          </p>
+          <ProjectFeatures features={project.features ?? []} />
         </div>
       </details>
 

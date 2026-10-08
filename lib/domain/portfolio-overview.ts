@@ -1,4 +1,5 @@
 import type { ProjectStatus } from "./portfolio";
+import type { ProjectFeature } from "./project-features";
 
 export type PortfolioRepositoryProgress = {
   id: string;
@@ -23,6 +24,7 @@ export type PortfolioProjectOverview = {
   planned: number;
   percent: number;
   repositories: PortfolioRepositoryProgress[];
+  features?: ProjectFeature[];
 };
 
 export type PortfolioStatistics = {

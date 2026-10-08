@@ -648,6 +648,14 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 .portfolio-total-machine { margin-bottom: 22px; }
 .comparison-table-scroll { max-width: 100%; overflow-x: auto; border-radius: var(--er-radius-sm); }
 .project-dashboard-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.project-feature-groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.project-feature-groups section { min-width: 0; border: 1px solid var(--er-border-metal); border-radius: var(--er-radius-sm); padding: 12px; }
+.project-feature-groups h3 { font-size: .95rem; color: var(--brass-hi); margin: 0 0 12px; }
+.project-feature-groups h3 span { color: var(--teal); margin-left: 8px; }
+.project-feature-groups ul { padding-left: 16px; }
+.project-feature-groups li { margin-bottom: 14px; overflow-wrap: anywhere; }
+.project-feature-groups p, .project-feature-groups small { color: var(--muted); font-size: .8rem; }
+@media (max-width: 900px) { .project-feature-groups { grid-template-columns: minmax(0, 1fr); } }
 .project-dashboard-grid .machine-panel { margin-bottom: 18px; }
 .project-repository-links, .project-milestones, .project-roadmap-work { list-style: none; padding: 0; }
 .project-repository-links li { display: grid; gap: 6px; margin-bottom: 16px; overflow-wrap: anywhere; }

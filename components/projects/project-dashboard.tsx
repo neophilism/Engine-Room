@@ -4,6 +4,7 @@ import type { ProjectDashboardData } from "../../lib/domain/project-dashboard";
 import { lifecycleStages } from "../../lib/domain/lifecycle-lanes";
 import { githubRepositoryUrl } from "../../lib/domain/portfolio-query";
 import { BrassPanel, GlassTube, IndicatorLamp } from "../machine";
+import { ProjectFeatures } from "./project-features";
 
 export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
   const project = data.project;
@@ -29,6 +30,7 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
         <span>{repository.visibility} · {repository.defaultBranch}{repository.archived ? " · archived" : ""}</span>
       </li>)}</ul>{data.repositories.length === 0 && <p>No repositories are linked yet.</p>}</BrassPanel>
     </div>
+    <BrassPanel title="Features" eyebrow="Delivery against linked approved work"><ProjectFeatures features={data.features ?? []} /></BrassPanel>
     <BrassPanel title="Milestones" eyebrow="Current approved plan">
       {data.graph ? <ol className="project-milestones">{data.graph.milestones.map((milestone) => {
         const progress = data.milestones.find((row) => row.milestoneId === milestone.id)!;

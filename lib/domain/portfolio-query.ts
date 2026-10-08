@@ -12,7 +12,8 @@ export function queryPortfolio(projects: readonly PortfolioProjectOverview[], qu
   return projects.filter((project) => {
     if (query.status !== "all" && project.status !== query.status) return false;
     const searchable = [project.displayName, project.summary, project.repositoryFullName,
-      ...project.repositories.map((repository) => repository.fullName)].filter(Boolean).join(" ").toLocaleLowerCase();
+      ...project.repositories.map((repository) => repository.fullName),
+      ...(project.features ?? []).flatMap((feature) => [feature.title, feature.description])].filter(Boolean).join(" ").toLocaleLowerCase();
     return terms.every((term) => searchable.includes(term));
   }).sort((a, b) => {
     if (query.sort === "portfolio") {
