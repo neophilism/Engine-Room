@@ -1,3 +1,4 @@
+import { orderProjectsByHierarchy } from "./project-hierarchy";
 import type { MachineState } from "../design/theme";
 import { projectStatuses, type ProjectStatus } from "./portfolio";
 import type { PortfolioProjectOverview } from "./portfolio-overview";
@@ -17,7 +18,6 @@ export function groupLifecycleLanes(projects: readonly PortfolioProjectOverview[
   return projectStatuses.map((status) => ({
     status,
     ...lifecycleStages[status],
-    projects: projects.filter((project) => project.status === status)
-      .sort((a, b) => a.displayName.localeCompare(b.displayName) || a.id.localeCompare(b.id))
+    projects: orderProjectsByHierarchy(projects.filter((project) => project.status === status))
   }));
 }

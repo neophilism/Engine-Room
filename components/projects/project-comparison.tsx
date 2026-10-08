@@ -1,3 +1,4 @@
+import { projectNameIndent } from "../../lib/domain/project-hierarchy";
 "use client";
 
 import React, { useState } from "react";
@@ -22,7 +23,7 @@ export function ProjectComparison({ overview }: { overview: PortfolioOverviewDat
         <thead><tr><th scope="col">Project</th><th scope="col">Lifecycle</th><th scope="col">Repositories</th><th scope="col">Approved PRs</th>
           <th scope="col">Merged</th><th scope="col">Underway</th><th scope="col">Remaining</th><th scope="col">Progress</th></tr></thead>
         <tbody>{visible.map((project) => <tr key={project.id}>
-          <th scope="row"><strong><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>{project.summary && <p>{project.summary}</p>}
+          <th scope="row"><strong className={projectNameIndent(project, visible) > 0 ? "project-name-indent" : undefined}><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>{project.summary && <p>{project.summary}</p>}
             {githubRepositoryUrl(project.repositoryFullName) && <a href={githubRepositoryUrl(project.repositoryFullName)} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}</th>
           <td>{project.status.replaceAll("-", " ")}</td>
           <td>{project.repositories.length || (project.repositoryFullName ? 1 : 0)}</td>

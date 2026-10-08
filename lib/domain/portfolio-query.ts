@@ -1,3 +1,4 @@
+import { orderProjectsByHierarchy } from "./project-hierarchy";
 import type { PortfolioProjectOverview } from "./portfolio-overview";
 import type { ProjectStatus } from "./portfolio";
 
@@ -9,13 +10,14 @@ export const defaultPortfolioQuery: PortfolioQuery = { search: "", status: "all"
 
 export function queryPortfolio(projects: readonly PortfolioProjectOverview[], query: PortfolioQuery) {
   const terms = query.search.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
-  return projects.filter((project) => {
+  const filtered = projects.filter((project) => {
     if (query.status !== "all" && project.status !== query.status) return false;
     const searchable = [project.displayName, project.summary, project.repositoryFullName,
       ...project.repositories.map((repository) => repository.fullName),
       ...(project.features ?? []).flatMap((feature) => [feature.title, feature.description])].filter(Boolean).join(" ").toLocaleLowerCase();
     return terms.every((term) => searchable.includes(term));
-  }).sort((a, b) => {
+  });
+  return orderProjectsByHierarchy(filtered, (a, b) => {
     if (query.sort === "portfolio") {
       const engineFirst = Number(b.repositoryFullName === "neophilism/Engine-Room") - Number(a.repositoryFullName === "neophilism/Engine-Room");
       if (engineFirst !== 0) return engineFirst;

@@ -15,9 +15,11 @@ function progressState(completed: number, inProgress: number, planned: number) {
 }
 
 export function ProjectProgressStack({
-  project
+  project,
+  nameIndent = 0
 }: {
   project: PortfolioProjectOverview;
+  nameIndent?: number;
 }) {
   const [expanded, setExpanded] = useState(false);
   const hasApprovedPlan = project.planned > 0;
@@ -55,7 +57,7 @@ export function ProjectProgressStack({
             ▶
           </span>
         </button>
-        <strong><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>
+        <strong className={nameIndent > 0 ? "project-name-indent" : undefined}><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>
         <span className="count">
           {hasApprovedPlan ? `${project.completed}/${project.planned} PRs` : "Approved plan not mapped"}
         </span>

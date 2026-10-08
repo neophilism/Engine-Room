@@ -1,3 +1,4 @@
+import { orderProjectsByHierarchy, projectNameIndent } from "../../lib/domain/project-hierarchy";
 "use client";
 
 import React, { useState } from "react";
@@ -12,14 +13,14 @@ function format(value: number | undefined, metric: OperationMetric) { return val
 export function OperationsDashboard({ overview, evaluatedAt }: { overview: OperationsOverview; evaluatedAt: string }) {
   const [environment, setEnvironment] = useState("production");
   const environments = [...new Set(["production", ...overview.samples.map((sample) => sample.environment)])].sort();
-  const projects = overview.projects.map((project) => ({ ...project, assessment: assessProjectOperations(project.id, environment, overview.samples, new Date(evaluatedAt)) }));
+  const projects = orderProjectsByHierarchy(overview.projects).map((project) => ({ ...project, assessment: assessProjectOperations(project.id, environment, overview.samples, new Date(evaluatedAt)) }));
   return <BrassPanel title="Operations & Performance" eyebrow="Current measured signals">
     <label className="activity-filter">Environment<select value={environment} onChange={(event) => setEnvironment(event.target.value)}>{environments.map((value) => <option key={value}>{value}</option>)}</select></label>
     <div className="operational-summary" aria-label="Operational summary">{(["nominal", "degraded", "unknown"] as const).map((status) => <div key={status}><span>{status}</span><strong>{projects.filter((project) => project.assessment.health === status).length}</strong></div>)}</div>
     {overview.source === "error" ? <p>Operational data is unavailable. Refresh to try again.</p> : projects.length === 0 ? <p>No projects are connected to operational monitoring yet.</p> :
       <div className="comparison-table-scroll" tabIndex={0} role="region" aria-label="Scrollable operations metrics"><table className="comparison-table">
         <caption>Latest readings by project · {environment}</caption><thead><tr><th scope="col">Project</th><th scope="col">Signal state</th>{operationMetrics.map((metric) => <th key={metric} scope="col">{metricLabels[metric]}</th>)}</tr></thead>
-        <tbody>{projects.map(({ assessment, ...project }) => <tr key={project.id}><th scope="row"><Link href={projectDashboardHref(project)}>{project.displayName}</Link></th>
+        <tbody>{projects.map(({ assessment, ...project }) => <tr key={project.id}><th scope="row"><Link className={projectNameIndent(project, projects) > 0 ? "project-name-indent" : undefined} href={projectDashboardHref(project)}>{project.displayName}</Link></th>
           <td><IndicatorLamp label={assessment.health} state={assessment.health === "nominal" ? "live" : assessment.health === "degraded" ? "warning" : "neutral"} /></td>
           {operationMetrics.map((metric) => <td key={metric}><strong>{format(assessment.readings[metric].value, metric)}</strong><small className="metric-freshness">{assessment.readings[metric].freshness}{assessment.readings[metric].source ? ` · ${assessment.readings[metric].source}` : ""}</small></td>)}</tr>)}</tbody>
       </table></div>}

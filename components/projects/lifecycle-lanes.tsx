@@ -1,3 +1,4 @@
+import { projectNameIndent } from "../../lib/domain/project-hierarchy";
 "use client";
 
 import React from "react";
@@ -20,7 +21,7 @@ export function LifecycleLanes({ projects, selectedStatus, onSelect }: {
         <span>{lane.label}</span><strong>{lane.projects.length}</strong>
       </button>
       <p>{lane.description}</p>
-      {lane.projects.length > 0 ? <ul>{lane.projects.map((project) => <li key={project.id}>{project.displayName}</li>)}</ul> : <span className="lifecycle-empty">No projects</span>}
+      {lane.projects.length > 0 ? <ul>{lane.projects.map((project) => <li key={project.id}><span className={projectNameIndent(project, lane.projects) > 0 ? "project-name-indent" : undefined}>{project.displayName}</span></li>)}</ul> : <span className="lifecycle-empty">No projects</span>}
     </article>)}
   </section>;
 }
