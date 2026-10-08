@@ -32,7 +32,7 @@ export function PlatformMetrics() {
       <div className="portfolio-stat"><span>Episodes</span><strong>{metrics ? metrics.episodeCount : "Unverified"}</strong></div>
       <div className="portfolio-stat"><span>Hours of source episodes</span><strong>{metrics ? metrics.totalHours : "Unverified"}</strong></div>
     </div>
-    <p className="metric-freshness" role="status">
+    <p className="metric-freshness" aria-live="polite">
       {metrics && observation ? `From Fireside Chat API · checked ${observation.observedAt.slice(0,16).replace("T"," ")} UTC` : "Public archive feed not yet verified. No values are inferred."}
       {" "}Episode hours measure published content duration, not individual visitor listening time.
     </p>
