@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 import type { CSSProperties } from "react";
 import type { MachineState } from "../../lib/design/theme";
 import { clamp, machineStateStyle, rangePercent } from "./utils";
+import { useMachineState } from "./machine-context";
 
 type GaugeProps = {
   value: number;
@@ -20,10 +23,11 @@ export function Gauge({
   max,
   label,
   unit = "",
-  state = "live",
+  state: explicitState,
   precision = 0,
   className
 }: GaugeProps) {
+  const state = useMachineState(explicitState);
   const bounded = clamp(value, min, max);
   const percent = rangePercent(bounded, min, max);
   const angle = -120 + (percent / 100) * 240;
@@ -61,3 +65,4 @@ export function Gauge({
     </div>
   );
 }
+

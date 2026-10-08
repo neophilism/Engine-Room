@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 import type { CSSProperties } from "react";
 import type { MachineState } from "../../lib/design/theme";
 import { machineStateStyle } from "./utils";
+import { useMachineState } from "./machine-context";
 
 export type PipeShape = "horizontal" | "vertical" | "elbow-ne" | "elbow-se" | "elbow-sw" | "elbow-nw";
 
@@ -21,7 +24,8 @@ const paths: Record<PipeShape, string> = {
   "elbow-nw": "M100 50 H50 Q25 50 25 25 V0"
 };
 
-export function Pipe({ shape = "horizontal", state = "neutral", label, className }: PipeProps) {
+export function Pipe({ shape = "horizontal", state: explicitState, label, className }: PipeProps) {
+  const state = useMachineState(explicitState, "neutral");
   return (
     <svg
       className={["machine-pipe", `machine-pipe-${shape}`, className].filter(Boolean).join(" ")}
@@ -36,7 +40,9 @@ export function Pipe({ shape = "horizontal", state = "neutral", label, className
       <path className="machine-pipe-shadow" d={paths[shape]} />
       <path className="machine-pipe-metal" d={paths[shape]} />
       <path className="machine-pipe-core" d={paths[shape]} />
+      <path className="machine-pipe-flow" d={paths[shape]} pathLength={100} />
       <path className="machine-pipe-highlight" d={paths[shape]} />
     </svg>
   );
 }
+

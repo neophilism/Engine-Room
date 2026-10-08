@@ -20,4 +20,5 @@ Pipes are used when a relationship exists, not as generic ornament. Structural c
 The portfolio overview now exercises the system with a real roadmap signal path:
 Approved Plan → Planned PRs → Merge Events → Machine State.
 
-PR 8 adds motion and state transitions on top of this layout system.
+PR 8 adds motion and state transitions on top of this layout system; see `machine-animation.md` for state inheritance, pause controls, and reduced-motion behavior.
+

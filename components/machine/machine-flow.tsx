@@ -1,6 +1,10 @@
+"use client";
+
 import React, { Children, type ReactNode } from "react";
 import { Pipe } from "./pipe";
 import type { MachineState } from "../../lib/design/theme";
+import { useMachineState } from "./machine-context";
+import { machineStateStyle } from "./utils";
 
 type MachineFlowProps = {
   label: string;
@@ -9,7 +13,8 @@ type MachineFlowProps = {
   className?: string;
 };
 
-export function MachineFlow({ label, children, state = "live", className }: MachineFlowProps) {
+export function MachineFlow({ label, children, state: explicitState, className }: MachineFlowProps) {
+  const state = useMachineState(explicitState);
   const nodes = Children.toArray(children);
 
   return (
@@ -18,6 +23,7 @@ export function MachineFlow({ label, children, state = "live", className }: Mach
       role="group"
       aria-label={label}
       data-flow-count={nodes.length}
+      data-state={state}
     >
       {nodes.map((node, index) => (
         <React.Fragment key={index}>
@@ -39,11 +45,13 @@ type FlowStationProps = {
   title: string;
   detail?: string;
   children?: ReactNode;
+  state?: MachineState;
 };
 
-export function FlowStation({ eyebrow, title, detail, children }: FlowStationProps) {
+export function FlowStation({ eyebrow, title, detail, children, state: explicitState }: FlowStationProps) {
+  const state = useMachineState(explicitState, "neutral");
   return (
-    <section className="machine-flow-station" aria-label={title}>
+    <section className="machine-flow-station" aria-label={title} data-state={state} style={machineStateStyle(state)}>
       {eyebrow && <span className="machine-engraved-label">{eyebrow}</span>}
       <strong>{title}</strong>
       {detail && <small>{detail}</small>}
@@ -51,3 +59,4 @@ export function FlowStation({ eyebrow, title, detail, children }: FlowStationPro
     </section>
   );
 }
+

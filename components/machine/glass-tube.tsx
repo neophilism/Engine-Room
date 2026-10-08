@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 import type { CSSProperties } from "react";
 import type { MachineState } from "../../lib/design/theme";
 import { machineStateStyle, rangePercent } from "./utils";
+import { useMachineState } from "./machine-context";
 
 type GlassTubeProps = {
   value: number;
@@ -19,11 +22,12 @@ export function GlassTube({
   min = 0,
   max,
   label,
-  state = "live",
+  state: explicitState,
   size = "standard",
   showScale = false,
   className
 }: GlassTubeProps) {
+  const state = useMachineState(explicitState);
   const percent = rangePercent(value, min, max);
   const style = {
     ...machineStateStyle(state),
@@ -62,3 +66,4 @@ export function GlassTube({
     </div>
   );
 }
+

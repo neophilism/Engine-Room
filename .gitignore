@@ -2,7 +2,11 @@ node_modules
 .next
 out
 coverage
+playwright-report
+test-results
+*.tsbuildinfo
 .env
 .env.local
 .DS_Store
 *.log
+

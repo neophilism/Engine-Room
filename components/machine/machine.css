@@ -17,7 +17,7 @@
 .machine-gauge-ticks{position:absolute;inset:19px;z-index:2}.machine-gauge-ticks span{position:absolute;left:calc(50% - .5px);top:0;width:1px;height:11px;transform-origin:.5px calc(50% + 62px);background:var(--er-ivory-300);opacity:.55}.machine-gauge-needle{position:absolute;z-index:4;left:50%;bottom:50%;width:2px;height:34%;border-radius:99px;background:linear-gradient(180deg,var(--er-brass-200),var(--machine-state-color));transform:translateX(-50%) rotate(var(--gauge-angle));transform-origin:50% 100%}.machine-gauge-hub{position:absolute;z-index:5;left:50%;top:50%;width:18px;height:18px;transform:translate(-50%,-50%);border-radius:50%;background:var(--er-material-brass)}
 .machine-gauge-readout{text-align:center}.machine-gauge-readout strong{display:block;margin-top:2px;color:var(--machine-state-color);font-family:var(--er-font-instrument);font-size:var(--er-text-xl)}
 .machine-valve{display:inline-grid;grid-template-columns:54px auto;align-items:center;gap:12px;min-height:var(--er-control-min);padding:6px 10px 6px 4px;border:1px solid transparent;border-radius:var(--er-radius-md);background:transparent;cursor:pointer}.machine-valve:hover:not(:disabled){border-color:rgba(227,174,88,.25);background:rgba(227,174,88,.045)}.machine-valve:disabled{cursor:not-allowed;opacity:.5}
-.machine-valve-body{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:radial-gradient(circle,#171c1a 0 33%,transparent 34%)}.machine-valve-wheel{position:relative;width:44px;height:44px;border:5px solid var(--er-brass-500);border-radius:50%;box-shadow:inset 0 0 6px rgba(0,0,0,.65),0 4px 10px rgba(0,0,0,.32);transition:transform var(--er-duration-slow) var(--er-ease-valve)}.machine-valve[data-open="true"] .machine-valve-wheel{transform:rotate(45deg)}
+.machine-valve-body{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:radial-gradient(circle,#171c1a 0 33%,transparent 34%)}.machine-valve-wheel{position:relative;width:44px;height:44px;border:5px solid var(--er-brass-500);border-radius:50%;box-shadow:inset 0 0 6px rgba(0,0,0,.65),0 4px 10px rgba(0,0,0,.32)}.machine-valve[data-open="true"] .machine-valve-wheel{transform:rotate(45deg)}
 .machine-valve-spoke{position:absolute;left:50%;top:50%;width:35px;height:3px;transform-origin:0 50%;background:var(--er-material-brass-dark)}.machine-valve-hub{position:absolute;left:50%;top:50%;width:14px;height:14px;transform:translate(-50%,-50%);border-radius:50%;background:var(--er-material-brass)}.machine-valve-label{text-align:left}.machine-valve-label strong{display:block}.machine-valve-label small{color:var(--er-text-secondary);font-family:var(--er-font-instrument)}
 .machine-pipe{--machine-state-color:var(--er-status-neutral);display:block;width:100%;min-height:12px;overflow:visible}.machine-pipe-horizontal{height:24px}.machine-pipe-vertical{width:24px;height:100%;min-height:80px}.machine-pipe-elbow-ne,.machine-pipe-elbow-se,.machine-pipe-elbow-sw,.machine-pipe-elbow-nw{aspect-ratio:1}.machine-pipe path{fill:none;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round}.machine-pipe-shadow{stroke:rgba(0,0,0,.65);stroke-width:16}.machine-pipe-metal{stroke:var(--er-brass-700);stroke-width:13}.machine-pipe-core{stroke:color-mix(in srgb,var(--machine-state-color) 48%,var(--er-brass-800));stroke-width:7}.machine-pipe-highlight{stroke:rgba(255,227,171,.46);stroke-width:2;transform:translateY(-2px)}
 @media(max-width:760px){.machine-panel-header{min-height:64px;padding-inline:16px}.machine-panel-body{padding:16px}.machine-glass-tube{min-width:0}}@media(prefers-reduced-motion:reduce){.machine-valve-wheel{transition:none}}
@@ -33,3 +33,114 @@
 .home-machine-flow{margin-top:22px;padding-top:20px;border-top:1px solid rgba(227,174,88,.16)}
 @media(max-width:1100px){.machine-grid[data-columns="4"],.machine-grid[data-columns="3"]{--machine-grid-columns:2}.machine-flow{display:grid;grid-template-columns:1fr}.machine-flow-node{width:100%}.machine-flow-connector{min-width:0;width:100%;height:54px}.machine-flow-pipe-desktop{display:none}.machine-flow-pipe-mobile{display:block;width:24px;height:54px;min-height:54px}.machine-flow-station{min-width:0;min-height:94px}.machine-manifold{grid-template-columns:minmax(0,1fr) 42px;grid-template-rows:auto 56px auto}.machine-manifold-inputs{grid-column:1;grid-row:1}.machine-manifold-collector{grid-column:2;grid-row:1}.machine-manifold-output-pipe{grid-column:1/-1;grid-row:2;transform:rotate(90deg)}.machine-manifold-output{grid-column:1/-1;grid-row:3;width:100%}}
 @media(max-width:760px){.machine-grid,.machine-grid[data-columns="2"],.machine-grid[data-columns="3"],.machine-grid[data-columns="4"]{--machine-grid-columns:1}.machine-manifold{grid-template-columns:minmax(0,1fr) 34px}.machine-manifold-input-row{grid-template-columns:minmax(0,1fr) 36px}.machine-manifold-input{min-height:58px;padding:9px 10px}}
+
+/* Motion changes instrument surfaces only; PR 7 owns layout and routing. */
+.machine-motion-root { display: contents; }
+.machine-motion-toggle {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--er-control-min);
+  height: var(--er-control-min);
+  padding: 0;
+  border: 1px solid var(--er-border-metal);
+  border-radius: var(--er-radius-sm);
+  background: var(--er-material-smoked-glass);
+  color: var(--er-text-primary);
+  cursor: pointer;
+}
+.machine-motion-toggle[aria-pressed="true"] { border-color: var(--er-accent-light); }
+.machine-state-readout {
+  display: flex;
+  align-items: center;
+  gap: var(--er-space-2);
+  margin-bottom: var(--er-space-4);
+  color: var(--er-text-primary);
+  font-family: var(--er-font-instrument);
+  font-size: var(--er-text-sm);
+}
+.machine-pipe-flow {
+  stroke: var(--machine-state-color);
+  stroke-width: 3;
+  stroke-dasharray: 5 12;
+  opacity: 0;
+}
+.machine-preview-panel { margin-top: var(--er-space-6); }
+.machine-preview-description { margin-top: 0; color: var(--er-text-secondary); }
+.machine-preview-selector {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--er-space-3);
+  margin-bottom: var(--er-space-4);
+}
+.machine-preview-selector select {
+  min-height: var(--er-control-min);
+  padding: var(--er-space-2) var(--er-space-3);
+  color: var(--er-text-primary);
+  background: var(--er-surface-2);
+  border: 1px solid var(--er-border-metal);
+  border-radius: var(--er-radius-sm);
+  font: inherit;
+}
+.machine-preview-tube { display: grid; align-content: center; gap: var(--er-space-3); }
+.machine-preview-tube strong { font-family: var(--er-font-instrument); color: var(--er-text-primary); }
+.machine-gauge:is([data-state="neutral"], [data-state="offline"]) .machine-gauge-readout strong {
+  color: var(--er-text-secondary);
+}
+
+/* Media queries apply before hydration and respond to preference changes live. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-machine-motion="system"] .machine-tube-fill {
+    transition: width var(--er-duration-instrument) var(--er-ease-mechanical),
+      box-shadow var(--er-duration-standard) var(--er-ease-mechanical);
+  }
+  [data-machine-motion="system"] .machine-gauge-needle {
+    transition: transform var(--er-duration-instrument) var(--er-ease-mechanical);
+  }
+  [data-machine-motion="system"] .machine-gauge-arc {
+    transition: border-color var(--er-duration-standard) var(--er-ease-mechanical);
+  }
+  [data-machine-motion="system"] .machine-gauge-readout strong,
+  [data-machine-motion="system"] .machine-state-readout,
+  [data-machine-motion="system"] .machine-preview-tube strong {
+    transition: color var(--er-duration-standard) var(--er-ease-mechanical);
+  }
+  [data-machine-motion="system"] .machine-lamp-bulb {
+    transition: box-shadow var(--er-duration-standard) var(--er-ease-mechanical),
+      filter var(--er-duration-standard) var(--er-ease-mechanical);
+  }
+  [data-machine-motion="system"] .machine-valve-wheel {
+    transition: transform var(--er-duration-slow) var(--er-ease-valve);
+  }
+  [data-machine-motion="system"] .machine-pipe-core {
+    transition: stroke var(--er-duration-standard) var(--er-ease-mechanical);
+  }
+  [data-machine-motion="system"] .machine-pipe:is([data-state="live"], [data-state="active"]) .machine-pipe-flow {
+    opacity: .8;
+    animation: machine-pipe-flow var(--er-duration-flow) linear infinite;
+  }
+  [data-machine-motion="system"] .machine-lamp:is([data-state="live"], [data-state="active"]) .machine-lamp-glint {
+    animation: machine-lamp-breathe var(--er-duration-lamp) ease-in-out infinite;
+  }
+}
+
+@keyframes machine-pipe-flow {
+  from { stroke-dashoffset: 17; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes machine-lamp-breathe {
+  0%, 100% { opacity: .55; }
+  50% { opacity: 1; }
+}
+
+/* A user pause also stops existing shell transitions. State and values stay live. */
+[data-machine-motion="paused"],
+[data-machine-motion="paused"] *,
+[data-machine-motion="paused"] *::before,
+[data-machine-motion="paused"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+

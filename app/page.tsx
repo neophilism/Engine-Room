@@ -1,8 +1,9 @@
 import React from "react";
 import { BrassPanel, FlowStation, GlassTube, IndicatorLamp, MachineFlow } from "../components/machine";
+import { MachinePreview } from "../components/machine/machine-preview";
 
 const roadmap = [
-  { name: "Engine Room", completed: 7, planned: 40 },
+  { name: "Engine Room", completed: 8, planned: 40 },
   { name: "RAM Marketplace", completed: 20, planned: 20 },
   { name: "Compliance Engine", completed: 21, planned: 21 }
 ];
@@ -54,6 +55,8 @@ export default function Home() {
           </MachineFlow>
         </div>
       </BrassPanel>
+      <MachinePreview />
     </main>
   );
 }
+

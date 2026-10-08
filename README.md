@@ -4,13 +4,13 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 7 — Responsive machine layout and pipe routing**
+**PR 8 — Animation, machine-state transitions, and reduced motion**
 
-This milestone adds responsive `MachineFlow`, `FlowStation`, `MachineManifold`, and `MachineGrid` composition primitives. Sequential machinery reroutes from horizontal desktop layouts to vertical tablet/mobile layouts without JavaScript viewport branching, and logical multi-source flows can merge into a single output.
+This milestone adds shared machine state, animated pipe flow, smooth instrument updates, and a keyboard-operable motion pause control. System reduced-motion preferences disable movement before hydration and during the session, while values, controls, and textual status continue updating immediately.
 
-The portfolio homepage now includes a live roadmap data path that visibly connects the development-plan logic to machine state.
+PR 7's responsive flow, manifold, and grid composition rules are preserved. The homepage includes an interactive animation preview with labeled sample values.
 
-Target post-merge progress: **7 / 40 planned PRs = 17.5%**.
+Target post-merge progress: **8 / 40 planned PRs = 20%**.
 
 Quality gates:
 
@@ -19,6 +19,9 @@ npm run typecheck
 npm run lint
 npm run test
 npm run build
+npx playwright install chromium
+npm run test:browser
 ```
 
-See `docs/machine-layout.md` and `docs/development-plan.md`.
+See `docs/machine-animation.md`, `docs/machine-layout.md`, and the approved 40-PR `docs/development-plan.md`.
+

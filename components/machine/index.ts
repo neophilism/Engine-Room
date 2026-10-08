@@ -7,3 +7,7 @@ export { MachineGrid } from "./machine-grid";
 export { MachineManifold, type ManifoldInput } from "./machine-manifold";
 export { Pipe, type PipeShape } from "./pipe";
 export { Valve } from "./valve";
+export { Machine } from "./machine-state";
+export { useMachineState, useMachineController } from "./machine-context";
+export { MachineMotionProvider, MachineMotionToggle } from "./machine-motion";
+
