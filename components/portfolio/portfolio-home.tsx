@@ -5,6 +5,7 @@ import {
   IndicatorLamp,
   MachineFlow
 } from "../machine";
+import { MachinePreview } from "../machine/machine-preview";
 import { ProjectProgressStack } from "./project-progress-stack";
 import type { PortfolioOverviewData } from "../../lib/server/portfolio-overview";
 
@@ -104,6 +105,7 @@ export function PortfolioHome({
           </MachineFlow>
         </div>
       </BrassPanel>
+      <MachinePreview />
     </main>
   );
 }
