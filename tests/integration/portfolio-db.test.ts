@@ -11,6 +11,7 @@ import { persistDevelopmentActivity } from "../../lib/server/development-activit
 import { registerProjectRisk, setProjectReleaseTarget, recordProjectReleaseEvidence } from "../../lib/server/project-readiness";
 import { recordOperationSamples, loadOperationsOverview } from "../../lib/server/operations";
 import { createRelease, transitionRelease, loadReleasesOverview } from "../../lib/server/releases";
+import { recordIncident, transitionIncident, loadIncidentsOverview } from "../../lib/server/incidents";
 
 const url = process.env.ENGINE_ROOM_TEST_DATABASE_URL;
 const source = { NODE_ENV: "test", DATABASE_URL: url };
@@ -100,5 +101,20 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     expect((await transitionRelease(id, event)).applied).toBe(false);
     await expect(transitionRelease(id, { ...event, key: "bad", from: "approved", to: "deploying" })).rejects.toThrow("precondition");
     expect((await loadReleasesOverview(source)).releases[0].state).toBe("building");
+  });
+  it("records incident responses with replay protection and rejects stale or conflicting events", async () => {
+    const data = await loadProjectDashboard("database-fixture", source);
+    const signal = { projectId: data.project!.id, environment: "production", source: "fixture-monitor", externalId: "outage-1", title: "API unavailable", severity: "critical" as const, occurredAt: new Date(Date.now() - 2000).toISOString() };
+    const id = await recordIncident(signal);
+    expect(await recordIncident(signal)).toBe(id);
+    const event = { key: "ack", from: "detected" as const, to: "acknowledged" as const, actor: "on-call", note: "Investigating API failures", occurredAt: new Date(Date.now() - 1000).toISOString() };
+    expect((await transitionIncident(id, event)).applied).toBe(true);
+    expect((await transitionIncident(id, event)).applied).toBe(false);
+    await expect(transitionIncident(id, { ...event, note: "Changed content" })).rejects.toThrow("different content");
+    await expect(transitionIncident(id, { ...event, key: "stale", from: "acknowledged", to: "mitigated", occurredAt: signal.occurredAt })).rejects.toThrow("time order");
+    expect((await loadIncidentsOverview(source)).incidents[0]).toMatchObject({ state: "acknowledged", lastNote: event.note, resolvedAt: null });
+    await transitionIncident(id, { ...event, key: "contain", from: "acknowledged", to: "mitigated", note: "Provider recovered", occurredAt: new Date().toISOString() });
+    await transitionIncident(id, { ...event, key: "recover", from: "mitigated", to: "resolved", note: "Recovery verified", occurredAt: new Date().toISOString() });
+    expect((await loadIncidentsOverview(source)).incidents[0].resolvedAt).not.toBeNull();
   });
 });
