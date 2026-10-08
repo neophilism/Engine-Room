@@ -2,6 +2,16 @@ import type { ProjectStatus } from "../domain/portfolio";
 import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
 import { getDatabasePool } from "./database";
 
+export type PortfolioRepositoryProgress = {
+  id: string;
+  fullName: string;
+  htmlUrl: string;
+  completed: number;
+  inProgress: number;
+  planned: number;
+  percent: number;
+};
+
 export type PortfolioProjectOverview = {
   id: string;
   displayName: string;
@@ -12,6 +22,7 @@ export type PortfolioProjectOverview = {
   inProgress: number;
   planned: number;
   percent: number;
+  repositories: PortfolioRepositoryProgress[];
 };
 
 export type PortfolioStatistics = {
@@ -39,6 +50,16 @@ export type PortfolioOverviewRow = {
   in_progress_count: string | number;
 };
 
+export type PortfolioRepositoryRow = {
+  project_id: string;
+  repository_id: string;
+  full_name: string;
+  html_url: string;
+  planned_count: string | number;
+  completed_count: string | number;
+  in_progress_count: string | number;
+};
+
 function percentage(completed: number, planned: number) {
   if (planned <= 0) return 0;
   return Math.round((completed / planned) * 1000) / 10;
@@ -61,9 +82,41 @@ export function normalizePortfolioRows(
       completed,
       inProgress,
       planned,
-      percent: percentage(completed, planned)
+      percent: percentage(completed, planned),
+      repositories: []
     };
   });
+}
+
+export function attachRepositoryProgress(
+  projects: readonly PortfolioProjectOverview[],
+  rows: readonly PortfolioRepositoryRow[]
+): PortfolioProjectOverview[] {
+  const repositoriesByProject = new Map<string, PortfolioRepositoryProgress[]>();
+
+  for (const row of rows) {
+    const completed = Number(row.completed_count);
+    const inProgress = Number(row.in_progress_count);
+    const planned = Number(row.planned_count);
+    const repository: PortfolioRepositoryProgress = {
+      id: row.repository_id,
+      fullName: row.full_name,
+      htmlUrl: row.html_url,
+      completed,
+      inProgress,
+      planned,
+      percent: percentage(completed, planned)
+    };
+
+    const current = repositoriesByProject.get(row.project_id) ?? [];
+    current.push(repository);
+    repositoriesByProject.set(row.project_id, current);
+  }
+
+  return projects.map((project) => ({
+    ...project,
+    repositories: repositoriesByProject.get(project.id) ?? []
+  }));
 }
 
 export function calculatePortfolioStatistics(
@@ -119,41 +172,74 @@ export async function loadPortfolioOverview(
   }
 
   try {
-    const result = await getDatabasePool(source).query<PortfolioOverviewRow>(
-      `select
-         p.id,
-         p.display_name,
-         p.status,
-         r.full_name as repository_full_name,
-         r.html_url as repository_html_url,
-         dp.planned_pr_total,
-         count(ppr.id) filter (where ppr.status = 'merged') as completed_count,
-         count(ppr.id) filter (where ppr.status = 'in-progress') as in_progress_count
-       from projects p
-       left join project_repositories pr
-         on pr.project_id = p.id
-        and pr.relationship = 'primary'
-       left join repositories r
-         on r.id = pr.repository_id
-       left join development_plans dp
-         on dp.project_id = p.id
-        and dp.status = 'approved'
-       left join planned_pull_requests ppr
-         on ppr.development_plan_id = dp.id
-       group by
-         p.id,
-         p.display_name,
-         p.status,
-         p.slug,
-         r.full_name,
-         r.html_url,
-         dp.planned_pr_total
-       order by
-         case when p.slug = 'engine-room' then 0 else 1 end,
-         p.display_name`
+    const pool = getDatabasePool(source);
+    const [projectResult, repositoryResult] = await Promise.all([
+      pool.query<PortfolioOverviewRow>(
+        `select
+           p.id,
+           p.display_name,
+           p.status,
+           r.full_name as repository_full_name,
+           r.html_url as repository_html_url,
+           dp.planned_pr_total,
+           count(ppr.id) filter (where ppr.status = 'merged') as completed_count,
+           count(ppr.id) filter (where ppr.status = 'in-progress') as in_progress_count
+         from projects p
+         left join project_repositories pr
+           on pr.project_id = p.id
+          and pr.relationship = 'primary'
+         left join repositories r
+           on r.id = pr.repository_id
+         left join development_plans dp
+           on dp.project_id = p.id
+          and dp.status = 'approved'
+         left join planned_pull_requests ppr
+           on ppr.development_plan_id = dp.id
+         group by
+           p.id,
+           p.display_name,
+           p.status,
+           p.slug,
+           r.full_name,
+           r.html_url,
+           dp.planned_pr_total
+         order by
+           case when p.slug = 'engine-room' then 0 else 1 end,
+           p.display_name`
+      ),
+      pool.query<PortfolioRepositoryRow>(
+        `select
+           p.id as project_id,
+           r.id as repository_id,
+           r.full_name,
+           r.html_url,
+           count(ppr.id) as planned_count,
+           count(ppr.id) filter (where ppr.status = 'merged') as completed_count,
+           count(ppr.id) filter (where ppr.status = 'in-progress') as in_progress_count
+         from projects p
+         join development_plans dp
+           on dp.project_id = p.id
+          and dp.status = 'approved'
+         join planned_pull_requests ppr
+           on ppr.development_plan_id = dp.id
+         join repositories r
+           on r.id = ppr.repository_id
+         group by
+           p.id,
+           r.id,
+           r.full_name,
+           r.html_url
+         order by
+           p.id,
+           r.full_name`
+      )
+    ]);
+
+    const projects = attachRepositoryProgress(
+      normalizePortfolioRows(projectResult.rows),
+      repositoryResult.rows
     );
 
-    const projects = normalizePortfolioRows(result.rows);
     return {
       source: "database",
       projects,

@@ -22,7 +22,18 @@ const overview: PortfolioOverviewData = {
       completed: 16,
       inProgress: 1,
       planned: 40,
-      percent: 40
+      percent: 40,
+      repositories: [
+        {
+          id: "engine-room-repo",
+          fullName: "neophilism/Engine-Room",
+          htmlUrl: "https://github.com/neophilism/Engine-Room",
+          completed: 16,
+          inProgress: 1,
+          planned: 40,
+          percent: 40
+        }
+      ]
     },
     {
       id: "complete",
@@ -31,7 +42,8 @@ const overview: PortfolioOverviewData = {
       completed: 5,
       inProgress: 0,
       planned: 5,
-      percent: 100
+      percent: 100,
+      repositories: []
     }
   ]
 };
@@ -47,7 +59,7 @@ describe("portfolio home", () => {
 
   it("renders Engine Room first when the data layer returns it first", () => {
     const { container } = render(<PortfolioHome overview={overview} />);
-    const names = container.querySelectorAll(".project-row strong");
+    const names = container.querySelectorAll(".project-progress-heading strong");
     expect(names[0]).toHaveTextContent("Engine Room");
   });
 

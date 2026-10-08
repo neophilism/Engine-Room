@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 17 — Portfolio Overview foundation and live portfolio statistics**
+**PR 18 — Stacked repository progress tubes and PR-count labels**
 
-This milestone replaces static demonstration roadmap data with a live PostgreSQL-backed portfolio overview. It reports tracked projects, active systems, merged/approved roadmap PRs, aggregate completion, and per-project progress while degrading truthfully when the database is unconfigured or unavailable.
+This milestone expands each portfolio project into repository-level roadmap progress. Multi-repository projects now render one live glass tube per repository with merged/planned PR labels and completion percentages, while preserving aggregate project totals.
 
-Target post-merge progress: **17 / 40 planned PRs = 42.5%**.
+Target post-merge progress: **18 / 40 planned PRs = 45%**.
 
 Quality gates:
 
