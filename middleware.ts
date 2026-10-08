@@ -1,0 +1,37 @@
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import { readSession } from "./lib/auth/database";
+import { SESSION_COOKIE } from "./lib/auth/security";
+
+// Next 15.5 stable Node runtime permits a durable DB lookup on every request.
+// Disabled accounts and revoked sessions take effect immediately.
+export const config={
+ runtime:"nodejs",
+ matcher:["/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)"]
+};
+const pages=new Set(["/login","/setup","/register"]);
+const apis=new Set(["/api/health","/api/ready","/api/auth/login","/api/auth/bootstrap","/api/auth/register","/api/github/webhook","/api/telemetry"]);
+export async function middleware(request:NextRequest){
+ const path=request.nextUrl.pathname;
+ if(pages.has(path)||apis.has(path)){
+  const res=NextResponse.next();
+  res.headers.set("Cache-Control","private, no-store");
+  res.headers.set("X-Robots-Tag","noindex, nofollow");
+  return res;
+ }
+ let user=null;
+ try{user=await readSession(request.cookies.get(SESSION_COOKIE)?.value);}
+ catch{/* Database or configuration unavailable: reject request. */}
+ if(!user){
+  if(path.startsWith("/api/"))return NextResponse.json({error:"Authentication required"},{status:401,headers:{"Cache-Control":"no-store"}});
+  const url=new URL("/login",request.url);
+  url.searchParams.set("next",path+request.nextUrl.search);
+  return NextResponse.redirect(url);
+ }
+ const res=NextResponse.next();
+ res.headers.set("Cache-Control","private, no-store");
+ res.headers.set("X-Robots-Tag","noindex, nofollow");
+ res.headers.set("X-Frame-Options","DENY");
+ res.headers.set("Referrer-Policy","no-referrer");
+ return res;
+}
