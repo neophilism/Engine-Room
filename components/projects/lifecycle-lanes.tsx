@@ -1,5 +1,6 @@
-import { projectNameIndent } from "../../lib/domain/project-hierarchy";
 "use client";
+
+import { projectNameIndent } from "../../lib/domain/project-hierarchy";
 
 import React from "react";
 import type { ProjectStatus } from "../../lib/domain/portfolio";
