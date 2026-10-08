@@ -1,4 +1,42 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page, type BrowserContext } from "@playwright/test";
+import { createHash, randomBytes, randomUUID } from "node:crypto";
+import { Pool } from "pg";
+
+let browserSessionToken = "";
+let browserTestUserId = "";
+const sessionCookie = () => ({
+  name: "engine_room_session", value: browserSessionToken, domain: "127.0.0.1",
+  path: "/", secure: false, httpOnly: true, sameSite: "Strict" as const,
+  expires: Math.floor(Date.now() / 1000) + 3600
+});
+async function installSession(context: BrowserContext) {
+  await context.addCookies([sessionCookie()]);
+}
+test.beforeAll(async () => {
+  const url = process.env.ENGINE_ROOM_BROWSER_DATABASE_URL;
+  if (!url) throw new Error("Browser regression tests require isolated PostgreSQL.");
+  browserSessionToken = randomBytes(32).toString("base64url");
+  browserTestUserId = randomUUID();
+  const db = new Pool({ connectionString: url });
+  try {
+    await db.query(
+      "INSERT INTO engine_room_users(id,email,display_name,password_hash,role) VALUES($1,$2,$3,$4,'admin')",
+      [browserTestUserId, `browser-${browserTestUserId}@example.invalid`, "Playwright Test", "test-fixture-no-login"]
+    );
+    await db.query(
+      "INSERT INTO engine_room_auth_sessions(token_hash,user_id,expires_at) VALUES($1,$2,now()+interval '2 hours')",
+      [createHash("sha256").update(browserSessionToken).digest("hex"), browserTestUserId]
+    );
+  } finally { await db.end(); }
+});
+test.beforeEach(async ({ context }) => { await installSession(context); });
+test.afterAll(async () => {
+  const url = process.env.ENGINE_ROOM_BROWSER_DATABASE_URL;
+  if (!url || !browserTestUserId) return;
+  const db = new Pool({ connectionString: url });
+  try { await db.query("DELETE FROM engine_room_users WHERE id=$1", [browserTestUserId]); }
+  finally { await db.end(); }
+});
 
 async function motionStyles(page: Page) {
   return page.evaluate(() => {
@@ -43,6 +81,7 @@ test("powered machines animate and reconcile status and values immediately", asy
 
 test("system reduced motion applies before hydration, even with JavaScript disabled", async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false, reducedMotion: "reduce" });
+  await installSession(context);
   const page = await context.newPage();
   try {
     await page.goto("http://127.0.0.1:3108/");
