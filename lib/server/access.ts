@@ -26,11 +26,18 @@ export async function recordAccessObservations(records: readonly AccessObservati
 export async function loadAccessOverview(source: EnvironmentSource = process.env): Promise<AccessOverview> {
   if (!getRuntimeConfig(source).databaseUrl) return { source: "unconfigured", principals: [] };
   try {
-    const result = await getDatabasePool(source).query<{ project_id: string; display_name: string; project_name: string; slug: string; environment: string; source: string; external_id: string; principal_id: string; principal_kind: "person" | "service"; status: PrincipalStatus; roles: string[]; privileged: boolean; mfa_enabled: boolean | null; last_active_at: Date | null; organization_id: string | null; organization_name: string | null; credential_expires_at: Date | null; observed_at: Date }>(
+    const client = await getDatabasePool(source).connect();
+    try {
+    await client.query("begin isolation level repeatable read read only");
+    const projects = await client.query<{ id: string; displayName: string }>(`select id, display_name as "displayName" from projects order by display_name`);
+    const result = await client.query<{ project_id: string; display_name: string; project_name: string; slug: string; environment: string; source: string; external_id: string; principal_id: string; principal_kind: "person" | "service"; status: PrincipalStatus; roles: string[]; privileged: boolean; mfa_enabled: boolean | null; last_active_at: Date | null; organization_id: string | null; organization_name: string | null; credential_expires_at: Date | null; observed_at: Date }>(
       `select distinct on (a.project_id,a.environment,a.source,a.principal_id) a.*, p.display_name as project_name, p.slug from project_access_observations a join projects p on p.id=a.project_id
        order by a.project_id,a.environment,a.source,a.principal_id,a.observed_at desc,a.received_at desc,a.external_id`);
-    return { source: "database", principals: result.rows.map((row) => ({ projectId: row.project_id, projectName: row.project_name, projectSlug: row.slug, environment: row.environment, source: row.source, externalId: row.external_id,
+    await client.query("commit");
+    return { source: "database", projects: projects.rows, principals: result.rows.map((row) => ({ projectId: row.project_id, projectName: row.project_name, projectSlug: row.slug, environment: row.environment, source: row.source, externalId: row.external_id,
       principalId: row.principal_id, displayName: row.display_name, principalKind: row.principal_kind, status: row.status, roles: row.roles, privileged: row.privileged, mfaEnabled: row.mfa_enabled, lastActiveAt: row.last_active_at?.toISOString() ?? null,
       organizationId: row.organization_id ?? undefined, organizationName: row.organization_name ?? undefined, credentialExpiresAt: row.credential_expires_at?.toISOString() ?? null, observedAt: row.observed_at.toISOString() })) };
+    } catch (error) { await client.query("rollback"); throw error; }
+    finally { client.release(); }
   } catch { return { source: "error", principals: [] }; }
 }

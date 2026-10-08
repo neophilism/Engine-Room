@@ -1018,3 +1018,11 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 .financial-drivers li { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
 .financial-driver-track { grid-column: 1 / -1; height: 10px; border-radius: 5px; background: var(--er-surface-2); overflow: hidden; }
 .financial-driver-track > span { display: block; height: 100%; background: var(--brass-hi); }
+.access-analytics-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; overflow-wrap: anywhere; }
+.access-analytics-grid ul { padding-left: 20px; }
+.access-findings { list-style: none; padding: 0; display: grid; gap: 12px; }
+.access-findings li { display: grid; gap: 8px; padding: 14px; border: 1px solid var(--er-border-metal); border-radius: var(--er-radius-sm); }
+.access-findings li[data-severity="high"] { border-color: var(--er-status-blocked); }
+.access-findings li[data-severity="medium"] { border-color: var(--er-status-warning); }
+.access-findings p { margin: 0; }
+@media (max-width: 900px) { .access-analytics-grid { grid-template-columns: 1fr; } }

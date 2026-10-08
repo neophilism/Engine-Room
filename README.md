@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 35 — Users and Access dashboard**
+**PR 36 — Cross-project access and security analytics**
 
-Source-scoped identity observations power a searchable Users and Access roster. Explicit roles, privilege, status, MFA unknowns, organization identity, and observation freshness preserve the difference between recorded access and inferred activity.
+Provider-scoped identities, organizations and roles are compared across projects. Freshness-aware review findings identify disabled or unknown privileged MFA, dormant grants, expired service credentials and broad access without inferring identity from shared names.
 
-Target post-merge progress: **35 / 40 planned PRs = 87.5%**.
+Target post-merge progress: **36 / 40 planned PRs = 90%**.
 
 Quality gates:
 
