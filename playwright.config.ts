@@ -14,6 +14,7 @@ export default defineConfig({
     trace: "retain-on-failure"
   },
   webServer: {
+    env: { ENGINE_ROOM_TEST_SERVER: "1" },
     command: "npm run start -- --hostname 127.0.0.1 --port 3108",
     url: "http://127.0.0.1:3108",
     reuseExistingServer: !process.env.CI
