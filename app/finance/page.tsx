@@ -1,11 +1,9 @@
 import React from "react";
-import { DashboardPage } from "../../components/dashboard-page";
+import { FinanceDashboard } from "../../components/finance/finance-dashboard";
+import { PortfolioRefresh } from "../../components/portfolio/portfolio-refresh";
+import { loadFinanceOverview } from "../../lib/server/finance";
 
-export default function FinancePage() {
-  return <DashboardPage
-    eyebrow="Portfolio Economics"
-    title="Finance"
-    description="Track spend, revenue, forecasts, unit economics, and financial health across the portfolio."
-    signals={["Spend by project", "Cost drivers", "Revenue and recoveries", "Forecast and runway"]}
-  />;
+export const dynamic = "force-dynamic";
+export default async function FinancePage() {
+  return <main className="content"><header className="hero"><p className="eyebrow">Portfolio Economics</p><h1>Finance</h1><p>Compare recorded cost, revenue, and forecasts in their accounting currency.</p></header><PortfolioRefresh /><FinanceDashboard overview={await loadFinanceOverview()} initialPeriod={new Date().toISOString().slice(0, 7)} /></main>;
 }
