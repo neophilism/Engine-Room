@@ -1,7 +1,10 @@
+"use client";
+
 import React, { type ReactNode } from "react";
 import type { MachineState } from "../../lib/design/theme";
 import { IndicatorLamp } from "./indicator-lamp";
 import { Pipe } from "./pipe";
+import { useMachineState } from "./machine-context";
 
 export type ManifoldInput = {
   id: string;
@@ -24,15 +27,17 @@ export function MachineManifold({
   inputs,
   output,
   outputLabel,
-  state = "live",
+  state: explicitState,
   className
 }: MachineManifoldProps) {
+  const state = useMachineState(explicitState);
   return (
     <div
       className={["machine-manifold", className].filter(Boolean).join(" ")}
       role="group"
       aria-label={label}
       data-input-count={inputs.length}
+      data-state={state}
     >
       <div className="machine-manifold-inputs">
         {inputs.map((input) => (
@@ -60,3 +65,4 @@ export function MachineManifold({
     </div>
   );
 }
+

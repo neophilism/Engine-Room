@@ -4,6 +4,7 @@ import React, { useEffect, useId, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { dashboardRoutes } from "../lib/navigation";
+import { MachineMotionToggle } from "./machine/machine-motion";
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -152,6 +153,7 @@ export function AppShell({ children }: AppShellProps) {
           </div>
 
           <div className="app-topbar-actions">
+            <MachineMotionToggle />
             <div className="live-readout" aria-label="Portfolio data status">
               <span className="system-light" aria-hidden="true" />
               <span>
@@ -215,3 +217,4 @@ export function AppShell({ children }: AppShellProps) {
     </div>
   );
 }
+

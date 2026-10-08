@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AppShell } from "../components/app-shell";
+import { MachineMotionProvider } from "../components/machine/machine-motion";
 import "./design-tokens.css";
 import "./globals.css";
 import "../components/machine/machine.css";
@@ -20,8 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AppShell>{children}</AppShell>
+        <MachineMotionProvider>
+          <AppShell>{children}</AppShell>
+        </MachineMotionProvider>
       </body>
     </html>
   );
 }
+

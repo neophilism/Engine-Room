@@ -24,6 +24,7 @@ export function machineStateStyle(state: MachineState): MachineCssProperties {
   const appearance = getMachineStateAppearance(state);
   return {
     "--machine-state-color": appearance.cssColor,
-    ...(appearance.cssGlow ? { "--machine-state-glow": appearance.cssGlow } : {})
+    "--machine-state-glow": appearance.cssGlow ?? "none"
   };
 }
+

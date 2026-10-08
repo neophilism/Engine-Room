@@ -172,6 +172,9 @@
   --er-duration-fast: 120ms;
   --er-duration-standard: 180ms;
   --er-duration-slow: 320ms;
+  --er-duration-instrument: 640ms;
+  --er-duration-flow: 2400ms;
+  --er-duration-lamp: 3200ms;
   --er-ease-mechanical: cubic-bezier(.2, .75, .2, 1);
   --er-ease-valve: cubic-bezier(.34, 1.2, .64, 1);
 
@@ -197,3 +200,4 @@
   --text: var(--er-text-primary);
   --muted: var(--er-text-secondary);
 }
+
