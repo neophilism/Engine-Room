@@ -13,7 +13,7 @@ async function installSession(context: BrowserContext) {
   await context.addCookies([sessionCookie()]);
 }
 test.beforeAll(async () => {
-  const url = process.env.ENGINE_ROOM_TEST_DATABASE_URL;
+  const url = process.env.ENGINE_ROOM_BROWSER_DATABASE_URL;
   if (!url) throw new Error("Browser regression tests require isolated PostgreSQL.");
   browserSessionToken = randomBytes(32).toString("base64url");
   browserTestUserId = randomUUID();
@@ -31,7 +31,7 @@ test.beforeAll(async () => {
 });
 test.beforeEach(async ({ context }) => { await installSession(context); });
 test.afterAll(async () => {
-  const url = process.env.ENGINE_ROOM_TEST_DATABASE_URL;
+  const url = process.env.ENGINE_ROOM_BROWSER_DATABASE_URL;
   if (!url || !browserTestUserId) return;
   const db = new Pool({ connectionString: url });
   try { await db.query("DELETE FROM engine_room_users WHERE id=$1", [browserTestUserId]); }
