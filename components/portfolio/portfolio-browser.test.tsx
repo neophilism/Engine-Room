@@ -7,6 +7,19 @@ const projects = [{ id: "a", displayName: "Alpha", status: "live" as const, comp
   { id: "b", displayName: "Beta", status: "planned" as const, completed: 0, planned: 10, inProgress: 0, percent: 0, repositories: [] }];
 
 describe("portfolio controls", () => {
+  it("tabs the implementation name only, leaving progress metrics aligned", () => {
+    const engine = { ...projects[0], id: "engine", slug: "civic-registry-transparency-engine", displayName: "Civic Registry Transparency Engine" };
+    const child = { ...projects[1], id: "child", slug: "smart-cities-surveillance-registry", displayName: "Smart Cities Surveillance Registry" };
+    const { container } = render(<PortfolioBrowser projects={[child, engine]} />);
+    const headings = Array.from(container.querySelectorAll(".project-progress-heading"));
+    expect(headings).toHaveLength(2);
+    expect(headings[0].textContent).toContain("Civic Registry Transparency Engine");
+    expect(headings[1].textContent).toContain("Smart Cities Surveillance Registry");
+    expect(headings[1].querySelector("strong.project-name-indent")).toHaveTextContent("Smart Cities Surveillance Registry");
+    expect(headings[1].querySelector(".count")).not.toHaveClass("project-name-indent");
+    expect(headings[1].querySelector(".percentage")).not.toHaveClass("project-name-indent");
+    expect(container.querySelector(".repository-progress-row")).not.toHaveClass("project-name-indent");
+  });
   it("filters rows, reports matches, and can clear a no-match search", () => {
     render(<PortfolioBrowser projects={projects} />);
     fireEvent.change(screen.getByRole("searchbox", { name: "Search projects" }), { target: { value: "Beta" } });
