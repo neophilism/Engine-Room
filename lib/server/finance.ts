@@ -43,7 +43,7 @@ export async function loadFinanceOverview(source: EnvironmentSource = process.en
     try {
       await client.query("begin isolation level repeatable read read only");
       const projects = await client.query<FinanceProject>(`select id, slug, display_name as "displayName" from projects order by display_name`);
-      const entries = await client.query<{ project_id: string; environment: string; source: string; external_id: string; kind: "cost" | "revenue"; category: string; currency: Currency; amount_minor: string; occurred_on: string; description: string | null }>("select *, occurred_on::text as occurred_on from project_financial_entries order by occurred_on desc, external_id");
+      const entries = await client.query<{ project_id: string; environment: string; source: string; external_id: string; kind: "cost" | "revenue"; category: string; currency: Currency; amount_minor: string; occurred_on: string; description: string | null }>("select project_id, environment, source, external_id, kind, category, currency, amount_minor, occurred_on::text as occurred_on, description from project_financial_entries order by occurred_on desc, external_id");
       const forecasts = await client.query<{ project_id: string; environment: string; source: string; external_id: string; currency: Currency; period: string; cost_minor: string; revenue_minor: string; observed_at: Date }>("select * from project_financial_forecasts order by observed_at desc, external_id");
       await client.query("commit");
       return { source: "database", projects: projects.rows,
