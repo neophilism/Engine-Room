@@ -15,6 +15,7 @@ import { calculatePortfolioStatistics } from "../domain/portfolio-statistics";
 export { calculatePortfolioStatistics } from "../domain/portfolio-statistics";
 import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
 import { getDatabasePool } from "./database";
+import { loadCurrentFeatures } from "./project-features";
 
 export type PortfolioOverviewRow = {
   id: string;
@@ -195,10 +196,12 @@ export async function loadPortfolioOverview(
            r.full_name`
       );
 
-    const projects = attachRepositoryProgress(
+    let projects = attachRepositoryProgress(
       normalizePortfolioRows(projectResult.rows),
       repositoryResult.rows
     );
+    const features = await loadCurrentFeatures(client);
+    projects = projects.map((project) => ({ ...project, features: features.filter((feature) => feature.projectId === project.id) }));
 
     const overview: PortfolioOverviewData = {
       source: "database",

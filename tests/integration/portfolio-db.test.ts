@@ -6,6 +6,7 @@ import { getDatabasePool, closeDatabasePool } from "../../lib/server/database";
 import { registerApprovedProject } from "../../lib/server/project-registration";
 import { loadPortfolioOverview } from "../../lib/server/portfolio-overview";
 import { loadProjectDashboard } from "../../lib/server/project-dashboard";
+import { registerProjectFeatures } from "../../lib/server/project-features";
 
 const url = process.env.ENGINE_ROOM_TEST_DATABASE_URL;
 const source = { NODE_ENV: "test", DATABASE_URL: url };
@@ -40,5 +41,18 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     expect(data.graph?.plannedPullRequests.map((pr) => pr.status)).toEqual(["merged", "in-progress", "planned", "planned"]);
     expect(data.milestones[0]).toMatchObject({ status: "active", completed: 1 });
     expect((await loadProjectDashboard("missing-project", source)).project).toBeNull();
+  });
+  it("registers and updates plan-scoped features without duplicates or cross-plan work", async () => {
+    const data = await loadProjectDashboard("database-fixture", source);
+    const planId = data.graph!.plan.id;
+    const definitions = [{ key: "done", title: "Delivered capability", plannedPrOrdinals: [1] },
+      { key: "active", title: "Active capability", plannedPrOrdinals: [1, 2] }, { key: "unlinked", title: "Unlinked capability", plannedPrOrdinals: [] }];
+    await registerProjectFeatures(planId, definitions);
+    await registerProjectFeatures(planId, definitions);
+    const updated = await loadProjectDashboard("database-fixture", source);
+    expect(updated.features?.map((feature) => feature.status)).toEqual(["implemented", "underway", "remaining"]);
+    expect(updated.features).toHaveLength(3);
+    expect((await loadPortfolioOverview(source)).projects[0].features).toHaveLength(3);
+    await expect(registerProjectFeatures(planId, [{ key: "bad", title: "Wrong plan ordinal", plannedPrOrdinals: [999] }])).rejects.toThrow("outside this approved plan");
   });
 });
