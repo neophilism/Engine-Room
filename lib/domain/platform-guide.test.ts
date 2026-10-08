@@ -9,6 +9,6 @@ describe("platform onboarding content", () => {
     const text=platformDefinitions.map(item=>item.meaning).join(" ");
     expect(text).toMatch(/merged planned pull requests/i);
     expect(text).toMatch(/unknown/i);
-    expect(text).toMatch(/currency/i);
+    expect(text).toMatch(/currenc(?:y|ies)/i);
   });
 });
