@@ -646,6 +646,16 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 }
 
 .portfolio-total-machine { margin-bottom: 22px; }
+.comparison-table-scroll { max-width: 100%; overflow-x: auto; border-radius: var(--er-radius-sm); }
+.comparison-table { width: 100%; border-collapse: collapse; min-width: 760px; font-size: .86rem; }
+.comparison-table caption { text-align: left; color: var(--muted); padding: 12px 0; }
+.comparison-table th, .comparison-table td { text-align: left; vertical-align: middle; padding: 14px 12px; border-bottom: 1px solid var(--er-border-metal); }
+.comparison-table thead th { color: var(--brass-hi); font-size: .75rem; letter-spacing: .04em; }
+.comparison-table tbody th { min-width: 180px; max-width: 280px; }
+.comparison-table tbody th p { font-weight: 400; color: var(--muted); font-size: .78rem; margin: 7px 0; }
+.comparison-table a { display: inline-block; color: var(--teal); font-size: .78rem; margin-top: 6px; text-underline-offset: 3px; }
+.comparison-table td:last-child { min-width: 160px; }
+.comparison-table td:last-child > span { display: block; margin-top: 6px; }
 .portfolio-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin-bottom: 12px; }
 .portfolio-controls label { display: grid; gap: 6px; flex: 1 1 150px; font-size: .8rem; color: var(--muted); min-width: 0; }
 .portfolio-controls label:first-child { flex: 2 1 200px; }
