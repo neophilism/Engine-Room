@@ -12,6 +12,7 @@ import { PortfolioProgressMachine } from "./portfolio-progress-machine";
 import type { PortfolioOverviewData } from "../../lib/domain/portfolio-overview";
 import type { RenderReadout } from "../../lib/domain/render-deployments";
 import { RenderServiceReadouts } from "./render-service-readouts";
+import { PlatformMetrics } from "./platform-metrics";
 
 function sourceLabel(source: PortfolioOverviewData["source"]) {
   if (source === "database") return "Live portfolio data";
@@ -62,6 +63,7 @@ export function PortfolioHome({
 
       <PortfolioProgressMachine projects={projects} />
       <RenderServiceReadouts services={renderServices} />
+      <PlatformMetrics />
       <PortfolioRefresh />
 
       <BrassPanel
