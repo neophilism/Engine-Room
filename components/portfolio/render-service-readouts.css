@@ -1,0 +1,19 @@
+.render-readouts { margin:26px 0 30px; padding:24px; border:1px solid var(--er-border-metal); border-radius:var(--er-radius-lg); background:linear-gradient(145deg,rgba(7,27,27,.94),rgba(4,15,17,.97)); }
+.render-readouts-heading { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; margin-bottom:20px; }
+.render-readouts-heading p:last-child { color:var(--muted); max-width:65ch; line-height:1.6; }
+.render-readouts-source { border:1px solid var(--er-border-metal); padding:8px 12px; border-radius:99px; background:var(--er-material-smoked-glass); color:var(--brass-hi); font-size:.78rem; }
+.render-readouts-grid { display:grid; gap:12px; grid-template-columns:repeat(3,minmax(0,1fr)); }
+.render-readout-card { min-width:0; padding:17px; border:1px solid rgba(227,174,88,.3); border-radius:12px; background:var(--er-surface-2); }
+.render-readout-line { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; }
+.render-readout-provider { font-size:.66rem; font-weight:800; letter-spacing:.18em; color:var(--brass-hi); }
+.render-readout-status { color:var(--er-status-warning); font-size:.74rem; text-transform:uppercase; font-weight:800; }
+.render-readout-status.is-live { color:var(--er-status-complete); }
+.render-readout-card h3 { font:700 1.22rem var(--er-font-display); margin:14px 0 5px; overflow-wrap:anywhere; }
+.render-readout-repo { font:.75rem var(--er-font-instrument); color:var(--muted); overflow-wrap:anywhere; }
+.render-readout-actions { display:flex; flex-wrap:wrap; gap:14px; margin:14px 0; }
+.render-readout-actions a { color:var(--teal); font-size:.82rem; text-decoration:underline; text-underline-offset:3px; }
+.render-readout-timestamp { font:.72rem var(--er-font-instrument); color:var(--muted); line-height:1.8; overflow-wrap:anywhere; }
+.render-readout-timestamp span { color:var(--er-text-tertiary); }
+.render-readouts-disclaimer { color:var(--muted); font-size:.82rem; margin:16px 0 0; }
+@media (max-width:1150px) { .render-readouts-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:700px) { .render-readouts { padding:16px; }.render-readouts-grid { grid-template-columns:minmax(0,1fr); } }

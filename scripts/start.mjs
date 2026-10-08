@@ -29,3 +29,30 @@ server.on("error", error => {
 server.on("exit", (code, signal) => {
   process.exitCode = code ?? (signal ? 1 : 0);
 });
+
+
+/**
+ * Optional zero-extra-service-cost public GitHub refresh while this web
+ * instance is awake. Official GitHub App webhooks remain the preferred
+ * low-latency production source.
+ */
+if (!testServer && process.env.ENGINE_ROOM_PUBLIC_GITHUB_SYNC === "1") {
+  let syncing = false;
+  const refresh = () => {
+    if (syncing) return;
+    syncing = true;
+    const run = spawn(process.execPath, ["scripts/sync-github.mjs"], { stdio: "inherit", env: process.env });
+    run.once("error", error => {
+      console.error("Public GitHub synchronization could not start:", error.message);
+      syncing = false;
+    });
+    run.once("exit", code => {
+      syncing = false;
+      if (code !== 0) console.error("Public GitHub synchronization failed; existing records remain visible.");
+    });
+  };
+  const startup = setTimeout(refresh, 15000);
+  startup.unref();
+  const interval = setInterval(refresh, 12 * 60 * 60 * 1000);
+  interval.unref();
+}
