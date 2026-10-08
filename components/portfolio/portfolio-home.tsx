@@ -6,7 +6,8 @@ import {
   MachineFlow
 } from "../machine";
 import { MachinePreview } from "../machine/machine-preview";
-import { ProjectProgressStack } from "./project-progress-stack";
+import { PortfolioBrowser } from "./portfolio-browser";
+import { PortfolioRefresh } from "./portfolio-refresh";
 import { PortfolioProgressMachine } from "./portfolio-progress-machine";
 import type { PortfolioOverviewData } from "../../lib/domain/portfolio-overview";
 
@@ -56,6 +57,7 @@ export function PortfolioHome({
       </section>
 
       <PortfolioProgressMachine projects={projects} />
+      <PortfolioRefresh />
 
       <BrassPanel
         eyebrow="Live roadmap"
@@ -68,11 +70,7 @@ export function PortfolioHome({
         }
       >
         {projects.length > 0 ? (
-          <div className="project-list">
-            {projects.map((project) => (
-              <ProjectProgressStack project={project} key={project.id} />
-            ))}
-          </div>
+          <PortfolioBrowser projects={projects} />
         ) : (
           <div className="portfolio-empty-state">
             <strong>{sourceLabel(overview.source)}</strong>

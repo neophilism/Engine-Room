@@ -646,6 +646,17 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 }
 
 .portfolio-total-machine { margin-bottom: 22px; }
+.portfolio-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin-bottom: 12px; }
+.portfolio-controls label { display: grid; gap: 6px; flex: 1 1 150px; font-size: .8rem; color: var(--muted); min-width: 0; }
+.portfolio-controls label:first-child { flex: 2 1 200px; }
+.portfolio-controls input, .portfolio-controls select { width: 100%; min-height: 44px; color: var(--text); background: var(--er-surface-2); border: 1px solid var(--er-border-metal); border-radius: var(--er-radius-sm); padding: 8px 10px; font: inherit; }
+.portfolio-control-button { min-height: 44px; border: 1px solid var(--er-border-metal); border-radius: var(--er-radius-sm); background: var(--er-surface-2); color: var(--brass-hi); padding: 8px 14px; font: inherit; cursor: pointer; }
+.portfolio-control-button:disabled { cursor: wait; opacity: .65; }
+.portfolio-result-count, .project-activity { color: var(--muted); font-size: .78rem; }
+.portfolio-refresh { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 18px; color: var(--muted); font-size: .8rem; }
+.project-quick-links { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 10px 46px; font-size: .78rem; }
+.project-quick-links a, .repository-progress-name a { color: var(--teal); text-underline-offset: 3px; overflow-wrap: anywhere; }
+@media (max-width: 760px) { .project-quick-links { margin-left: 0; } }
 .portfolio-total-readout { display: grid; align-content: center; gap: 12px; }
 .portfolio-total-readout strong { font: 700 clamp(1.3rem, 3vw, 2rem) var(--er-font-instrument); color: var(--brass-hi); }
 .portfolio-total-readout > span:last-child, .portfolio-calculation-note { color: var(--muted); font-size: .8rem; }

@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 21 — Total Portfolio Progress machine**
+**PR 22 — Portfolio search, filters, sorting, activity, and GitHub links**
 
-A weighted portfolio instrument now shows merged approved PRs, completion, underway work, and remaining work. The approved roadmap denominator stays fixed, repository stacks do not duplicate the totals, and the home page queries current data on each request.
+The portfolio can be searched, filtered by lifecycle, and sorted by progress or active work. Repository links and mapped-PR activity labels make each row actionable. Visible pages refresh current server data every 30 seconds while preserving their controls.
 
-Target post-merge progress: **21 / 40 planned PRs = 52.5%**.
+Target post-merge progress: **22 / 40 planned PRs = 55%**.
 
 Quality gates:
 

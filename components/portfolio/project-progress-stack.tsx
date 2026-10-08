@@ -4,6 +4,7 @@ import React, { useId, useState } from "react";
 import type { PortfolioProjectOverview } from "../../lib/domain/portfolio-overview";
 import { GlassTube } from "../machine";
 import { ProjectAccordions } from "./project-accordions";
+import { githubRepositoryUrl } from "../../lib/domain/portfolio-query";
 
 function progressState(completed: number, inProgress: number, planned: number) {
   if (planned > 0 && completed === planned) return "complete" as const;
@@ -58,6 +59,11 @@ export function ProjectProgressStack({
         <span className="percentage">{project.percent}%</span>
       </header>
 
+      <div className="project-quick-links">
+        <span className="project-activity">{project.inProgress > 0 ? `${project.inProgress} roadmap PR${project.inProgress === 1 ? "" : "s"} underway` : "No roadmap PRs underway"}</span>
+        {githubRepositoryUrl(project.repositoryFullName) && <a href={githubRepositoryUrl(project.repositoryFullName)} target="_blank" rel="noopener noreferrer">Open repository ↗</a>}
+      </div>
+
       <div
         className="repository-progress-list"
         aria-label={`${project.displayName} repository progress`}
@@ -65,7 +71,9 @@ export function ProjectProgressStack({
         {repositories.map((repository) => (
           <div className="repository-progress-row" key={repository.id}>
             <span className="repository-progress-name">
-              {repository.fullName}
+              {githubRepositoryUrl(repository.fullName)
+                ? <a href={githubRepositoryUrl(repository.fullName)} target="_blank" rel="noopener noreferrer">{repository.fullName}</a>
+                : repository.fullName}
             </span>
             <GlassTube
               value={repository.completed}
