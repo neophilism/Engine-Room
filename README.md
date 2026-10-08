@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 10 — GitHub webhook ingestion and signed webhook validation**
+**PR 11 — Repository/PR synchronization and periodic reconciliation**
 
-This milestone adds a signed, idempotent GitHub webhook endpoint backed by a durable PostgreSQL delivery inbox. HMAC-SHA256 validation happens against the exact request body before JSON parsing or persistence.
+This milestone adds normalized pull-request storage and a full-state GitHub reconciliation service. Webhooks remain the low-latency path; reconciliation is the anti-drift path that periodically re-reads authoritative repository and PR state.
 
-Target post-merge progress: **10 / 40 planned PRs = 25%**.
+Target post-merge progress: **11 / 40 planned PRs = 27.5%**.
 
 Quality gates:
 
@@ -21,4 +21,4 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-See `docs/github-webhooks.md`, `docs/github-integration.md`, and the approved 40-PR `docs/development-plan.md`.
+See `docs/github-reconciliation.md`, `docs/github-webhooks.md`, and the approved 40-PR `docs/development-plan.md`.
