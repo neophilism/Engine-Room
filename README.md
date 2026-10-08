@@ -4,13 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 8 — Animation, machine-state transitions, and reduced motion**
+**PR 9 — GitHub App integration foundation and repository discovery**
 
-This milestone adds shared machine state, animated pipe flow, smooth instrument updates, and a keyboard-operable motion pause control. System reduced-motion preferences disable movement before hydration and during the session, while values, controls, and textual status continue updating immediately.
+This milestone adds dependency-light GitHub App authentication, installation-token exchange, paginated repository discovery, normalized repository records, and runtime configuration for GitHub.com or compatible enterprise API endpoints.
 
-PR 7's responsive flow, manifold, and grid composition rules are preserved. The homepage includes an interactive animation preview with labeled sample values.
-
-Target post-merge progress: **8 / 40 planned PRs = 20%**.
+Target post-merge progress: **9 / 40 planned PRs = 22.5%**.
 
 Quality gates:
 
@@ -23,5 +21,4 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-See `docs/machine-animation.md`, `docs/machine-layout.md`, and the approved 40-PR `docs/development-plan.md`.
-
+See `docs/github-integration.md` and the approved 40-PR `docs/development-plan.md`.
