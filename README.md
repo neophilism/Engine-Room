@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 20 — Summary / Features / At a Glance accordions**
+**PR 21 — Total Portfolio Progress machine**
 
-This milestone fills the expandable project drawer with three accessible native accordions. Summary uses registered project copy when available, Features explicitly reports when structured feature data is not yet registered, and At a Glance exposes lifecycle, repository count, active PRs, and remaining roadmap work.
+A weighted portfolio instrument now shows merged approved PRs, completion, underway work, and remaining work. The approved roadmap denominator stays fixed, repository stacks do not duplicate the totals, and the home page queries current data on each request.
 
-Target post-merge progress: **20 / 40 planned PRs = 50%**.
+Target post-merge progress: **21 / 40 planned PRs = 52.5%**.
 
 Quality gates:
 

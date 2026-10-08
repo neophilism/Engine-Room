@@ -2,8 +2,7 @@ import type { ProjectStatus } from "../domain/portfolio";
 import type {
   PortfolioOverviewData,
   PortfolioProjectOverview,
-  PortfolioRepositoryProgress,
-  PortfolioStatistics
+  PortfolioRepositoryProgress
 } from "../domain/portfolio-overview";
 
 export type {
@@ -12,6 +11,8 @@ export type {
   PortfolioRepositoryProgress,
   PortfolioStatistics
 } from "../domain/portfolio-overview";
+import { calculatePortfolioStatistics } from "../domain/portfolio-statistics";
+export { calculatePortfolioStatistics } from "../domain/portfolio-statistics";
 import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
 import { getDatabasePool } from "./database";
 
@@ -97,34 +98,6 @@ export function attachRepositoryProgress(
   }));
 }
 
-export function calculatePortfolioStatistics(
-  projects: readonly PortfolioProjectOverview[]
-): PortfolioStatistics {
-  const completedRoadmapPrs = projects.reduce(
-    (sum, project) => sum + project.completed,
-    0
-  );
-  const plannedRoadmapPrs = projects.reduce(
-    (sum, project) => sum + project.planned,
-    0
-  );
-  const activeStatuses = new Set<ProjectStatus>([
-    "active-development",
-    "beta",
-    "live",
-    "maintenance"
-  ]);
-
-  return {
-    projects: projects.length,
-    activeProjects: projects.filter((project) =>
-      activeStatuses.has(project.status)
-    ).length,
-    completedRoadmapPrs,
-    plannedRoadmapPrs,
-    percent: percentage(completedRoadmapPrs, plannedRoadmapPrs)
-  };
-}
 
 function emptyOverview(
   source: PortfolioOverviewData["source"]
