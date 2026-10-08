@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 28 — Risks, next actions, and release readiness**
+**PR 29 — Operations and Performance dashboard**
 
-Project dashboards now show recorded risks, blockers, ordered next actions, and acceptance evidence scoped to an immutable release commit and environment. Missing or expired production evidence stays unknown even when roadmap work is complete.
+Current operational measurements now show availability, latency, throughput, errors, CPU, and memory by environment. Source identity, freshness, and explicit unknown readings prevent missing or stale telemetry from appearing healthy.
 
-Target post-merge progress: **28 / 40 planned PRs = 70%**.
+Target post-merge progress: **29 / 40 planned PRs = 72.5%**.
 
 Quality gates:
 
