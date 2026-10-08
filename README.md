@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 9 — GitHub App integration foundation and repository discovery**
+**PR 10 — GitHub webhook ingestion and signed webhook validation**
 
-This milestone adds dependency-light GitHub App authentication, installation-token exchange, paginated repository discovery, normalized repository records, and runtime configuration for GitHub.com or compatible enterprise API endpoints.
+This milestone adds a signed, idempotent GitHub webhook endpoint backed by a durable PostgreSQL delivery inbox. HMAC-SHA256 validation happens against the exact request body before JSON parsing or persistence.
 
-Target post-merge progress: **9 / 40 planned PRs = 22.5%**.
+Target post-merge progress: **10 / 40 planned PRs = 25%**.
 
 Quality gates:
 
@@ -21,4 +21,4 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-See `docs/github-integration.md` and the approved 40-PR `docs/development-plan.md`.
+See `docs/github-webhooks.md`, `docs/github-integration.md`, and the approved 40-PR `docs/development-plan.md`.
