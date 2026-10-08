@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 32 — Generic telemetry ingestion and adapters**
+**PR 33 — Finance dashboard and financial model**
 
-Signed, bounded telemetry deliveries normalize operational metrics, incident responses, and release events. Source credentials enforce project, environment, adapter, and capability scope; receipts and atomic batches guard retries and partial imports.
+Currency-aware actuals and forecast snapshots power the Finance dashboard. Exact minor-unit arithmetic, immutable source identities, period filters, and coverage labels keep recorded values separate from missing data and estimates.
 
-Target post-merge progress: **32 / 40 planned PRs = 80%**.
+Target post-merge progress: **33 / 40 planned PRs = 82.5%**.
 
 Quality gates:
 

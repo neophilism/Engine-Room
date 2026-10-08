@@ -15,6 +15,7 @@ import { recordIncident, transitionIncident, loadIncidentsOverview } from "../..
 import { ingestTelemetry, loadTelemetryFeeds } from "../../lib/server/telemetry";
 import { normalizeTelemetry } from "../../lib/telemetry/adapters";
 import type { TelemetryCredential } from "../../lib/telemetry/types";
+import { recordFinancialData, loadFinanceOverview } from "../../lib/server/finance";
 
 const url = process.env.ENGINE_ROOM_TEST_DATABASE_URL;
 const source = { NODE_ENV: "test", DATABASE_URL: url };
@@ -138,5 +139,16 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     const ack = encode("batch-response", [{ kind: "incident-event", externalId: "batch-alert", event: { key: "ack", from: "detected", to: "acknowledged", occurredAt: at, note: "Staging owner responding" } }]);
     expect(await ingestTelemetry(credential, ack, "4".repeat(64))).toBe("accepted");
     expect((await loadIncidentsOverview(source)).incidents.find((incident) => incident.externalId === "batch-alert")?.state).toBe("acknowledged");
+  });
+  it("persists immutable financial actuals and separate forecast snapshots without duplicate imports", async () => {
+    const data = await loadProjectDashboard("database-fixture", source);
+    const entry = { projectId: data.project!.id, environment: "production", source: "fixture-billing", externalId: "invoice-1", kind: "cost" as const, category: "hosting", currency: "USD" as const, amountMinor: 1234, occurredOn: "2026-10-01" };
+    const forecast = { projectId: entry.projectId, environment: entry.environment, source: entry.source, externalId: "forecast-1", currency: entry.currency, period: "2026-10", costMinor: 2000, revenueMinor: 5000, observedAt: new Date().toISOString() };
+    await recordFinancialData([entry], [forecast]); await recordFinancialData([entry], [forecast]);
+    const overview = await loadFinanceOverview(source);
+    expect(overview.source).toBe("database"); expect(overview.entries).toHaveLength(1); expect(overview.forecasts).toHaveLength(1);
+    expect(overview.entries[0]).toMatchObject({ amountMinor: 1234, occurredOn: "2026-10-01" });
+    await expect(recordFinancialData([{ ...entry, amountMinor: 999 }])).rejects.toThrow("different content");
+    expect((await loadFinanceOverview(source)).entries[0].amountMinor).toBe(1234);
   });
 });
