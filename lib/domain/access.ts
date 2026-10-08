@@ -5,7 +5,7 @@ export type AccessObservation = {
   roles: string[]; privileged: boolean; mfaEnabled: boolean | null; lastActiveAt: string | null; organizationId?: string; organizationName?: string; credentialExpiresAt: string | null; observedAt: string;
 };
 export type AccessPrincipal = AccessObservation & { projectName: string; projectSlug: string };
-export type AccessOverview = { source: "database" | "unconfigured" | "error"; principals: AccessPrincipal[] };
+export type AccessOverview = { source: "database" | "unconfigured" | "error"; principals: AccessPrincipal[]; projects?: Array<{ id: string; displayName: string }> };
 export function validateAccessObservation(record: AccessObservation) {
   const identity = /^[A-Za-z0-9._:@-]{1,200}$/;
   if (!record.projectId || !/^[a-z0-9-]{1,64}$/.test(record.environment) || !/^[A-Za-z0-9._-]{1,128}$/.test(record.source) || !identity.test(record.externalId) || !identity.test(record.principalId)
