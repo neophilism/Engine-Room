@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 31 — Alerts and incidents dashboard**
+**PR 32 — Generic telemetry ingestion and adapters**
 
-Source-scoped incidents move through audited acknowledgement, containment, resolution, and reopening. Response notes, source timestamps, replay protection, and state preconditions preserve a trustworthy incident history.
+Signed, bounded telemetry deliveries normalize operational metrics, incident responses, and release events. Source credentials enforce project, environment, adapter, and capability scope; receipts and atomic batches guard retries and partial imports.
 
-Target post-merge progress: **31 / 40 planned PRs = 77.5%**.
+Target post-merge progress: **32 / 40 planned PRs = 80%**.
 
 Quality gates:
 
