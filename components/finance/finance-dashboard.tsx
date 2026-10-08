@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { currencies, formatMoney, summarizeProjectFinance, validFinancePeriod, type Currency, type FinanceOverview } from "../../lib/domain/finance";
 import { BrassPanel, IndicatorLamp } from "../machine";
+import { FinancialFlow } from "./financial-flow";
 
 export function FinanceDashboard({ overview, initialPeriod }: { overview: FinanceOverview; initialPeriod: string }) {
   const [period, setPeriod] = useState(initialPeriod), [currency, setCurrency] = useState<Currency>("USD"), [environment, setEnvironment] = useState("production");
@@ -14,7 +15,8 @@ export function FinanceDashboard({ overview, initialPeriod }: { overview: Financ
     <div className="incident-controls"><label className="activity-filter">Accounting month<input type="month" value={period} onChange={(event) => { if (validFinancePeriod(event.target.value)) setPeriod(event.target.value); }} /></label>
       <label className="activity-filter">Currency<select value={currency} onChange={(event) => setCurrency(event.target.value as Currency)}>{Object.keys(currencies).map((value) => <option key={value}>{value}</option>)}</select></label>
       <label className="activity-filter">Environment<select value={environment} onChange={(event) => setEnvironment(event.target.value)}>{environments.map((value) => <option key={value}>{value}</option>)}</select></label></div>
-    <div className="operational-summary"><div><span>Recorded cost</span><strong>{formatMoney(total("costMinor"), currency)}</strong></div><div><span>Recorded revenue</span><strong>{formatMoney(total("revenueMinor"), currency)}</strong></div></div>
+    <FinancialFlow overview={overview} period={period} currency={currency} environment={environment} />
+    <div className="operational-summary"><div><span>Recorded cost total</span><strong>{formatMoney(total("costMinor"), currency)}</strong></div><div><span>Recorded revenue total</span><strong>{formatMoney(total("revenueMinor"), currency)}</strong></div></div>
     <p>Cost recorded for {projects.filter((project) => project.summary.costMinor !== null).length}/{projects.length} projects · Revenue recorded for {projects.filter((project) => project.summary.revenueMinor !== null).length}/{projects.length} projects</p>
     {overview.source === "error" ? <p>Financial data is unavailable. Refresh to try again.</p> : projects.length === 0 ? <p>No projects have been connected to finance yet.</p> : <div className="comparison-table-scroll" tabIndex={0} role="region" aria-label="Scrollable financial comparison"><table className="comparison-table">
       <caption>{period} · {currency} · {environment}</caption><thead><tr><th scope="col">Project</th><th scope="col">Actual cost</th><th scope="col">Actual revenue</th><th scope="col">Recorded net</th><th scope="col">Forecast cost</th><th scope="col">Forecast revenue</th><th scope="col">Coverage</th></tr></thead>

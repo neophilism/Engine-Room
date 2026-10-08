@@ -1,6 +1,7 @@
 import { operationMetrics, validateOperationSample } from "../domain/operations";
 import { incidentSeverities, incidentStates, validateIncidentEvent, validateIncidentSignal } from "../domain/incidents";
 import { releaseStates, validateReleaseEvent } from "../domain/releases";
+import { normalizeFinancialAdapter, normalizeFinanceRecord } from "../finance/adapters";
 import { TelemetryError, type TelemetryCredential, type TelemetryEnvelope, type TelemetryRecord } from "./types";
 
 function object(value: unknown, keys: string[]): Record<string, unknown> {
@@ -27,6 +28,7 @@ export function assertTelemetryScope(credential: TelemetryCredential, records: T
   }
 }
 function normalizeRecord(value: unknown, credential: TelemetryCredential): TelemetryRecord {
+  if (value && typeof value === "object" && "kind" in value && (value.kind === "financial-entry" || value.kind === "financial-forecast")) return normalizeFinanceRecord(value, credential);
   const item = object(value, ["kind", "externalId", "metric", "value", "observedAt", "title", "severity", "occurredAt", "evidenceUrl", "event", "key", "commitSha"]);
   if (item.kind === "metric") {
     object(item, ["kind", "externalId", "metric", "value", "observedAt"]);
@@ -61,6 +63,11 @@ const aliases = { availability: "availability-percent", latencyP95Ms: "latency-p
 export function normalizeTelemetry(body: Uint8Array, credential: TelemetryCredential): TelemetryEnvelope {
   try {
     const raw: unknown = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(body));
+    if (credential.adapter === "finance-json-v1" || credential.adapter === "finance-csv-v1") {
+      const envelope = normalizeFinancialAdapter(raw, credential);
+      assertTelemetryScope(credential, envelope.records);
+      return envelope;
+    }
     const item = object(raw, credential.adapter === "metrics-json-v1" ? ["version", "deliveryId", "observedAt", "samples"] : ["version", "deliveryId", "records"]);
     if (item.version !== 1) throw new Error("Unsupported telemetry version.");
     const deliveryId = identity(item.deliveryId);

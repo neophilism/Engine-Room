@@ -4,11 +4,11 @@ Engine Room is a responsive executive software-portfolio control room for tracki
 
 ## Current milestone
 
-**PR 33 — Finance dashboard and financial model**
+**PR 34 — Financial adapters and flow visualization**
 
-Currency-aware actuals and forecast snapshots power the Finance dashboard. Exact minor-unit arithmetic, immutable source identities, period filters, and coverage labels keep recorded values separate from missing data and estimates.
+Signed JSON and CSV adapters import exact cost, revenue, and forecast amounts. The Finance dashboard adds an accessible financial-flow machine and recorded cost-driver bars without currency conversion or inferred missing values.
 
-Target post-merge progress: **33 / 40 planned PRs = 82.5%**.
+Target post-merge progress: **34 / 40 planned PRs = 85%**.
 
 Quality gates:
 

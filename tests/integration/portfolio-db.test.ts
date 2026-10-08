@@ -151,4 +151,17 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     await expect(recordFinancialData([{ ...entry, amountMinor: 999 }])).rejects.toThrow("different content");
     expect((await loadFinanceOverview(source)).entries[0].amountMinor).toBe(1234);
   });
+  it("imports scoped financial adapters with exact decimals and rolls back conflicting invoices", async () => {
+    const data = await loadProjectDashboard("database-fixture", source), pool = getDatabasePool(source);
+    const credential: TelemetryCredential = { id: "integration-billing", secret: "test-secret-with-at-least-32-bytes", projectId: data.project!.id, environment: "production", source: "adapter-billing", adapter: "finance-json-v1", capabilities: ["financial-entry", "financial-forecast"], evidenceTransitions: [] };
+    const entry = { id: "adapter-invoice", date: "2026-10-01", kind: "cost", category: "hosting", currency: "USD", amount: "0.29" };
+    const normalize = (id: string, entries: unknown[]) => normalizeTelemetry(Buffer.from(JSON.stringify({ version: 1, deliveryId: id, entries })), credential);
+    const batch = normalize("financial-adapter-1", [entry]);
+    expect(await ingestTelemetry(credential, batch, "5".repeat(64))).toBe("accepted");
+    expect(await ingestTelemetry(credential, batch, "5".repeat(64))).toBe("duplicate");
+    expect((await loadFinanceOverview(source)).entries.find((record) => record.source === "adapter-billing")?.amountMinor).toBe(29);
+    await expect(ingestTelemetry(credential, normalize("financial-adapter-conflict", [{ ...entry, id: "must-rollback" }, { ...entry, amount: "1.00" }]), "6".repeat(64))).rejects.toMatchObject({ status: 409 });
+    expect((await pool.query("select 1 from project_financial_entries where external_id='must-rollback'")).rows).toHaveLength(0);
+    expect((await pool.query("select 1 from telemetry_deliveries where delivery_id='financial-adapter-conflict'")).rows).toHaveLength(0);
+  });
 });
