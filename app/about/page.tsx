@@ -1,11 +1,11 @@
 import React from "react";
-import { DashboardPage } from "../../components/dashboard-page";
+import { PlatformGuide } from "../../components/onboarding/platform-guide";
 
 export default function AboutPage() {
-  return <DashboardPage
-    eyebrow="Platform Guide"
-    title="About / Overview"
-    description="Explain Engine Room, every dashboard, progress logic, data sources, lifecycle stages, and machine indicators."
-    signals={["Page guide", "Metric definitions", "Lifecycle glossary", "Data freshness"]}
-  />;
+  return <main className="content">
+    <header className="hero"><p className="eyebrow">Platform Guide</p><h1>Engine Room / Overview</h1>
+      <p>A guide to the portfolio machines, their evidence, and the steps from approved development to running production.</p>
+    </header>
+    <PlatformGuide />
+  </main>;
 }
