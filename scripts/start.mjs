@@ -1,5 +1,5 @@
 import { spawn, spawnSync } from "node:child_process";
-import { shouldRunPublicSync, PUBLIC_SYNC_INTERVAL_MS } from "./public-sync-policy.mjs";
+import { shouldRunPublicSync, publicSyncIntervalMs } from "./public-sync-policy.mjs";
 
 const testServer = process.env.ENGINE_ROOM_TEST_SERVER === "1";
 if (!testServer) {
@@ -63,6 +63,6 @@ if (shouldRunPublicSync(process.env, testServer)) {
   };
   const startup = setTimeout(refresh, 15000);
   startup.unref();
-  const interval = setInterval(refresh, PUBLIC_SYNC_INTERVAL_MS);
+  const interval = setInterval(refresh, publicSyncIntervalMs(process.env));
   interval.unref();
 }
