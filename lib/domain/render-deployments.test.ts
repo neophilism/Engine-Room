@@ -2,9 +2,9 @@ import { describe, expect, it } from "vitest";
 import { asLatestRenderDeployment, verifiedRenderServices } from "./render-deployments";
 describe("Render deployment observations", () => {
   it("contains verified real, distinct Render service identities", () => {
-    expect(verifiedRenderServices).toHaveLength(13);
-    expect(new Set(verifiedRenderServices.map(service=>service.id)).size).toBe(13);
-    expect(verifiedRenderServices.filter(service=>service.deployStatus === "live")).toHaveLength(12);
+    expect(verifiedRenderServices.length).toBeGreaterThanOrEqual(16);
+    expect(new Set(verifiedRenderServices.map(service=>service.id)).size).toBe(verifiedRenderServices.length);
+    expect(verifiedRenderServices.filter(service=>service.deployStatus === "live").length).toBeGreaterThanOrEqual(14);
     for (const service of verifiedRenderServices) {
       expect(service.website).toMatch(/^https:\/\/[a-z0-9-]+\.onrender\.com$/);
       expect(service.repository).toMatch(/^neophilism\//);
