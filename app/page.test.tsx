@@ -86,6 +86,25 @@ describe("portfolio home", () => {
     expect(screen.queryByText("0%")).not.toBeInTheDocument();
   });
 
+  it("surfaces real repository activity separately from unverified roadmap completion", () => {
+    const data: PortfolioOverviewData = {
+      ...overview,
+      statistics: { projects: 1, activeProjects: 1, completedRoadmapPrs: 0, plannedRoadmapPrs: 0, percent: 0 },
+      projects: [{
+        id: "repo", displayName: "Real GitHub Repository", status: "planned",
+        repositoryFullName: "neophilism/Real", completed: 0, inProgress: 0, planned: 0, percent: 0,
+        repositories: [],
+        activity: { total: 15, merged: 11, open: 4, drafts: 1, failedChecks: 2, runningChecks: 1, lastObservedAt: "2026-10-09T20:00:00Z" }
+      }]
+    };
+    render(<PortfolioHome overview={data} />);
+    expect(screen.getByText("Observed GitHub PR records").nextSibling).toHaveTextContent("15");
+    expect(screen.getByText("Observed merged PRs").nextSibling).toHaveTextContent("11");
+    expect(screen.getByText("Observed open PRs").nextSibling).toHaveTextContent("4");
+    expect(screen.getByText(/11 merged \/ 15 observed GitHub PRs/)).toBeInTheDocument();
+    expect(screen.getAllByText("N/A").length).toBeGreaterThan(0);
+  });
+
   it("shows a truthful empty state instead of static demo projects", () => {
     render(
       <PortfolioHome
