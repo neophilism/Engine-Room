@@ -29,3 +29,9 @@ Engine Room now reads real, public (not administrative) archive statistics from 
 ## Public GitHub import freshness readout
 
 The portfolio home checks `/api/public-github-status` against Engine Room's own PostgreSQL database. It reports the count of observed public repositories, observed real PR records, verified PR merge timestamps and latest PR observation time for the configured owner. These are persisted observations, not an assertion that the last complete import succeeded or that every repository is currently synchronized. The readout explicitly distinguishes no observed records, missing DB configuration and query failure. It does not expose private repository names or confidential operational metadata.
+
+## Fireside Chat source-health monitor
+
+The same Engine Room homepage polls the public `/api/health/ready` endpoint from the registered Fireside Chat Render host every minute. The server fetch is cached for at most 60 seconds; displayed values are read-only and are validated against the application's feed and archive schema. **Healthy**, **degraded** (failed, stale, or never-synced feeds), and **unverified** (unreachable or invalid response) are distinct. It displays feed counts, transcript coverage, source observation time and last successful ingestion. No API key or operational secret is sent to the browser; there is no write or privileged admin access. A successful Render deploy is not interpreted as working ingestion.
+
+This is an on-screen status observer while Engine Room is open, not a background pager or guaranteed always-on alert. Render Free services can sleep, and no site visit means no active refresh. Additional continuous monitoring and alert delivery require a persistent scheduler and explicitly configured credentials.
