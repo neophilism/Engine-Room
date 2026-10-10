@@ -58,11 +58,11 @@ export async function loadProjectDashboard(slug: string, source: EnvironmentSour
         milestones = (await client.query<MilestoneRow>("select * from milestones where development_plan_id = $1 order by ordinal", [plan.id])).rows;
         plannedPrs = (await client.query<PlannedPrRow>(`select ppr.id, ppr.development_plan_id, ppr.milestone_id, ppr.repository_id, ppr.ordinal,
           ppr.title, ppr.description, ppr.github_pr_number,
-          (gpr.id IS NULL OR (gpr.merged_at IS NOT NULL AND gpr.base_ref IS DISTINCT FROM (SELECT default_branch FROM repositories WHERE id=gpr.repository_id)
-            AND (gpr.release_included IS NULL OR gpr.release_target_sha IS DISTINCT FROM (SELECT default_branch_sha FROM github_repository_sync WHERE repository_id=gpr.repository_id)))) AS completion_unverified,
-          CASE WHEN (gpr.base_ref=(SELECT default_branch FROM repositories WHERE id=gpr.repository_id) OR (gpr.release_included=true AND gpr.release_target_sha=(SELECT default_branch_sha FROM github_repository_sync WHERE repository_id=gpr.repository_id))) THEN gpr.merged_at ELSE NULL END AS merged_at,
-          case when gpr.merged_at is not null AND (gpr.base_ref=(SELECT default_branch FROM repositories WHERE id=gpr.repository_id) OR (gpr.release_included=true AND gpr.release_target_sha=(SELECT default_branch_sha FROM github_repository_sync WHERE repository_id=gpr.repository_id))) then 'merged' when gpr.state = 'open' then 'in-progress'
-            when ppr.status = 'skipped' then 'skipped' else 'planned' end as status
+          (gpr.id IS NULL) AS completion_unverified,
+          gpr.merged_at AS merged_at,
+          CASE WHEN gpr.merged_at IS NOT NULL THEN 'merged'
+            WHEN gpr.state = 'open' THEN 'in-progress'
+            WHEN ppr.status = 'skipped' THEN 'skipped' ELSE 'planned' END AS status
           from planned_pull_requests ppr left join github_pull_requests gpr
             on gpr.repository_id = ppr.repository_id and gpr.number = ppr.github_pr_number
           where ppr.development_plan_id = $1 order by ppr.ordinal`, [plan.id])).rows;

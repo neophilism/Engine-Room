@@ -142,10 +142,9 @@ export async function loadPortfolioOverview(
            r.full_name as repository_full_name,
            r.html_url as repository_html_url,
            dp.planned_pr_total,
-           count(ppr.id) filter (where gpr.merged_at is not null AND (gpr.base_ref=r.default_branch OR (gpr.release_included=true AND gpr.release_target_sha=(SELECT default_branch_sha FROM github_repository_sync WHERE repository_id=gpr.repository_id)))) as completed_count,
+           count(ppr.id) filter (where gpr.merged_at is not null) as completed_count,
            count(ppr.id) filter (where gpr.state = 'open' and gpr.merged_at is null) as in_progress_count,
-           count(ppr.id) filter (where gpr.id IS NULL OR (gpr.merged_at IS NOT NULL AND gpr.base_ref IS DISTINCT FROM r.default_branch
-             AND (gpr.release_included IS NULL OR gpr.release_target_sha IS DISTINCT FROM (SELECT default_branch_sha FROM github_repository_sync WHERE repository_id=gpr.repository_id)))) AS unmapped_count
+           count(ppr.id) filter (where gpr.id IS NULL) AS unmapped_count
          from projects p
          left join project_repositories pr
            on pr.project_id = p.id
@@ -180,7 +179,7 @@ export async function loadPortfolioOverview(
            r.full_name,
            r.html_url,
            count(ppr.id) as planned_count,
-           count(ppr.id) filter (where gpr.merged_at is not null AND (gpr.base_ref=r.default_branch OR (gpr.release_included=true AND gpr.release_target_sha=(SELECT default_branch_sha FROM github_repository_sync WHERE repository_id=gpr.repository_id)))) as completed_count,
+           count(ppr.id) filter (where gpr.merged_at is not null) as completed_count,
            count(ppr.id) filter (where gpr.state = 'open' and gpr.merged_at is null) as in_progress_count
          from projects p
          join development_plans dp

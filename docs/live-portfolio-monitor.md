@@ -8,9 +8,9 @@ Repository source documents are versioned in PostgreSQL. Structured roadmaps can
 
 Original units survive source revisions. Changed scope and new units are additions; historical additions remain visible after later edits. Private planning documents belong in the database, not this public repository. Proposed or unapproved documents do not establish an approved original denominator.
 
-A unit is verified merged only when every mapped PR has landed on its repository's default branch. Intermediate merges can qualify when GitHub commit ancestry proves inclusion in the observed default-branch head. Missing PRs or unverifiable release inclusion show N/A. New default-branch heads invalidate older ancestry evidence until reconciliation checks it again. Merged work remains separate from deployment and operational readiness.
+A planned unit is complete when **every explicitly mapped GitHub PR has a verified merge timestamp**, regardless of whether its merge target was the default branch or an intermediate branch. Missing or unmerged references remain incomplete. The separate operational/release monitoring view still reports default-branch integration evidence and can show unknown release inclusion after the default branch changes. Merged planned work is **not** a claim of deployment, production acceptance or release availability.
 
-The aggregate gauge measures verified mappings, and explicitly reports incomplete portfolio coverage. It is not the percentage of the whole portfolio finished. Original work uses green; additions use blue. Stored plan history is available from each project dashboard.
+The aggregate gauge divides verified complete planned units by all documented planned units, including unopened and unmapped tasks. Original work uses green; documented additions use amber. Projects without documented development plans are N/A. Stored plan history is available from each project dashboard.
 
 ## Durable updates
 

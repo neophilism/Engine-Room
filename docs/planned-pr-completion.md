@@ -19,3 +19,5 @@ The denominator is never inferred from GitHub activity. It remains the immutable
 ## Ambiguity
 
 PR numbers are repository-local. If reconciliation input contains the same PR number for more than one repository, the calculation fails rather than guessing. Repository-scoped plan mapping is completed by the project registration/import path.
+
+Completion uses the PR's GitHub merge timestamp regardless of target branch. Whether a feature merge reached the default branch is a separate release-inclusion/operational readiness signal; it MUST NOT reduce the completed-planned-PR count. A PR merged to an intermediate branch is a completed PR, but is not automatically production-released.
