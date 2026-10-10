@@ -25,7 +25,8 @@ export function calculatePortfolioWorkload(projects: readonly PortfolioProjectOv
   const statistics = calculatePortfolioStatistics(projects);
   return {
     ...statistics,
-    underway: projects.reduce((sum, project) => sum + project.inProgress, 0),
+    underway: projects.reduce((sum, project) => sum + (summarizePlannedProgress(project)?.inProgress ?? 0), 0),
+    notStarted: projects.reduce((sum, project) => sum + (summarizePlannedProgress(project)?.notStarted ?? 0), 0),
     remaining: statistics.plannedRoadmapPrs - statistics.completedRoadmapPrs
   };
 }
