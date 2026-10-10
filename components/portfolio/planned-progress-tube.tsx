@@ -23,12 +23,10 @@ export function PlannedProgressTube({
     aria-valuetext={`${progress.completed} merged, ${progress.inProgress} open, ${progress.notStarted} not started; ${progress.planned} planned units total`}
     title={`Merged: ${progress.completed}/${progress.planned}; open: ${progress.inProgress}; not started: ${progress.notStarted}`}
   >
-    <span className="planned-progress-endcap" aria-hidden="true" />
     <span className="planned-progress-chamber" aria-hidden="true">
       <span className="planned-progress-merged-fill" style={{ width: `${mergedWidth}%` }} />
       <span className="planned-progress-open-fill"
         style={{ left: `${mergedWidth}%`, width: `${openWidth}%` }} />
     </span>
-    <span className="planned-progress-endcap" aria-hidden="true" />
   </div>;
 }
