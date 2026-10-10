@@ -23,7 +23,7 @@ export function ProjectComparison({ overview }: { overview: PortfolioOverviewDat
     {visible.length > 0 ? <div className="comparison-table-scroll" tabIndex={0} role="region" aria-label="Scrollable project comparison">
       <table className="comparison-table">
         <caption>Compare approved roadmaps and current lifecycle stages</caption>
-        <thead><tr><th scope="col">Project</th><th scope="col">Lifecycle</th><th scope="col">Repositories</th><th scope="col">Approved PRs</th>
+        <thead><tr><th scope="col">Project</th><th scope="col">Lifecycle</th><th scope="col">Repositories</th><th scope="col">Planned PRs</th>
           <th scope="col">Completed</th><th scope="col">Remaining</th><th scope="col">Progress</th></tr></thead>
         <tbody>{visible.map((project) => {
           const progress = summarizePlannedProgress(project);
