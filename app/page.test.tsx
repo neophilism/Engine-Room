@@ -59,6 +59,17 @@ describe("portfolio home", () => {
     expect(screen.getByText("46.7%")).toBeInTheDocument();
   });
 
+  it("removes animation testing and makes secondary monitoring optional", () => {
+    const { container } = render(<PortfolioHome overview={overview} />);
+    expect(screen.queryByText("Machine animation preview")).not.toBeInTheDocument();
+    expect(screen.queryByText("Roadmap signal path")).not.toBeInTheDocument();
+    expect(screen.getByText("Project progress")).toBeInTheDocument();
+    const operations = container.querySelector(".dashboard-operations-details") as HTMLDetailsElement;
+    expect(operations).toBeInTheDocument();
+    expect(operations.open).toBe(false);
+    expect(screen.getByText("Activity and connected services")).toBeInTheDocument();
+  });
+
   it("renders Engine Room first when the data layer returns it first", () => {
     const { container } = render(<PortfolioHome overview={overview} />);
     const names = container.querySelectorAll(".project-progress-heading strong");
