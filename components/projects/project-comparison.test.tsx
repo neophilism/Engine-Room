@@ -13,7 +13,9 @@ describe("project comparison", () => {
   it("compares planned work without presenting unplanned projects as complete", () => {
     render(<ProjectComparison overview={overview} />);
     const row = screen.getByRole("rowheader", { name: "Alpha" }).closest("tr")!;
-    expect(within(row).getByText("15")).toBeInTheDocument();
+    expect(within(screen.getByRole("table")).getAllByRole("columnheader")).toHaveLength(4);
+    expect(screen.queryByText("Repositories")).not.toBeInTheDocument();
+    expect(within(row).getByText("15 remaining")).toBeInTheDocument();
     expect(within(row).getByRole("progressbar")).toHaveAttribute("aria-valuemax", "20");
     const unplanned = screen.getByRole("rowheader", { name: "Beta" }).closest("tr")!;
     expect(within(unplanned).getAllByText("N/A").length).toBeGreaterThan(0);
@@ -41,7 +43,7 @@ describe("project comparison", () => {
     expect(bar).toHaveAttribute("aria-valuenow", "9");
     expect(bar).toHaveAttribute("aria-valuemax", "100");
     expect(within(row).getByText("9%")).toBeInTheDocument();
-    expect(within(row).getByText("91")).toBeInTheDocument();
+    expect(within(row).getByText("91 remaining")).toBeInTheDocument();
   });
 
 
