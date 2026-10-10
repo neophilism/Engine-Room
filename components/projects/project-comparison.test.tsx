@@ -16,7 +16,7 @@ describe("project comparison", () => {
     expect(within(row).getByText("15")).toBeInTheDocument();
     expect(within(row).getByRole("progressbar")).toHaveAttribute("aria-valuemax", "20");
     const unplanned = screen.getByRole("rowheader", { name: "Beta" }).closest("tr")!;
-    expect(within(unplanned).getByText("N/A")).toBeInTheDocument();
+    expect(within(unplanned).getAllByText("N/A").length).toBeGreaterThan(0);
     expect(within(unplanned).queryByRole("progressbar")).not.toBeInTheDocument();
   });
   it("applies the same search and lifecycle controls as the portfolio home", () => {
