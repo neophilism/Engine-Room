@@ -474,3 +474,16 @@ h2 { font: 680 clamp(1.06rem, 1.5vw, 1.35rem)/1.28 var(--er-font-body); letter-s
 .project-open-count, .source-work-open { color: #e7be71; }
 .source-work-merged { color: #91d7b9; }
 .source-work-remaining { color: #a6b7c8; }
+
+/* A one-repo project has one plan bar; totals already appear in the header. */
+.single-plan-progress-row {
+  grid-template-columns: minmax(145px,.8fr) minmax(160px,3.2fr);
+}
+@media (max-width:760px) {
+  .single-plan-progress-row {
+    grid-template-columns: minmax(0,1fr);
+  }
+  .single-plan-progress-row .planned-progress-tube {
+    grid-column:1;
+  }
+}
