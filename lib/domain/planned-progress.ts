@@ -1,16 +1,19 @@
 import type { SourcePlanSummary } from "./live-monitor";
 
 /**
- * A progress denominator is the ENTIRE published plan, not the number of
- * open PRs, closed PRs, discovered PRs, or currently mapped plan items.
- * Uncreated and unmapped planned items remain in the denominator.
+ * Every planned unit contributes to the same denominator, including newly
+ * documented additions. Progress is: merged (green), written and open (yellow),
+ * and not started/unverified (empty). Never confuse a passing check with merge.
  */
 export type PlannedTrack = { planned: number; completed: number };
 export type PlannedProgress = {
+  /** Historical provenance only; never color-code original versus additions. */
   original: PlannedTrack;
   added: PlannedTrack;
   planned: number;
   completed: number;
+  inProgress: number;
+  notStarted: number;
   remaining: number;
   percent: number;
 };
@@ -18,6 +21,8 @@ export type PlannedProgress = {
 export type PlanSource = {
   planned: number;
   completed: number;
+  inProgress?: number;
+  activity?: { open: number };
   sourcePlan?: SourcePlanSummary;
 };
 
@@ -27,30 +32,51 @@ function validCount(value: number): boolean {
 
 export function summarizePlannedProgress(source: PlanSource): PlannedProgress | null {
   const published = source.sourcePlan;
-  const hasApproved = validCount(source.planned) && source.planned > 0;
-  const originalPlanned = hasApproved ? source.planned : published?.original ?? 0;
-  const originalCompleted = hasApproved ? source.completed : published?.originalComplete ?? 0;
+  const documentedOriginal = published?.original ?? 0;
+  const documentedOriginalComplete = published?.originalComplete ?? 0;
+  const addedPlanned = published?.added ?? 0;
+  const addedCompleted = published?.addedComplete ?? 0;
 
-  // Do not combine contradictory approved and source-document baselines.
-  // An additions-only document may extend an existing approved original plan.
-  const matchingSource = !!published &&
-    (!hasApproved || published.original === 0 || published.original === originalPlanned);
-  const addedPlanned = matchingSource ? published.added : 0;
-  const addedCompleted = matchingSource ? published.addedComplete : 0;
-
-  if (![originalPlanned, originalCompleted, addedPlanned, addedCompleted].every(validCount) ||
-    originalCompleted > originalPlanned || addedCompleted > addedPlanned) {
+  if (![source.planned,source.completed,documentedOriginal,
+        documentedOriginalComplete,addedPlanned,addedCompleted].every(validCount) ||
+      source.completed > source.planned ||
+      documentedOriginalComplete > documentedOriginal ||
+      addedCompleted > addedPlanned) {
     return null;
   }
 
+  // A newer canonical source plan may expand beyond the legacy approved-plan
+  // table; never discard legitimate additions merely because the old totals
+  // differ. A legacy approved base and an additions-only document also combine.
+  const originalPlanned = Math.max(source.planned,documentedOriginal);
+  const originalCompleted = Math.max(source.completed,documentedOriginalComplete);
   const planned = originalPlanned + addedPlanned;
   const completed = originalCompleted + addedCompleted;
-  if (!validCount(planned) || !validCount(completed) || planned === 0) return null;
+  if (!validCount(planned) || !validCount(completed) ||
+      originalCompleted > originalPlanned || completed > planned || planned === 0) return null;
+
+  // "Written" means a real, currently open GitHub PR, including drafts, work
+  // undergoing CI, and work with green checks waiting for merge. The plan-item
+  // state is the precise signal when a PR has been mapped. Legacy plan/monitor
+  // open counts cover other opened PRs whose individual plan mapping is still
+  // incomplete. Take the maximum rather than adding overlapping observations.
+  // Cap yellow to the unmerged plan capacity: green and yellow never overlap.
+  const observedOpen = [
+    source.inProgress ?? 0,
+    source.activity?.open ?? 0,
+    published?.items.filter(item => item.state === "in-progress").length ?? 0
+  ];
+  const inProgress = Math.min(planned - completed,
+    Math.max(0,...observedOpen.filter(validCount)));
+  const notStarted = planned - completed - inProgress;
+
   return {
     original: { planned: originalPlanned, completed: originalCompleted },
     added: { planned: addedPlanned, completed: addedCompleted },
     planned,
     completed,
+    inProgress,
+    notStarted,
     remaining: planned - completed,
     percent: Math.round((completed / planned) * 1000) / 10
   };
