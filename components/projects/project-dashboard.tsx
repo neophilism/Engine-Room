@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { ProjectDashboardData } from "../../lib/domain/project-dashboard";
 import { lifecycleStages } from "../../lib/domain/lifecycle-lanes";
 import { githubRepositoryUrl } from "../../lib/domain/portfolio-query";
-import { BrassPanel, GlassTube, IndicatorLamp } from "../machine";
+import { BrassPanel, IndicatorLamp } from "../machine";
 import { PlannedProgressTube } from "../portfolio/planned-progress-tube";
 import { summarizePlannedProgress } from "../../lib/domain/planned-progress";
 import { ProjectFeatures } from "./project-features";
@@ -22,6 +22,8 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
   const planProgress = summarizePlannedProgress({
     planned: data.progress?.planned ?? 0,
     completed: data.progress?.completed ?? 0,
+    inProgress: Math.max(data.graph?.plannedPullRequests.filter(p=>p.status==="in-progress").length ?? 0,
+      data.pullRequests?.filter(p=>p.state==="open").length ?? 0),
     sourcePlan: data.sourcePlan
   });
   const measured = planProgress !== null;
@@ -31,13 +33,14 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
     <div className="project-dashboard-grid">
       <BrassPanel title="Approved roadmap" status={<IndicatorLamp state={stage.state} label={stage.label} />}>
         {planProgress ? <>
-          <p>{data.graph ? `Plan version ${data.graph.plan.version}` : "Source development plan"} · {planProgress.completed}/{planProgress.planned} planned items verified complete</p>
+          <p>{data.graph ? `Plan version ${data.graph.plan.version}` : "Source development plan"} · {planProgress.completed}/{planProgress.planned} merged · {planProgress.inProgress} open / awaiting merge</p>
           <PlannedProgressTube label={`${project.displayName} approved roadmap progress`} progress={planProgress} />
-          {planProgress.added.planned > 0 && <p className="planned-progress-legend">
-            <span className="original">Original {planProgress.original.completed}/{planProgress.original.planned}</span>
-            <span className="added">Added {planProgress.added.completed}/{planProgress.added.planned}</span>
-          </p>}
-          <p>{planProgress.percent}% complete · {planProgress.remaining} planned items remaining</p>
+          <p className="planned-progress-legend">
+            <span className="merged">Green: merged ({planProgress.completed})</span>
+            <span className="underway">Yellow: written / unmerged ({planProgress.inProgress})</span>
+            <span>Empty: not started ({planProgress.notStarted})</span>
+          </p>
+          <p>{planProgress.percent}% merged · {planProgress.remaining} unmerged · {planProgress.notStarted} not started</p>
           <p className="portfolio-calculation-note">{unmapped} items await mapping or release evidence; all remain in the planned denominator.</p>
         </> : <p>No approved development plan has been registered.</p>}
       </BrassPanel>
@@ -47,7 +50,7 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
       </li>)}</ul>{data.repositories.length === 0 && <p>No repositories are linked yet.</p>}</BrassPanel>
     </div>
     <PortfolioRefresh/>
-    <BrassPanel title="Original roadmap and added work"><SourcePlan plan={data.sourcePlan} historyHref={'/projects/'+encodeURIComponent(project.slug)+'/plans'}/></BrassPanel>
+    <BrassPanel title="Full development plan"><SourcePlan plan={data.sourcePlan} historyHref={'/projects/'+encodeURIComponent(project.slug)+'/plans'}/></BrassPanel>
     <ActivityMonitor projects={[{...project,completed:data.progress?.completed||0,inProgress:data.graph?.plannedPullRequests.filter(p=>p.status==="in-progress").length||0,planned:data.progress?.planned||0,percent:data.progress?.percent||0,repositories:[],pullRequests:data.pullRequests,sourcePlan:data.sourcePlan,completionMeasured:data.progress?measured:!!data.sourcePlan?.original&&!data.sourcePlan.items.some(item=>item.scope==='original'&&item.state==='unmapped')}]}/>
     <BrassPanel title="Features" eyebrow="Delivery against linked approved work"><ProjectFeatures features={data.features ?? []} /></BrassPanel>
     {data.readiness && <ProjectReadinessPanel readiness={data.readiness} />}
@@ -58,7 +61,15 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
         const state = progress.status === "blocked" ? "blocked" : progress.status === "complete" ? "complete" : progress.status === "active" ? "active" : "neutral";
         return <li key={milestone.id}><div><IndicatorLamp label={progress.status} state={state} size="small" /><strong>{milestone.name}</strong>
           <span>{progress.completed}/{progress.planned} PRs · {progress.status}</span></div>
-          {progress.planned > 0 && <GlassTube label={`${milestone.name} milestone progress`} value={progress.completed} max={progress.planned} state={state} />}</li>;
+          {progress.planned > 0 && (() => {
+            const open = data.graph!.plannedPullRequests.filter(pr =>
+              pr.milestoneId===milestone.id && pr.status==="in-progress").length;
+            const item = summarizePlannedProgress({
+              planned: progress.planned, completed: progress.completed, inProgress:open
+            });
+            return item ? <PlannedProgressTube
+              label={`${milestone.name} milestone progress`} progress={item}/> : null;
+          })()}</li>;
       })}</ol> : <p>Milestones appear after a development plan is approved.</p>}
     </BrassPanel>
     {data.graph && <BrassPanel title="Roadmap work" eyebrow="Mapped units only advance completion">
