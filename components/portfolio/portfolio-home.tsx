@@ -1,4 +1,6 @@
 import React from "react";
+import { PodcastProductionAlert } from "../podcast-production-alert";
+import type { PodcastInquiryAlertSummary } from "../../lib/server/podcast-inquiry-alerts";
 import {
   BrassPanel,
   FlowStation,
@@ -24,10 +26,12 @@ function sourceLabel(source: PortfolioOverviewData["source"]) {
 
 export function PortfolioHome({
   overview,
-  renderServices = []
+  renderServices = [],
+  inquiryAlerts = null
 }: {
   overview: PortfolioOverviewData;
   renderServices?: readonly RenderReadout[];
+  inquiryAlerts?: PodcastInquiryAlertSummary | null;
 }) {
   const { projects, statistics } = overview;
 
@@ -41,6 +45,8 @@ export function PortfolioHome({
           production operations.
         </p>
       </header>
+
+      <PodcastProductionAlert summary={inquiryAlerts} />
 
       <section className="portfolio-stat-grid" aria-label="Live portfolio statistics">
         <article className="portfolio-stat">

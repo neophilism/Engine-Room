@@ -1062,3 +1062,27 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 .repository-progress-row .planned-progress-tube { min-width:0; }
 .planned-progress-aggregate-row { border-bottom:1px solid rgba(227,174,88,.2);padding:10px 0 12px; }
 @media(max-width:760px){ .planned-progress-aggregate-row .planned-progress-tube {grid-column:1/-1;} }
+
+
+/* Deliberate scarlet business lead alarm, distinct from routine plan-status lamps. */
+.podcast-production-alert {
+  margin: 0 0 28px; padding: clamp(22px, 3vw, 34px);
+  border: 3px solid #ff5562; border-radius: 14px;
+  background: linear-gradient(155deg, #6f0917 0%, #3a0711 60%, #170710 100%);
+  box-shadow: 0 0 0 1px rgba(255,95,115,.3), 0 12px 38px rgba(200,22,50,.32);
+  color: #fff5f5;
+}
+.podcast-production-alert-header { display: flex; align-items: flex-start; gap: 20px; }
+.podcast-production-alarm { display: grid; place-items: center; flex: 0 0 auto;
+  font-size: 2.7rem; font-weight: 900; color: #fff; border: 3px solid #fff;
+  background: #d21127; border-radius: 50%; width: 70px; height: 70px; box-shadow: 0 0 25px rgba(255,60,70,.45); }
+.podcast-production-overline { color: #ffbec3; font-size: .8rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 12px; }
+.podcast-production-alert h2 { font-size: clamp(1.45rem, 2.4vw, 2.6rem); line-height: 1.15; color: #fff; margin: 0; }
+.podcast-production-alert-names { color: #fff; font-size: 1.06rem; margin: 22px 0 12px; line-height: 1.7; }
+.podcast-production-disclaimer { color: #ffd7da; font-size: .85rem; }
+.podcast-production-alert-link { display: inline-flex; margin-top: 15px; padding: 13px 18px;
+  border: 1px solid #ffd8d8; border-radius: 9px; background: #fff; color: #7a0019 !important; font-weight: 800; }
+.podcast-production-alert-link:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+@media (max-width: 700px) { .podcast-production-alert-header { gap: 12px; }
+  .podcast-production-alarm { width: 47px; height: 47px; font-size: 2rem; }
+}
