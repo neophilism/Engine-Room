@@ -65,7 +65,11 @@ export function ProjectProgressStack({
       </header>
 
       <div className="project-quick-links">
-        <span className="project-activity">{!hasApprovedPlan ? `${project.activity?.open??0} open GitHub PRs · ${project.activity?.failedChecks??0} failed checks` : project.inProgress > 0 ? `${project.inProgress} roadmap PR${project.inProgress === 1 ? "" : "s"} underway` : `${project.activity?.open??0} open GitHub PRs · ${project.activity?.failedChecks??0} failed checks`}</span>
+        <span className="project-activity">{project.activity
+          ? `${project.activity.merged} merged / ${project.activity.total} observed GitHub PRs · ${project.activity.open} open · ${project.activity.failedChecks} failed checks`
+          : "No GitHub PR records imported yet"}</span>
+        {hasApprovedPlan && project.inProgress > 0 &&
+          <span className="project-activity">{project.inProgress} approved roadmap PR{project.inProgress === 1 ? "" : "s"} underway</span>}
         {githubRepositoryUrl(project.repositoryFullName) && <a href={githubRepositoryUrl(project.repositoryFullName)} target="_blank" rel="noopener noreferrer">Open repository ↗</a>}
       </div>
 
