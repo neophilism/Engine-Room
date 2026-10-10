@@ -9,12 +9,6 @@ import { summarizePlannedProgress } from "../../lib/domain/planned-progress";
 import { ProjectAccordions } from "./project-accordions";
 import { githubRepositoryUrl } from "../../lib/domain/portfolio-query";
 
-function progressState(completed: number, inProgress: number, planned: number) {
-  if (planned > 0 && completed === planned) return "complete" as const;
-  if (inProgress > 0) return "active" as const;
-  return "live" as const;
-}
-
 export function ProjectProgressStack({
   project,
   nameIndent = 0
