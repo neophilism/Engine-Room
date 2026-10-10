@@ -3,6 +3,7 @@ import type { PortfolioProjectOverview } from "../../lib/domain/portfolio-overvi
 import { SourcePlan } from "../projects/source-plan";
 import { ProjectFeatures } from "../projects/project-features";
 import {projectDashboardHref} from '../../lib/domain/project-dashboard';
+import { summarizePlannedProgress } from "../../lib/domain/planned-progress";
 
 export function ProjectAccordions({
   project
@@ -10,6 +11,7 @@ export function ProjectAccordions({
   project: PortfolioProjectOverview;
 }) {
   const repositoryCount = project.repositories.length || (project.repositoryFullName ? 1 : 0);
+  const progress = summarizePlannedProgress(project);
 
   return (
     <div className="project-accordions">
@@ -44,12 +46,12 @@ export function ProjectAccordions({
               <dd>{repositoryCount}</dd>
             </div>
             <div>
-              <dt>Open GitHub PRs</dt>
-              <dd>{project.activity?.open??project.inProgress}</dd>
+              <dt>Planned work complete</dt>
+              <dd>{progress ? `${progress.completed}/${progress.planned}` : "N/A"}</dd>
             </div>
             <div>
               <dt>PRs remaining</dt>
-              <dd>{project.planned>0&&project.completionMeasured!==false?Math.max(project.planned - project.completed, 0):"N/A"}</dd>
+              <dd>{progress?.remaining ?? "N/A"}</dd>
             </div>
           </dl>
         </div>

@@ -52,18 +52,18 @@ export function PortfolioHome({
           <strong>{statistics.activeProjects}</strong>
         </article>
         <article className="portfolio-stat">
-          <span>Mapped original items merged</span>
+          <span>Planned items completed</span>
           <strong>
             {statistics.plannedRoadmapPrs > 0 ? `${statistics.completedRoadmapPrs}/${statistics.plannedRoadmapPrs}` : "N/A"}
           </strong>
         </article>
         <article className="portfolio-stat">
-          <span>Mapped roadmap progress</span>
+          <span>Planned roadmap progress</span>
           <strong>{statistics.plannedRoadmapPrs > 0 ? `${statistics.percent}%` : "N/A"}</strong>
         </article>
       </section>
 
-      <p className="portfolio-calculation-note">Source documents: {projects.filter(p=>p.planned>0||p.sourcePlan?.documents.length).length}/{projects.length} projects. Fully mapped original completion: {projects.filter(p=>p.planned>0&&p.completionMeasured!==false).length}/{projects.length}. The aggregate covers verified original mappings; unmapped work and production health remain separate.</p>
+      <p className="portfolio-calculation-note">Source documents: {projects.filter(p=>p.planned>0||p.sourcePlan?.documents.length).length}/{projects.length} projects. Fully mapped original completion: {projects.filter(p=>p.planned>0&&p.completionMeasured!==false).length}/{projects.length}. Every documented planned item counts in the denominator; uncreated or unmapped PRs stay incomplete, not excluded. Green is original planned work and amber represents added planned work.</p>
       <GitHubSourceReadout />
       <ActivityMonitor projects={projects} />
       <PortfolioProgressMachine projects={projects} />

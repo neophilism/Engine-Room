@@ -16,7 +16,7 @@ describe("project comparison", () => {
     expect(within(row).getByText("15")).toBeInTheDocument();
     expect(within(row).getByRole("progressbar")).toHaveAttribute("aria-valuemax", "20");
     const unplanned = screen.getByRole("rowheader", { name: "Beta" }).closest("tr")!;
-    expect(within(unplanned).getByText("Not measured")).toBeInTheDocument();
+    expect(within(unplanned).getAllByText("N/A").length).toBeGreaterThan(0);
     expect(within(unplanned).queryByRole("progressbar")).not.toBeInTheDocument();
   });
   it("applies the same search and lifecycle controls as the portfolio home", () => {
@@ -29,4 +29,19 @@ describe("project comparison", () => {
     render(<ProjectComparison overview={{ ...overview, source: "error", projects: [] }} />);
     expect(screen.getByText("Portfolio data is unavailable. Refresh to try again.")).toBeInTheDocument();
   });
+  it("does not turn nine merged PRs among ten mapped PRs into 90% of a 100-PR plan", () => {
+    const partial = {
+      id: "hundred", displayName: "Hundred Item Plan", status: "active-development" as const,
+      planned: 100, completed: 9, inProgress: 1, completionMeasured: false,
+      percent: 9, repositories: []
+    };
+    render(<ProjectComparison overview={{ source: "database", projects: [partial], statistics: calculatePortfolioStatistics([partial]) }} />);
+    const row = screen.getByRole("rowheader", { name: "Hundred Item Plan" }).closest("tr")!;
+    const bar = within(row).getByRole("progressbar");
+    expect(bar).toHaveAttribute("aria-valuenow", "9");
+    expect(bar).toHaveAttribute("aria-valuemax", "100");
+    expect(within(row).getByText("9%")).toBeInTheDocument();
+    expect(within(row).getByText("91")).toBeInTheDocument();
+  });
+
 });

@@ -1042,7 +1042,7 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 .monitor-failing {background:#9f35251c;}
 .activity-monitor.compact .monitor-table td {padding:.35rem .6rem;}
 .original-work {color:#9ecc9d;}
-.added-work {color:#9cc6ec;}
+.added-work {color:#e2aa43;}
 .source-plan-items {display:grid;gap:.65rem;margin-top:1rem;}
 .source-plan-items li {display:flex;flex-wrap:wrap;gap:.5rem;align-items:baseline;}
 .source-plan-items li strong {flex:1 1 22rem;}
@@ -1054,3 +1054,11 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 
 .plan-history-version { margin: 1rem 0; padding: 1rem; border: 1px solid var(--brass); }
 .plan-history-version pre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }
+
+/* Keep plan totals and N/A inside the portfolio cards at every viewport. */
+.project-progress-heading .count { min-width:0; overflow-wrap:anywhere; }
+.project-progress-heading .percentage { text-align:right; white-space:nowrap; min-width:3.2rem; }
+.project-progress-stack { min-width:0; }
+.repository-progress-row .planned-progress-tube { min-width:0; }
+.planned-progress-aggregate-row { border-bottom:1px solid rgba(227,174,88,.2);padding:10px 0 12px; }
+@media(max-width:760px){ .planned-progress-aggregate-row .planned-progress-tube {grid-column:1/-1;} }

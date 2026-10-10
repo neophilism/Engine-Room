@@ -7,7 +7,9 @@ import Link from "next/link";
 import { projectDashboardHref } from "../../lib/domain/project-dashboard";
 import type { PortfolioOverviewData } from "../../lib/domain/portfolio-overview";
 import { defaultPortfolioQuery, githubRepositoryUrl, queryPortfolio } from "../../lib/domain/portfolio-query";
-import { BrassPanel, GlassTube } from "../machine";
+import { BrassPanel } from "../machine";
+import { PlannedProgressTube } from "../portfolio/planned-progress-tube";
+import { summarizePlannedProgress } from "../../lib/domain/planned-progress";
 import { PortfolioControls } from "../portfolio/portfolio-controls";
 import { LifecycleLanes } from "./lifecycle-lanes";
 
@@ -21,19 +23,24 @@ export function ProjectComparison({ overview }: { overview: PortfolioOverviewDat
     {visible.length > 0 ? <div className="comparison-table-scroll" tabIndex={0} role="region" aria-label="Scrollable project comparison">
       <table className="comparison-table">
         <caption>Compare approved roadmaps and current lifecycle stages</caption>
-        <thead><tr><th scope="col">Project</th><th scope="col">Lifecycle</th><th scope="col">Repositories</th><th scope="col">Approved PRs</th>
-          <th scope="col">Merged</th><th scope="col">Underway</th><th scope="col">Remaining</th><th scope="col">Progress</th></tr></thead>
-        <tbody>{visible.map((project) => <tr key={project.id}>
+        <thead><tr><th scope="col">Project</th><th scope="col">Lifecycle</th><th scope="col">Repositories</th><th scope="col">Planned PRs</th>
+          <th scope="col">Completed</th><th scope="col">Remaining</th><th scope="col">Progress</th></tr></thead>
+        <tbody>{visible.map((project) => {
+          const progress = summarizePlannedProgress(project);
+          return <tr key={project.id}>
           <th scope="row"><strong className={projectNameIndent(project, visible) > 0 ? "project-name-indent" : undefined}><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>{project.summary && <p>{project.summary}</p>}
             {githubRepositoryUrl(project.repositoryFullName) && <a href={githubRepositoryUrl(project.repositoryFullName)} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}</th>
           <td>{project.status.replaceAll("-", " ")}</td>
           <td>{project.repositories.length || (project.repositoryFullName ? 1 : 0)}</td>
-          <td>{project.planned || "No approved plan"}</td><td>{project.planned > 0 && project.completionMeasured!==false ? project.completed : "—"}</td><td>{project.planned > 0 && project.completionMeasured!==false ? project.inProgress : "—"}</td><td>{project.planned > 0 && project.completionMeasured!==false ? project.planned - project.completed : "—"}</td>
-          <td>{project.planned > 0 && project.completionMeasured!==false ? <><GlassTube label={`${project.displayName} comparison progress`} value={project.completed} max={project.planned}
-            state={project.completed === project.planned ? "complete" : "active"} size="compact" /><span>{project.percent}%</span></> : "Not measured"}</td>
-        </tr>)}</tbody>
+          <td>{progress?.planned ?? "N/A"}</td>
+          <td>{progress?.completed ?? "—"}</td>
+          <td>{progress?.remaining ?? "—"}</td>
+          <td>{progress
+            ? <><PlannedProgressTube compact label={`${project.displayName} comparison progress`} progress={progress} /><span>{progress.percent}%</span></>
+            : "N/A"}</td>
+        </tr>})}</tbody>
       </table>
     </div> : <p className="portfolio-empty-state">{overview.source === "error" ? "Portfolio data is unavailable. Refresh to try again." : overview.projects.length === 0 ? "No registered projects are available to compare yet." : "No projects match these filters."}</p>}
-    <p className="portfolio-calculation-note">Progress measures approved roadmap work. A lifecycle stage such as live or beta remains a separate signal.</p>
+    <p className="portfolio-calculation-note">Progress is completed planned units divided by all planned units in the development plan, even if most planned PRs have not been opened or mapped. Green is original work; amber is documented added work.</p>
   </BrassPanel>;
 }
