@@ -17,13 +17,13 @@ export function PortfolioProgressMachine({ projects }: { projects: readonly Port
   const state = planned === 0 ? "neutral" : completed === planned && !incomplete ? "complete" : "active";
 
   return (
-    <BrassPanel title="Mapped Roadmap Progress" eyebrow="Approved roadmap coverage" className="portfolio-total-machine"
+    <BrassPanel title="Development Plan Progress" eyebrow="Documented planned work" className="portfolio-total-machine"
       status={<IndicatorLamp state={state} label={planned === 0 ? "Awaiting approved roadmaps" : incomplete ? "Coverage incomplete" : completed === planned ? "Mapped work merged" : "Mapped work underway"} />}>
       {planned === 0 ? <p>No approved roadmap work is available yet.</p> : (
         <MachineGrid label="Portfolio progress instruments" columns={3}>
           <Gauge label="Merged roadmap PRs" value={completed} max={planned} state={state} unit=" PRs" />
           <div className="portfolio-total-readout">
-            <span className="machine-engraved-label">Mapped roadmap completion</span>
+            <span className="machine-engraved-label">Total planned completion</span>
             <PlannedProgressTube label="Total portfolio roadmap progress" progress={aggregate} />
             <strong>{workload.percent}% complete</strong>
             <span>{completed} of {planned} planned items verified complete</span>
