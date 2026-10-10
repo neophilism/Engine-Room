@@ -19,6 +19,14 @@ describe("operational measurements", () => {
   });
   it("rejects impossible percentages and nonfinite values before persistence", () => {
     expect(() => validateOperationSample(sample("cpu-percent", 101))).toThrow("Percent metrics");
+    expect(() => validateOperationSample(sample("worker-heartbeat-percent", 110))).toThrow("Percent metrics");
     expect(() => validateOperationSample(sample("latency-p95-ms", Infinity))).toThrow("Invalid operational");
+  });
+  it("displays worker presence without treating it as website availability", () => {
+    const workerOnly = [sample("worker-heartbeat-percent", 100)];
+    const assessment = assessProjectOperations("p", "production", workerOnly, now);
+    expect(assessment.readings["worker-heartbeat-percent"].value).toBe(100);
+    expect(assessment.readings["availability-percent"].freshness).toBe("unknown");
+    expect(assessment.health).toBe("unknown");
   });
 });
