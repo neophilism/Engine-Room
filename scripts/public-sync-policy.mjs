@@ -1,5 +1,11 @@
 /** Pure production sync policy. Off for test and non-production by default. */
 export const PUBLIC_SYNC_INTERVAL_MS = 2 * 60 * 60 * 1000;
+export const AUTHENTICATED_SYNC_INTERVAL_MS = 15 * 60 * 1000;
+
+/** Fast polling is allowed only with server-side GitHub credentials. */
+export function publicSyncIntervalMs(env) {
+  return env.GITHUB_READ_TOKEN?.trim() ? AUTHENTICATED_SYNC_INTERVAL_MS : PUBLIC_SYNC_INTERVAL_MS;
+}
 
 export function shouldRunPublicSync(env, testServer = false) {
   if (testServer) return false;
