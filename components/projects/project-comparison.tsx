@@ -90,7 +90,7 @@ export function ProjectComparison({ overview }: { overview: PortfolioOverviewDat
         <span className="planned-progress-legend">
           <span className="merged">Green: merged</span>
           <span className="underway">Yellow: open / unmerged</span>
-          <span>Empty: not started</span>
+          <span className="unstarted">Empty: not started</span>
         </span>
         All planned work, including additions, shares the same denominator.
         An open PR counts yellow regardless of whether its tests are still running or already passing.
