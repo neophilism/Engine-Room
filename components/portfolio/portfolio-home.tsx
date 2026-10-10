@@ -30,6 +30,10 @@ export function PortfolioHome({
   renderServices?: readonly RenderReadout[];
 }) {
   const { projects, statistics } = overview;
+  const observed = projects.reduce((total, project) => total + (project.activity?.total ?? 0), 0);
+  const merged = projects.reduce((total, project) => total + (project.activity?.merged ?? 0), 0);
+  const open = projects.reduce((total, project) => total + (project.activity?.open ?? 0), 0);
+  const represented = projects.filter(project => project.activity !== undefined).length;
 
   return (
     <main className="content">
@@ -42,6 +46,20 @@ export function PortfolioHome({
         </p>
       </header>
 
+      <section aria-label="Recorded GitHub development activity">
+        <div className="section-heading">
+          <div><p className="eyebrow">Verified repository activity</p><h2>Actual GitHub work</h2></div>
+        </div>
+        <p className="portfolio-calculation-note">These counts come from stored, source-linked GitHub pull requests. They measure observed activity, not remaining roadmap work, deploy readiness or complete GitHub coverage.</p>
+        <div className="portfolio-stat-grid">
+          <article className="portfolio-stat"><span>Observed GitHub PR records</span><strong>{observed > 0 ? observed : "N/A"}</strong></article>
+          <article className="portfolio-stat"><span>Observed merged PRs</span><strong>{observed > 0 ? merged : "N/A"}</strong></article>
+          <article className="portfolio-stat"><span>Observed open PRs</span><strong>{observed > 0 ? open : "N/A"}</strong></article>
+          <article className="portfolio-stat"><span>Projects with PR records</span><strong>{represented}/{projects.length}</strong></article>
+        </div>
+      </section>
+
+      <p className="portfolio-calculation-note">Roadmap completion below is only available where source plans and GitHub mappings are verified. A project may have real development activity even when its plan completion is N/A.</p>
       <section className="portfolio-stat-grid" aria-label="Live portfolio statistics">
         <article className="portfolio-stat">
           <span>Projects tracked</span>
