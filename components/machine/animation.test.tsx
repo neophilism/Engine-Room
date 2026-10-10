@@ -1,8 +1,7 @@
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { FlowStation, Gauge, GlassTube, IndicatorLamp, Machine, MachineFlow, MachineManifold, MachineMotionProvider, MachineMotionToggle, Pipe } from ".";
-import { MachinePreview } from "./machine-preview";
+import { FlowStation, Gauge, GlassTube, IndicatorLamp, Machine, MachineFlow, MachineManifold, Pipe } from ".";
 import { machineStates, type MachineState } from "../../lib/design/theme";
 
 describe("machine state composition", () => {
@@ -70,21 +69,3 @@ describe("machine state composition", () => {
   });
 });
 
-describe("motion controls", () => {
-  it("pauses motion while machine updates and controls remain functional", () => {
-    const { container } = render(<MachineMotionProvider><MachineMotionToggle /><MachinePreview /></MachineMotionProvider>);
-    const toggle = screen.getByRole("button", { name: "Pause machine motion" });
-    expect(container.querySelector(".machine-motion-root")).toHaveAttribute("data-machine-motion", "system");
-    fireEvent.click(toggle);
-    expect(toggle).toHaveAttribute("aria-pressed", "true");
-    expect(container.querySelector(".machine-motion-root")).toHaveAttribute("data-machine-motion", "paused");
-    fireEvent.change(screen.getByRole("combobox", { name: "Preview machine state" }), { target: { value: "blocked" } });
-    expect(screen.getByRole("status")).toHaveTextContent("Blocked");
-    fireEvent.click(screen.getByRole("button", { name: "Run preview: closed" }));
-    expect(screen.getByRole("status")).toHaveTextContent("Active");
-    expect(screen.getByRole("meter")).toHaveAttribute("aria-valuenow", "65");
-    fireEvent.click(toggle);
-    expect(toggle).toHaveAttribute("aria-pressed", "false");
-    expect(container.querySelector(".machine-motion-root")).toHaveAttribute("data-machine-motion", "system");
-  });
-});

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { AppShell } from "../components/app-shell";
-import { MachineMotionProvider } from "../components/machine/machine-motion";
 import "./design-tokens.css";
 import "./globals.css";
 import "../components/machine/machine.css";
 import "../components/portfolio/planned-progress.css";
+import "./workspace.css";
 
 export const metadata: Metadata = {
   title: {
@@ -22,9 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <MachineMotionProvider>
-          <AppShell>{children}</AppShell>
-        </MachineMotionProvider>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );

@@ -1,0 +1,489 @@
+/*
+ * Engine Room — compact workspace interface.
+ *
+ * The retired mechanical theme remains in the codebase for future use, but
+ * this stylesheet is loaded last and deliberately turns its presentation into
+ * quiet, accessible surfaces. Functional plans, charts, alerts and navigation
+ * continue to use their existing components and data sources.
+ */
+:root {
+  color-scheme: dark;
+  --er-coal-1000: #0b1119;
+  --er-coal-950: #0e151f;
+  --er-coal-900: #101823;
+  --er-coal-850: #17212d;
+  --er-coal-800: #1b2734;
+  --er-coal-750: #243242;
+  --er-bg-canvas: #0e151e;
+  --er-bg-deep: #0b1119;
+  --er-surface-1: #171f2b;
+  --er-surface-2: #1c2735;
+  --er-surface-raised: #253445;
+  --er-text-primary: #ebf2fa;
+  --er-text-secondary: #a9b9c8;
+  --er-text-tertiary: #8296a9;
+  --er-border-metal: rgba(148, 166, 189, .18);
+  --er-border-metal-strong: rgba(148, 166, 189, .27);
+  --er-border-glass: rgba(148, 166, 189, .14);
+  --er-accent-metal: #89a7be;
+  --er-accent-light: #7dd9ca;
+  --er-accent-light-soft: #4aa994;
+  --er-teal-400: #7dd9ca;
+  --er-teal-600: #4aa994;
+  --er-teal-800: #226e65;
+  --er-ivory-100: #ebf2fa;
+  --er-font-display: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --er-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --er-font-instrument: "SFMono-Regular", Consolas, Menlo, monospace;
+  --er-material-cast-iron: #111a26;
+  --er-material-brass: #537186;
+  --er-material-brass-dark: #374e61;
+  --er-material-smoked-glass: #1b2734;
+  --er-material-patina: none;
+  --er-machine-backdrop: #0e151e;
+  --er-inset-metal: none;
+  --er-inset-glass: none;
+  --er-shadow-low: 0 2px 8px rgba(0, 0, 0, .09);
+  --er-shadow-medium: 0 8px 24px rgba(0, 0, 0, .13);
+  --er-shadow-high: 0 10px 30px rgba(0, 0, 0, .16);
+  --er-glow-teal-sm: none;
+  --er-glow-teal-md: none;
+  --er-glow-teal-lg: none;
+  --er-letter-label: .065em;
+  --er-letter-engraved: .055em;
+  --er-radius-md: 10px;
+  --er-radius-lg: 12px;
+  --er-content-max: 1680px;
+  --sidebar-width: 218px;
+  --topbar-height: 62px;
+  --er-focus-ring: 0 0 0 2px #0e151e, 0 0 0 4px #73cbbd;
+  --ink: #0e151e;
+  --ink-deep: #0b1119;
+  --panel: #171f2b;
+  --panel-2: #1c2735;
+  --brass: #71889d;
+  --brass-deep: #3b5268;
+  --brass-hi: #b9cddd;
+  --teal: #82d5c7;
+  --teal-soft: #53ae9d;
+  --teal-deep: #236d65;
+  --text: #ebf2fa;
+  --muted: #a9b9c8;
+}
+
+html, body { background: #0e151e; }
+body { font-family: var(--er-font-body); background: #0e151e; line-height: 1.5; }
+::selection { background: rgba(125, 217, 202, .22); color: #fff; }
+* { scrollbar-color: #394b5c #111923; }
+::-webkit-scrollbar-track { background: #111923; }
+::-webkit-scrollbar-thumb { background: #394b5c; border-color: #111923; }
+:focus-visible { outline: 2px solid #7dd9ca; outline-offset: 2px; box-shadow: none; }
+
+/* Shell and navigation: one calm boundary, no coils, rivets or status lamps. */
+.app-shell { background: var(--er-bg-canvas); }
+.app-sidebar {
+  padding: 18px 12px 14px;
+  background: #121b27;
+  border-right: 1px solid var(--er-border-metal);
+  box-shadow: none;
+}
+.app-sidebar::after, .app-topbar::after,
+.app-brand-mark::before, .app-brand-mark::after { content: none; display: none; }
+.app-brand {
+  gap: 11px; min-height: 56px; padding: 8px 10px;
+  background: none; border: 0; border-radius: 10px; box-shadow: none;
+}
+.app-brand:hover { background: rgba(135, 160, 186, .07); }
+.app-brand-mark {
+  position: static; width: 35px; height: 35px; flex: 0 0 35px;
+  display: grid; place-items: center; background: #254d56;
+  border: 1px solid #427880; border-radius: 10px;
+  color: #c1f5ed; font: 800 .75rem var(--er-font-body);
+  box-shadow: none;
+}
+.app-brand strong, .mobile-drawer-heading strong {
+  font: 750 .92rem var(--er-font-body);
+  letter-spacing: -.015em; text-transform: none; color: #eef4fc;
+}
+.app-brand small, .mobile-drawer-heading small,
+.profile-copy small { margin-top: 1px; font-size: .71rem; }
+.app-navigation { margin-top: 20px; gap: 3px; }
+.app-nav-link {
+  grid-template-columns: 23px minmax(0,1fr); gap: 11px;
+  min-height: 39px; padding: 7px 11px; border: 0;
+  color: #a6b7c7; border-radius: 8px;
+  transition: background .14s ease, color .14s ease;
+}
+.app-nav-link:hover { background: #1c2938; color: #edf4fa; border: 0; }
+.app-nav-link.active {
+  background: #263b4a; color: #f3fafc; border: 0;
+  box-shadow: inset 3px 0 0 #69c6b7;
+}
+.app-nav-icon { color: #90a7bd; }
+.app-nav-link.active .app-nav-icon { color: #7ed9cb; }
+.app-nav-icon svg { width: 17px; height: 17px; }
+.app-nav-lamp, .app-sidebar-footer, .mobile-drawer-status { display: none; }
+.app-nav-label { font-size: .845rem; font-weight: 560; }
+
+.app-topbar {
+  min-height: 62px;
+  grid-template-columns: minmax(115px,.75fr) minmax(220px, 1.6fr) auto;
+  padding: 10px 24px;
+  gap: 24px;
+  background: rgba(17, 25, 36, .98); backdrop-filter: none;
+  border-bottom: 1px solid var(--er-border-metal); box-shadow: none;
+}
+.app-topbar-leading, .app-topbar-actions { gap: 11px; }
+.route-readout strong { font-size: .89rem; color: #e9f0f8; font-weight: 690; }
+.route-readout-label { display: none; }
+.app-topbar-center {
+  height: 38px; padding: 0 12px; gap: 8px;
+  grid-template-columns: 16px minmax(0,1fr) auto;
+  border: 1px solid #314152; border-radius: 8px;
+  background: #192432; box-shadow: none;
+}
+.app-topbar-center:focus-within { border-color: #7bbfb5; }
+.search-symbol { font-size: 1rem; color: #9cb0c0; }
+.global-search { font-size: .84rem; color: #e7f0f8; }
+.global-search::placeholder { color: #92a5b6; }
+.app-topbar-center kbd {
+  padding: 2px 5px; color: #91a6b8; background: #1d2c3b;
+  border: 1px solid #35475a; border-radius: 5px; font-size: .67rem;
+}
+.live-readout {
+  min-width: 0; border: 1px solid #304355;
+  padding: 5px 9px; gap: 7px; border-radius: 999px; background: #1b2937;
+}
+.live-readout small { display: none; }
+.live-readout strong { margin: 0; font-size: .74rem; font-weight: 650; }
+.live-readout .system-light { width: 7px; height: 7px; box-shadow: none; }
+.topbar-icon-button, .mobile-menu-button, .drawer-close-button {
+  background: transparent; color: #b2c4d5; border-color: #344556;
+  border-radius: 9px; box-shadow: none;
+}
+.topbar-icon-button { width: 34px; height: 34px; }
+.topbar-icon-button:hover, .profile-control:hover { background: #203043; color: #f2f8fb; }
+.topbar-icon-button svg { width: 18px; height: 18px; }
+.profile-control { gap: 7px; padding: 4px; border-radius: 8px; }
+.profile-monogram {
+  width: 32px; height: 32px; border-radius: 9px;
+  background: #293c4a; color: #d6e9f6; border: 1px solid #465b6d;
+  font: 730 .73rem var(--er-font-body); box-shadow: none;
+}
+.profile-copy strong { font-size: .77rem; font-weight: 650; }
+
+/* Content hierarchy: concise titles and restrained surfaces. */
+.content { width: min(var(--er-content-max), 100%); padding: 24px clamp(18px, 2.6vw, 36px) 42px; }
+.hero { max-width: none; margin: 0 0 20px; }
+.hero h1, h1 { font: 740 clamp(1.7rem, 2.45vw, 2.4rem)/1.18 var(--er-font-body); letter-spacing: -.045em; }
+h2 { font: 680 clamp(1.06rem, 1.5vw, 1.35rem)/1.28 var(--er-font-body); letter-spacing: -.025em; }
+.eyebrow, .machine-engraved-label {
+  margin-bottom: 5px; color: #91a9bd;
+  font-size: .68rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; text-shadow: none;
+}
+.hero p:last-child { max-width: 74ch; font-size: .86rem; margin: 6px 0 0; }
+.panel, .machine-panel {
+  padding: 0; background: #161f2b;
+  border: 1px solid var(--er-border-metal);
+  border-radius: 11px; box-shadow: none; overflow: hidden;
+}
+.machine-panel::before { content: none; display: none; }
+.machine-panel-header {
+  min-height: 56px; padding: 16px 19px 13px;
+  gap: 10px; border-bottom: 1px solid var(--er-border-metal);
+}
+.machine-panel-heading h2 { font: 690 1.14rem/1.3 var(--er-font-body); letter-spacing: -.02em; }
+.machine-panel-body { padding: 17px 19px 19px; }
+.panel { padding: 17px 19px; }
+.section-heading { gap: 12px; margin-bottom: 12px; }
+.section-heading h2 { font-size: 1.14rem; }
+.panel a, .machine-panel a, .comparison-table a,
+.project-repository-links a, .project-progress-heading strong a {
+  color: #83d8d6; text-decoration: none;
+}
+.panel a:hover, .machine-panel a:hover, .comparison-table a:hover,
+.project-repository-links a:hover, .project-progress-heading strong a:hover { text-decoration: underline; }
+
+/* Overall dashboard: primary actions and project bars first. */
+.dashboard-home-hero {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap;
+}
+.dashboard-data-chip {
+  margin-top: 12px; padding: 5px 10px; white-space: nowrap;
+  border-radius: 999px; background: #2a3544;
+  color: #bdcbd9; border: 1px solid #3b4b5e;
+  font-size: .73rem; font-weight: 650;
+}
+.dashboard-data-chip.is-connected { color: #8ee3be; background: #17362f; border-color: #2e6557; }
+.portfolio-stat-grid { gap: 10px; margin: 0 0 18px; }
+.portfolio-stat {
+  padding: 15px 16px; background: #171f2b;
+  border: 1px solid var(--er-border-metal); border-radius: 10px;
+  box-shadow: none;
+}
+.portfolio-stat span { color: #a7b7c8; font-size: .7rem; font-weight: 540; letter-spacing: 0; text-transform: none; }
+.portfolio-stat strong {
+  margin-top: 5px; font: 740 clamp(1.25rem, 2.1vw, 1.85rem)/1.25 var(--er-font-body);
+  color: #edf4f8; letter-spacing: -.045em;
+}
+.dashboard-primary-section > .machine-panel { margin: 0; }
+.dashboard-coverage-caption {
+  display: inline-flex; align-items: center;
+  color: #a6b9c9; font-size: .75rem; font-weight: 560;
+}
+.portfolio-calculation-note { font-size: .755rem; line-height: 1.55; }
+.dashboard-source-footnote { margin: 12px 0 0; }
+.portfolio-refresh {
+  margin: 9px 0 18px; gap: 8px; font-size: .72rem;
+  justify-content: flex-end; color: #95a8b8;
+}
+.portfolio-control-button {
+  padding: 7px 11px; min-height: 34px; border-radius: 7px;
+  border: 1px solid #3a4a5d; background: #223040;
+  color: #e3edf5; font-size: .78rem;
+}
+.portfolio-control-button:hover { background: #2a3c4e; border-color: #647a8d; }
+.portfolio-controls { gap: 10px; margin-bottom: 10px; }
+.portfolio-controls label { flex-basis: 150px; gap: 4px; font-size: .75rem; color: #b3c1cf; }
+.portfolio-controls label:first-child { flex-basis: 250px; }
+.portfolio-controls input, .portfolio-controls select {
+  min-height: 37px; background: #1d2a39; border: 1px solid #36485a;
+  padding: 7px 10px; border-radius: 7px; font-size: .82rem;
+}
+.portfolio-controls input:focus, .portfolio-controls select:focus {
+  outline: 1px solid #75cabb; border-color: #75cabb;
+}
+.portfolio-result-count { margin: 8px 0 11px; color: #92a5b6; font-size: .74rem; }
+.portfolio-empty-state { background: #192636; border-color: #3a4c5e; padding: 18px; }
+
+/* Compact accordion-like rows; exact milestone totals and data stay intact. */
+.project-list { gap: 5px; }
+.project-progress-stack {
+  padding: 10px 12px; gap: 4px; border-radius: 8px;
+  border: 1px solid transparent; border-bottom-color: #283545;
+  background: transparent;
+}
+.project-progress-stack:hover { background: #1d2a39; border-color: #324659; }
+.project-progress-heading { grid-template-columns: 25px minmax(0,1fr) auto 60px; gap: 9px; }
+.project-progress-heading strong { font-size: .87rem; font-weight: 630; }
+.project-progress-heading strong a { color: #bfeaf0; }
+.project-progress-heading .count { color: #a5b7c7; font-size: .77rem; }
+.project-progress-heading .percentage { font-size: .8rem; color: #b5f0df; font-weight: 680; }
+.project-quick-links { margin: 0 0 3px 34px; gap: 9px; font-size: .71rem; }
+.project-quick-links .project-activity { font-size: .73rem; }
+.project-quick-links a, .repository-progress-name a { color: #8ccfdf; }
+.repository-progress-list { gap: 4px; padding-left: 34px; }
+.repository-progress-row { grid-template-columns: minmax(145px, .9fr) minmax(120px,2fr) auto 48px; gap: 9px; }
+.repository-progress-name, .repository-pr-count, .repository-percent { font-size: .73rem; }
+.repository-percent { color: #b5f0df; font-weight: 680; }
+.repository-progress-row .planned-progress-tube { min-width: 0; }
+.planned-progress-aggregate-row { border-bottom-color: #344657; }
+.disclosure {
+  display: grid; place-items: center; width: 23px; height: 23px;
+  border: 0; border-radius: 6px; color: #96a8b9;
+  background: transparent; font-size: .76rem;
+}
+.disclosure:hover { background: #2c3e52; color: #eff6fb; }
+.project-accordion, .project-expansion-facts { background: #1a2735; border-color: #34475a; }
+.project-accordion summary { color: #c5d6e5; letter-spacing: 0; font-weight: 620; }
+.project-accordion summary::after { color: #9bb1c2; }
+.project-accordions { margin-left: 34px; }
+.project-at-a-glance dt, .project-expansion-facts dt { letter-spacing: .04em; }
+.project-progress-heading .count, .project-quick-links { overflow-wrap: break-word; }
+
+/* Bars show merged green + open yellow with a shared total denominator. */
+.planned-progress-tube {
+  height: 12px; min-width: 75px;
+  grid-template-columns: 0 minmax(0,1fr) 0;
+  filter: none; background: #2a3949; border-radius: 999px;
+  overflow: hidden;
+}
+.planned-progress-compact { height: 10px; grid-template-columns: 0 minmax(0,1fr) 0; }
+.planned-progress-endcap, .planned-progress-reflection, .planned-progress-boundary { display: none; }
+.planned-progress-chamber {
+  border: 0; border-radius: 999px; background: #293747; box-shadow: none;
+}
+.planned-progress-merged-fill,.planned-progress-open-fill {
+  top: 0; bottom: 0; height: 100%; border-radius: 999px;
+  box-shadow: none; background: #59bca1;
+}
+.planned-progress-open-fill { background: #dfac59; }
+.planned-progress-legend { margin: 2px 0 6px; gap: 8px; font-size: .71rem; }
+.repository-unmeasured-plan {
+  background: #253444; color: #b6c2d0; border-color: #435367;
+  font-size: .7rem; min-height: 22px; border-radius: 6px;
+}
+
+/* Secondary monitoring is available without dominating the first screen. */
+.dashboard-operations-details {
+  border: 1px solid var(--er-border-metal); border-radius: 10px;
+  background: #171f2b; margin-top: 16px; overflow: hidden;
+}
+.dashboard-operations-details > summary {
+  list-style: none; cursor: pointer; display: flex;
+  align-items: center; justify-content: space-between;
+  gap: 12px; padding: 16px 19px;
+}
+.dashboard-operations-details > summary::-webkit-details-marker { display: none; }
+.dashboard-operations-details > summary:hover { background: #202d3a; }
+.dashboard-operations-details > summary strong { font-size: .9rem; font-weight: 660; }
+.dashboard-operations-details > summary small { color: #9fb2c2; font-size: .75rem; display: block; margin-top: 2px; }
+.dashboard-operations-chevron { color: #abbfd1; font-size: 1.35rem; transition: transform .16s ease; }
+.dashboard-operations-details[open] .dashboard-operations-chevron { transform: rotate(180deg); }
+.dashboard-operations-content { padding: 0 14px 16px; }
+.dashboard-operations-content > .machine-panel,
+.dashboard-operations-content > .panel,
+.dashboard-operations-content > .render-readouts { margin: 12px 0 !important; }
+.dashboard-operations-content .portfolio-stat-grid { margin-top: 12px; }
+.render-readouts {
+  background: #171f2b; border-color: var(--er-border-metal); border-radius: 10px;
+  padding: 19px; margin: 14px 0;
+}
+.render-readout-card {
+  padding: 14px; background: #1d2a39;
+  border-color: #35475a; border-radius: 8px;
+}
+.render-readout-source, .render-readouts-source {
+  background: #243343; color: #c4d5e2; border: 1px solid #3c4e60;
+}
+.render-readout-provider, .render-readout-card h3 { color: #dfebf4; }
+.monitor-table th { background: #223041; color: #bac9d7; }
+.monitor-table td { border-top-color: #344759; }
+.monitor-table-wrap { border: 1px solid #304357; border-radius: 8px; }
+
+/* Four-column project comparison instead of redundant counts and tile banks. */
+.comparison-table-scroll { border: 1px solid #344455; border-radius: 9px; }
+.comparison-table { min-width: 620px; font-size: .82rem; }
+.comparison-table caption { padding: 10px 12px; font-size: .73rem; }
+.comparison-table th, .comparison-table td { padding: 12px 13px; border-bottom: 1px solid #2c3b4b; }
+.comparison-table thead th {
+  background: #1d2a38; color: #9fb3c5; font-size: .73rem;
+  letter-spacing: 0; font-weight: 660;
+}
+.comparison-table tbody th { width: 43%; max-width: none; min-width: 220px; }
+.comparison-table tbody tr:hover { background: #1d2a39; }
+.comparison-table tbody th p {
+  color: #93a8ba; font-size: .75rem; line-height: 1.35;
+  margin: 2px 0 0; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; max-width: 45ch;
+}
+.comparison-project-name { display: flex; align-items: baseline; gap: 9px; }
+.comparison-table tbody th a { font-size: .84rem; margin: 0; }
+.comparison-github-link { font-size: .9rem !important; color: #8aa7b8 !important; }
+.comparison-stage {
+  display: inline-block; white-space: nowrap; text-transform: capitalize;
+  padding: 3px 8px; background: #293949; border-radius: 6px;
+  color: #b8cad9; font-size: .71rem;
+}
+.comparison-work-count strong {
+  color: #eaf2f8; font-weight: 720; font-variant-numeric: tabular-nums;
+}
+.comparison-work-count small { display: block; color: #94a8b9; font-size: .72rem; margin-top: 2px; }
+.comparison-progress-cell { min-width: 180px; }
+.comparison-progress { display: flex; align-items: center; gap: 10px; }
+.comparison-progress .planned-progress-tube { flex: 1 1 115px; }
+.comparison-progress strong {
+  min-width: 40px; text-align: right; color: #bfeee1;
+  font-size: .77rem; font-weight: 710; font-variant-numeric: tabular-nums;
+}
+.comparison-not-measured { font-size: .77rem; color: #8395a5; }
+.comparison-table td:last-child { min-width: 190px; }
+.comparison-table td:last-child > span { margin-top: 0; }
+
+/* Keep business-critical alerts conspicuous; do not neutralize severity. */
+.podcast-production-alert { margin: 0 0 18px; border-radius: 10px; padding: 21px; }
+.podcast-production-alarm { width: 48px; height: 48px; font-size: 1.7rem; }
+.podcast-production-alert h2 { font-size: clamp(1.2rem, 1.9vw, 1.8rem); }
+.podcast-production-alert-names { font-size: .95rem; margin: 13px 0 8px; }
+.podcast-production-overline { font-size: .7rem; letter-spacing: .07em; }
+
+/* Focus and responsive adaptations retain mobile navigation and table scrolling. */
+@media (max-width: 1180px) and (min-width: 761px) {
+  :root { --sidebar-width: 196px; }
+  .app-sidebar { padding-inline: 10px; }
+  .app-brand { justify-content: flex-start; padding-inline: 5px; }
+  .app-brand > span:last-child { display: block; }
+  .app-navigation { gap: 3px; }
+  .app-nav-link {
+    grid-template-columns: 23px minmax(0,1fr);
+    place-items: initial; align-items: center; min-height: 39px; padding: 7px;
+  }
+  .app-nav-label { display: block; }
+  .app-topbar { grid-template-columns: minmax(85px,.6fr) minmax(160px,1fr) auto; gap: 11px; padding-inline: 14px; }
+  .live-readout span:last-child { display: block; }
+  .profile-copy { display: none; }
+}
+@media (max-width: 960px) and (min-width: 761px) {
+  :root { --sidebar-width: 174px; }
+  .app-topbar { grid-template-columns: auto minmax(130px,1fr) auto; }
+  .app-topbar .profile-control { display: none; }
+  .live-readout { padding: 5px; }
+  .live-readout span:last-child { display: none; }
+}
+@media (max-width: 760px) {
+  .app-topbar { min-height: 58px; padding: 8px 13px; }
+  .mobile-menu-button { width: 36px; height: 36px; font-size: 1rem; }
+  .mobile-drawer { background: #121b27; border-right: 1px solid #364759; box-shadow: 12px 0 40px rgba(0,0,0,.34); }
+  .mobile-drawer-heading { border-bottom-color: #344555; }
+  .mobile-drawer .app-navigation { margin-top: 13px; }
+  .mobile-drawer .app-nav-link { grid-template-columns: 23px minmax(0,1fr); }
+  .mobile-drawer .app-nav-label { display: block; }
+  .mobile-drawer .app-nav-link.active { background: #263b4a; }
+  .content { padding: 16px 13px 32px; }
+  .machine-panel-header { padding: 14px; min-height: 50px; }
+  .machine-panel-body { padding: 13px; }
+  .project-progress-heading { grid-template-columns: 24px minmax(0,1fr) auto; gap: 7px; }
+  .project-quick-links { margin-left: 0; }
+  .repository-progress-list { padding-left: 0; }
+  .repository-progress-row { grid-template-columns: minmax(0,1fr) auto; }
+  .repository-progress-row .planned-progress-tube { grid-column: 1/-1; }
+  .dashboard-home-hero { align-items: baseline; }
+  .dashboard-data-chip { margin-top: 0; }
+  .dashboard-operations-content { padding: 0 10px 10px; }
+  .dashboard-operations-details > summary { padding: 13px; }
+  .comparison-table { min-width: 590px; }
+  .comparison-table tbody th { min-width: 200px; }
+  .portfolio-controls label:first-child { flex-basis: 100%; }
+}
+@media (max-width: 480px) {
+  .portfolio-stat-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .portfolio-stat { padding: 12px; }
+  .portfolio-stat strong { font-size: 1.38rem; }
+  .dashboard-data-chip { display: none; }
+  .dashboard-operations-details > summary small { font-size: .7rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-nav-link, .disclosure-arrow, .dashboard-operations-chevron { transition: none; }
+}
+
+
+/* One status vocabulary everywhere: green=merged, yellow=open, empty=unstarted. */
+.portfolio-progress-key {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px;
+  align-items: center; color: #a5b8c8; font-size: .77rem;
+  margin: -2px 0 13px;
+}
+.portfolio-progress-key .planned-progress-legend { margin: 0; }
+.planned-progress-legend .merged::before { background: #59bca1; }
+.planned-progress-legend .underway::before { background: #dfac59; }
+.planned-progress-legend .unstarted::before {
+  background: #293747; border: 1px solid #65798b;
+}
+.project-open-count, .source-work-open { color: #e7be71; }
+.source-work-merged { color: #91d7b9; }
+.source-work-remaining { color: #a6b7c8; }
+
+/* A one-repo project has one plan bar; totals already appear in the header. */
+.single-plan-progress-row {
+  grid-template-columns: minmax(145px,.8fr) minmax(160px,3.2fr);
+}
+@media (max-width:760px) {
+  .single-plan-progress-row {
+    grid-template-columns: minmax(0,1fr);
+  }
+  .single-plan-progress-row .planned-progress-tube {
+    grid-column:1;
+  }
+}

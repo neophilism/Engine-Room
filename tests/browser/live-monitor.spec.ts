@@ -35,6 +35,7 @@ test('push updates refresh data without reloading or losing filters and expansio
   await expect(page.getByLabel('Portfolio data status')).toContainText('PUSH CONNECTED');
   await page.getByRole('searchbox',{name:'Search projects',exact:true}).fill('Live Monitor Fixture');
   await page.getByRole('button',{name:'Expand Live Monitor Fixture',exact:true}).click();
+  await page.locator('.dashboard-operations-details summary').click();
   await page.getByRole('button',{name:'Compact monitor',exact:true}).click();
   const marker=randomUUID();
   await page.evaluate(value=>{(window as unknown as Record<string,unknown>).liveMarker=value;},marker);
@@ -69,7 +70,7 @@ test('search, project history, and notification links resolve to working pages',
   await page.getByRole('link',{name:'View stored plan history',exact:true}).click();
   await expect(page.getByRole('heading',{level:1})).toHaveText('Live Monitor Fixture');
   await expect(page.locator('.plan-history-version pre')).toContainText('Original browser work');
-  await page.getByRole('link',{name:'Notifications',exact:true}).click();
+  await page.getByRole('navigation',{name:'Primary navigation'}).getByRole('link',{name:'Alerts',exact:true}).click();
   await expect(page).toHaveURL(/\/alerts$/);
   await expect(page.getByRole('heading',{name:'Source and development alerts',exact:true})).toBeVisible();
 });
