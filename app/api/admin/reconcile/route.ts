@@ -14,7 +14,7 @@ export async function POST(request:Request){
  try{const raw=await request.text();if(raw.length>256)return reply({error:"Request too large"},413);
   const value=JSON.parse(raw);if(!value||Object.keys(value).join(",")!=="mode"||!["manual","scheduled"].includes(value.mode))throw new Error();mode=value.mode;
  }catch{return reply({error:"Choose manual or scheduled synchronization"},400);}
- try{const pool=getDatabasePool();const inbox=await processWebhookInbox(pool);const result=await reconcilePortfolio(pool,{force:mode==="manual"});
+ try{const pool=getDatabasePool();const inbox=await processWebhookInbox(pool);const result=await reconcilePortfolio(pool,{force:mode==="manual",repositoryLimit:mode==="manual"?12:100});
   return reply({status:result.disabled?"disabled":result.rateLimited?"rate-limited":result.failed?"partial":"succeeded",...result,...inbox});
  }catch{return reply({error:"Synchronization unavailable; previous records preserved"},503);}
 }
