@@ -4,6 +4,8 @@ import type { ProjectDashboardData } from "../../lib/domain/project-dashboard";
 import { lifecycleStages } from "../../lib/domain/lifecycle-lanes";
 import { githubRepositoryUrl } from "../../lib/domain/portfolio-query";
 import { BrassPanel, GlassTube, IndicatorLamp } from "../machine";
+import { PlannedProgressTube } from "../portfolio/planned-progress-tube";
+import { summarizePlannedProgress } from "../../lib/domain/planned-progress";
 import { ProjectFeatures } from "./project-features";
 import { DevelopmentActivityTimeline } from "./development-activity";
 import { SourcePlan } from "./source-plan";
@@ -17,18 +19,26 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
     <p>{data.source === "unconfigured" ? "Connect portfolio data to load project dashboards." : "The project could not be loaded. Try refreshing."}</p></header><Link href="/projects">← Projects</Link></main>;
   const stage = lifecycleStages[project.status];
   const unmapped = data.unverifiedRoadmapItems??data.graph?.plannedPullRequests.filter((pr) => !pr.repositoryId || !pr.githubPrNumber).length ?? 0;
-  const measured=!!data.progress&&data.completionMeasured!==false&&unmapped===0;
+  const planProgress = summarizePlannedProgress({
+    planned: data.progress?.planned ?? 0,
+    completed: data.progress?.completed ?? 0,
+    sourcePlan: data.sourcePlan
+  });
+  const measured = planProgress !== null;
   return <main className="content">
     <header className="hero"><p className="eyebrow">Project intelligence</p><h1>{project.displayName}</h1><p>{project.summary || "No project summary has been registered yet."}</p>
       <Link href="/projects">← Compare projects</Link></header>
     <div className="project-dashboard-grid">
       <BrassPanel title="Approved roadmap" status={<IndicatorLamp state={stage.state} label={stage.label} />}>
-        {data.progress && data.graph ? <>
-          <p>Plan version {data.graph.plan.version} · {data.progress.completed}/{data.progress.planned} approved PRs verified merged</p>
-          {measured&&<GlassTube label={`${project.displayName} approved roadmap progress`} value={data.progress.completed} max={data.progress.planned} showScale
-            state={data.progress.completed === data.progress.planned ? "complete" : "active"} />}
-          <p>{measured?`${data.progress.percent}% complete · ${data.progress.remaining} PRs remaining`:'Completion N/A until release evidence is complete'}</p>
-          <p className="portfolio-calculation-note">{unmapped} roadmap PRs await mapping or release evidence.</p>
+        {planProgress ? <>
+          <p>{data.graph ? `Plan version ${data.graph.plan.version}` : "Source development plan"} · {planProgress.completed}/{planProgress.planned} planned items verified complete</p>
+          <PlannedProgressTube label={`${project.displayName} approved roadmap progress`} progress={planProgress} />
+          {planProgress.added.planned > 0 && <p className="planned-progress-legend">
+            <span className="original">Original {planProgress.original.completed}/{planProgress.original.planned}</span>
+            <span className="added">Added {planProgress.added.completed}/{planProgress.added.planned}</span>
+          </p>}
+          <p>{planProgress.percent}% complete · {planProgress.remaining} planned items remaining</p>
+          <p className="portfolio-calculation-note">{unmapped} items await mapping or release evidence; all remain in the planned denominator.</p>
         </> : <p>No approved development plan has been registered.</p>}
       </BrassPanel>
       <BrassPanel title="Repositories"><ul className="project-repository-links">{data.repositories.map((repository) => <li key={repository.id}>
