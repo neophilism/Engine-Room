@@ -58,7 +58,8 @@ export function ProjectComparison({ overview }: { overview: PortfolioOverviewDat
                     <td className="comparison-work-count">
                       {progress ?
                         <><strong>{progress.completed}/{progress.planned}</strong>
-                          <small>{progress.remaining} remaining</small></>
+                          <small>{progress.remaining} remaining</small>
+                          {progress.inProgress>0 && <small className="project-open-count">{progress.inProgress} open / unmerged</small>}</>
                         : <span className="comparison-not-measured">N/A</span>}
                     </td>
                     <td className="comparison-progress-cell">
@@ -86,8 +87,13 @@ export function ProjectComparison({ overview }: { overview: PortfolioOverviewDat
         </p>
       )}
       <p className="portfolio-calculation-note">
-        Completion reflects mapped, merged milestones, not all repository activity.
-        Every documented plan item stays in the denominator.
+        <span className="planned-progress-legend">
+          <span className="merged">Green: merged</span>
+          <span className="underway">Yellow: open / unmerged</span>
+          <span>Empty: not started</span>
+        </span>
+        All planned work, including additions, shares the same denominator.
+        An open PR counts yellow regardless of whether its tests are still running or already passing.
       </p>
     </BrassPanel>
   );
