@@ -64,6 +64,15 @@ export function PortfolioHome({
         </article>
       </section>
 
+      <p className="portfolio-progress-key" aria-label="Development status legend">
+        <span className="planned-progress-legend">
+          <span className="merged">Green: merged</span>
+          <span className="underway">Yellow: written / awaiting merge</span>
+          <span>Empty: not started</span>
+        </span>
+        <span>Original and newly added work share the same total.</span>
+      </p>
+
       <section className="dashboard-primary-section" aria-label="Project development progress">
         <BrassPanel
           eyebrow="Development overview"
@@ -80,8 +89,8 @@ export function PortfolioHome({
             </div>
           )}
           <p className="portfolio-calculation-note dashboard-source-footnote">
-            Progress counts all documented work, including unmapped milestones. A 0% bar means
-            no verified completion evidence yet, not necessarily that no code exists.
+            Progress counts all documented work, including unmapped milestones and plan additions.
+            Yellow is written but unmerged; a 0% green bar does not necessarily mean no code exists.
           </p>
         </BrassPanel>
         <PortfolioRefresh />
