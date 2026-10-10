@@ -82,6 +82,27 @@ describe("ProjectProgressStack", () => {
     expect(screen.queryByText("90%")).not.toBeInTheDocument();
   });
 
+  it("shows one bar with 60 merged, 10 open, 30 unstarted after the plan expands", () => {
+    const mixed = {
+      ...project, id:"expanded", displayName:"Expanded Project",
+      planned:50, completed:50, inProgress:10,
+      repositories:[{...project.repositories[0], id:"whole", planned:50, completed:50}],
+      sourcePlan:{
+        original:50,originalComplete:50,added:50,addedComplete:10,
+        unmapped:30,items:[],documents:[]
+      }
+    };
+    render(<ProjectProgressStack project={mixed} />);
+    const bar=screen.getByRole("progressbar",{name:"Expanded Project development plan progress"});
+    expect(bar).toHaveAttribute("aria-valuenow","60");
+    expect(bar).toHaveAttribute("aria-valuemax","100");
+    expect(bar).toHaveAttribute("aria-valuetext",
+      "60 merged, 10 open, 30 not started; 100 planned units total");
+    expect(screen.getAllByText("60/100 planned")).toHaveLength(2);
+    expect(screen.getByText("60%")).toBeInTheDocument();
+    expect(screen.queryByText(/Original 50\/50/)).not.toBeInTheDocument();
+  });
+
   it("does not infer added planned work from an unrelated open GitHub PR", () => {
     const mapped = {
       ...project, id: "original-complete", displayName: "Original Done",
