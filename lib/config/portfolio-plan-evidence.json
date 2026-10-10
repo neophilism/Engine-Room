@@ -164,6 +164,21 @@
         }
       ],
       "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/DEVELOPMENT-PLAN.md",
+      "sourceTitle": "Abstraction review and upstream hardening",
+      "numbers": [
+        12
+      ],
+      "evidence": [
+        {
+          "number": 12,
+          "title": "PR 12: CAIAE abstraction audit, real-data access gate, and Engine Room registration",
+          "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/12"
+        }
+      ],
+      "reason": "Reviewed completed CAIAE SDK boundary audit and production-access hardening against roadmap PR 12"
     }
   ],
   "Compliance-Authorization-Immutable-Audit-Engine": [

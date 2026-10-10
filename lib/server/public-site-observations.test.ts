@@ -18,6 +18,21 @@ describe("Public platform HTTP observations", () => {
     expect(result.httpStatus).toBe(200);
     expect(String(vi.mocked(fetcher).mock.calls[0][0])).toBe("https://foia-aggregator.onrender.com/healthz");
   });
+  it("probes the real Algorithmic Accountability health route on its allowlisted host", async () => {
+    const fetcher = vi.fn(async () => new Response(null, { status: 200 })) as unknown as typeof fetch;
+    const result = await probePublicSite({
+      id: "algorithmic-accountability",
+      website: "https://algorithmic-accountability-preview.onrender.com",
+      healthPath: "/api/engine-health",
+    }, fetcher);
+    expect(result).toMatchObject({
+      serviceId: "algorithmic-accountability",
+      httpStatus: 200,
+      observation: "http-response",
+    });
+    expect(String(vi.mocked(fetcher).mock.calls[0][0]))
+      .toBe("https://algorithmic-accountability-preview.onrender.com/api/engine-health");
+  });
   it("reports real HTTP status without declaring application health", async () => {
     const fetcher=vi.fn(async()=>new Response(null,{status:503})) as unknown as typeof fetch;
     const result=await probePublicSite(service,fetcher);

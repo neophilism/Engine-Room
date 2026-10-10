@@ -26,6 +26,19 @@ describe('source plan evidence',()=>{
     const items=parsePlanItems('PR 1 — Accounts\nDeliver: scope\nPR 2 — Media ingest\n','source.txt','Wizard');
     expect(items.map(x=>x.title)).toEqual(['Accounts','Media ingest']);
   });
+  it('maps Algorithmic Accountability abstraction audit to actual merged PR 12',()=>{
+    const items=parsePlanItems(
+      '## PR 12 — Abstraction review and upstream hardening\n',
+      'docs/DEVELOPMENT-PLAN.md',
+      'Algorithmic-Accountability'
+    );
+    expect(items).toHaveLength(1);
+    expect(items[0]).toMatchObject({
+      ordinal:12,
+      numbers:[12],
+      reason:'Reviewed completed CAIAE SDK boundary audit and production-access hardening against roadmap PR 12'
+    });
+  });
   it('uses reviewed capability mappings instead of matching Fireside roadmap ordinals to PR numbers',()=>{
     const items=parsePlanItems('## MVP roadmap\n1. Production hardening and deployment','README.md','FiresideChat');
     expect(items[0].numbers).toEqual([19,21]);

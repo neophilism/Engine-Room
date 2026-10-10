@@ -15,13 +15,13 @@ export function publicSiteUrl(website: string) {
 }
 
 export async function probePublicSite(
-  service: { id: string; website: string; healthPath?: "/healthz" },
+  service: { id: string; website: string; healthPath?: "/healthz" | "/api/engine-health" },
   fetcher: Fetcher = fetch
 ): Promise<PublicSiteObservation> {
   const checkedAt = new Date().toISOString();
   try {
     const url = publicSiteUrl(service.website);
-    if (service.healthPath === "/healthz") url.pathname = service.healthPath;
+    if (service.healthPath) url.pathname = service.healthPath;
     let response = await fetcher(url, {
       method: "HEAD",
       redirect: "manual",

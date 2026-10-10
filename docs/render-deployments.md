@@ -17,3 +17,25 @@ Public GitHub import now defaults on when NODE_ENV=production unless explicitly 
 ## Public endpoint observations (10-minute refresh)
 
 The Dashboard's public-site readouts use `GET /api/public-sites` to make anonymous HEAD requests to the 13 explicitly listed `https://*.onrender.com` websites. The allowlist is fixed in source code, preventing arbitrary destination probing. Observations are cached in-process for ten minutes and the dashboard refreshes while open. The check reports the actual HTTP response code and timestamp or `no response`, not `healthy`, `running`, or `offline`. A Render free-tier instance may take longer than the timeout to wake, and HTTP success alone is not end-to-end application acceptance evidence. Neither database credentials nor Render API keys are required for these public HTTP checks.
+
+
+## Algorithmic Accountability preview (October 10, 2026)
+
+The named Render service `srv-db3f658m7kps73ee6360` deployed commit
+`411c56ed36db3f7d500c1c6cdd84db746a370dc6` successfully at
+`2026-10-10T00:50:45Z`. The source-backed dated service snapshot has been
+updated to reflect that observation, not to imply persistent uptime.
+
+Engine Room now directs this service's public HTTP observation to the
+read-only `/api/engine-health` endpoint, rather than simply checking the
+homepage. Observations are displayed as HTTP response codes/timestamps or
+no response, never as a claim of production authorization. Its public demo
+uses fictional data and its generic CAIAE SDK deployment is distinct from
+production engine availability.
+
+The application repository separately runs content-validating public HTTPS
+smoke tests on GitHub Actions every 15 minutes and after passing `main` CI.
+Engine Room's 10-minute in-page HTTP readouts, source-specific Render
+deployment results, and the scheduled smoke test are independent evidence
+streams. Neither guarantees uninterrupted production uptime on sleeping
+free-tier services.
