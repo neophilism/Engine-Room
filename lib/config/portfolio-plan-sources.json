@@ -74,5 +74,17 @@
     "docs/DEVELOPMENT_PLAN.md"
   ],
   "FOIA_Bias_Analysis": [],
-  "Send_FOIA_Log_Requests": []
+  "Send_FOIA_Log_Requests": [],
+  "The-Public-Record": [
+    ".exechub/project.yml"
+  ],
+  "Justic-For-All": [
+    ".exechub/project.yml"
+  ],
+  "NFT-Minting-Console": [
+    "docs/DEVELOPMENT_PLAN.md"
+  ],
+  "Music-Analyzer": [
+    "docs/DEVELOPMENT_PLAN.md"
+  ]
 }
