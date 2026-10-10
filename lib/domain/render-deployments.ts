@@ -1,4 +1,4 @@
-export type VerifiedRenderService = { id: string; name: string; repository: string; website: string; deployStatus: string; deployedCommit: string; lastObservedAt: string };
+export type VerifiedRenderService = { id: string; name: string; repository: string; website: string; healthPath?: "/healthz"; deployStatus: string; deployedCommit: string; lastObservedAt: string };
 
 // Real Render service/deployment records verified October 8, 2026. This is a dated snapshot, not a live health signal.
 export const verifiedRenderServices: readonly VerifiedRenderService[] = [
@@ -17,7 +17,7 @@ export const verifiedRenderServices: readonly VerifiedRenderService[] = [
   { id: "srv-db3pulbtqb8s73evkfh0", name: "E2EESA Standards Website (main)", repository: "neophilism/End-To-End-Everywhere-Security-Architecture-Standard", website: "https://end-to-end-everywhere-standard.onrender.com", deployStatus: "live", deployedCommit: "dea8f54cab9130da86a71f36de553766a978daf2", lastObservedAt: "2026-10-08T13:49:25Z" },
   { id: "srv-db3ptde0tbcc738giui0", name: "E2EESA Standards Website (preview)", repository: "neophilism/End-To-End-Everywhere-Security-Architecture-Standard", website: "https://e2eesa-standards-portal.onrender.com", deployStatus: "live", deployedCommit: "333d0914d40a95be9a49db1d96f29b36e5efb2cb", lastObservedAt: "2026-10-08T13:48:28Z" },
   { id: "srv-db3pk16gekts73fnpctg", name: "Smart Cities Surveillance Registry (build failed)", repository: "neophilism/Smart-Cities-Surveillance-Registry", website: "https://smart-cities-surveillance-registry.onrender.com", deployStatus: "build_failed", deployedCommit: "a5fee8874cdf8edf6bb7872064601ecb5183d87f", lastObservedAt: "2026-10-08T13:26:36Z" },
-  { id: "srv-db23s33bc2fs73f4ui10", name: "FOIA Aggregator", repository: "neophilism/FOIA_Aggregator", website: "https://foia-aggregator.onrender.com", deployStatus: "live", deployedCommit: "12e802d53348ae01d1bfe3bb400f64b2b4a7a136", lastObservedAt: "2026-10-07T19:52:43Z" }
+  { id: "srv-db23s33bc2fs73f4ui10", name: "FOIA Aggregator", repository: "neophilism/FOIA_Aggregator", website: "https://foia-aggregator.onrender.com", healthPath: "/healthz", deployStatus: "live", deployedCommit: "12e802d53348ae01d1bfe3bb400f64b2b4a7a136", lastObservedAt: "2026-10-07T19:52:43Z" }
 ];
 
 export type PublicSiteObservation = {
