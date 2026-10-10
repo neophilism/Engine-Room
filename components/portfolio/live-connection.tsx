@@ -11,6 +11,7 @@ type SynchronizationOutcome = {
   failed?: number;
   processed?: number;
   error?: string;
+  rateLimitResetAt?: string | null;
 };
 
 type SyncFeedback = { kind: "success" | "warning" | "error"; message: string };
@@ -23,13 +24,14 @@ function describeSynchronization(outcome: SynchronizationOutcome): SyncFeedback 
     return { kind: "warning", message: "GitHub synchronization is paused in Settings. Enable it to fetch new data." };
   }
   if (outcome.status === "rate-limited") {
-    return { kind: "warning", message: "GitHub's rate limit was reached. " + synced + " repositories refreshed; the remainder will retry automatically." };
+    const reset = outcome.rateLimitResetAt ? " Try again after " + new Date(outcome.rateLimitResetAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) + "." : " Please try again after GitHub resets its API allowance.";
+    return { kind: "warning", message: "GitHub API rate limit: " + synced + " repositories refreshed." + reset + " Existing data has not been replaced with newer GitHub records." };
   }
   if (outcome.status === "partial" || failed > 0) {
     return { kind: "warning", message: "Partial GitHub refresh: " + synced + " repositories refreshed, " + failed + " failed. Unavailable sources retain their previous data." };
   }
   if (outcome.status === "succeeded" && synced > 0) {
-    return { kind: "success", message: "GitHub refresh complete: " + synced + " repositories checked. Dashboard data updated." };
+    return { kind: "success", message: "GitHub refresh complete: " + synced + " repositories checked. Click again to refresh further repositories." };
   }
   return { kind: "warning", message: "No repositories were refreshed. Another synchronization may be running; try again shortly." };
 }
