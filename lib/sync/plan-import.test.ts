@@ -74,3 +74,100 @@ describe('source plan evidence',()=>{
   });
 
 });
+
+
+describe("canonical cross-account milestone plans",()=>{
+  it("imports all authored milestone headings without assuming ordinal means PR number",()=>{
+    const body=[
+      "# Live Competition Engine",
+      "## Original numbered milestones",
+      "#### LC-01 — Repository/application foundation",
+      "#### LC-02 — Core domain model",
+      "#### LC-03 — Authentication and identity",
+      "## Handoff",
+      "1. Read the README",
+    ].join("\n");
+    const items=parsePlanItems(body,"docs/DEVELOPMENT_PLAN.md","Live-Competition-Engine",[]);
+    expect(items.map(x=>x.sourceItemId)).toEqual(["LC-01","LC-02","LC-03"]);
+    expect(items.map(x=>x.numbers)).toEqual([[],[],[]]);
+    expect(items.every(x=>x.scope==="original")).toBe(true);
+  });
+
+  it("keeps original FiresideChat 11 plus FC-P additions without a duplicate ordinal",()=>{
+    const body=[
+      "# FiresideChat plan",
+      "### MVP-01 — Application foundation",
+      "### MVP-02 — Registry",
+      "### MVP-11 — Production acceptance",
+      "### FC-P01 — Snapshot and census",
+      "### FC-P20 — Complete archive coverage",
+      "### FC-P21 — Podcast production inquiries",
+    ].join("\n");
+    const items=parsePlanItems(body,"docs/DEVELOPMENT_PLAN.md","FiresideChat");
+    expect(items).toHaveLength(6);
+    expect(items.map(x=>x.ordinal)).toEqual([1,2,3,4,5,6]);
+    expect(items.map(x=>x.scope)).toEqual(["original","original","original","addition","addition","addition"]);
+    expect(items[5].sourceItemId).toBe("FC-P21");
+  });
+
+  it("preserves FA original vs FC added FOIA coverage work",()=>{
+    const body=[
+      "# FOIA archive roadmap",
+      "### FA-01 — Database recovery",
+      "### FA-10 — Production scale gate",
+      "### FC-01 — Federal source inventory",
+      "### FC-14 — Broad coverage acceptance",
+    ].join("\n");
+    const items=parsePlanItems(body,"docs/DEVELOPMENT_PLAN.md","FOIA_Aggregator");
+    expect(items.map(x=>x.scope)).toEqual(["original","original","addition","addition"]);
+  });
+
+  it("imports E2EESA audited remediation packages separately from provisional downstream slots",()=>{
+    const body=[
+      "# E2EESA audit remediation",
+      "### AUD-01: Audit register",
+      "### AUD-02: Canonical serializer",
+      "### ROLL-01: Provisional downstream survey",
+      "### AUD-26: Independent review",
+    ].join("\n");
+    const items=parsePlanItems(body,"docs/AUDIT_REMEDIATION_PLAN.md","End-To-End-Everywhere-Security-Architecture-Standard");
+    expect(items.map(x=>x.sourceItemId)).toEqual(["AUD-01","AUD-02","AUD-26"]);
+    expect(items.every(x=>x.scope==="addition")).toBe(true);
+  });
+
+  it("only maps PRs with exact work-unit ID, not coincidentally identical ordinal",()=>{
+    const body=["# Civic","### CRT-01 — Foundation","### CRT-02 — Domain model","### CRT-03 — Schema"].join("\n");
+    const prs=[
+      {number:18,title:"CRT-01: Foundation"},
+      {number:1,title:"Unrelated PR"},
+      {number:22,title:"CRT-03: Schema"},
+    ];
+    const items=parsePlanItems(body,"docs/DEVELOPMENT_PLAN.md","Civic-Registry-Transparency-Engine",prs);
+    expect(items.map(x=>x.numbers)).toEqual([[18],[],[22]]);
+  });
+
+  it("RAM phase roadmap is auditable and does not silently infer merged work",()=>{
+    const body=JSON.stringify({items:[
+      {id:"RAM-01",repository:"RAM-Marketplace",title:"Phase 0 — Definition",origin:"original",github_prs:[]},
+      {id:"RAM-02",repository:"RAM-Marketplace",title:"Phase 1 — Foundation",origin:"original",github_prs:[]}
+    ]});
+    const items=parsePlanItems(body,"docs/engine-room-roadmap.json","RAM-Marketplace");
+    expect(items).toHaveLength(2);
+    expect(items.every(x=>x.numbers.length===0)).toBe(true);
+  });
+});
+
+
+describe("reviewed historical mapping reuse",()=>{
+  it("carries audited Fireside MVP GitHub references into the canonical plan while leaving new scope unmapped",()=>{
+    const body = [
+      "# Fireside",
+      "### MVP-01 — Application and PostgreSQL data foundation",
+      "### MVP-02 — Verified politician/podcast registry",
+      "### MVP-11 — Production hardening and deployment",
+      "### FC-P01 — Source audit and census",
+    ].join("\n");
+    const items = parsePlanItems(body,"docs/DEVELOPMENT_PLAN.md","FiresideChat");
+    expect(items.map(item=>item.numbers)).toEqual([[1],[2],[19,21],[]]);
+  });
+});

@@ -1,5 +1,5 @@
 import type { PoolClient } from 'pg';
-export type ImportedPlanItem={ordinal:number;title:string;numbers:number[];reason:string|null;scope:string};
+export type ImportedPlanItem={ordinal:number;title:string;sourceItemId?:string;numbers:number[];reason:string|null;scope:string};
 export function normalizedWorkTitle(title:string):string;
 export function parseApprovedManifestItems(body:string,repoName:string,mappingBody?:string|null):ImportedPlanItem[];
 export function parsePlanItems(body:string,path:string,repoName:string,prs?:{number:number;title:string}[],mappingBody?:string|null):ImportedPlanItem[];

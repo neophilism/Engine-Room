@@ -1,6 +1,7 @@
 import type { PoolClient } from 'pg';
 import type { LiveSnapshot,ProjectActivitySummary,PullRequestReadout,SourcePlanSummary,PlanItemReadout } from '../domain/live-monitor';
 import { getDatabasePool } from './database';
+import planSources from '../config/portfolio-plan-sources.json';
 
 const iso=(value:Date|string|null)=>value?new Date(value).toISOString():null;
 
@@ -56,12 +57,16 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
         row.default_branch_sha&&row.release_target_sha===row.default_branch_sha?row.release_included:null,reviewSummary:row.review_summary});
     pullRequests.set(row.project_id,prs);
   }
-  const docResult=await db.query<{project_id:string;repository_id:string;path:string;fingerprint:string;source_url:string;repository_url:string;title:string;imported_at:Date;versions:string}>(`SELECT DISTINCT ON(pr.project_id,d.repository_id,d.path)
-    pr.project_id,d.*,r.html_url AS repository_url,count(*) OVER(PARTITION BY d.repository_id,d.path) AS versions FROM project_plan_documents d
+  const docResult=await db.query<{project_id:string;repository_id:string;repository_name:string;path:string;fingerprint:string;source_url:string;repository_url:string;title:string;imported_at:Date;versions:string}>(`SELECT DISTINCT ON(pr.project_id,d.repository_id,d.path)
+    pr.project_id,d.*,r.name AS repository_name,r.html_url AS repository_url,count(*) OVER(PARTITION BY d.repository_id,d.path) AS versions FROM project_plan_documents d
     JOIN repositories r ON r.id=d.repository_id JOIN project_repositories pr ON pr.repository_id=d.repository_id WHERE ($1::uuid IS NULL OR pr.project_id=$1)
     ORDER BY pr.project_id,d.repository_id,d.path,d.version_id DESC`,[projectId||null]);
   const plans=new Map<string,SourcePlanSummary>();
   for(const doc of docResult.rows){
+    // Historical paths remain in the audit database but only authoritative current
+    // plan sources contribute to the denominator (avoid README + canonical double-counting).
+    const activePaths=(planSources as Record<string,string[]>)[doc.repository_name];
+    if(activePaths && !activePaths.includes(doc.path))continue;
     const plan=plans.get(doc.project_id)||{original:0,originalComplete:0,added:0,addedComplete:0,unmapped:0,items:[],documents:[]};
     plan.documents.push({path:doc.path,url:doc.source_url,title:doc.title,importedAt:iso(doc.imported_at)!,versions:Number(doc.versions)});
     const result=await db.query<{ordinal:number;title:string;scope:PlanItemReadout['scope'];github_pr_numbers:number[];mapping_reason:string|null;completed:boolean;underway:boolean;unverified:boolean}>(`

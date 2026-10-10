@@ -3,17 +3,51 @@
     "docs/development-plan.md",
     "docs/portfolio-monitor-additions.json"
   ],
+  "Live-Competition-Engine": [
+    "docs/DEVELOPMENT_PLAN.md"
+  ],
+  "MMS": [
+    "docs/DEVELOPMENT_PLAN.md"
+  ],
+  "Rap-Battle-Platform": [
+    "docs/DEVELOPMENT_PLAN.md"
+  ],
+  "RAM-Marketplace": [
+    "docs/engine-room-roadmap.json"
+  ],
+  "Civic-Registry-Transparency-Engine": [
+    "docs/DEVELOPMENT_PLAN.md"
+  ],
+  "Secure-Intake-Case-Workflow-Engine": [
+    "docs/DEVELOPMENT_PLAN.md"
+  ],
   "Compliance-Authorization-Immutable-Audit-Engine": [
     "docs/roadmap.md"
+  ],
+  "Stems-White-Label": [
+    ".exechub/project.yml"
+  ],
+  "Music_Video_Wizard": [
+    ".exechub/project.yml"
+  ],
+  "End-To-End-Everywhere-Security-Architecture-Standard": [
+    "docs/DEVELOPMENT_PLAN.md",
+    "docs/AUDIT_REMEDIATION_PLAN.md"
   ],
   "Federal-Encryption-Compliance": [
     "docs/roadmap.md"
   ],
+  "National-Secure-Ideas-Submission": [
+    "docs/development-plan.md"
+  ],
+  "Smart-Cities-Surveillance-Registry": [
+    "docs/DEVELOPMENT_PLAN.md"
+  ],
   "Algorithmic-Accountability": [
     "docs/DEVELOPMENT-PLAN.md"
   ],
-  "National-Secure-Ideas-Submission": [
-    "docs/development-plan.md"
+  "End-To-End-Everywhere-Suite": [
+    ".exechub/project.yml"
   ],
   "Distributed-Audio-Engine": [
     "docs/roadmap.json"
@@ -27,7 +61,18 @@
   "TrackZero": [
     "docs/roadmap.json"
   ],
+  "Music-Operations-Engine": [
+    "docs/roadmap.json"
+  ],
+  "Unsealed-Records-Command-Center": [
+    "docs/DEVELOPMENT_PLAN.md"
+  ],
+  "FOIA_Aggregator": [
+    "docs/DEVELOPMENT_PLAN.md"
+  ],
   "FiresideChat": [
-    "README.md"
-  ]
+    "docs/DEVELOPMENT_PLAN.md"
+  ],
+  "FOIA_Bias_Analysis": [],
+  "Send_FOIA_Log_Requests": []
 }

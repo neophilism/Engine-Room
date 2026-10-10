@@ -761,6 +761,21 @@
         }
       ],
       "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/DEVELOPMENT_PLAN.md",
+      "sourceTitle": "Congressional podcast production services inquiries (October 10, 2026)",
+      "numbers": [
+        49
+      ],
+      "evidence": [
+        {
+          "number": 49,
+          "title": "Add secure congressional podcast production inquiries and email outbox",
+          "url": "https://github.com/neophilism/FiresideChat/pull/49"
+        }
+      ],
+      "reason": "Reviewed merged implementation PR for approved October 10 production inquiry scope"
     }
   ]
 }
