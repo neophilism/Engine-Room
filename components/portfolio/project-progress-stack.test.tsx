@@ -98,7 +98,7 @@ describe("ProjectProgressStack", () => {
     expect(bar).toHaveAttribute("aria-valuemax","100");
     expect(bar).toHaveAttribute("aria-valuetext",
       "60 merged, 10 open, 30 not started; 100 planned units total");
-    expect(screen.getAllByText("60/100 planned")).toHaveLength(2);
+    expect(screen.getAllByText("60/100 planned")).toHaveLength(1);
     expect(screen.getByText("60%")).toBeInTheDocument();
     expect(screen.queryByText(/Original 50\/50/)).not.toBeInTheDocument();
   });
