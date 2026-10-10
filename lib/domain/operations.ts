@@ -1,4 +1,4 @@
-export const operationMetrics = ["availability-percent", "latency-p95-ms", "requests-per-minute", "error-rate-percent", "cpu-percent", "memory-percent"] as const;
+export const operationMetrics = ["availability-percent", "latency-p95-ms", "requests-per-minute", "error-rate-percent", "cpu-percent", "memory-percent", "worker-heartbeat-percent"] as const;
 export type OperationMetric = typeof operationMetrics[number];
 export type OperationSample = { projectId: string; environment: string; metric: OperationMetric; value: number; source: string; externalId: string; observedAt: string };
 export type OperationsProject = { id: string; slug: string; displayName: string };
