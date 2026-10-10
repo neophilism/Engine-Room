@@ -1,4 +1,5 @@
-import { test, expect } from "@playwright/test";
+import {expect} from "@playwright/test";
+import {test} from "./fixtures";
 test("anonymous visitors cannot access portfolio or privileged dashboards", async ({ browser }) => {
   const context = await browser.newContext();
   const page = await context.newPage();

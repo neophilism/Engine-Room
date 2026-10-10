@@ -1,0 +1,766 @@
+{
+  "Algorithmic-Accountability": [
+    {
+      "sourcePath": "docs/DEVELOPMENT-PLAN.md",
+      "sourceTitle": "Foundation and thin-app boundary",
+      "numbers": [
+        1
+      ],
+      "evidence": [
+        {
+          "number": 1,
+          "title": "PR 1: Foundation and CAIAE thin-app boundary",
+          "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/1"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/DEVELOPMENT-PLAN.md",
+      "sourceTitle": "System, deployment, and version inventory",
+      "numbers": [
+        2
+      ],
+      "evidence": [
+        {
+          "number": 2,
+          "title": "PR 2: System, deployment, and model-version inventory",
+          "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/2"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/DEVELOPMENT-PLAN.md",
+      "sourceTitle": "Impact assessment and risk classification",
+      "numbers": [
+        3
+      ],
+      "evidence": [
+        {
+          "number": 3,
+          "title": "PR 3: Impact assessment and risk classification",
+          "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/3"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/DEVELOPMENT-PLAN.md",
+      "sourceTitle": "Authorization before deployment",
+      "numbers": [
+        4
+      ],
+      "evidence": [
+        {
+          "number": 4,
+          "title": "PR 4: Authorization before deployment",
+          "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/4"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/DEVELOPMENT-PLAN.md",
+      "sourceTitle": "Material change and reassessment",
+      "numbers": [
+        5
+      ],
+      "evidence": [
+        {
+          "number": 5,
+          "title": "PR 5: Material change and reassessment",
+          "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/5"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/DEVELOPMENT-PLAN.md",
+      "sourceTitle": "Continuous monitoring",
+      "numbers": [
+        6
+      ],
+      "evidence": [
+        {
+          "number": 6,
+          "title": "PR 6: Continuous monitoring and threshold-driven reassessment",
+          "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/6"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/DEVELOPMENT-PLAN.md",
+      "sourceTitle": "Complaints, incidents, and findings",
+      "numbers": [
+        7
+      ],
+      "evidence": [
+        {
+          "number": 7,
+          "title": "PR 7: Complaints, incidents, and findings",
+          "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/7"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/DEVELOPMENT-PLAN.md",
+      "sourceTitle": "Remediation, suspension, and corrective action",
+      "numbers": [
+        8
+      ],
+      "evidence": [
+        {
+          "number": 8,
+          "title": "PR 8: Remediation, suspension, and corrective action",
+          "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/8"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/DEVELOPMENT-PLAN.md",
+      "sourceTitle": "Deadlines, periodic review, and renewal",
+      "numbers": [
+        9
+      ],
+      "evidence": [
+        {
+          "number": 9,
+          "title": "PR 9: Deadlines, periodic review, and renewal",
+          "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/9"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/DEVELOPMENT-PLAN.md",
+      "sourceTitle": "Reporting, transparency, and certification",
+      "numbers": [
+        10
+      ],
+      "evidence": [
+        {
+          "number": 10,
+          "title": "PR 10: Reporting, transparency, and certification",
+          "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/10"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/DEVELOPMENT-PLAN.md",
+      "sourceTitle": "Full demonstration",
+      "numbers": [
+        11
+      ],
+      "evidence": [
+        {
+          "number": 11,
+          "title": "PR 11: Full fictional demonstration",
+          "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/11"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    }
+  ],
+  "Compliance-Authorization-Immutable-Audit-Engine": [
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Foundation and architecture",
+      "numbers": [
+        1
+      ],
+      "evidence": [
+        {
+          "number": 1,
+          "title": "PR 1: Architecture and repository foundation",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/1"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Core compliance domain model",
+      "numbers": [
+        2
+      ],
+      "evidence": [
+        {
+          "number": 2,
+          "title": "PR 2: Core compliance domain model",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/2"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Tamper-evident event ledger",
+      "numbers": [
+        3
+      ],
+      "evidence": [
+        {
+          "number": 3,
+          "title": "PR 3: Tamper-evident append-only audit ledger",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/3"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Declarative rules engine",
+      "numbers": [
+        4
+      ],
+      "evidence": [
+        {
+          "number": 4,
+          "title": "PR 4: Declarative rules engine",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/4"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Authorization lifecycle",
+      "numbers": [
+        5
+      ],
+      "evidence": [
+        {
+          "number": 5,
+          "title": "PR 5: Authorization engine",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/5"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Exceptions and waivers",
+      "numbers": [
+        6
+      ],
+      "evidence": [
+        {
+          "number": 6,
+          "title": "PR 6: Exceptions and waivers",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/6"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Evidence and attestations",
+      "numbers": [
+        7
+      ],
+      "evidence": [
+        {
+          "number": 7,
+          "title": "PR 7: Evidence and attestations",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/7"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Deadline/statutory clocks",
+      "numbers": [
+        8
+      ],
+      "evidence": [
+        {
+          "number": 8,
+          "title": "PR 8: Deadline and statutory clock engine",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/8"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Automated evaluations",
+      "numbers": [
+        9
+      ],
+      "evidence": [
+        {
+          "number": 9,
+          "title": "PR 9: Automated compliance evaluations",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/9"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Findings and remediation",
+      "numbers": [
+        10
+      ],
+      "evidence": [
+        {
+          "number": 10,
+          "title": "PR 10: Findings and remediation lifecycle",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/10"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Certification",
+      "numbers": [
+        11
+      ],
+      "evidence": [
+        {
+          "number": 11,
+          "title": "PR 11: Certification engine",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/11"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Reporting",
+      "numbers": [
+        12
+      ],
+      "evidence": [
+        {
+          "number": 12,
+          "title": "PR 12: Reporting engine",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/12"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "API/integrations",
+      "numbers": [
+        13
+      ],
+      "evidence": [
+        {
+          "number": 13,
+          "title": "PR 13: API and integration layer",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/13"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Administration UI",
+      "numbers": [
+        14
+      ],
+      "evidence": [
+        {
+          "number": 14,
+          "title": "PR 14: Reference administration UI",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/14"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Publication controls",
+      "numbers": [
+        15
+      ],
+      "evidence": [
+        {
+          "number": 15,
+          "title": "PR 15: Public/private publication controls",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/15"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Security/RBAC",
+      "numbers": [
+        16
+      ],
+      "evidence": [
+        {
+          "number": 16,
+          "title": "PR 16: Security and permission hardening",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/16"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Ruleset versioning/legal traceability",
+      "numbers": [
+        17
+      ],
+      "evidence": [
+        {
+          "number": 17,
+          "title": "PR 17: Ruleset versioning and legal traceability",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/17"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Configuration SDK",
+      "numbers": [
+        18
+      ],
+      "evidence": [
+        {
+          "number": 18,
+          "title": "PR 18: Configuration SDK",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/18"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Production readiness",
+      "numbers": [
+        19
+      ],
+      "evidence": [
+        {
+          "number": 19,
+          "title": "PR 19: Production readiness",
+          "url": "https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine/pull/19"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    }
+  ],
+  "Federal-Encryption-Compliance": [
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Foundation + thin-app configuration",
+      "numbers": [
+        1
+      ],
+      "evidence": [
+        {
+          "number": 1,
+          "title": "PR 1: Foundation and thin-app SDK boundary",
+          "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/1"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Federal Data Encryption policy bundle",
+      "numbers": [
+        2
+      ],
+      "evidence": [
+        {
+          "number": 2,
+          "title": "PR 2: Federal Data Encryption policy bundle",
+          "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/2"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Encryption compliance evaluation",
+      "numbers": [
+        3
+      ],
+      "evidence": [
+        {
+          "number": 3,
+          "title": "PR 3: Encryption compliance evaluation",
+          "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/3"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Contractor and external-system compliance",
+      "numbers": [
+        4
+      ],
+      "evidence": [
+        {
+          "number": 4,
+          "title": "PR 4: Contractor and external-system compliance",
+          "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/4"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Waivers and emergency exceptions",
+      "numbers": [
+        5
+      ],
+      "evidence": [
+        {
+          "number": 5,
+          "title": "PR 5: Waivers and emergency exceptions",
+          "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/5"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Statutory clocks and oversight",
+      "numbers": [
+        6
+      ],
+      "evidence": [
+        {
+          "number": 6,
+          "title": "PR 6: Statutory clocks and oversight",
+          "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/6"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Findings, remediation, and certification",
+      "numbers": [
+        7
+      ],
+      "evidence": [
+        {
+          "number": 7,
+          "title": "PR 7: Findings, remediation, and certification",
+          "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/7"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Federal Encryption UI and reporting",
+      "numbers": [
+        8
+      ],
+      "evidence": [
+        {
+          "number": 8,
+          "title": "PR 8: Federal Encryption UI and reporting",
+          "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/8"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "docs/roadmap.md",
+      "sourceTitle": "Abstraction review and upstream improvements",
+      "numbers": [
+        9
+      ],
+      "evidence": [
+        {
+          "number": 9,
+          "title": "PR 9: Abstraction review and upstream improvements",
+          "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/9"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    }
+  ],
+  "FiresideChat": [
+    {
+      "sourcePath": "README.md",
+      "sourceTitle": "Application and PostgreSQL data foundation",
+      "numbers": [
+        1
+      ],
+      "evidence": [
+        {
+          "number": 1,
+          "title": "PR 1: establish application and data foundation",
+          "url": "https://github.com/neophilism/FiresideChat/pull/1"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "README.md",
+      "sourceTitle": "Verified politician/podcast registry",
+      "numbers": [
+        2
+      ],
+      "evidence": [
+        {
+          "number": 2,
+          "title": "PR 2: add verified congressional podcast registry",
+          "url": "https://github.com/neophilism/FiresideChat/pull/2"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "README.md",
+      "sourceTitle": "RSS/Atom ingestion and automatic episode updates",
+      "numbers": [
+        3
+      ],
+      "evidence": [
+        {
+          "number": 3,
+          "title": "PR 3: add resilient RSS and Atom episode ingestion",
+          "url": "https://github.com/neophilism/FiresideChat/pull/3"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "README.md",
+      "sourceTitle": "Homepage and podcast directory",
+      "numbers": [
+        5
+      ],
+      "evidence": [
+        {
+          "number": 5,
+          "title": "MVP: ship the presentable Fireside Chat website",
+          "url": "https://github.com/neophilism/FiresideChat/pull/5"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles; landing PR body confirms scope"
+    },
+    {
+      "sourcePath": "README.md",
+      "sourceTitle": "Persistent bottom audio player",
+      "numbers": [
+        5
+      ],
+      "evidence": [
+        {
+          "number": 5,
+          "title": "MVP: ship the presentable Fireside Chat website",
+          "url": "https://github.com/neophilism/FiresideChat/pull/5"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles; landing PR body confirms scope"
+    },
+    {
+      "sourcePath": "README.md",
+      "sourceTitle": "Person pages and episode browsing",
+      "numbers": [
+        5
+      ],
+      "evidence": [
+        {
+          "number": 5,
+          "title": "MVP: ship the presentable Fireside Chat website",
+          "url": "https://github.com/neophilism/FiresideChat/pull/5"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles; landing PR body confirms scope"
+    },
+    {
+      "sourcePath": "README.md",
+      "sourceTitle": "Publisher transcript ingestion",
+      "numbers": [
+        12
+      ],
+      "evidence": [
+        {
+          "number": 12,
+          "title": "PR 12: ingest publisher-provided episode transcripts",
+          "url": "https://github.com/neophilism/FiresideChat/pull/12"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "README.md",
+      "sourceTitle": "Automatic transcription when publisher transcripts are absent",
+      "numbers": [
+        17
+      ],
+      "evidence": [
+        {
+          "number": 17,
+          "title": "PR 16: add automatic generated-transcript fallback",
+          "url": "https://github.com/neophilism/FiresideChat/pull/17"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "README.md",
+      "sourceTitle": "Full-text transcript search with timestamp playback",
+      "numbers": [
+        16
+      ],
+      "evidence": [
+        {
+          "number": 16,
+          "title": "Integrate episode transcripts, timestamp playback, and transcript search",
+          "url": "https://github.com/neophilism/FiresideChat/pull/16"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles; landing PR body confirms scope"
+    },
+    {
+      "sourcePath": "README.md",
+      "sourceTitle": "Private administration and source-health interface",
+      "numbers": [
+        18
+      ],
+      "evidence": [
+        {
+          "number": 18,
+          "title": "Add private source-health and archive operations dashboard",
+          "url": "https://github.com/neophilism/FiresideChat/pull/18"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    },
+    {
+      "sourcePath": "README.md",
+      "sourceTitle": "Production hardening and deployment",
+      "numbers": [
+        19,
+        21
+      ],
+      "evidence": [
+        {
+          "number": 19,
+          "title": "Harden production health, probes, and response headers",
+          "url": "https://github.com/neophilism/FiresideChat/pull/19"
+        },
+        {
+          "number": 21,
+          "title": "Add clean daily archive maintenance on hardened main",
+          "url": "https://github.com/neophilism/FiresideChat/pull/21"
+        }
+      ],
+      "reason": "Reviewed capability mapping from source plan and GitHub PR titles"
+    }
+  ]
+}

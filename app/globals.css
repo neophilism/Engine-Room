@@ -1029,3 +1029,28 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 
 /* Hierarchy tabs only the name glyphs, never the progress/metric columns. */
 .project-name-indent { display: inline-block; padding-inline-start: 1.15rem; }
+
+/* Source status and second-screen monitor */
+.live-state-stale,.live-state-catching-up { background:#e2aa43;box-shadow:0 0 8px #e2aa4366; }
+.live-state-disconnected { background:#a66a62;box-shadow:none; }
+.monitor-toolbar {display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.monitor-table-wrap {overflow:auto;max-height:48rem;}
+.monitor-table {width:100%;border-collapse:collapse;font-size:.85rem;}
+.monitor-table th {text-align:left;position:sticky;top:0;background:var(--panel-bg,#211e19);padding:.8rem;z-index:1;}
+.monitor-table td {padding:.8rem;border-top:1px solid #78674755;vertical-align:top;}
+.monitor-table small {display:block;opacity:.75;margin-top:.25rem;}
+.monitor-failing {background:#9f35251c;}
+.activity-monitor.compact .monitor-table td {padding:.35rem .6rem;}
+.original-work {color:#9ecc9d;}
+.added-work {color:#9cc6ec;}
+.source-plan-items {display:grid;gap:.65rem;margin-top:1rem;}
+.source-plan-items li {display:flex;flex-wrap:wrap;gap:.5rem;align-items:baseline;}
+.source-plan-items li strong {flex:1 1 22rem;}
+.search-results {display:grid;gap:.75rem;padding-top:1rem;list-style:none;}
+.search-results li {display:flex;gap:1rem;}
+.project-progress-heading .percentage {min-width:3.4rem;font-size:.85rem;white-space:nowrap;}
+.project-progress-heading .count {overflow-wrap:anywhere;font-size:.8rem;}
+@media(max-width:760px){.monitor-table{min-width:600px;}.live-readout small{display:none;}}
+
+.plan-history-version { margin: 1rem 0; padding: 1rem; border: 1px solid var(--brass); }
+.plan-history-version pre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }

@@ -1,0 +1,33 @@
+{
+  "Engine-Room": [
+    "docs/development-plan.md",
+    "docs/portfolio-monitor-additions.json"
+  ],
+  "Compliance-Authorization-Immutable-Audit-Engine": [
+    "docs/roadmap.md"
+  ],
+  "Federal-Encryption-Compliance": [
+    "docs/roadmap.md"
+  ],
+  "Algorithmic-Accountability": [
+    "docs/DEVELOPMENT-PLAN.md"
+  ],
+  "National-Secure-Ideas-Submission": [
+    "docs/development-plan.md"
+  ],
+  "Distributed-Audio-Engine": [
+    "docs/roadmap.json"
+  ],
+  "Distributed-Radio-Engine": [
+    "docs/roadmap.json"
+  ],
+  "SceneSignal": [
+    "docs/roadmap.json"
+  ],
+  "TrackZero": [
+    "docs/roadmap.json"
+  ],
+  "FiresideChat": [
+    "README.md"
+  ]
+}

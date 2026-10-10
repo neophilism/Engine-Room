@@ -11,6 +11,10 @@ export const IMPLEMENTATION_PARENTS: Readonly<Record<string, string>> = {
   "rap-battle-platform": "live-competition-engine",
   "national-secure-ideas-submission": "secure-intake-case-workflow-engine",
   "end-to-end-everywhere-suite": "end-to-end-everywhere-security-architecture-standard"
+  ,"scenesignal":"distributed-audio-engine"
+  ,"distributed-radio-engine":"distributed-audio-engine"
+  ,"trackzero":"distributed-radio-engine"
+  ,"unsealed-records-command-center":"music-operations-engine"
 };
 
 export type ProjectHierarchyIdentity = {

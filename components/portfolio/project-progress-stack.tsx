@@ -22,7 +22,7 @@ export function ProjectProgressStack({
   nameIndent?: number;
 }) {
   const [expanded, setExpanded] = useState(false);
-  const hasApprovedPlan = project.planned > 0;
+  const hasApprovedPlan = project.planned > 0 && project.completionMeasured!==false;
   const drawerId = useId();
   const repositories =
     project.repositories.length > 0
@@ -59,13 +59,13 @@ export function ProjectProgressStack({
         </button>
         <strong className={nameIndent > 0 ? "project-name-indent" : undefined}><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>
         <span className="count">
-          {hasApprovedPlan ? `${project.completed}/${project.planned} PRs` : "Approved plan not mapped"}
+          {hasApprovedPlan ? `${project.completed}/${project.planned} original items` : project.sourcePlan?.original?`${project.sourcePlan.originalComplete}/${project.sourcePlan.original} source plan items`:"Plan mapping N/A"}
         </span>
-        <span className="percentage">{hasApprovedPlan ? `${project.percent}%` : "Not measured"}</span>
+        <span className="percentage" title={!hasApprovedPlan?"Approved roadmap completion is not mapped":"Original approved roadmap"}>{hasApprovedPlan ? `${project.percent}%` : "N/A"}</span>
       </header>
 
       <div className="project-quick-links">
-        <span className="project-activity">{!hasApprovedPlan ? "No approved roadmap mapping yet — repository activity is available separately" : project.inProgress > 0 ? `${project.inProgress} roadmap PR${project.inProgress === 1 ? "" : "s"} underway` : "No roadmap PRs underway"}</span>
+        <span className="project-activity">{!hasApprovedPlan ? `${project.activity?.open??0} open GitHub PRs · ${project.activity?.failedChecks??0} failed checks` : project.inProgress > 0 ? `${project.inProgress} roadmap PR${project.inProgress === 1 ? "" : "s"} underway` : `${project.activity?.open??0} open GitHub PRs · ${project.activity?.failedChecks??0} failed checks`}</span>
         {githubRepositoryUrl(project.repositoryFullName) && <a href={githubRepositoryUrl(project.repositoryFullName)} target="_blank" rel="noopener noreferrer">Open repository ↗</a>}
       </div>
 
@@ -86,9 +86,9 @@ export function ProjectProgressStack({
               label={`${repository.fullName} roadmap progress`}
               state={progressState(repository.completed, repository.inProgress, repository.planned)}
               showScale
-            /> : <span className="repository-unmeasured" aria-label={`${repository.fullName} unmeasured roadmap`}>Roadmap not measured</span>}
+            /> : <span className="repository-unmeasured" aria-label={`${repository.fullName} unmeasured roadmap`}>N/A</span>}
             <span className="repository-pr-count">
-              {hasApprovedPlan ? `${repository.completed}/${repository.planned} PRs` : "No approved mapping"}
+              {hasApprovedPlan ? `${repository.completed}/${repository.planned} PRs` : "Plan mapping N/A"}
             </span>
             <span className="repository-percent">{hasApprovedPlan ? `${repository.percent}%` : "—"}</span>
           </div>

@@ -26,6 +26,7 @@ export async function POST(request: Request) {
   }
 
   const body = await request.text();
+  if(Buffer.byteLength(body,'utf8')>1_000_000)return NextResponse.json({error:'Webhook payload too large'},{status:413});
 
   if (!verifyGitHubWebhookSignature(body, webhookHeaders.signature, secret)) {
     return NextResponse.json({ ok: false, error: "Invalid webhook signature." }, { status: 401 });

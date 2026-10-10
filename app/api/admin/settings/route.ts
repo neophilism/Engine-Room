@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { authorizeAdmin, trustedWriteOrigin } from "../../../../lib/server/admin-auth";
+import { trustedWriteOrigin } from "../../../../lib/server/admin-auth";
+import { isRequestAdmin,requestAdminActor } from "../../../../lib/server/request-admin";
 import { getRuntimeConfig } from "../../../../lib/config/env";
 import { InvalidControlSettings, parseControlUpdate } from "../../../../lib/domain/control-settings";
 import { loadControlSnapshot, StaleSettingsRevision, updateControlSettings } from "../../../../lib/server/control-settings";
@@ -11,16 +12,14 @@ function reply(body: unknown, status: number) {
   return NextResponse.json(body, { status, headers: { "Cache-Control": "no-store", "Vary": "Authorization" } });
 }
 
-function denial(request: Request): Response | null {
-  const auth = authorizeAdmin(request.headers);
-  if (auth === "unconfigured") return reply({ error: "Administrative access is not configured." }, 503);
-  if (auth !== "authorized") return reply({ error: "Administrative credentials are required." }, 401);
+async function denial(request: Request): Promise<Response | null> {
+  if (!await isRequestAdmin(request)) return reply({error:"Administrator required"},401);
   if (!getRuntimeConfig().databaseUrl) return reply({ error: "The database is not configured." }, 503);
   return null;
 }
 
 export async function GET(request: Request) {
-  const refused = denial(request);
+  const refused = await denial(request);
   if (refused) return refused;
   try {
     return reply(await loadControlSnapshot(), 200);
@@ -30,7 +29,7 @@ export async function GET(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  const refused = denial(request);
+  const refused = await denial(request);
   if (refused) return refused;
   if (!trustedWriteOrigin(request)) return reply({ error: "Request origin is not trusted." }, 403);
   let input;
@@ -42,7 +41,9 @@ export async function PUT(request: Request) {
     return reply({ error: error instanceof InvalidControlSettings ? error.message : "Invalid JSON settings payload." }, 400);
   }
   try {
-    return reply(await updateControlSettings(input.expectedRevision, input.settings), 200);
+    const actor=await requestAdminActor(request);
+    if(!actor)return reply({error:'Administrator required'},401);
+    return reply(await updateControlSettings(input.expectedRevision, input.settings,actor), 200);
   } catch (error) {
     if (error instanceof StaleSettingsRevision) return reply({ error: error.message }, 409);
     return reply({ error: "Settings could not be saved." }, 503);

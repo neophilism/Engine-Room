@@ -8,6 +8,7 @@ type Snapshot = {
   integration: Record<string, boolean>;
   audit: { revision: number; actor: string; changedAt: string }[];
   reconciliationRuns: { installationId: string; status: string; startedAt: string }[];
+  repositorySync?:{fullName:string;lastSuccessAt:string|null;lastError:string|null}[];
 };
 
 export function ControlConsole() {
@@ -21,7 +22,7 @@ export function ControlConsole() {
   async function request(path: string, method: string, body?: unknown) {
     const response = await fetch(path, {
       method,
-      headers: { Authorization: `Bearer ${token}`, ...(body ? { "Content-Type": "application/json" } : {}) },
+      headers: { ...(token?{Authorization: `Bearer ${token}`} : {}), ...(body ? { "Content-Type": "application/json" } : {}) },
       body: body ? JSON.stringify(body) : undefined,
       cache: "no-store"
     });
@@ -31,7 +32,6 @@ export function ControlConsole() {
   }
 
   async function load() {
-    if (!token.trim()) { setNotice("Enter an admin token to load private settings."); return; }
     setBusy(true); setNotice("");
     try {
       const value = await request("/api/admin/settings", "GET") as Snapshot;
@@ -63,9 +63,9 @@ export function ControlConsole() {
     setBusy(true); setNotice("");
     try {
       const outcome = await request("/api/admin/reconcile", "POST", { mode: "manual" });
-      setNotice(outcome.status === "succeeded"
-        ? `Reconciled ${outcome.repositories} repositories and ${outcome.pullRequests} pull requests.`
-        : outcome.message ?? "Reconciliation did not execute.");
+      setNotice(['succeeded','partial'].includes(outcome.status)
+        ? `Synchronized ${outcome.repositories} repositories. ${outcome.failed||0} source errors; failed sources will retry.`
+        : outcome.status==='disabled'?'Reconciliation is paused. Enable it to synchronize.':outcome.status==='rate-limited'?'GitHub rate limit reached. Automatic retry is scheduled.':"Reconciliation did not execute.");
       setSnapshot(await request("/api/admin/settings", "GET") as Snapshot);
     } catch (error) { setNotice(error instanceof Error ? error.message : "Reconciliation failed."); }
     finally { setBusy(false); }
@@ -73,9 +73,9 @@ export function ControlConsole() {
 
   return <section className="panel" aria-label="Engine Room administration">
     <h2>Administration console</h2>
-    <p>Credentials stay in this browser session and are never saved in Engine Room settings. Configure ENGINE_ROOM_ADMIN_TOKEN in the server environment first.</p>
+    <p>Your registered administrator account authorizes these controls. An optional server token can be used for scheduler administration.</p>
     <div className="incident-controls">
-      <label className="activity-filter">Administrator token <input aria-label="Administrator token" type="password" autoComplete="off" value={token} onChange={e => setToken(e.target.value)} /></label>
+      <label className="activity-filter">Optional scheduler token <input aria-label="Administrator token" type="password" autoComplete="off" value={token} onChange={e => setToken(e.target.value)} /></label>
       <button disabled={busy} type="button" onClick={load}>Load controls</button>
       <button type="button" onClick={() => { setToken(""); setSnapshot(null); setNotice("Credentials cleared."); }}>Clear credentials</button>
     </div>
@@ -91,14 +91,16 @@ export function ControlConsole() {
           {reconciliationIntervals.map(value => <option key={value} value={value}>{value}</option>)}
         </select>
       </label>
-      <p>Enabling this setting permits a configured external scheduler to run reconciliation. It does not create or activate a scheduler.</p>
+      <p>The built-in worker reconciles while the existing service is awake. Anonymous GitHub access uses a minimum 120-minute interval. Configure GitHub read credentials for the selected faster interval.</p>
       <div className="incident-controls">
         <button disabled={busy} type="button" onClick={save}>Save settings</button>
         <button disabled={busy} type="button" onClick={synchronize}>Synchronize now</button>
       </div>
       <h3>Recent changes</h3>
       {snapshot.audit.length ? <ul>{snapshot.audit.map(change => <li key={change.revision}>Revision {change.revision} · {change.changedAt} · {change.actor}</li>)}</ul> : <p>No setting changes recorded.</p>}
-      <h3>Recent reconciliation runs</h3>
+      <h3>Repository checkpoints</h3>
+      {snapshot.repositorySync?.length?<ul>{snapshot.repositorySync.map(row=><li key={row.fullName}>{row.fullName}: {row.lastError||'Last success '+(row.lastSuccessAt||'N/A')}</li>)}</ul>:<p>Initial repository synchronization pending.</p>}
+      <h3>Previous installation reconciliation runs</h3>
       {snapshot.reconciliationRuns.length ? <ul>{snapshot.reconciliationRuns.map(run => <li key={run.installationId}>{run.installationId}: {run.status} · {run.startedAt}</li>)}</ul> : <p>No reconciliation runs recorded.</p>}
     </>}
   </section>;

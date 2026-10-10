@@ -1,7 +1,9 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { ProjectDashboard } from "./project-dashboard";
+
+vi.mock("next/navigation",()=>({useRouter:()=>({refresh:vi.fn()})}));
 
 describe("project dashboard surface", () => {
   it("keeps an unplanned project unmeasured and provides navigation", () => {

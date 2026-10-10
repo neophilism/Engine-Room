@@ -48,14 +48,16 @@ export async function readControlSettings() {
 
 export async function loadControlSnapshot() {
   const pool = getDatabasePool();
-  const [controls, audit, runs] = await Promise.all([
+  const [controls, audit, runs,admins,checkpoints] = await Promise.all([
     readControlSettings(),
     pool.query<AuditRow>(
       "select revision, actor, previous_settings, new_settings, changed_at from engine_room_control_audit order by revision desc limit 8"
     ),
     pool.query<RunRow>(
       "select installation_id::text as installation_id, status, last_started_at, last_finished_at from engine_room_reconciliation_runs order by last_started_at desc limit 8"
-    )
+    ),
+    pool.query<{present:boolean}>("SELECT EXISTS(SELECT 1 FROM engine_room_users WHERE role='admin' AND NOT disabled) AS present"),
+    pool.query<{full_name:string;last_success_at:Date|null;last_error:string|null}>("SELECT r.full_name,s.last_success_at,s.last_error FROM github_repository_sync s JOIN repositories r ON r.id=s.repository_id WHERE NOT r.archived ORDER BY s.last_success_at NULLS FIRST,r.full_name")
   ]);
   const runtime = getRuntimeConfig();
   return {
@@ -66,7 +68,8 @@ export async function loadControlSnapshot() {
       githubWebhook: Boolean(runtime.github.webhookSecret),
       githubInstallation: Boolean(process.env.GITHUB_INSTALLATION_ID),
       telemetry: Boolean(process.env.ENGINE_ROOM_TELEMETRY_KEYS && process.env.ENGINE_ROOM_TELEMETRY_KEYS !== "[]"),
-      adminAccess: Boolean(process.env.ENGINE_ROOM_ADMIN_TOKEN && process.env.ENGINE_ROOM_ADMIN_TOKEN.length >= 32)
+      githubRead: Boolean(process.env.GITHUB_READ_TOKEN || runtime.github.appId&&runtime.github.privateKey&&process.env.GITHUB_INSTALLATION_ID),
+      adminAccess: Boolean(admins.rows[0]?.present || process.env.ENGINE_ROOM_ADMIN_TOKEN && process.env.ENGINE_ROOM_ADMIN_TOKEN.length >= 32)
     },
     audit: audit.rows.map((row) => ({
       revision: row.revision,
@@ -75,6 +78,7 @@ export async function loadControlSnapshot() {
       next: row.new_settings,
       changedAt: row.changed_at.toISOString()
     })),
+    repositorySync:checkpoints.rows.map(row=>({fullName:row.full_name,lastSuccessAt:row.last_success_at?.toISOString()||null,lastError:row.last_error})),
     reconciliationRuns: runs.rows.map((row) => ({
       installationId: row.installation_id,
       status: row.status,
@@ -84,7 +88,7 @@ export async function loadControlSnapshot() {
   };
 }
 
-export async function updateControlSettings(expectedRevision: number, settings: ControlSettings) {
+export async function updateControlSettings(expectedRevision: number, settings: ControlSettings,actor='admin-token') {
   const client = await getDatabasePool().connect();
   try {
     await client.query("begin");
@@ -104,8 +108,8 @@ export async function updateControlSettings(expectedRevision: number, settings: 
       [revision, settings.githubReconciliationEnabled, settings.githubReconciliationIntervalMinutes]
     );
     await client.query(
-      "insert into engine_room_control_audit (revision, actor, previous_settings, new_settings) values ($1, 'admin-token', $2::jsonb, $3::jsonb)",
-      [revision, JSON.stringify(previous.settings), JSON.stringify(settings)]
+      "insert into engine_room_control_audit (revision, actor, previous_settings, new_settings) values ($1, $2, $3::jsonb, $4::jsonb)",
+      [revision,actor, JSON.stringify(previous.settings), JSON.stringify(settings)]
     );
     await client.query("commit");
     return { revision, settings };

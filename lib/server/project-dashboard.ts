@@ -6,13 +6,14 @@ import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
 import { getDatabasePool } from "./database";
 import { loadCurrentFeatures } from "./project-features";
 import { loadProjectActivity } from "./development-activity";
+import { loadProjectMonitorData } from "./live-monitor";
 import { loadProjectReadiness } from "./project-readiness";
 
 type ProjectRow = { id: string; slug: string; display_name: string; summary: string | null; status: Project["status"] };
 type RepositoryRow = { id: string; github_repository_id: string | number; owner_login: string; name: string; full_name: string; html_url: string; default_branch: string; visibility: Repository["visibility"]; archived: boolean };
 type PlanRow = { id: string; project_id: string; version: number; title: string; summary: string | null; planned_pr_total: number; approved_at: Date | string };
 type MilestoneRow = { id: string; development_plan_id: string; ordinal: number; name: string; description: string | null; planned_pr_total: number; status: DevelopmentPlanGraph["milestones"][number]["status"] };
-type PlannedPrRow = { id: string; development_plan_id: string; milestone_id: string | null; repository_id: string | null; ordinal: number; title: string; description: string | null; status: DevelopmentPlanGraph["plannedPullRequests"][number]["status"]; github_pr_number: number | null; merged_at: Date | string | null };
+type PlannedPrRow = { id: string; development_plan_id: string; milestone_id: string | null; repository_id: string | null; ordinal: number; title: string; description: string | null; status: DevelopmentPlanGraph["plannedPullRequests"][number]["status"]; github_pr_number: number | null; merged_at: Date | string | null; completion_unverified?:boolean };
 
 function iso(value: Date | string | null) { return value === null ? undefined : new Date(value).toISOString(); }
 function empty(source: ProjectDashboardData["source"]): ProjectDashboardData { return { source, project: null, repositories: [], milestones: [] }; }
@@ -32,7 +33,9 @@ export function normalizeProjectDashboard(projectRow: ProjectRow, repositoryRows
       repositoryId: row.repository_id ?? undefined, ordinal: row.ordinal, title: row.title, description: row.description ?? undefined, status: row.status,
       githubPrNumber: row.github_pr_number ?? undefined, mergedAt: iso(row.merged_at) }))
   };
+  const unverifiedRoadmapItems=plannedPrRows.filter(row=>!row.repository_id||!row.github_pr_number||row.completion_unverified).length;
   return { source: "database", project, repositories, graph, progress: calculateRoadmapProgress(graph),
+    completionMeasured:planRow.planned_pr_total>0&&unverifiedRoadmapItems===0,unverifiedRoadmapItems,
     milestones: graph.milestones.map((milestone) => calculateMilestoneProgress(milestone, graph.plannedPullRequests)) };
 }
 
@@ -54,14 +57,20 @@ export async function loadProjectDashboard(slug: string, source: EnvironmentSour
       if (plan) {
         milestones = (await client.query<MilestoneRow>("select * from milestones where development_plan_id = $1 order by ordinal", [plan.id])).rows;
         plannedPrs = (await client.query<PlannedPrRow>(`select ppr.id, ppr.development_plan_id, ppr.milestone_id, ppr.repository_id, ppr.ordinal,
-          ppr.title, ppr.description, ppr.github_pr_number, gpr.merged_at,
-          case when gpr.merged_at is not null then 'merged' when gpr.state = 'open' then 'in-progress'
+          ppr.title, ppr.description, ppr.github_pr_number,
+          (gpr.id IS NULL OR (gpr.merged_at IS NOT NULL AND gpr.base_ref IS DISTINCT FROM (SELECT default_branch FROM repositories WHERE id=gpr.repository_id)
+            AND (gpr.release_included IS NULL OR gpr.release_target_sha IS DISTINCT FROM (SELECT default_branch_sha FROM github_repository_sync WHERE repository_id=gpr.repository_id)))) AS completion_unverified,
+          CASE WHEN (gpr.base_ref=(SELECT default_branch FROM repositories WHERE id=gpr.repository_id) OR (gpr.release_included=true AND gpr.release_target_sha=(SELECT default_branch_sha FROM github_repository_sync WHERE repository_id=gpr.repository_id))) THEN gpr.merged_at ELSE NULL END AS merged_at,
+          case when gpr.merged_at is not null AND (gpr.base_ref=(SELECT default_branch FROM repositories WHERE id=gpr.repository_id) OR (gpr.release_included=true AND gpr.release_target_sha=(SELECT default_branch_sha FROM github_repository_sync WHERE repository_id=gpr.repository_id))) then 'merged' when gpr.state = 'open' then 'in-progress'
             when ppr.status = 'skipped' then 'skipped' else 'planned' end as status
           from planned_pull_requests ppr left join github_pull_requests gpr
             on gpr.repository_id = ppr.repository_id and gpr.number = ppr.github_pr_number
           where ppr.development_plan_id = $1 order by ppr.ordinal`, [plan.id])).rows;
       }
       const dashboard = normalizeProjectDashboard(project, repositories.rows, plan, milestones, plannedPrs);
+      const monitor=await loadProjectMonitorData(client,project.id);
+      dashboard.sourcePlan=monitor.plans.get(project.id);
+      dashboard.pullRequests=monitor.pullRequests.get(project.id)||[];
       dashboard.features = await loadCurrentFeatures(client, project.id);
       dashboard.activities = await loadProjectActivity(client, project.id);
       dashboard.readiness = await loadProjectReadiness(client, project.id, dashboard);

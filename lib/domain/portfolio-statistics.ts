@@ -4,8 +4,9 @@ import type { PortfolioProjectOverview, PortfolioStatistics } from "./portfolio-
 export function calculatePortfolioStatistics(
   projects: readonly PortfolioProjectOverview[]
 ): PortfolioStatistics {
-  const completedRoadmapPrs = projects.reduce((sum, project) => sum + project.completed, 0);
-  const plannedRoadmapPrs = projects.reduce((sum, project) => sum + project.planned, 0);
+  const completedRoadmapPrs = projects.reduce((sum, project) => sum + (project.completionMeasured===false?project.sourcePlan?.originalComplete||0:project.completed), 0);
+  const plannedRoadmapPrs = projects.reduce((sum, project) => sum + (project.completionMeasured===false
+    ? project.sourcePlan?.items.filter(item=>item.scope==='original'&&item.numbers.length>0&&item.state!=='unmapped').length||0 : project.planned), 0);
   const activeStatuses = new Set<ProjectStatus>(["active-development", "beta", "live", "maintenance"]);
 
   return {

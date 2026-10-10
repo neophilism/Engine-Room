@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import { dashboardRoutes } from "../../lib/navigation";
 
 const stations = [
   { name: "Portfolio", route: "/", kind: "STRATEGY", description: "Every registered project, approved roadmap, and the weighted progress machine in one view.", input: "Approved roadmap mappings + merged GitHub pull requests" },

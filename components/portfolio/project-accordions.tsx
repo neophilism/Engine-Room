@@ -1,6 +1,8 @@
 import React from "react";
 import type { PortfolioProjectOverview } from "../../lib/domain/portfolio-overview";
+import { SourcePlan } from "../projects/source-plan";
 import { ProjectFeatures } from "../projects/project-features";
+import {projectDashboardHref} from '../../lib/domain/project-dashboard';
 
 export function ProjectAccordions({
   project
@@ -21,6 +23,7 @@ export function ProjectAccordions({
         </div>
       </details>
 
+      <details className="project-accordion"><summary>Original roadmap and added work</summary><div className="project-accordion-body"><SourcePlan plan={project.sourcePlan} historyHref={projectDashboardHref(project)+'/plans'}/></div></details>
       <details className="project-accordion">
         <summary>Features</summary>
         <div className="project-accordion-body">
@@ -41,12 +44,12 @@ export function ProjectAccordions({
               <dd>{repositoryCount}</dd>
             </div>
             <div>
-              <dt>PRs underway</dt>
-              <dd>{project.inProgress}</dd>
+              <dt>Open GitHub PRs</dt>
+              <dd>{project.activity?.open??project.inProgress}</dd>
             </div>
             <div>
               <dt>PRs remaining</dt>
-              <dd>{Math.max(project.planned - project.completed, 0)}</dd>
+              <dd>{project.planned>0&&project.completionMeasured!==false?Math.max(project.planned - project.completed, 0):"N/A"}</dd>
             </div>
           </dl>
         </div>
