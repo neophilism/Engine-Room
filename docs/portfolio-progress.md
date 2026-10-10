@@ -1,15 +1,29 @@
-# Portfolio progress
+# Portfolio progress — current green/yellow/empty semantics
 
-The Total Portfolio Progress machine sums merged approved roadmap PRs and divides by the sum of each project's approved planned PR total. It does not average percentages or add repository totals to project totals. Underway and remaining counts use the same project snapshot.
+**Current requirement (October 10, 2026):** a project has **one total planned-work denominator**. It includes all original plan items and all newly documented approved additions. The date a work item was first planned never determines its color.
 
-An empty portfolio remains neutral with no misleading completion instrument. A fully merged roadmap signals roadmap completion; it does not establish production readiness. The home page renders dynamically so deployments do not freeze portfolio data at build time.
+For a plan containing `N` current work units:
 
-The shared calculation lives in the domain layer and is reusable by client views. Instruments inherit the existing reduced-motion and pause behavior.
+- **Green** = units accepted through a recorded GitHub PR merge timestamp. Merge to an intermediate branch is still a merge, but not proof of production release.
+- **Yellow** = written GitHub PRs still open/unmerged, **including drafts, CI-pending, CI-failing, and checks-passed-awaiting-merge**. Yellow is not used for newly planned work that is already merged.
+- **Empty** = items neither counted merged nor represented by current open PRs. Planned items not yet created or not verified remain in the denominator.
 
-## October 2026 correction: full planned denominator
+The bar's accessible value measures `merged/N`; its accessible text also announces `open` and `not started`.
 
-**Never divide completed work by GitHub PRs observed, opened, closed, or mapped.** A plan with 100 planned units, nine verified completed units, one in-progress PR, and 90 items without a PR must display **9/100 = 9%**, not 9/10 = 90%. A missing PR mapping or uncreated PR remains an uncompleted planned item and is never subtracted from the denominator. Projects without any documented plan still display N/A.
+**Required example:** 100 work units, 60 merged, 10 written but open and 30 not started = **60% green, 10% yellow, 30% empty**. An original 50/50 plan is fully green; adding 50 new planned items instantly changes the denominator to 100 and the bar to **50% green, 0% yellow, 50% empty** until those new PRs are opened or merged.
 
-The plan progress tube uses green for verified original-plan completions and amber for verified additions explicitly present in imported development-plan documents. Both are divided by **all planned units, original plus added**. For example, 40/40 original plus 9/60 added displays 49/100 = 49% overall. Raw GitHub activity and CI observations may be shown separately for operational diagnosis, but are not progress measures. The original-plan count is preserved and has not been inflated by additional unrelated pull requests.
+Plan progress percentage = `100 × merged / total planned`. Do not average project percentages or divide by the number of observed, created, synchronized, mapped or opened GitHub PRs. All planned items count in the denominator. The yellow count is capped to remaining plan capacity to avoid overlap and overfilling. PRs that are closed without merging are not accepted and should not count green.
 
-Project and repository views only show a per-repository completion bar when the repository allocation covers all approved original plan units. If 90 items are unallocated, the project-wide 9/100 tube is shown instead of a misleading per-repository 9/10 tube.
+## Evidence sources and fallback
+
+The source-controlled canonical plan plus approved-version data form the denominator. The loader retains source-plan historical provenance (`original`, `addition`) for audit, but **the UI never uses those fields as colors**. If the authoritative plan expands while the older approved plan table has not been reconciled, use the larger documented scope rather than truncating added planned work.
+
+Written, unmerged progress uses mapped `in-progress` plan items and the repository's observed open-PR counts, choosing the larger verified observation rather than summing potentially overlapping counts, and never exceeding `N - merged`. A recent PR merge may remain yellow until GitHub synchronization or signed webhook reconciliation records it; the dashboard must show source freshness and must not guess a merge.
+
+Projects without any documented plan display **N/A** (not 0%); projects with a plan and zero verified merges display a real 0% green bar, with yellow open work as available.
+
+## Scope
+
+These rules apply to the home project list, `/projects`, `/projects/[slug]`, milestones and any aggregate portfolio progress widget. Keep a common `PlannedProgressTube` component and `summarizePlannedProgress` calculation to avoid cross-page disagreements. The old split-color original/added bar was explicitly superseded on October 10, 2026.
+
+A merged PR is not necessarily reviewed for release inclusion, deployed, operationally healthy or accepted by an external stakeholder. Those states remain separate from the current **merged = green** definition.
