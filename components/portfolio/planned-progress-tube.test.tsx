@@ -10,6 +10,7 @@ describe("unified development plan progress bar", () => {
     const {container}=render(<PlannedProgressTube label="Sample roadmap" progress={progress}/>);
     expect(screen.getByRole("progressbar",{name:"Sample roadmap"})).toHaveAttribute("aria-valuemax","100");
     expect(screen.getByRole("progressbar",{name:"Sample roadmap"})).toHaveAttribute("aria-valuenow","9");
+    expect(container.querySelector(".planned-progress-endcap")).not.toBeInTheDocument();
     expect(container.querySelector(".planned-progress-merged-fill")).toHaveStyle({width:"9%"});
     expect(container.querySelector(".planned-progress-open-fill")).toHaveStyle({left:"9%",width:"0%"});
   });
