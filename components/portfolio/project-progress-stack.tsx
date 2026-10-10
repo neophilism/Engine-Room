@@ -64,7 +64,7 @@ export function ProjectProgressStack({
         </button>
         <strong className={nameIndent > 0 ? "project-name-indent" : undefined}><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>
         <span className="count">
-          {progress ? `${progress.completed}/${progress.planned} verified` : aggregatorDeferred ? "Awaiting corpus" : "Plan unavailable"}
+          {progress ? `${progress.completed}/${progress.planned} planned` : aggregatorDeferred ? "Awaiting corpus" : "Plan unavailable"}
         </span>
         <span className="percentage" title={progress ? "Completed planned units divided by all planned units" : "No documented development plan"}>{progress ? `${progress.percent}%` : "N/A"}</span>
       </header>
