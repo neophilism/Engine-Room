@@ -68,7 +68,7 @@ export function PortfolioHome({
         <span className="planned-progress-legend">
           <span className="merged">Green: merged</span>
           <span className="underway">Yellow: written / awaiting merge</span>
-          <span>Empty: not started</span>
+          <span className="unstarted">Empty: not started</span>
         </span>
         <span>Original and newly added work share the same total.</span>
       </p>
