@@ -6,7 +6,8 @@ import { AppShell } from "./app-shell";
 let pathname = "/";
 
 vi.mock("next/navigation", () => ({
-  usePathname: () => pathname
+  usePathname: () => pathname,
+  useRouter: () => ({ refresh: vi.fn() })
 }));
 
 describe("AppShell", () => {
