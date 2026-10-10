@@ -1,0 +1,52 @@
+/* Plan completion only: a 9/100 plan lights exactly 9% of the chamber. */
+.planned-progress-tube {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr) 14px;
+  align-items: stretch;
+  width: 100%;
+  min-width: 88px;
+  height: 30px;
+  filter: drop-shadow(0 5px 8px rgba(0,0,0,.27));
+}
+.planned-progress-compact { height: 22px; grid-template-columns: 11px minmax(0, 1fr) 11px; }
+.planned-progress-endcap {
+  background: var(--er-material-brass);
+  box-shadow: inset 0 0 5px rgba(0,0,0,.65), 0 1px 0 rgba(255,225,164,.25);
+}
+.planned-progress-endcap:first-child { border-radius: 8px 3px 3px 8px; }
+.planned-progress-endcap:last-child { border-radius: 3px 8px 8px 3px; }
+.planned-progress-chamber {
+  position: relative;
+  overflow: hidden;
+  border-block: 2px solid rgba(227,174,88,.62);
+  background: linear-gradient(180deg,rgba(226,255,250,.16),transparent 25%,rgba(0,0,0,.25) 80%),var(--er-material-smoked-glass);
+  box-shadow: var(--er-inset-glass);
+}
+.planned-progress-original-fill,.planned-progress-added-fill {
+  display: block;
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 0;
+  max-width: 100%;
+  border-radius: 0 7px 7px 0;
+}
+.planned-progress-original-fill {
+  background: linear-gradient(90deg,#1e7653,#4ec98a 75%,#8de4ac);
+  box-shadow: 0 0 11px rgba(75,201,135,.4);
+}
+.planned-progress-added-fill {
+  background: linear-gradient(90deg,#90631d,#d8a343 75%,#ffd37c);
+  box-shadow: 0 0 11px rgba(227,174,88,.45);
+}
+.planned-progress-boundary { position:absolute;top:0;bottom:0;border-left:1px solid rgba(227,174,88,.55); }
+.planned-progress-reflection {position:absolute;left:4px;right:4px;top:3px;height:20%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);pointer-events:none;}
+.planned-progress-legend {display:flex;gap:14px;flex-wrap:wrap;font-size:.75rem;color:var(--muted);margin:4px 0 9px;}
+.planned-progress-legend span::before {content:"";display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:7px;}
+.planned-progress-legend .original::before {background:#4ec98a;}
+.planned-progress-legend .added::before {background:#d8a343;}
+.planned-progress-totals {font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap;}
+@media(max-width:760px){
+  .repository-progress-row .planned-progress-tube {grid-column:1/-1;}
+  .planned-progress-totals {min-width:0;}
+}
