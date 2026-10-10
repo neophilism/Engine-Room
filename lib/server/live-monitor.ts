@@ -65,7 +65,7 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
   for(const doc of docResult.rows){
     // Historical paths remain in the audit database but only authoritative current
     // plan sources contribute to the denominator (avoid README + canonical double-counting).
-    const activePaths=planSources[doc.repository_name as keyof typeof planSources];
+    const activePaths=(planSources as Record<string,string[]>)[doc.repository_name];
     if(activePaths && !activePaths.includes(doc.path))continue;
     const plan=plans.get(doc.project_id)||{original:0,originalComplete:0,added:0,addedComplete:0,unmapped:0,items:[],documents:[]};
     plan.documents.push({path:doc.path,url:doc.source_url,title:doc.title,importedAt:iso(doc.imported_at)!,versions:Number(doc.versions)});
