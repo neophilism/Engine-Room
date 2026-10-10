@@ -295,14 +295,15 @@ h2 { font: 680 clamp(1.06rem, 1.5vw, 1.35rem)/1.28 var(--er-font-body); letter-s
 
 /* Bars show merged green + open yellow with a shared total denominator. */
 .planned-progress-tube {
+  display: block;
   height: 12px; min-width: 75px;
-  grid-template-columns: 0 minmax(0,1fr) 0;
   filter: none; background: #2a3949; border-radius: 999px;
   overflow: hidden;
 }
-.planned-progress-compact { height: 10px; grid-template-columns: 0 minmax(0,1fr) 0; }
+.planned-progress-compact { height: 10px; }
 .planned-progress-endcap, .planned-progress-reflection, .planned-progress-boundary { display: none; }
 .planned-progress-chamber {
+  display: block; position: relative; width: 100%; height: 100%;
   border: 0; border-radius: 999px; background: #293747; box-shadow: none;
 }
 .planned-progress-merged-fill,.planned-progress-open-fill {
