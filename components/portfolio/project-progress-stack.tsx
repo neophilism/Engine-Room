@@ -4,7 +4,8 @@ import React, { useId, useState } from "react";
 import Link from "next/link";
 import { projectDashboardHref } from "../../lib/domain/project-dashboard";
 import type { PortfolioProjectOverview } from "../../lib/domain/portfolio-overview";
-import { GlassTube } from "../machine";
+import { PlannedProgressTube } from "./planned-progress-tube";
+import { summarizePlannedProgress } from "../../lib/domain/planned-progress";
 import { ProjectAccordions } from "./project-accordions";
 import { githubRepositoryUrl } from "../../lib/domain/portfolio-query";
 
@@ -22,22 +23,24 @@ export function ProjectProgressStack({
   nameIndent?: number;
 }) {
   const [expanded, setExpanded] = useState(false);
-  const hasApprovedPlan = project.planned > 0 && project.completionMeasured!==false;
+  const progress = summarizePlannedProgress(project);
   const drawerId = useId();
-  const repositories =
-    project.repositories.length > 0
-      ? project.repositories
-      : [
-          {
-            id: `${project.id}-aggregate`,
-            fullName: project.repositoryFullName ?? "Unassigned roadmap units",
-            htmlUrl: project.repositoryUrl ?? "",
-            completed: project.completed,
-            inProgress: project.inProgress,
-            planned: project.planned,
-            percent: project.percent
-          }
-        ];
+  const repositories = project.repositories.length > 0 ? project.repositories : [{
+    id: `${project.id}-aggregate`,
+    fullName: project.repositoryFullName ?? "Entire development plan",
+    htmlUrl: project.repositoryUrl ?? "",
+    completed: progress?.original.completed ?? 0,
+    inProgress: 0,
+    planned: progress?.original.planned ?? 0,
+    percent: progress?.original.planned
+      ? 100 * (progress.original.completed / progress.original.planned) : 0
+  }];
+  // If only ten of 100 planned items have repository mappings, a 9/10
+  // repository tube would be misleading. Show the 9/100 plan tube instead.
+  const allocated = !!progress &&
+    repositories.reduce((total, repository) => total + repository.planned, 0) === progress.original.planned;
+  const showAggregate = !!progress && (repositories.length > 1 || !allocated);
+
 
   return (
     <article className="project-progress-stack">
@@ -59,40 +62,50 @@ export function ProjectProgressStack({
         </button>
         <strong className={nameIndent > 0 ? "project-name-indent" : undefined}><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>
         <span className="count">
-          {hasApprovedPlan ? `${project.completed}/${project.planned} original items` : project.sourcePlan?.original?`${project.sourcePlan.originalComplete}/${project.sourcePlan.original} source plan items`:"Plan mapping N/A"}
+          {progress ? `${progress.completed}/${progress.planned} planned` : "N/A"}
         </span>
-        <span className="percentage" title={!hasApprovedPlan?"Approved roadmap completion is not mapped":"Original approved roadmap"}>{hasApprovedPlan ? `${project.percent}%` : "N/A"}</span>
+        <span className="percentage" title={progress ? "Completed planned units divided by all planned units" : "No documented development plan"}>{progress ? `${progress.percent}%` : "N/A"}</span>
       </header>
 
       <div className="project-quick-links">
-        <span className="project-activity">{!hasApprovedPlan ? `${project.activity?.open??0} open GitHub PRs · ${project.activity?.failedChecks??0} failed checks` : project.inProgress > 0 ? `${project.inProgress} roadmap PR${project.inProgress === 1 ? "" : "s"} underway` : `${project.activity?.open??0} open GitHub PRs · ${project.activity?.failedChecks??0} failed checks`}</span>
+        <span className="project-activity">{progress
+          ? `${progress.remaining} of ${progress.planned} planned items remaining`
+          : "Development plan N/A"}</span>
+        {progress?.added.planned ? <span className="planned-progress-legend">
+          <span className="original">Original {progress.original.completed}/{progress.original.planned}</span>
+          <span className="added">Added {progress.added.completed}/{progress.added.planned}</span>
+        </span> : null}
         {githubRepositoryUrl(project.repositoryFullName) && <a href={githubRepositoryUrl(project.repositoryFullName)} target="_blank" rel="noopener noreferrer">Open repository ↗</a>}
       </div>
 
-      <div
-        className="repository-progress-list"
-        aria-label={`${project.displayName} repository progress`}
-      >
-        {repositories.map((repository) => (
-          <div className="repository-progress-row" key={repository.id}>
+      <div className="repository-progress-list" aria-label={`${project.displayName} repository progress`}>
+        {showAggregate && progress && <div className="repository-progress-row planned-progress-aggregate-row">
+          <span className="repository-progress-name">Full development plan</span>
+          <PlannedProgressTube progress={progress} label={`${project.displayName} development plan progress`} />
+          <span className="repository-pr-count">{progress.completed}/{progress.planned} planned</span>
+          <span className="repository-percent">{progress.percent}%</span>
+        </div>}
+        {repositories.map((repository) => {
+          const repositoryProgress = allocated && progress && repository.planned > 0
+            ? repositories.length === 1
+              ? progress
+              : summarizePlannedProgress({ planned: repository.planned, completed: repository.completed })
+            : null;
+          return <div className="repository-progress-row" key={repository.id}>
             <span className="repository-progress-name">
               {githubRepositoryUrl(repository.fullName)
                 ? <a href={githubRepositoryUrl(repository.fullName)} target="_blank" rel="noopener noreferrer">{repository.fullName}</a>
                 : repository.fullName}
             </span>
-            {hasApprovedPlan ? <GlassTube
-              value={repository.completed}
-              max={Math.max(repository.planned, 1)}
-              label={`${repository.fullName} roadmap progress`}
-              state={progressState(repository.completed, repository.inProgress, repository.planned)}
-              showScale
-            /> : <span className="repository-unmeasured" aria-label={`${repository.fullName} unmeasured roadmap`}>N/A</span>}
-            <span className="repository-pr-count">
-              {hasApprovedPlan ? `${repository.completed}/${repository.planned} PRs` : "Plan mapping N/A"}
-            </span>
-            <span className="repository-percent">{hasApprovedPlan ? `${repository.percent}%` : "—"}</span>
-          </div>
-        ))}
+            {repositoryProgress
+              ? <PlannedProgressTube progress={repositoryProgress} label={`${repository.fullName} roadmap progress`} />
+              : <span className="repository-unmeasured" aria-label={`${repository.fullName} plan allocation unavailable`}>N/A</span>}
+            <span className="repository-pr-count">{repositoryProgress
+              ? `${repositoryProgress.completed}/${repositoryProgress.planned} planned`
+              : "Plan allocation N/A"}</span>
+            <span className="repository-percent">{repositoryProgress ? `${repositoryProgress.percent}%` : "—"}</span>
+          </div>;
+        })}
       </div>
 
       <div
