@@ -55,4 +55,20 @@ describe("independent canonical development plan refresh", () => {
     expect(outcome.completed[0].plans[0]).toEqual({path:"docs/DEVELOPMENT_PLAN.md",units:3});
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
+
+  it("synchronizes the revised 16-unit Music Analyzer baseline without deleting source documents",async()=>{
+    const db=fakeDatabase([
+      {id:"music",name:"Music-Analyzer",full_name:"neophilism/Music-Analyzer",default_branch:"main"}
+    ]);
+    const body=["# Music Analyzer","## PR roadmap"];
+    for(let i=1;i<=18;i++)body.push("### PR "+String(i).padStart(2,"0")+" Work package "+i);
+    const fetched=vi.fn(async()=>new Response(body.join("\n")));
+    const outcome=await reconcilePlanSources(db.pool,{fetcher:fetched as unknown as typeof fetch});
+    expect(outcome).toMatchObject({imported:1,failed:0});
+    expect(outcome.completed[0].plans[0].units).toBe(16);
+    expect(db.statements.filter(sql=>sql.includes("INSERT INTO project_plan_items"))).toHaveLength(16);
+    expect(db.statements.some(sql=>sql.startsWith("DELETE FROM project_plan_items")&&sql.includes("fingerprint=$3"))).toBe(true);
+    expect(db.statements.every(sql=>!sql.includes("DELETE FROM project_plan_documents"))).toBe(true);
+  });
+
 });
