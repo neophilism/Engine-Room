@@ -68,6 +68,22 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     expect(data.milestones[0]).toMatchObject({ status: "active", completed: 1 });
     expect((await loadProjectDashboard("missing-project", source)).project).toBeNull();
   });
+  it("counts a planned GitHub PR merged into an intermediate branch without claiming release readiness", async () => {
+    const pool = getDatabasePool(source);
+    const id = (await pool.query("SELECT id FROM repositories WHERE full_name='test/core'")).rows[0].id;
+    try {
+      await pool.query("UPDATE github_pull_requests SET merged_at=now(),base_ref='integration',release_included=NULL WHERE repository_id=$1 AND number=3", [id]);
+      const portfolio = await loadPortfolioOverview(source);
+      const project = portfolio.projects.find(p=>p.slug==='database-fixture')!;
+      expect(project).toMatchObject({ planned:4, completed:2, percent:50 });
+      const dashboard = await loadProjectDashboard("database-fixture", source);
+      expect(dashboard.progress).toMatchObject({ planned:4, completed:2, remaining:2, percent:50 });
+      expect(dashboard.graph?.plannedPullRequests[2].status).toBe("merged");
+    } finally {
+      await pool.query("UPDATE github_pull_requests SET merged_at=NULL,base_ref='main',release_included=NULL WHERE repository_id=$1 AND number=3", [id]);
+    }
+  });
+
   it("registers and updates plan-scoped features without duplicates or cross-plan work", async () => {
     const data = await loadProjectDashboard("database-fixture", source);
     const planId = data.graph!.plan.id;
@@ -230,7 +246,7 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     expect((await pool.query('SELECT checks_state FROM github_pull_requests WHERE repository_id=$1 AND number=80',[repo])).rows[0].checks_state).toBe('passing');
   });
 
-  it('preserves original work and all additions across edits and counts only complete release-branch evidence',async()=>{
+  it('preserves original and added planned units without requiring default-branch release inclusion',async()=>{
     const pool=getDatabasePool(source),row=(await pool.query("SELECT r.id,pr.project_id FROM repositories r JOIN project_repositories pr ON pr.repository_id=r.id WHERE r.full_name='test/core'")).rows[0];
     const repo={id:row.id,full_name:'test/core'};
     const one={ordinal:1,title:'Foundation',numbers:[1],reason:'Explicit source evidence',scope:'original'};
@@ -241,8 +257,8 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     await persistPullRequest(pool,row.id,prPayload(81));
     await persistPlanDocument(pool,repo,{path:'docs/roadmap.md',body:'Revision 2',ref:'second-sha',items:[one,two,added]});
     let plan=(await loadProjectMonitorData(pool,row.project_id)).plans.get(row.project_id)!;
-    expect(plan).toMatchObject({original:2,originalComplete:1,added:1,addedComplete:0,unmapped:2});
-    expect(plan.items.find(x=>x.ordinal===3)?.state).toBe('unmapped');
+    expect(plan).toMatchObject({original:2,originalComplete:1,added:1,addedComplete:0,unmapped:1});
+    expect(plan.items.find(x=>x.ordinal===3)?.state).toBe('in-progress');
     await persistPullRequest(pool,row.id,prPayload(80,{state:'closed',merged_at:new Date().toISOString(),updated_at:new Date(Date.now()+3000).toISOString()}));
     await persistPullRequest(pool,row.id,prPayload(81,{state:'closed',merged_at:new Date().toISOString(),updated_at:new Date(Date.now()+3000).toISOString()}));
     const revision=(await pool.query('SELECT revision FROM engine_room_live_state')).rows[0].revision;
@@ -293,7 +309,7 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     expect((await pool.query('SELECT count(*) FROM github_pull_requests')).rows[0].count).not.toBe('0');
   });
 
-  it('credits intermediate merges only after ancestry proves release-branch inclusion',async()=>{
+  it('keeps roadmap completion separate when release inclusion is no longer verified',async()=>{
     const pool=getDatabasePool(source),row=(await pool.query("SELECT r.id,pr.project_id FROM repositories r JOIN project_repositories pr ON pr.repository_id=r.id WHERE r.full_name='test/core'")).rows[0];
     await pool.query('UPDATE engine_room_live_state SET rate_limit_reset_at=NULL,discovery_at=now()');
     await pool.query("UPDATE github_repository_sync SET next_attempt_at=now() WHERE repository_id=$1",[row.id]);
@@ -316,7 +332,7 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     await pool.query("UPDATE github_repository_sync SET default_branch_sha=$2 WHERE repository_id=$1",[row.id,'e'.repeat(40)]);
     data=await loadProjectMonitorData(pool,row.project_id);
     expect(data.pullRequests.get(row.project_id)?.find(x=>x.number===85)?.releaseMerge).toBeNull();
-    expect(data.plans.get(row.project_id)?.items.find(x=>x.title==='Ancestry work')?.state).toBe('unmapped');
+    expect(data.plans.get(row.project_id)?.items.find(x=>x.title==='Ancestry work')?.state).toBe('merged');
   });
 
   it('reads real dashboard account roles and disabled states without inventing MFA or usage',async()=>{
