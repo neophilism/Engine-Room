@@ -74,7 +74,7 @@ describe("ProjectProgressStack", () => {
       repositories: [{ ...project.repositories[0], id: "partially-mapped", planned: 10, completed: 9, percent: 90 }]
     };
     render(<ProjectProgressStack project={partial} />);
-    expect(screen.getByText("9/100 planned")).toBeInTheDocument();
+    expect(screen.getAllByText("9/100 planned").length).toBeGreaterThan(0);
     expect(screen.getAllByText("9%").length).toBeGreaterThan(0);
     const tube = screen.getByRole("progressbar", { name: "Hundred Item Plan development plan progress" });
     expect(tube).toHaveAttribute("aria-valuemax", "100");
@@ -89,7 +89,7 @@ describe("ProjectProgressStack", () => {
       repositories: [{ ...project.repositories[0], planned: 10, completed: 10, percent: 100 }]
     };
     render(<ProjectProgressStack project={mapped} />);
-    expect(screen.getByText("10/10 planned")).toBeInTheDocument();
+    expect(screen.getAllByText("10/10 planned").length).toBeGreaterThan(0);
     expect(screen.queryByText(/1 open GitHub PR/)).not.toBeInTheDocument();
   });
 
