@@ -22,7 +22,7 @@ export function ProjectComparison({ overview }: { overview: PortfolioOverviewDat
       <table className="comparison-table">
         <caption>Compare approved roadmaps and current lifecycle stages</caption>
         <thead><tr><th scope="col">Project</th><th scope="col">Lifecycle</th><th scope="col">Repositories</th><th scope="col">Approved PRs</th>
-          <th scope="col">Merged</th><th scope="col">Underway</th><th scope="col">Remaining</th><th scope="col">Progress</th></tr></thead>
+          <th scope="col">Merged</th><th scope="col">Underway</th><th scope="col">Remaining</th><th scope="col">Progress</th><th scope="col">Observed GitHub PRs</th></tr></thead>
         <tbody>{visible.map((project) => <tr key={project.id}>
           <th scope="row"><strong className={projectNameIndent(project, visible) > 0 ? "project-name-indent" : undefined}><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>{project.summary && <p>{project.summary}</p>}
             {githubRepositoryUrl(project.repositoryFullName) && <a href={githubRepositoryUrl(project.repositoryFullName)} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}</th>
@@ -31,6 +31,7 @@ export function ProjectComparison({ overview }: { overview: PortfolioOverviewDat
           <td>{project.planned || "No approved plan"}</td><td>{project.planned > 0 && project.completionMeasured!==false ? project.completed : "—"}</td><td>{project.planned > 0 && project.completionMeasured!==false ? project.inProgress : "—"}</td><td>{project.planned > 0 && project.completionMeasured!==false ? project.planned - project.completed : "—"}</td>
           <td>{project.planned > 0 && project.completionMeasured!==false ? <><GlassTube label={`${project.displayName} comparison progress`} value={project.completed} max={project.planned}
             state={project.completed === project.planned ? "complete" : "active"} size="compact" /><span>{project.percent}%</span></> : "Not measured"}</td>
+          <td>{project.activity ? `${project.activity.merged} merged / ${project.activity.total} observed; ${project.activity.open} open` : "Not observed"}</td>
         </tr>)}</tbody>
       </table>
     </div> : <p className="portfolio-empty-state">{overview.source === "error" ? "Portfolio data is unavailable. Refresh to try again." : overview.projects.length === 0 ? "No registered projects are available to compare yet." : "No projects match these filters."}</p>}
