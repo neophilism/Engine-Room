@@ -1,5 +1,7 @@
 # Engine Room
 
+**Full development plan and cross-account handoff:** [docs/DEVELOPMENT_PLAN.md](docs/DEVELOPMENT_PLAN.md).
+
 Engine Room is an invite-only executive software-portfolio control room for tracking real projects, GitHub development activity, verified development plans, deployments, service operations, releases, and monitoring.
 
 ## Development status
