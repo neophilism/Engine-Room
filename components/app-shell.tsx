@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { dashboardRoutes } from "../lib/navigation";
 import { LiveConnection } from "./portfolio/live-connection";
-import { MachineMotionToggle } from "./machine/machine-motion";
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -80,7 +79,6 @@ function Navigation({ pathname, onNavigate }: { pathname: string; onNavigate?: (
               <RouteIcon name={routeIcons[route.href] ?? "settings"} />
             </span>
             <span className="app-nav-label">{route.label}</span>
-            <span className="app-nav-lamp" aria-hidden="true" />
           </Link>
         );
       })}
@@ -107,24 +105,15 @@ export function AppShell({ children }: AppShellProps) {
     <div className="app-shell">
       <aside className="app-sidebar">
         <Link className="app-brand" href="/" aria-label="Engine Room portfolio overview">
-          <span className="app-brand-mark" aria-hidden="true">
-            <span className="app-brand-coil" />
-          </span>
+          <span className="app-brand-mark" aria-hidden="true">ER</span>
           <span>
-            <strong>ENGINE ROOM</strong>
-            <small>Software Portfolio</small>
+            <strong>Engine Room</strong>
+            <small>Portfolio workspace</small>
           </span>
         </Link>
 
         <Navigation pathname={pathname} />
 
-        <div className="app-sidebar-footer">
-          <span className="system-light" aria-hidden="true" />
-          <span>
-            <strong>CONTROL BUS</strong>
-            <small>Source health in header</small>
-          </span>
-        </div>
       </aside>
 
       <div className="app-frame">
@@ -142,7 +131,6 @@ export function AppShell({ children }: AppShellProps) {
             </button>
 
             <div className="route-readout">
-              <span className="route-readout-label">Portfolio control</span>
               <strong>{currentRoute?.label ?? "Engine Room"}</strong>
             </div>
           </div>
@@ -161,14 +149,12 @@ export function AppShell({ children }: AppShellProps) {
           </form>
 
           <div className="app-topbar-actions">
-            <MachineMotionToggle />
             <LiveConnection />
-            <Link href="/alerts" className="topbar-icon-button" aria-label="Notifications"><span aria-hidden="true">♢</span></Link>
+            <Link href="/alerts" className="topbar-icon-button" aria-label="Alerts" title="Alerts"><RouteIcon name="alerts" /></Link>
             <Link className="profile-control" href="/account" aria-label="Manage registered-user account">
               <span className="profile-monogram" aria-hidden="true">ER</span>
               <span className="profile-copy">
                 <strong>Account</strong>
-                <small>Registered access</small>
               </span>
             </Link>
           </div>
@@ -195,8 +181,8 @@ export function AppShell({ children }: AppShellProps) {
         >
           <div className="mobile-drawer-heading">
             <span>
-              <strong>ENGINE ROOM</strong>
-              <small>Portfolio navigation</small>
+              <strong>Engine Room</strong>
+              <small>Navigation</small>
             </span>
             <button
               className="drawer-close-button"
@@ -208,10 +194,6 @@ export function AppShell({ children }: AppShellProps) {
             </button>
           </div>
           <Navigation pathname={pathname} onNavigate={() => setDrawerOpen(false)} />
-          <div className="mobile-drawer-status">
-            <span className="system-light" aria-hidden="true" />
-            <span>Source health in header</span>
-          </div>
         </aside>
       </div>
     </div>
