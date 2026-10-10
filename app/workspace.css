@@ -509,5 +509,4 @@ h2 { font: 680 clamp(1.06rem, 1.5vw, 1.35rem)/1.28 var(--er-font-body); letter-s
 }
 .live-sync-feedback.is-warning { border-color: #b88a42; }
 .live-sync-feedback.is-error { border-color: #c77c74; }
-@media (max-width: 1200px) { .live-refresh-copy { display: none; } }
 @media (max-width: 760px) { .live-readout { display: flex; } .live-refresh-trigger { padding: 8px; } }
