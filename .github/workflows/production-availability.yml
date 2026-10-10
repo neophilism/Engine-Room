@@ -1,0 +1,32 @@
+name: Production public availability
+
+on:
+  schedule:
+    - cron: "7,22,37,52 * * * *"
+  workflow_dispatch:
+    inputs:
+      expected_commit:
+        description: "Optional deployed Git SHA to verify (40 hex characters)"
+        type: string
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: engine-room-public-probe
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      ENGINE_ROOM_PUBLIC_URL: https://engine-room-1ec7.onrender.com
+      EXPECTED_COMMIT: ${{ inputs.expected_commit || '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/probe-production.mjs
