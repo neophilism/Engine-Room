@@ -79,12 +79,9 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
       ) SELECT u.*,
       jsonb_array_length(github_pr_numbers)>0 AND NOT EXISTS(SELECT 1 FROM jsonb_array_elements_text(u.github_pr_numbers) n
         LEFT JOIN github_pull_requests g ON g.repository_id=$1 AND g.number=n.value::integer
-        JOIN repositories r ON r.id=$1 LEFT JOIN github_repository_sync s ON s.repository_id=r.id
-        WHERE g.merged_at IS NULL OR (g.base_ref IS DISTINCT FROM r.default_branch AND NOT coalesce(g.release_included=true AND g.release_target_sha=s.default_branch_sha,false))) AS completed,
+        WHERE g.merged_at IS NULL) AS completed,
       EXISTS(SELECT 1 FROM jsonb_array_elements_text(u.github_pr_numbers) n LEFT JOIN github_pull_requests g ON g.repository_id=$1 AND g.number=n.value::integer
-        JOIN repositories r ON r.id=$1 LEFT JOIN github_repository_sync s ON s.repository_id=r.id
-        WHERE g.id IS NULL OR (g.merged_at IS NOT NULL AND g.base_ref IS DISTINCT FROM r.default_branch AND
-          (g.release_included IS NULL OR g.release_target_sha IS DISTINCT FROM s.default_branch_sha))) AS unverified,
+        WHERE g.id IS NULL) AS unverified,
       EXISTS(SELECT 1 FROM jsonb_array_elements_text(u.github_pr_numbers) n JOIN github_pull_requests g ON g.repository_id=$1 AND g.number=n.value::integer WHERE g.state='open') AS underway
       FROM units u ORDER BY scope DESC,ordinal`,[doc.repository_id,doc.path,doc.fingerprint]);
     for(const item of result.rows){
