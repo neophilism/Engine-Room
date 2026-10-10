@@ -23,3 +23,15 @@ Original steampunk design tokens, component primitives and reference documentati
 ## Handoff/verification
 
 Changes in [the October 10 UI PR](https://github.com/neophilism/Engine-Room/pull/77) are tested by `app/page.test.tsx`, `components/app-shell.test.tsx`, `components/projects/project-comparison.test.tsx`, and `tests/browser/workspace-layout.spec.ts`. A code merge does not prove the production browser shows the updated presentation; confirm deployed commit, current page structure and mobile responsive behavior separately.
+
+## Unified roadmap bar semantics (October 10 owner directive)
+
+All original and later planned work shares one denominator. Green means merged;
+yellow means written/open but **not yet merged** (drafts, CI-running,
+CI-failing, or CI-passing but unmerged); the remainder of the bar is empty.
+The color never means "later-added work". As soon as a new batch of plan work
+is approved and imported, the denominator grows and the already merged green
+portion shrinks proportionally. Example: 60 merged + 10 open + 30 not started
+out of 100 = **60% green, 10% yellow, 30% empty**. The tooltip and accessible
+value must announce the three numbers. Refer to
+[portfolio-progress.md](portfolio-progress.md) for the source-of-truth model.
