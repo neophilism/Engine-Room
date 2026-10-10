@@ -89,7 +89,7 @@ export function ProjectProgressStack({
                 : repository.fullName}
             </span>
             {repositoryProgress
-              ? <PlannedProgressTube progress={repositoryProgress} label={`${repository.fullName} roadmap progress`} />
+              ? <PlannedProgressTube progress={repositoryProgress} label={isMultiRepository ? `${repository.fullName} roadmap progress` : `${project.displayName} development plan progress`} />
               : <span className="repository-unmeasured-plan" role="status"
                   aria-label={aggregatorDeferred ? "Implementation deferred pending FOIA corpus" : "Plan allocation not measured"}>
                   {aggregatorDeferred ? "Deferred: FOIA corpus" : "Not yet measured"}</span>}
