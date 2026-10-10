@@ -1,6 +1,6 @@
 // @vitest-environment node
 import {describe,expect,it} from 'vitest';
-import {parsePlanItems} from './plan-import.mjs';
+import {parsePlanItems,parseApprovedManifestItems} from './plan-import.mjs';
 
 describe('source plan evidence',()=>{
   it('isolates roadmap lists and never treats an ordinal as a GitHub PR number',()=>{
@@ -30,4 +30,47 @@ describe('source plan evidence',()=>{
     const items=parsePlanItems('## MVP roadmap\n1. Production hardening and deployment','README.md','FiresideChat');
     expect(items[0].numbers).toEqual([19,21]);
   });
+  it('discovers a valid approved 63-unit manifest with a nonconsecutive exact mapping',()=>{
+    const manifest='project:\n  repository: neophilism/Music_Video_Wizard\nroadmap:\n  version: 1\n  planned_prs: 3\n  approved: true\nmilestones:\n  - name: First phase\n    prs: 2\n  - name: Launch readiness\n    prs: 1\n';
+    const mapping=JSON.stringify({sourceRepository:'neophilism/Music_Video_Wizard',roadmapVersion:1,pullRequestNumbers:[1,3,5]});
+    const items=parsePlanItems(manifest,'.exechub/project.yml','Music_Video_Wizard',[],mapping);
+    expect(items).toHaveLength(3);
+    expect(items.map(x=>x.numbers)).toEqual([[1],[3],[5]]);
+    expect(items.map(x=>x.scope)).toEqual(['original','original','original']);
+    expect(parseApprovedManifestItems(manifest,'Music_Video_Wizard').map(x=>x.numbers)).toEqual([[],[],[]]);
+    const partial=JSON.stringify({sourceRepository:'neophilism/Music_Video_Wizard',roadmapVersion:1,pullRequestNumbers:[1,null,null]});
+    expect(parseApprovedManifestItems(manifest,'Music_Video_Wizard',partial).map(x=>x.numbers)).toEqual([[1],[],[]]);
+    expect(()=>parseApprovedManifestItems(manifest,'Other')).toThrow();
+    expect(()=>parseApprovedManifestItems(manifest,'Music_Video_Wizard',JSON.stringify({sourceRepository:'neophilism/Music_Video_Wizard',roadmapVersion:1,pullRequestNumbers:[1,1,3]}))).toThrow();
+    expect(()=>parseApprovedManifestItems(manifest.replace('  approved: true','  approved: false'),'Music_Video_Wizard')).toThrow();
+  });
+
+  it('matches a unique structured DRE identifier in a merged PR title without guessing the ordinal',()=>{
+    const body=JSON.stringify({items:[
+      {id:'DRE-09',title:'Advertising accounts',origin:'added'},
+      {id:'DRE-10',title:'Not yet built',origin:'added'}
+    ]});
+    const items=parsePlanItems(body,'docs/roadmap.json','Distributed-Radio-Engine',
+      [{number:11,title:'DRE-09: approved common-program sponsorship accounting'}]);
+    expect(items).toHaveLength(2);
+    expect(items[0]).toMatchObject({ordinal:9,numbers:[11],reason:'Unique explicit roadmap ID in GitHub PR title'});
+    expect(items[1]).toMatchObject({ordinal:10,numbers:[]});
+    const ambiguous=parsePlanItems(body,'docs/roadmap.json','Distributed-Radio-Engine',
+      [{number:11,title:'DRE-09: option A'},{number:12,title:'DRE-09: option B'}]);
+    expect(ambiguous[0].numbers).toEqual([]);
+  });
+
+  it('treats partial Music Operations milestones as unfinished despite merged PR references',()=>{
+    const body=JSON.stringify({project:'Music-Operations-Engine',baselineMilestones:2,addedMilestones:1,
+      milestones:[
+        {id:1,title:'Foundation',origin:'baseline',implementationStatus:'implemented',pullRequests:[1]},
+        {id:2,title:'Accounts',origin:'baseline',implementationStatus:'partial',pullRequests:[2]},
+        {id:3,title:'Multi-label reporting',origin:'added',implementationStatus:'implemented',pullRequests:[2,3]}
+      ]});
+    const items=parsePlanItems(body,'docs/roadmap.json','Music-Operations-Engine');
+    expect(items.map(x=>x.numbers)).toEqual([[1],[],[2,3]]);
+    expect(items.map(x=>x.scope)).toEqual(['original','original','addition']);
+    expect(()=>parsePlanItems(body,'docs/roadmap.json','Another-Engine')).toThrow();
+  });
+
 });
