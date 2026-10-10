@@ -41,5 +41,7 @@ describe("AppShell", () => {
     expect(screen.getByText("Portfolio content")).toBeInTheDocument();
     expect(screen.getByRole("search")).toBeInTheDocument();
     expect(screen.getByLabelText("Portfolio data status")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Pause machine motion" })).not.toBeInTheDocument();
+    expect(screen.queryByText("CONTROL BUS")).not.toBeInTheDocument();
   });
 });
