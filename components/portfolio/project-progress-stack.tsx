@@ -19,7 +19,15 @@ export function ProjectProgressStack({
   const [expanded, setExpanded] = useState(false);
   const progress = summarizePlannedProgress(project);
   const drawerId = useId();
-  const repositories = project.repositories.length > 0 ? project.repositories : [{
+  const aggregatorDeferred = ["FOIA_Bias_Analysis", "Send_FOIA_Log_Requests"]
+    .some(name => project.repositoryFullName?.endsWith("/" + name));
+  // A source plan can be documented even though the older approved-PR allocation
+  // table has no rows yet. For a one-repo project, show the full sourced plan
+  // instead of rendering a second misleading "Plan allocation N/A" row.
+  const repositories = project.repositories.length === 1 && progress && project.repositories[0].planned === 0
+    ? [{ ...project.repositories[0], planned: progress.original.planned, completed: progress.original.completed,
+         percent: progress.original.planned ? 100 * progress.original.completed / progress.original.planned : 0 }]
+    : project.repositories.length > 0 ? project.repositories : [{
     id: `${project.id}-aggregate`,
     fullName: project.repositoryFullName ?? "Entire development plan",
     htmlUrl: project.repositoryUrl ?? "",
@@ -56,7 +64,7 @@ export function ProjectProgressStack({
         </button>
         <strong className={nameIndent > 0 ? "project-name-indent" : undefined}><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>
         <span className="count">
-          {progress ? `${progress.completed}/${progress.planned} planned` : "N/A"}
+          {progress ? `${progress.completed}/${progress.planned} verified` : aggregatorDeferred ? "Awaiting corpus" : "Plan unavailable"}
         </span>
         <span className="percentage" title={progress ? "Completed planned units divided by all planned units" : "No documented development plan"}>{progress ? `${progress.percent}%` : "N/A"}</span>
       </header>
@@ -64,7 +72,7 @@ export function ProjectProgressStack({
       <div className="project-quick-links">
         <span className="project-activity">{progress
           ? `${progress.remaining} of ${progress.planned} planned items remaining`
-          : "Development plan N/A"}</span>
+          : aggregatorDeferred ? "Development deferred until FOIA Aggregator reaches broad source coverage" : "Source plan not yet verified"}</span>
         {progress?.added.planned ? <span className="planned-progress-legend">
           <span className="original">Original {progress.original.completed}/{progress.original.planned}</span>
           <span className="added">Added {progress.added.completed}/{progress.added.planned}</span>
@@ -93,7 +101,9 @@ export function ProjectProgressStack({
             </span>
             {repositoryProgress
               ? <PlannedProgressTube progress={repositoryProgress} label={`${repository.fullName} roadmap progress`} />
-              : <span className="repository-unmeasured" aria-label={`${repository.fullName} plan allocation unavailable`}>N/A</span>}
+              : <span className="repository-unmeasured-plan" role="status"
+                  aria-label={aggregatorDeferred ? "Implementation deferred pending FOIA corpus" : "Plan allocation not measured"}>
+                  {aggregatorDeferred ? "Deferred: FOIA corpus" : "Not yet measured"}</span>}
             <span className="repository-pr-count">{repositoryProgress
               ? `${repositoryProgress.completed}/${repositoryProgress.planned} planned`
               : "Plan allocation N/A"}</span>
