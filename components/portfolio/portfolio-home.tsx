@@ -1,16 +1,9 @@
 import React from "react";
 import { PodcastProductionAlert } from "../podcast-production-alert";
 import type { PodcastInquiryAlertSummary } from "../../lib/server/podcast-inquiry-alerts";
-import {
-  BrassPanel,
-  FlowStation,
-  IndicatorLamp,
-  MachineFlow
-} from "../machine";
-import { MachinePreview } from "../machine/machine-preview";
+import { BrassPanel } from "../machine";
 import { PortfolioBrowser } from "./portfolio-browser";
 import { PortfolioRefresh } from "./portfolio-refresh";
-import { PortfolioProgressMachine } from "./portfolio-progress-machine";
 import type { PortfolioOverviewData } from "../../lib/domain/portfolio-overview";
 import type { RenderReadout } from "../../lib/domain/render-deployments";
 import { RenderServiceReadouts } from "./render-service-readouts";
@@ -19,9 +12,9 @@ import { ActivityMonitor } from "./activity-monitor";
 import { PlatformMetrics } from "./platform-metrics";
 
 function sourceLabel(source: PortfolioOverviewData["source"]) {
-  if (source === "database") return "Stored portfolio records";
-  if (source === "error") return "Portfolio data unavailable";
-  return "Database not configured";
+  if (source === "database") return "Data connected";
+  if (source === "error") return "Data unavailable";
+  return "Setup required";
 }
 
 export function PortfolioHome({
@@ -34,16 +27,19 @@ export function PortfolioHome({
   inquiryAlerts?: PodcastInquiryAlertSummary | null;
 }) {
   const { projects, statistics } = overview;
+  const sourced = projects.filter(p => p.planned > 0 || p.sourcePlan?.documents.length).length;
 
   return (
-    <main className="content">
-      <header className="hero">
-        <p className="eyebrow">Software Portfolio</p>
-        <h1>Engine Room</h1>
-        <p>
-          Portfolio-wide control from approved development plan through
-          production operations.
-        </p>
+    <main className="content dashboard-home">
+      <header className="hero dashboard-home-hero">
+        <div>
+          <p className="eyebrow">Portfolio overview</p>
+          <h1>Engine Room</h1>
+          <p>Projects, delivery progress, and source-backed status in one place.</p>
+        </div>
+        <span className={`dashboard-data-chip${overview.source === "database" ? " is-connected" : ""}`}>
+          {sourceLabel(overview.source)}
+        </span>
       </header>
 
       <PodcastProductionAlert summary={inquiryAlerts} />
@@ -54,77 +50,56 @@ export function PortfolioHome({
           <strong>{statistics.projects}</strong>
         </article>
         <article className="portfolio-stat">
-          <span>Projects in active stages</span>
+          <span>Active projects</span>
           <strong>{statistics.activeProjects}</strong>
         </article>
         <article className="portfolio-stat">
-          <span>Planned items completed</span>
-          <strong>
-            {statistics.plannedRoadmapPrs > 0 ? `${statistics.completedRoadmapPrs}/${statistics.plannedRoadmapPrs}` : "N/A"}
-          </strong>
+          <span>Completed plan items</span>
+          <strong>{statistics.plannedRoadmapPrs > 0 ?
+            `${statistics.completedRoadmapPrs}/${statistics.plannedRoadmapPrs}` : "N/A"}</strong>
         </article>
         <article className="portfolio-stat">
-          <span>Planned roadmap progress</span>
+          <span>Portfolio progress</span>
           <strong>{statistics.plannedRoadmapPrs > 0 ? `${statistics.percent}%` : "N/A"}</strong>
         </article>
       </section>
 
-      <p className="portfolio-calculation-note">Source documents: {projects.filter(p=>p.planned>0||p.sourcePlan?.documents.length).length}/{projects.length} projects. Fully mapped original completion: {projects.filter(p=>p.planned>0&&p.completionMeasured!==false).length}/{projects.length}. Every documented planned item counts in the denominator; uncreated or unmapped PRs stay incomplete, not excluded. Green is original planned work and amber represents added planned work.</p>
-      <GitHubSourceReadout />
-      <ActivityMonitor projects={projects} />
-      <PortfolioProgressMachine projects={projects} />
-      <RenderServiceReadouts services={renderServices} />
-      <PlatformMetrics />
-      <PortfolioRefresh />
+      <section className="dashboard-primary-section" aria-label="Project development progress">
+        <BrassPanel
+          eyebrow="Development overview"
+          title="Project progress"
+          status={<span className="dashboard-coverage-caption">{sourced} of {projects.length} plans tracked</span>}
+        >
+          {projects.length > 0 ? (
+            <PortfolioBrowser projects={projects} />
+          ) : (
+            <div className="portfolio-empty-state">
+              <strong>{overview.source === "error" ? "Portfolio data unavailable" :
+                overview.source === "unconfigured" ? "Database not configured" : "No projects yet"}</strong>
+              <p>Projects will appear after registration and source synchronization.</p>
+            </div>
+          )}
+          <p className="portfolio-calculation-note dashboard-source-footnote">
+            Progress counts all documented work, including unmapped milestones. A 0% bar means
+            no verified completion evidence yet, not necessarily that no code exists.
+          </p>
+        </BrassPanel>
+        <PortfolioRefresh />
+      </section>
 
-      <BrassPanel
-        eyebrow="Live roadmap"
-        title="Portfolio progress"
-        status={
-          <IndicatorLamp
-            state={overview.source === "database" ? "neutral" : "warning"}
-            label={sourceLabel(overview.source)}
-          />
-        }
-      >
-        {projects.length > 0 ? (
-          <PortfolioBrowser projects={projects} />
-        ) : (
-          <div className="portfolio-empty-state">
-            <strong>{sourceLabel(overview.source)}</strong>
-            <p>
-              Approved projects will appear here automatically after registration.
-            </p>
-          </div>
-        )}
-
-        <div className="home-machine-flow">
-          <p className="machine-engraved-label">Roadmap signal path</p>
-          <MachineFlow label="Roadmap progress data path">
-            <FlowStation
-              eyebrow="01"
-              title="Approved Plan"
-              detail="Defines the denominator."
-            />
-            <FlowStation
-              eyebrow="02"
-              title="Repository Stacks"
-              detail="Split roadmap work by repository."
-            />
-            <FlowStation
-              eyebrow="03"
-              title="Merge Events"
-              detail="Advance completed work."
-            />
-            <FlowStation
-              eyebrow="04"
-              title="Portfolio State"
-              detail="Updates tubes and statistics."
-            />
-          </MachineFlow>
+      <details className="dashboard-operations-details">
+        <summary>
+          <span><strong>Activity and connected services</strong>
+            <small>Open PRs, deployments, source health, and platform metrics</small></span>
+          <span className="dashboard-operations-chevron" aria-hidden="true">⌄</span>
+        </summary>
+        <div className="dashboard-operations-content">
+          <ActivityMonitor projects={projects} />
+          <RenderServiceReadouts services={renderServices} />
+          <GitHubSourceReadout />
+          <PlatformMetrics />
         </div>
-      </BrassPanel>
-      <MachinePreview />
+      </details>
     </main>
   );
 }
