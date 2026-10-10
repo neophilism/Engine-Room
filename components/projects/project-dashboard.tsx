@@ -38,7 +38,7 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
           <p className="planned-progress-legend">
             <span className="merged">Green: merged ({planProgress.completed})</span>
             <span className="underway">Yellow: written / unmerged ({planProgress.inProgress})</span>
-            <span>Empty: not started ({planProgress.notStarted})</span>
+            <span className="unstarted">Empty: not started ({planProgress.notStarted})</span>
           </p>
           <p>{planProgress.percent}% merged · {planProgress.remaining} unmerged · {planProgress.notStarted} not started</p>
           <p className="portfolio-calculation-note">{unmapped} items await mapping or release evidence; all remain in the planned denominator.</p>
