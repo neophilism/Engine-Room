@@ -39,8 +39,8 @@ describe("ProjectProgressStack", () => {
 
     expect(screen.getByText("owner/core")).toBeInTheDocument();
     expect(screen.getByText("owner/web")).toBeInTheDocument();
-    expect(screen.getByText("3/6 PRs")).toBeInTheDocument();
-    expect(screen.getByText("1/4 PRs")).toBeInTheDocument();
+    expect(screen.getByText("3/6 planned")).toBeInTheDocument();
+    expect(screen.getByText("1/4 planned")).toBeInTheDocument();
     expect(
       screen.getByRole("progressbar", { name: "owner/core roadmap progress" })
     ).toHaveAttribute("aria-valuenow", "3");
@@ -67,4 +67,30 @@ describe("ProjectProgressStack", () => {
     expect(screen.getByText("active-development")).toBeInTheDocument();
     expect(screen.getByText("6")).toBeInTheDocument();
   });
+  it("shows 9/100, not 9/10, when 90 planned units lack a GitHub PR mapping", () => {
+    const partial = {
+      ...project, id: "partial", displayName: "Hundred Item Plan",
+      planned: 100, completed: 9, inProgress: 1, percent: 9, completionMeasured: false,
+      repositories: [{ ...project.repositories[0], id: "partially-mapped", planned: 10, completed: 9, percent: 90 }]
+    };
+    render(<ProjectProgressStack project={partial} />);
+    expect(screen.getByText("9/100 planned")).toBeInTheDocument();
+    expect(screen.getAllByText("9%").length).toBeGreaterThan(0);
+    const tube = screen.getByRole("progressbar", { name: "Hundred Item Plan development plan progress" });
+    expect(tube).toHaveAttribute("aria-valuemax", "100");
+    expect(tube).toHaveAttribute("aria-valuenow", "9");
+    expect(screen.queryByText("90%")).not.toBeInTheDocument();
+  });
+
+  it("does not infer added planned work from an unrelated open GitHub PR", () => {
+    const mapped = {
+      ...project, id: "original-complete", displayName: "Original Done",
+      planned: 10, completed: 10, inProgress: 1, percent: 100,
+      repositories: [{ ...project.repositories[0], planned: 10, completed: 10, percent: 100 }]
+    };
+    render(<ProjectProgressStack project={mapped} />);
+    expect(screen.getByText("10/10 planned")).toBeInTheDocument();
+    expect(screen.queryByText(/1 open GitHub PR/)).not.toBeInTheDocument();
+  });
+
 });

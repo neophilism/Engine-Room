@@ -17,4 +17,14 @@ describe("portfolio progress machine", () => {
     expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
     expect(screen.getByText("No approved roadmap work is available yet.")).toBeInTheDocument();
   });
+  it("fills nine of 100 units despite incomplete GitHub PR mapping", () => {
+    const project = { id: "p", displayName: "100 items", status: "active-development" as const,
+      planned: 100, completed: 9, percent: 9, inProgress: 1, completionMeasured: false, repositories: [] };
+    render(<PortfolioProgressMachine projects={[project]} />);
+    const tube = screen.getByRole("progressbar", { name: "Total portfolio roadmap progress" });
+    expect(tube).toHaveAttribute("aria-valuenow", "9");
+    expect(tube).toHaveAttribute("aria-valuemax", "100");
+    expect(screen.getByText("9% complete")).toBeInTheDocument();
+  });
+
 });
