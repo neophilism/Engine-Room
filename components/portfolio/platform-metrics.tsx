@@ -49,7 +49,7 @@ export function PlatformMetrics() {
         <h3>Live archive ingestion</h3>
         <a href="https://fireside-chat-preview.onrender.com/api/health/ready" target="_blank" rel="noopener noreferrer">Source health ↗</a>
       </div>
-      <p role="status" aria-live="polite">
+      <p aria-live="polite">
         <strong>{!health ? "Unverified" : degraded ? "Degraded" : "Healthy"}</strong>
         {health ? ` · ${health.feeds.healthy}/${health.feeds.active} healthy feeds · ${health.feeds.failing} failing · ${health.feeds.stale} stale · ${health.feeds.neverSynced} never synced` : " · public readiness feed unavailable; do not infer healthy status"}
       </p>

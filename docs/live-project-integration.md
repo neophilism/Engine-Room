@@ -20,7 +20,7 @@ The infrastructure and finance/user/telemetry adapters can only ingest real meas
 
 ## Production public GitHub import default
 
-When NODE_ENV=production and ENGINE_ROOM_TEST_SERVER is unset, the Engine Room web process automatically imports the owner's public non-fork repositories and their real pull requests shortly after startup, then once every two hours while the instance is awake. This does not need GitHub App secrets or a paid cron service, but is best effort on sleeping free-tier services and GitHub rate limits. Set ENGINE_ROOM_PUBLIC_GITHUB_SYNC=0 to opt out, or ENGINE_ROOM_PUBLIC_GITHUB_SYNC=1 to enable explicitly in development. Errors leave prior data intact and are logged. The approved Engine Room PR mapping is imported only after a successful GitHub synchronization. Reconciliation is not equivalent to production service monitoring.
+When NODE_ENV=production and ENGINE_ROOM_TEST_SERVER is unset, the Engine Room web process automatically imports the owner's public non-fork repositories and their real pull requests shortly after startup, then once every two hours anonymously, or every 15 minutes when a server-side `GITHUB_READ_TOKEN` is configured, while the instance is awake. This does not need GitHub App secrets or a paid cron service, but is best effort on sleeping free-tier services and GitHub rate limits. Set ENGINE_ROOM_PUBLIC_GITHUB_SYNC=0 to opt out, or ENGINE_ROOM_PUBLIC_GITHUB_SYNC=1 to enable explicitly in development. Errors leave prior data intact and are logged. The approved Engine Room PR mapping is imported only after a successful GitHub synchronization. Reconciliation is not equivalent to production service monitoring.
 
 ## Fireside Chat public archive metrics
 

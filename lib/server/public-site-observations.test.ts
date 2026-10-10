@@ -10,6 +10,14 @@ describe("Public platform HTTP observations", () => {
     expect(() => publicSiteUrl("https://evil.onrender.com.attacker.test")).toThrow();
     expect(() => publicSiteUrl("https://engine-room-1ec7.onrender.com/other")).toThrow();
   });
+  it("probes the FOIA SQLite health endpoint while retaining the hostname allowlist", async () => {
+    const fetcher = vi.fn(async () => new Response(null, { status: 200 })) as unknown as typeof fetch;
+    const result = await probePublicSite({
+      id: "foia", website: "https://foia-aggregator.onrender.com", healthPath: "/healthz"
+    }, fetcher);
+    expect(result.httpStatus).toBe(200);
+    expect(String(vi.mocked(fetcher).mock.calls[0][0])).toBe("https://foia-aggregator.onrender.com/healthz");
+  });
   it("reports real HTTP status without declaring application health", async () => {
     const fetcher=vi.fn(async()=>new Response(null,{status:503})) as unknown as typeof fetch;
     const result=await probePublicSite(service,fetcher);
