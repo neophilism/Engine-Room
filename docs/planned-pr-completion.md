@@ -1,23 +1,19 @@
-# Planned-PR completion calculation
+# Planned-PR completion and acceptance lifecycle
 
-PR 14 defines the roadmap numerator.
+## Definitions (October 10, 2026)
 
-## Rule
+**Planned unit:** a work unit in the current development plan, including *both* original milestones and later formally documented additions. Provenance is retained for handoff and audit but does not change visual status.
 
-A roadmap unit counts as complete only when:
+**Green / merged:** a planned unit is completed when its mapped GitHub PR(s) have a recorded non-null merge timestamp. Completed CI checks alone do not satisfy this requirement. A merge to an intermediate branch counts as merged planned work; production release is separately monitored.
 
-1. it exists in the approved development plan;
-2. it is mapped to a GitHub pull-request number; and
-3. synchronized GitHub state contains a non-null merge timestamp for that PR.
+**Yellow / written, unmerged:** a currently open PR, including drafts, failing/running CI and PRs awaiting review or merge after green CI. Open-PR counts are reconciled from GitHub, not invented. If open PRs cannot be mapped individually, display their verified observed count bounded to the number of unmerged planned units. Never sum duplicate graph and activity observations.
 
-Open PRs become `in-progress`. Closed-but-unmerged PRs do not count as completed and return to `planned` for roadmap purposes. Unmapped or missing GitHub PRs also remain planned.
+**Empty / not started:** plan work with neither verified completion nor a currently open PR. Missing mappings remain unmerged. A closed-without-merge PR does not count green or yellow.
 
-## Denominator
+## Total denominator
 
-The denominator is never inferred from GitHub activity. It remains the immutable `planned_pr_total` captured from the approved manifest version.
+Use the *current complete approved plan scope*, not only its original version. New approved work adds to the same denominator, and a previously full progress bar **must shrink** when the new plan is larger. Historical approved plan versions and their source fingerprints remain immutable so prior scope can be audited. Changes in the current scope are a legitimate cause for the current completion percentage to change.
 
-## Ambiguity
+Do not derive a plan denominator solely from GitHub PRs observed/opened/mapped. A 100-unit plan with 60 merges, 10 open PRs and 30 unstarted units is **60 green + 10 yellow + 30 empty**. The number of remaining unmerged units is 40.
 
-PR numbers are repository-local. If reconciliation input contains the same PR number for more than one repository, the calculation fails rather than guessing. Repository-scoped plan mapping is completed by the project registration/import path.
-
-Completion uses the PR's GitHub merge timestamp regardless of target branch. Whether a feature merge reached the default branch is a separate release-inclusion/operational readiness signal; it MUST NOT reduce the completed-planned-PR count. A PR merged to an intermediate branch is a completed PR, but is not automatically production-released.
+GitHub PR numbers are repository-local. A work unit may have multiple PR mappings; avoid double-counting it within the *mapped planned-item completion* measure. In cases where raw open-PR counts are used because mapping is incomplete, clearly distinguish the evidence from fully mapped work. Merged PRs and deployed releases are different states.
