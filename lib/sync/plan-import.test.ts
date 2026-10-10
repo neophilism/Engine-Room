@@ -156,3 +156,18 @@ describe("canonical cross-account milestone plans",()=>{
     expect(items.every(x=>x.numbers.length===0)).toBe(true);
   });
 });
+
+
+describe("reviewed historical mapping reuse",()=>{
+  it("carries audited Fireside MVP GitHub references into the canonical plan while leaving new scope unmapped",()=>{
+    const body = [
+      "# Fireside",
+      "### MVP-01 — Application and PostgreSQL data foundation",
+      "### MVP-02 — Verified politician/podcast registry",
+      "### MVP-11 — Production hardening and deployment",
+      "### FC-P01 — Source audit and census",
+    ].join("\n");
+    const items = parsePlanItems(body,"docs/DEVELOPMENT_PLAN.md","FiresideChat");
+    expect(items.map(item=>item.numbers)).toEqual([[1],[2],[19,21],[]]);
+  });
+});
