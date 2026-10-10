@@ -55,3 +55,51 @@
 .about-footer a { color:var(--teal); }
 @media(max-width:1150px) { .about-station-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.about-fact-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.about-process { grid-template-columns:repeat(2,minmax(0,1fr)); }.about-process li { border-right:0; border-bottom:1px solid var(--about-border); padding-bottom:18px; } }
 @media(max-width:760px) { .about-hero::before { opacity:.35; width:200px; right:-80px; }.about-system-diagram { flex-direction:column; }.about-machine-pipe { transform:rotate(90deg); }.about-station-grid,.about-fact-grid,.about-process,.about-state-list { grid-template-columns:minmax(0,1fr); }.about-station-card { min-height:240px; }.about-last-call { padding:24px 0; }.about-hero { padding:24px; } }
+
+
+/* Streamlined workspace refresh: preserve the platform guide without the
+ * ornamental machinery. Content and links stay available. */
+.about-content { --about-border: rgba(148,166,189,.2); --about-glow: transparent; }
+.about-hero {
+  padding: clamp(20px,3vw,32px);
+  background: #171f2b; border-color: var(--er-border-metal);
+  border-radius: 11px;
+}
+.about-hero::before, .about-machine-trace { content: none; display: none; }
+.about-hero p:last-of-type { font-size: .9rem; line-height: 1.55; }
+.about-hero-actions { margin-top: 17px; }
+.about-action-primary, .about-action-secondary {
+  border-radius: 8px; padding: 9px 13px; min-height: 38px;
+  background: #243547; color: #dceef6; border: 1px solid #3a5268;
+  font-size: .83rem;
+}
+.about-action-primary { background: #27544c; border-color: #477c70; color: #defcf3; }
+.about-machine-panel {
+  margin: 16px 0 24px; padding: clamp(14px,2vw,22px);
+  background: #171f2b; border: 1px solid var(--er-border-metal);
+  border-radius: 11px; box-shadow: none;
+}
+.about-machine-node, .about-station-card {
+  min-height: 0; padding: 16px; gap: 7px;
+  background: #1d2a38; border: 1px solid #334658;
+  border-radius: 9px; box-shadow: none;
+}
+.about-machine-core { box-shadow: none; border-color: #4a8176; }
+.about-machine-node strong, .about-station-card h3 {
+  font: 675 clamp(1.03rem,1.6vw,1.2rem) var(--er-font-body);
+  letter-spacing: -.02em;
+}
+.about-machine-node small, .about-station-kind { color: #b7cadd; letter-spacing: .06em; }
+.about-machine-pipe { color: #7e9dae; font-size: 1.1rem; }
+.about-system-diagram { gap: 11px; margin: 18px 0 12px; }
+.about-station-grid, .about-fact-grid { gap: 11px; }
+.about-station-number { color: #526478; font-size: 1.2rem; }
+.about-station-card a { border-top-color: #3a5063; color: #89d8d6; }
+.about-how-it-works, .about-facts, .about-signal-guide { margin-top: 25px; }
+.about-process-step { background: #253748; color: #c5dae6; border-color: #496174; }
+.about-state-list div { border-color: #35495c; border-radius: 8px; background: #1d2a38; }
+.about-state-dot { box-shadow: none; }
+@media (max-width:760px) {
+  .about-hero::before { display: none; }
+  .about-machine-node, .about-station-card { min-height: 0; }
+}
