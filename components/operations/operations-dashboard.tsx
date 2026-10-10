@@ -8,7 +8,7 @@ import { assessProjectOperations, operationMetrics, DEFAULT_OPERATIONS_THRESHOLD
 import { projectDashboardHref } from "../../lib/domain/project-dashboard";
 import { BrassPanel, IndicatorLamp } from "../machine";
 
-const metricLabels: Record<OperationMetric, string> = { "availability-percent": "Availability", "latency-p95-ms": "P95 latency", "requests-per-minute": "Requests/min", "error-rate-percent": "Error rate", "cpu-percent": "CPU", "memory-percent": "Memory" };
+const metricLabels: Record<OperationMetric, string> = { "availability-percent": "Availability", "latency-p95-ms": "P95 latency", "requests-per-minute": "Requests/min", "error-rate-percent": "Error rate", "cpu-percent": "CPU", "memory-percent": "Memory", "worker-heartbeat-percent": "Worker presence" };
 function format(value: number | undefined, metric: OperationMetric) { return value === undefined ? "Unknown" : `${Math.round(value * 100) / 100}${metric.endsWith("percent") ? "%" : metric.endsWith("ms") ? " ms" : ""}`; }
 
 export function OperationsDashboard({ overview, evaluatedAt }: { overview: OperationsOverview; evaluatedAt: string }) {
