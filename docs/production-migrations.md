@@ -7,3 +7,9 @@ Migrations are selected using a strict numeric four-digit filename matcher and a
 The browser test server explicitly uses `ENGINE_ROOM_TEST_SERVER=1` to avoid connecting to a real database during CI. Never set this override on production.
 
 Live deployment and readiness are distinct claims. Passing startup confirms migration scripts ran successfully, not that the live portfolio has imported repositories or fresh observability data.
+
+## Live-monitor schema readiness (migration 0017)
+
+The live dashboard's durable webhook inbox, per-repository synchronization, check runs and versioned plan history require migration `0017_live_monitor.sql`. The public `/api/ready` endpoint returns HTTP 503 if that migration or one of its required tables is absent; a successful JSON response includes `schemaVersion: "0017"`. HTTP 200 confirms schema availability only, not that GitHub, Render, operations, finance or external platform feeds are fresh. The process-only `/api/health` endpoint remains distinct.
+
+The existing `npm start` migration runner applies SQL transactionally before boot. If readiness fails after a deployment, inspect startup migration logs in the **authorized Render workspace**; never manually fake a successful migration entry or point an unrelated service at this database. When recovery is necessary, rerun the documented migration process and verify its actual evidence.
