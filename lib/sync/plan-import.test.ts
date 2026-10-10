@@ -171,3 +171,28 @@ describe("reviewed historical mapping reuse",()=>{
     expect(items.map(item=>item.numbers)).toEqual([[1],[2],[19,21],[]]);
   });
 });
+
+
+describe("additional existing development-plan formats",()=>{
+  it("imports the 16 required macOS Music Analyzer PRs but not optional model-training contingencies",()=>{
+    const lines=["# Music Analyzer Development Plan","## PR roadmap for foundations"];
+    for(let i=1;i<=18;i++){
+      lines.push("### PR "+String(i).padStart(2,"0")+" "+(i>16?"Contingency":"Develop")+" work package "+i);
+    }
+    const parsed=parsePlanItems(lines.join("\n"),"docs/DEVELOPMENT_PLAN.md","Music-Analyzer");
+    expect(parsed).toHaveLength(16);
+    expect(parsed.at(0)).toMatchObject({ordinal:1,sourceItemId:"PR-01",scope:"original",numbers:[]});
+    expect(parsed.at(-1)).toMatchObject({ordinal:16,sourceItemId:"PR-16"});
+  });
+
+  it("imports the full 36-unit NFT Console plan with bold PR-## headings",()=>{
+    const lines=["# NFT Console","## 4. Execution plan — complete ordered PR backlog"];
+    for(let i=1;i<=36;i++){
+      lines.push("**PR-"+String(i).padStart(2,"0")+" — Capability "+i+".** Depends: earlier deliverables.");
+    }
+    const parsed=parsePlanItems(lines.join("\n"),"docs/DEVELOPMENT_PLAN.md","NFT-Minting-Console");
+    expect(parsed).toHaveLength(36);
+    expect(parsed[0]).toMatchObject({ordinal:1,sourceItemId:"PR-01",numbers:[]});
+    expect(parsed.at(-1)).toMatchObject({ordinal:36,sourceItemId:"PR-36",numbers:[]});
+  });
+});

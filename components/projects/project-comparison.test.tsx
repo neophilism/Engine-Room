@@ -44,4 +44,37 @@ describe("project comparison", () => {
     expect(within(row).getByText("91")).toBeInTheDocument();
   });
 
+
+  it("renders a real 0/N tube for each documented plan, even when PR mapping is unavailable",()=>{
+    const sourcedNames=["FiresideChat","MMS","NFT Minting Console","Music Analyzer","Live Competition Engine"];
+    const sourced=sourcedNames.map((displayName,index)=>({
+      id:"s"+index,displayName,status:"active-development" as const,
+      completed:0,planned:0,inProgress:0,percent:0,repositories:[],
+      sourcePlan:{
+        original:index===2?36:index===3?16:8,
+        originalComplete:0,added:0,addedComplete:0,unmapped:8,
+        items:[],documents:[{path:"docs/DEVELOPMENT_PLAN.md",url:"https://github.com/example/plan",title:"Plan",importedAt:"2026-10-10T15:00:00Z",versions:1}]
+      }
+    }));
+    const noPlan=[
+      {id:"missing-1",displayName:"FOIA Bias Analysis",status:"active-development" as const,
+        completed:0,planned:0,inProgress:0,percent:0,repositories:[]},
+      {id:"missing-2",displayName:"Send FOIA Log Requests",status:"active-development" as const,
+        completed:0,planned:0,inProgress:0,percent:0,repositories:[]}
+    ];
+    const projects=[...sourced,...noPlan];
+    render(<ProjectComparison overview={{source:"database",projects,statistics:calculatePortfolioStatistics(projects)}}/>);
+    const table=screen.getByRole("table");
+    expect(within(table).getAllByRole("progressbar")).toHaveLength(5);
+    const consoleRow=screen.getByRole("rowheader",{name:"NFT Minting Console"}).closest("tr")!;
+    expect(within(consoleRow).getByRole("progressbar")).toHaveAttribute("aria-valuemax","36");
+    const macRow=screen.getByRole("rowheader",{name:"Music Analyzer"}).closest("tr")!;
+    expect(within(macRow).getByRole("progressbar")).toHaveAttribute("aria-valuemax","16");
+    for(const name of ["FOIA Bias Analysis","Send FOIA Log Requests"]){
+      const row=screen.getByRole("rowheader",{name}).closest("tr")!;
+      expect(within(row).queryByRole("progressbar")).not.toBeInTheDocument();
+      expect(within(row).getAllByText("N/A").length).toBeGreaterThan(0);
+    }
+  });
+
 });
