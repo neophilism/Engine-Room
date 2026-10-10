@@ -14,14 +14,16 @@ export function PortfolioRefresh() {
     };
     const timer = window.setInterval(refresh, PORTFOLIO_REFRESH_MS);
     document.addEventListener("visibilitychange", refresh);
+    window.addEventListener('engine-room-data-changed',refresh);
     return () => {
       window.clearInterval(timer);
       document.removeEventListener("visibilitychange", refresh);
+      window.removeEventListener('engine-room-data-changed',refresh);
     };
   }, [router, pending]);
 
   return <div className="portfolio-refresh">
-    <span aria-live="polite">{pending ? "Refreshing portfolio…" : "Refreshes every 30 seconds while visible"}</span>
+    <span aria-live="polite">{pending ? "Refreshing portfolio…" : "Updates on data changes · 30-second refresh fallback"}</span>
     <button type="button" className="portfolio-control-button" disabled={pending}
       onClick={() => startTransition(() => router.refresh())}>Refresh now</button>
   </div>;

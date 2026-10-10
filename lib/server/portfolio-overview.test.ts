@@ -31,6 +31,7 @@ describe("portfolio overview data", () => {
         inProgress: 1,
         planned: 40,
         percent: 40,
+        completionMeasured: true,
         repositories: []
       }
     ]);

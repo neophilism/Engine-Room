@@ -16,6 +16,7 @@ export { calculatePortfolioStatistics } from "../domain/portfolio-statistics";
 import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
 import { getDatabasePool } from "./database";
 import { loadCurrentFeatures } from "./project-features";
+import { loadProjectMonitorData } from './live-monitor';
 
 export type PortfolioOverviewRow = {
   id: string;
@@ -28,6 +29,7 @@ export type PortfolioOverviewRow = {
   planned_pr_total: number | null;
   completed_count: string | number;
   in_progress_count: string | number;
+  unmapped_count?:string|number;
 };
 
 export type PortfolioRepositoryRow = {
@@ -65,6 +67,7 @@ export function normalizePortfolioRows(
       inProgress,
       planned,
       percent: percentage(completed, planned),
+      completionMeasured:planned>0&&Number(row.unmapped_count||0)===0,
       repositories: []
     };
   });
@@ -139,8 +142,10 @@ export async function loadPortfolioOverview(
            r.full_name as repository_full_name,
            r.html_url as repository_html_url,
            dp.planned_pr_total,
-           count(ppr.id) filter (where gpr.merged_at is not null) as completed_count,
-           count(ppr.id) filter (where gpr.state = 'open' and gpr.merged_at is null) as in_progress_count
+           count(ppr.id) filter (where gpr.merged_at is not null AND (gpr.base_ref=r.default_branch OR (gpr.release_included=true AND gpr.release_target_sha=(SELECT default_branch_sha FROM github_repository_sync WHERE repository_id=gpr.repository_id)))) as completed_count,
+           count(ppr.id) filter (where gpr.state = 'open' and gpr.merged_at is null) as in_progress_count,
+           count(ppr.id) filter (where gpr.id IS NULL OR (gpr.merged_at IS NOT NULL AND gpr.base_ref IS DISTINCT FROM r.default_branch
+             AND (gpr.release_included IS NULL OR gpr.release_target_sha IS DISTINCT FROM (SELECT default_branch_sha FROM github_repository_sync WHERE repository_id=gpr.repository_id)))) AS unmapped_count
          from projects p
          left join project_repositories pr
            on pr.project_id = p.id
@@ -161,6 +166,7 @@ export async function loadPortfolioOverview(
            p.status,
            p.slug,
            r.full_name,
+           r.default_branch,
            r.html_url,
            dp.planned_pr_total
          order by
@@ -174,7 +180,7 @@ export async function loadPortfolioOverview(
            r.full_name,
            r.html_url,
            count(ppr.id) as planned_count,
-           count(ppr.id) filter (where gpr.merged_at is not null) as completed_count,
+           count(ppr.id) filter (where gpr.merged_at is not null AND (gpr.base_ref=r.default_branch OR (gpr.release_included=true AND gpr.release_target_sha=(SELECT default_branch_sha FROM github_repository_sync WHERE repository_id=gpr.repository_id)))) as completed_count,
            count(ppr.id) filter (where gpr.state = 'open' and gpr.merged_at is null) as in_progress_count
          from projects p
          join development_plans dp
@@ -190,6 +196,7 @@ export async function loadPortfolioOverview(
            p.id,
            r.id,
            r.full_name,
+           r.default_branch,
            r.html_url
          order by
            p.id,
@@ -202,6 +209,14 @@ export async function loadPortfolioOverview(
     );
     const features = await loadCurrentFeatures(client);
     projects = projects.map((project) => ({ ...project, features: features.filter((feature) => feature.projectId === project.id) }));
+    const monitor=await loadProjectMonitorData(client);
+    projects=projects.map(project=>{
+      const plan=monitor.plans.get(project.id);
+      return {...project,...(!project.planned&&plan?.original?{planned:plan.original,completed:plan.originalComplete,percent:percentage(plan.originalComplete,plan.original),
+        inProgress:plan.items.filter(item=>item.scope==='original'&&item.state==='in-progress').length}:{}),
+        completionMeasured:project.planned>0?project.completionMeasured!==false:!!plan?.original&&!plan.items.some(item=>item.scope==='original'&&item.state==='unmapped'),
+        activity:monitor.summaries.get(project.id),pullRequests:monitor.pullRequests.get(project.id)||[],sourcePlan:plan};
+    });
 
     const overview: PortfolioOverviewData = {
       source: "database",

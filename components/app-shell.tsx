@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useEffect, useId, useState } from "react";
+import React, { useEffect, useId, useState, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { dashboardRoutes } from "../lib/navigation";
+import { LiveConnection } from "./portfolio/live-connection";
 import { MachineMotionToggle } from "./machine/machine-motion";
 
 type AppShellProps = {
@@ -91,6 +92,11 @@ export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const drawerId = useId();
+  const searchRef=useRef<HTMLInputElement>(null);
+  useEffect(()=>{
+    const focus=(event:KeyboardEvent)=>{if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==="k"){event.preventDefault();searchRef.current?.focus();}};
+    window.addEventListener("keydown",focus);return()=>window.removeEventListener("keydown",focus);
+  },[]);
   const currentRoute = dashboardRoutes.find((route) => routeIsActive(pathname, route.href));
 
   useEffect(() => {
@@ -116,7 +122,7 @@ export function AppShell({ children }: AppShellProps) {
           <span className="system-light" aria-hidden="true" />
           <span>
             <strong>CONTROL BUS</strong>
-            <small>Architecture online</small>
+            <small>Source health in header</small>
           </span>
         </div>
       </aside>
@@ -141,29 +147,23 @@ export function AppShell({ children }: AppShellProps) {
             </div>
           </div>
 
-          <div className="app-topbar-center" role="search">
+          <form className="app-topbar-center" role="search" action="/search">
             <span className="search-symbol" aria-hidden="true">⌕</span>
             <input
+              ref={searchRef}
+              name="q"
               aria-label="Search Engine Room"
               className="global-search"
               placeholder="Search projects, releases, users…"
               type="search"
             />
             <kbd>⌘ K</kbd>
-          </div>
+          </form>
 
           <div className="app-topbar-actions">
             <MachineMotionToggle />
-            <div className="live-readout" aria-label="Portfolio data status">
-              <span className="system-light" aria-hidden="true" />
-              <span>
-                <small>DATA BUS</small>
-                <strong>Live-ready</strong>
-              </span>
-            </div>
-            <button className="topbar-icon-button" type="button" aria-label="Notifications">
-              <span aria-hidden="true">♢</span>
-            </button>
+            <LiveConnection />
+            <Link href="/alerts" className="topbar-icon-button" aria-label="Notifications"><span aria-hidden="true">♢</span></Link>
             <Link className="profile-control" href="/account" aria-label="Manage registered-user account">
               <span className="profile-monogram" aria-hidden="true">ER</span>
               <span className="profile-copy">
@@ -210,7 +210,7 @@ export function AppShell({ children }: AppShellProps) {
           <Navigation pathname={pathname} onNavigate={() => setDrawerOpen(false)} />
           <div className="mobile-drawer-status">
             <span className="system-light" aria-hidden="true" />
-            <span>Control bus online</span>
+            <span>Source health in header</span>
           </div>
         </aside>
       </div>

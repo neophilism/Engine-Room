@@ -1,5 +1,6 @@
 import type { ProjectStatus } from "./portfolio";
 import type { ProjectFeature } from "./project-features";
+import type { ProjectActivitySummary,PullRequestReadout,SourcePlanSummary } from './live-monitor';
 
 export type PortfolioRepositoryProgress = {
   id: string;
@@ -25,6 +26,10 @@ export type PortfolioProjectOverview = {
   percent: number;
   repositories: PortfolioRepositoryProgress[];
   features?: ProjectFeature[];
+  activity?: ProjectActivitySummary;
+  pullRequests?: PullRequestReadout[];
+  sourcePlan?: SourcePlanSummary;
+  completionMeasured?: boolean;
 };
 
 export type PortfolioStatistics = {

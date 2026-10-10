@@ -2,6 +2,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { readSession } from "./lib/auth/database";
 import { SESSION_COOKIE } from "./lib/auth/security";
+import { authorizeAdmin } from './lib/server/admin-auth';
 
 // Next 15.5 stable Node runtime permits a durable DB lookup on every request.
 // Disabled accounts and revoked sessions take effect immediately.
@@ -14,6 +15,7 @@ const adminOnly=["/finance","/users","/operations","/releases","/alerts","/setti
 const apis=new Set(["/api/health","/api/ready","/api/auth/login","/api/auth/bootstrap","/api/auth/register","/api/github/webhook","/api/telemetry"]);
 export async function middleware(request:NextRequest){
  const path=request.nextUrl.pathname;
+ if(path==='/api/admin/reconcile' && authorizeAdmin(request.headers)==='authorized')return NextResponse.next();
  if(pages.has(path)||apis.has(path)){
   const res=NextResponse.next();
   res.headers.set("Cache-Control","private, no-store");

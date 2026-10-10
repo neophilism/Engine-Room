@@ -1,4 +1,5 @@
-import { expect, test } from "@playwright/test";
+import {expect} from "@playwright/test";
+import {test} from "./fixtures";
 
 test("onboarding and navigation are usable on mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });

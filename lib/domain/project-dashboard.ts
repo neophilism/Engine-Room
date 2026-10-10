@@ -1,3 +1,4 @@
+import type { SourcePlanSummary,PullRequestReadout } from "./live-monitor";
 import type { DevelopmentPlanGraph, Project, Repository, RoadmapProgress } from "./portfolio";
 import type { MilestoneProgress } from "./milestone-lifecycle";
 import type { PortfolioOverviewData } from "./portfolio-overview";
@@ -11,10 +12,14 @@ export type ProjectDashboardData = {
   repositories: Repository[];
   graph?: DevelopmentPlanGraph;
   progress?: RoadmapProgress;
+  completionMeasured?: boolean;
+  unverifiedRoadmapItems?: number;
   milestones: MilestoneProgress[];
   features?: ProjectFeature[];
   activities?: DevelopmentActivity[];
   readiness?: ProjectReadiness;
+  sourcePlan?: SourcePlanSummary;
+  pullRequests?: PullRequestReadout[];
 };
 
 export function projectDashboardHref(project: { id: string; slug?: string }) {

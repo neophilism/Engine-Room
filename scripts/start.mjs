@@ -1,5 +1,5 @@
 import { spawn, spawnSync } from "node:child_process";
-import { shouldRunPublicSync, publicSyncIntervalMs } from "./public-sync-policy.mjs";
+import { shouldRunPublicSync } from "./public-sync-policy.mjs";
 
 const testServer = process.env.ENGINE_ROOM_TEST_SERVER === "1";
 if (!testServer) {
@@ -32,37 +32,18 @@ server.on("exit", (code, signal) => {
 });
 
 
-/**
- * Optional zero-extra-service-cost public GitHub refresh while this web
- * instance is awake. Official GitHub App webhooks remain the preferred
- * low-latency production source.
- */
-if (shouldRunPublicSync(process.env, testServer)) {
-  let syncing = false;
-  const refresh = () => {
-    if (syncing) return;
-    syncing = true;
-    const run = spawn(process.execPath, ["scripts/sync-github.mjs"], { stdio: "inherit", env: process.env });
-    run.once("error", error => {
-      console.error("Public GitHub synchronization could not start:", error.message);
-      syncing = false;
-    });
-    run.once("exit", code => {
-      syncing = false;
-      if (code !== 0) {
-        console.error("Public GitHub synchronization failed; existing records remain visible.");
-        return;
-      }
-      // Apply the reviewed original 40-PR Engine Room mapping only after real PR records arrive.
-      const roadmap = spawn(process.execPath, ["scripts/sync-approved-roadmap.mjs"], { stdio: "inherit", env: process.env });
-      roadmap.once("error", error => console.error("Approved roadmap importer failed to start:", error.message));
-      roadmap.once("exit", result => {
-        if (result !== 0) console.error("Approved roadmap import failed; other real source records remain intact.");
-      });
-    });
+// Durable inbox and incremental reconciliation share the existing web service.
+if (!testServer && process.env.ENGINE_ROOM_LIVE_WORKER !== "0") {
+  let stopping=false,worker,restartTimer;
+  const launch=()=>{
+    if(stopping)return;
+    worker=spawn(process.execPath,["scripts/live-worker.mjs"],{stdio:"inherit",env:{...process.env,
+      ENGINE_ROOM_PUBLIC_GITHUB_SYNC:shouldRunPublicSync(process.env,testServer)?"1":"0"}});
+    worker.once("error",()=>console.error("Live worker unavailable; dashboard will show disconnected source state."));
+    worker.once("exit",()=>{if(!stopping){console.error("Live worker stopped; restarting; durable inbox preserved.");restartTimer=setTimeout(launch,5000);}});
   };
-  const startup = setTimeout(refresh, 15000);
-  startup.unref();
-  const interval = setInterval(refresh, publicSyncIntervalMs(process.env));
-  interval.unref();
+  const stop=(signal="SIGTERM")=>{stopping=true;clearTimeout(restartTimer);if(worker&&!worker.killed)worker.kill(signal);};
+  for(const signal of ["SIGTERM","SIGINT"])process.on(signal,()=>stop(signal));
+  server.once("exit",()=>stop());
+  launch();
 }

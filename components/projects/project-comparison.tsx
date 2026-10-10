@@ -28,8 +28,8 @@ export function ProjectComparison({ overview }: { overview: PortfolioOverviewDat
             {githubRepositoryUrl(project.repositoryFullName) && <a href={githubRepositoryUrl(project.repositoryFullName)} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}</th>
           <td>{project.status.replaceAll("-", " ")}</td>
           <td>{project.repositories.length || (project.repositoryFullName ? 1 : 0)}</td>
-          <td>{project.planned || "No approved plan"}</td><td>{project.planned > 0 ? project.completed : "—"}</td><td>{project.planned > 0 ? project.inProgress : "—"}</td><td>{project.planned > 0 ? project.planned - project.completed : "—"}</td>
-          <td>{project.planned > 0 ? <><GlassTube label={`${project.displayName} comparison progress`} value={project.completed} max={project.planned}
+          <td>{project.planned || "No approved plan"}</td><td>{project.planned > 0 && project.completionMeasured!==false ? project.completed : "—"}</td><td>{project.planned > 0 && project.completionMeasured!==false ? project.inProgress : "—"}</td><td>{project.planned > 0 && project.completionMeasured!==false ? project.planned - project.completed : "—"}</td>
+          <td>{project.planned > 0 && project.completionMeasured!==false ? <><GlassTube label={`${project.displayName} comparison progress`} value={project.completed} max={project.planned}
             state={project.completed === project.planned ? "complete" : "active"} size="compact" /><span>{project.percent}%</span></> : "Not measured"}</td>
         </tr>)}</tbody>
       </table>

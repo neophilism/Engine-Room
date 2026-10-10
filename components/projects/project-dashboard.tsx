@@ -6,6 +6,9 @@ import { githubRepositoryUrl } from "../../lib/domain/portfolio-query";
 import { BrassPanel, GlassTube, IndicatorLamp } from "../machine";
 import { ProjectFeatures } from "./project-features";
 import { DevelopmentActivityTimeline } from "./development-activity";
+import { SourcePlan } from "./source-plan";
+import { ActivityMonitor } from "../portfolio/activity-monitor";
+import { PortfolioRefresh } from "../portfolio/portfolio-refresh";
 import { ProjectReadinessPanel } from "./project-readiness";
 
 export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
@@ -13,18 +16,19 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
   if (!project) return <main className="content"><header className="hero"><h1>Project data unavailable</h1>
     <p>{data.source === "unconfigured" ? "Connect portfolio data to load project dashboards." : "The project could not be loaded. Try refreshing."}</p></header><Link href="/projects">← Projects</Link></main>;
   const stage = lifecycleStages[project.status];
-  const unmapped = data.graph?.plannedPullRequests.filter((pr) => !pr.repositoryId || !pr.githubPrNumber).length ?? 0;
+  const unmapped = data.unverifiedRoadmapItems??data.graph?.plannedPullRequests.filter((pr) => !pr.repositoryId || !pr.githubPrNumber).length ?? 0;
+  const measured=!!data.progress&&data.completionMeasured!==false&&unmapped===0;
   return <main className="content">
     <header className="hero"><p className="eyebrow">Project intelligence</p><h1>{project.displayName}</h1><p>{project.summary || "No project summary has been registered yet."}</p>
       <Link href="/projects">← Compare projects</Link></header>
     <div className="project-dashboard-grid">
       <BrassPanel title="Approved roadmap" status={<IndicatorLamp state={stage.state} label={stage.label} />}>
         {data.progress && data.graph ? <>
-          <p>Plan version {data.graph.plan.version} · {data.progress.completed}/{data.progress.planned} approved PRs merged</p>
-          <GlassTube label={`${project.displayName} approved roadmap progress`} value={data.progress.completed} max={data.progress.planned} showScale
-            state={data.progress.completed === data.progress.planned ? "complete" : "active"} />
-          <p>{data.progress.percent}% complete · {data.progress.remaining} PRs remaining</p>
-          <p className="portfolio-calculation-note">{unmapped} roadmap PRs await a GitHub mapping.</p>
+          <p>Plan version {data.graph.plan.version} · {data.progress.completed}/{data.progress.planned} approved PRs verified merged</p>
+          {measured&&<GlassTube label={`${project.displayName} approved roadmap progress`} value={data.progress.completed} max={data.progress.planned} showScale
+            state={data.progress.completed === data.progress.planned ? "complete" : "active"} />}
+          <p>{measured?`${data.progress.percent}% complete · ${data.progress.remaining} PRs remaining`:'Completion N/A until release evidence is complete'}</p>
+          <p className="portfolio-calculation-note">{unmapped} roadmap PRs await mapping or release evidence.</p>
         </> : <p>No approved development plan has been registered.</p>}
       </BrassPanel>
       <BrassPanel title="Repositories"><ul className="project-repository-links">{data.repositories.map((repository) => <li key={repository.id}>
@@ -32,6 +36,9 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
         <span>{repository.visibility} · {repository.defaultBranch}{repository.archived ? " · archived" : ""}</span>
       </li>)}</ul>{data.repositories.length === 0 && <p>No repositories are linked yet.</p>}</BrassPanel>
     </div>
+    <PortfolioRefresh/>
+    <BrassPanel title="Original roadmap and added work"><SourcePlan plan={data.sourcePlan} historyHref={'/projects/'+encodeURIComponent(project.slug)+'/plans'}/></BrassPanel>
+    <ActivityMonitor projects={[{...project,completed:data.progress?.completed||0,inProgress:data.graph?.plannedPullRequests.filter(p=>p.status==="in-progress").length||0,planned:data.progress?.planned||0,percent:data.progress?.percent||0,repositories:[],pullRequests:data.pullRequests,sourcePlan:data.sourcePlan,completionMeasured:data.progress?measured:!!data.sourcePlan?.original&&!data.sourcePlan.items.some(item=>item.scope==='original'&&item.state==='unmapped')}]}/>
     <BrassPanel title="Features" eyebrow="Delivery against linked approved work"><ProjectFeatures features={data.features ?? []} /></BrassPanel>
     {data.readiness && <ProjectReadinessPanel readiness={data.readiness} />}
     <BrassPanel title="Development activity" eyebrow="GitHub source records"><DevelopmentActivityTimeline activities={data.activities ?? []} /></BrassPanel>

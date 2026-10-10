@@ -1,0 +1,9 @@
+{
+  "repository": "neophilism/Engine-Room",
+  "note": "Additional work requested after the original 40-item roadmap. These units do not change that original denominator.",
+  "items": [
+    {"repository":"Engine-Room","ordinal":1,"title":"Expand the verified deployment inventory","origin":"addition","github_prs":[56]},
+    {"repository":"Engine-Room","ordinal":2,"title":"Use credential-aware GitHub reconciliation intervals","origin":"addition","github_prs":[57]},
+    {"repository":"Engine-Room","ordinal":3,"title":"Accurate portfolio source accounting and durable live monitoring","origin":"addition","github_prs":[58]}
+  ]
+}

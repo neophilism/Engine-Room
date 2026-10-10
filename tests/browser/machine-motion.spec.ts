@@ -1,4 +1,5 @@
-import { expect, test, type Page, type BrowserContext } from "@playwright/test";
+import {expect, type Page, type BrowserContext} from "@playwright/test";
+import {test} from "./fixtures";
 import { createHash, randomBytes, randomUUID } from "node:crypto";
 import { Pool } from "pg";
 

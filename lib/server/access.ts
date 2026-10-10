@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import type { PoolClient } from "pg";
 import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
-import { validateAccessObservation, type AccessObservation, type AccessOverview, type PrincipalStatus } from "../domain/access";
+import { validateAccessObservation, type AccessObservation, type AccessOverview, type PrincipalStatus,type AccessPrincipal } from "../domain/access";
 import { getDatabasePool } from "./database";
 
 export async function persistAccessObservations(client: Pick<PoolClient, "query">, records: readonly AccessObservation[]) {
@@ -33,10 +33,18 @@ export async function loadAccessOverview(source: EnvironmentSource = process.env
     const result = await client.query<{ project_id: string; display_name: string; project_name: string; slug: string; environment: string; source: string; external_id: string; principal_id: string; principal_kind: "person" | "service"; status: PrincipalStatus; roles: string[]; privileged: boolean; mfa_enabled: boolean | null; last_active_at: Date | null; organization_id: string | null; organization_name: string | null; credential_expires_at: Date | null; observed_at: Date }>(
       `select distinct on (a.project_id,a.environment,a.source,a.principal_id) a.*, p.display_name as project_name, p.slug from project_access_observations a join projects p on p.id=a.project_id
        order by a.project_id,a.environment,a.source,a.principal_id,a.observed_at desc,a.received_at desc,a.external_id`);
+    const own=await client.query<{id:string;display_name:string;role:string;disabled:boolean;project_id:string;project_name:string;slug:string}>(
+      `SELECT u.id,u.display_name,u.role,u.disabled,p.id AS project_id,p.display_name AS project_name,p.slug
+        FROM engine_room_users u CROSS JOIN projects p WHERE p.slug='engine-room'`);
     await client.query("commit");
-    return { source: "database", projects: projects.rows, principals: result.rows.map((row) => ({ projectId: row.project_id, projectName: row.project_name, projectSlug: row.slug, environment: row.environment, source: row.source, externalId: row.external_id,
+    const observedAt=new Date().toISOString();
+    const ownedPrincipals:AccessPrincipal[]=own.rows.map(row=>({projectId:row.project_id,projectName:row.project_name,projectSlug:row.slug,
+      environment:'production',source:'engine-room-auth',externalId:row.id,principalId:row.id,displayName:row.display_name,
+      principalKind:'person',status:row.disabled?'suspended':'active',roles:[row.role],privileged:row.role==='admin',
+      mfaEnabled:null,lastActiveAt:null,credentialExpiresAt:null,observedAt}));
+    return { source: "database", projects: projects.rows, principals: [...ownedPrincipals,...result.rows.map((row) => ({ projectId: row.project_id, projectName: row.project_name, projectSlug: row.slug, environment: row.environment, source: row.source, externalId: row.external_id,
       principalId: row.principal_id, displayName: row.display_name, principalKind: row.principal_kind, status: row.status, roles: row.roles, privileged: row.privileged, mfaEnabled: row.mfa_enabled, lastActiveAt: row.last_active_at?.toISOString() ?? null,
-      organizationId: row.organization_id ?? undefined, organizationName: row.organization_name ?? undefined, credentialExpiresAt: row.credential_expires_at?.toISOString() ?? null, observedAt: row.observed_at.toISOString() })) };
+      organizationId: row.organization_id ?? undefined, organizationName: row.organization_name ?? undefined, credentialExpiresAt: row.credential_expires_at?.toISOString() ?? null, observedAt: row.observed_at.toISOString() }))] };
     } catch (error) { await client.query("rollback"); throw error; }
     finally { client.release(); }
   } catch { return { source: "error", principals: [] }; }

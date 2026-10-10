@@ -13,10 +13,11 @@ import type { PortfolioOverviewData } from "../../lib/domain/portfolio-overview"
 import type { RenderReadout } from "../../lib/domain/render-deployments";
 import { RenderServiceReadouts } from "./render-service-readouts";
 import { GitHubSourceReadout } from "./github-source-readout";
+import { ActivityMonitor } from "./activity-monitor";
 import { PlatformMetrics } from "./platform-metrics";
 
 function sourceLabel(source: PortfolioOverviewData["source"]) {
-  if (source === "database") return "Live portfolio data";
+  if (source === "database") return "Stored portfolio records";
   if (source === "error") return "Portfolio data unavailable";
   return "Database not configured";
 }
@@ -51,18 +52,20 @@ export function PortfolioHome({
           <strong>{statistics.activeProjects}</strong>
         </article>
         <article className="portfolio-stat">
-          <span>Roadmap PRs merged</span>
+          <span>Mapped original items merged</span>
           <strong>
-            {statistics.plannedRoadmapPrs > 0 ? `${statistics.completedRoadmapPrs}/${statistics.plannedRoadmapPrs}` : "Not measured"}
+            {statistics.plannedRoadmapPrs > 0 ? `${statistics.completedRoadmapPrs}/${statistics.plannedRoadmapPrs}` : "N/A"}
           </strong>
         </article>
         <article className="portfolio-stat">
-          <span>Portfolio completion</span>
-          <strong>{statistics.plannedRoadmapPrs > 0 ? `${statistics.percent}%` : "Not measured"}</strong>
+          <span>Mapped roadmap progress</span>
+          <strong>{statistics.plannedRoadmapPrs > 0 ? `${statistics.percent}%` : "N/A"}</strong>
         </article>
       </section>
 
+      <p className="portfolio-calculation-note">Source documents: {projects.filter(p=>p.planned>0||p.sourcePlan?.documents.length).length}/{projects.length} projects. Fully mapped original completion: {projects.filter(p=>p.planned>0&&p.completionMeasured!==false).length}/{projects.length}. The aggregate covers verified original mappings; unmapped work and production health remain separate.</p>
       <GitHubSourceReadout />
+      <ActivityMonitor projects={projects} />
       <PortfolioProgressMachine projects={projects} />
       <RenderServiceReadouts services={renderServices} />
       <PlatformMetrics />
@@ -73,7 +76,7 @@ export function PortfolioHome({
         title="Portfolio progress"
         status={
           <IndicatorLamp
-            state={overview.source === "database" ? "live" : "warning"}
+            state={overview.source === "database" ? "neutral" : "warning"}
             label={sourceLabel(overview.source)}
           />
         }

@@ -80,8 +80,8 @@ describe("portfolio home", () => {
       }
     };
     render(<PortfolioHome overview={unscored} />);
-    expect(screen.getAllByText("Not measured").length).toBeGreaterThan(0);
-    expect(screen.getByText("Approved plan not mapped")).toBeInTheDocument();
+    expect(screen.getAllByText("N/A").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Plan mapping N/A")[0]).toBeInTheDocument();
     expect(screen.queryByText("0/0 PRs")).not.toBeInTheDocument();
     expect(screen.queryByText("0%")).not.toBeInTheDocument();
   });

@@ -7,7 +7,7 @@ type FeatureRow = { id: string; project_id: string; feature_key: string; title: 
 export async function loadCurrentFeatures(client: Pick<PoolClient, "query">, projectId?: string): Promise<ProjectFeature[]> {
   const result = await client.query<FeatureRow>(`select f.id, dp.project_id, f.feature_key, f.title, f.description,
     count(fp.planned_pull_request_id) as planned_count,
-    count(fp.planned_pull_request_id) filter (where gpr.merged_at is not null) as merged_count,
+    count(fp.planned_pull_request_id) filter (where gpr.merged_at is not null AND (gpr.base_ref=(SELECT default_branch FROM repositories WHERE id=gpr.repository_id) OR (gpr.release_included=true AND gpr.release_target_sha=(SELECT default_branch_sha FROM github_repository_sync WHERE repository_id=gpr.repository_id)))) as merged_count,
     count(fp.planned_pull_request_id) filter (where gpr.state = 'open' and gpr.merged_at is null) as open_count
     from project_features f join development_plans dp on dp.id = f.development_plan_id and dp.status = 'approved'
     left join feature_planned_pull_requests fp on fp.feature_id = f.id
