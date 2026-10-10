@@ -457,3 +457,20 @@ h2 { font: 680 clamp(1.06rem, 1.5vw, 1.35rem)/1.28 var(--er-font-body); letter-s
 @media (prefers-reduced-motion: reduce) {
   .app-nav-link, .disclosure-arrow, .dashboard-operations-chevron { transition: none; }
 }
+
+
+/* One status vocabulary everywhere: green=merged, yellow=open, empty=unstarted. */
+.portfolio-progress-key {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px;
+  align-items: center; color: #a5b8c8; font-size: .77rem;
+  margin: -2px 0 13px;
+}
+.portfolio-progress-key .planned-progress-legend { margin: 0; }
+.planned-progress-legend .merged::before { background: #59bca1; }
+.planned-progress-legend .underway::before { background: #dfac59; }
+.planned-progress-legend .unstarted::before {
+  background: #293747; border: 1px solid #65798b;
+}
+.project-open-count, .source-work-open { color: #e7be71; }
+.source-work-merged { color: #91d7b9; }
+.source-work-remaining { color: #a6b7c8; }
