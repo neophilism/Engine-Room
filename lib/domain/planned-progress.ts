@@ -32,9 +32,9 @@ export function summarizePlannedProgress(source: PlanSource): PlannedProgress | 
   const originalCompleted = hasApproved ? source.completed : published?.originalComplete ?? 0;
 
   // Do not combine contradictory approved and source-document baselines.
-  // Additions may be tracked only when an original document baseline exists.
-  const matchingSource = !!published && published.original > 0 &&
-    (!hasApproved || published.original === originalPlanned);
+  // An additions-only document may extend an existing approved original plan.
+  const matchingSource = !!published &&
+    (!hasApproved || published.original === 0 || published.original === originalPlanned);
   const addedPlanned = matchingSource ? published.added : 0;
   const addedCompleted = matchingSource ? published.addedComplete : 0;
 
