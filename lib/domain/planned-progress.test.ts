@@ -23,6 +23,11 @@ describe("development plan completion, never PR-activity completion", () => {
         planned: 100, completed: 49, remaining: 51, percent: 49
       });
   });
+  it("includes explicitly planned additions even when their document contains no original units", () => {
+    const additionsOnly = plan(0, 0, 60, 9);
+    expect(summarizePlannedProgress({ planned: 40, completed: 40, sourcePlan: additionsOnly }))
+      .toMatchObject({ planned: 100, completed: 49, remaining: 51, percent: 49 });
+  });
   it("does not call raw, unmapped repository PRs additional planned work", () => {
     expect(summarizePlannedProgress({ planned: 40, completed: 40 }))
       .toMatchObject({ planned: 40, completed: 40, percent: 100, added: { planned: 0, completed: 0 } });
