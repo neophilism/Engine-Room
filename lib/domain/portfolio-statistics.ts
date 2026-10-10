@@ -1,12 +1,15 @@
 import type { ProjectStatus } from "./portfolio";
 import type { PortfolioProjectOverview, PortfolioStatistics } from "./portfolio-overview";
+import { summarizePlannedProgress } from "./planned-progress";
 
 export function calculatePortfolioStatistics(
   projects: readonly PortfolioProjectOverview[]
 ): PortfolioStatistics {
-  const completedRoadmapPrs = projects.reduce((sum, project) => sum + (project.completionMeasured===false?project.sourcePlan?.originalComplete||0:project.completed), 0);
-  const plannedRoadmapPrs = projects.reduce((sum, project) => sum + (project.completionMeasured===false
-    ? project.sourcePlan?.items.filter(item=>item.scope==='original'&&item.numbers.length>0&&item.state!=='unmapped').length||0 : project.planned), 0);
+  // ALL documented planned units form the denominator, including those
+  // without a GitHub PR yet. No open/closed PR totals are used.
+  const progress = projects.map(summarizePlannedProgress).filter((p) => p !== null);
+  const completedRoadmapPrs = progress.reduce((sum, p) => sum + p.completed, 0);
+  const plannedRoadmapPrs = progress.reduce((sum, p) => sum + p.planned, 0);
   const activeStatuses = new Set<ProjectStatus>(["active-development", "beta", "live", "maintenance"]);
 
   return {

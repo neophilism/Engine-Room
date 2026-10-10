@@ -4,6 +4,7 @@ import { MachineMotionProvider } from "../components/machine/machine-motion";
 import "./design-tokens.css";
 import "./globals.css";
 import "../components/machine/machine.css";
+import "../components/portfolio/planned-progress.css";
 
 export const metadata: Metadata = {
   title: {
