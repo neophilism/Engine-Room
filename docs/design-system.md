@@ -1,3 +1,5 @@
+> **Current UI direction (October 10, 2026):** The mechanical/steampunk material system below is preserved as a *future optional theme*, not today's default UI. The deployed application uses the compact, understated workspace described in [UI_CURRENT.md](UI_CURRENT.md). Do not reintroduce animation demos or ornamental panels into the production interface.
+
 # Machine design system
 
 PR 5 establishes the visual grammar for Engine Room. The goal is not to place ordinary dashboard widgets inside decorative steampunk frames. Data-bearing interface elements should themselves read as parts of one functioning Victorian machine.
