@@ -82,7 +82,7 @@ export function ProjectProgressStack({
               ? summarizePlannedProgress({ planned: repository.planned,
                   completed: repository.completed, inProgress: repository.inProgress })
               : null;
-          return <div className="repository-progress-row" key={repository.id}>
+          return <div className={`repository-progress-row${!isMultiRepository && progress ? " single-plan-progress-row" : ""}`} key={repository.id}>
             <span className="repository-progress-name">
               {githubRepositoryUrl(repository.fullName)
                 ? <a href={githubRepositoryUrl(repository.fullName)} target="_blank" rel="noopener noreferrer">{repository.fullName}</a>
@@ -93,10 +93,12 @@ export function ProjectProgressStack({
               : <span className="repository-unmeasured-plan" role="status"
                   aria-label={aggregatorDeferred ? "Implementation deferred pending FOIA corpus" : "Plan allocation not measured"}>
                   {aggregatorDeferred ? "Deferred: FOIA corpus" : "Not yet measured"}</span>}
-            <span className="repository-pr-count">{repositoryProgress
-              ? `${repositoryProgress.completed}/${repositoryProgress.planned} planned`
-              : "Plan allocation N/A"}</span>
-            <span className="repository-percent">{repositoryProgress ? `${repositoryProgress.percent}%` : "—"}</span>
+            {(isMultiRepository || !progress) && <>
+              <span className="repository-pr-count">{repositoryProgress
+                ? `${repositoryProgress.completed}/${repositoryProgress.planned} planned`
+                : "Plan allocation N/A"}</span>
+              <span className="repository-percent">{repositoryProgress ? `${repositoryProgress.percent}%` : "—"}</span>
+            </>}
           </div>;
         })}
       </div>
