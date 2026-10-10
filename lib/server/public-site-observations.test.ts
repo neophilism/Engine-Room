@@ -1,3 +1,4 @@
+import { verifiedRenderServices } from "../domain/render-deployments";
 import { describe, expect, it, vi } from "vitest";
 import { publicSiteUrl, probePublicSite, loadPublicSiteObservations } from "./public-site-observations";
 describe("Public platform HTTP observations", () => {
@@ -31,8 +32,8 @@ describe("Public platform HTTP observations", () => {
   it("reports one independent observation for every known platform", async () => {
     const fetcher=vi.fn(async()=>new Response(null,{status:204})) as unknown as typeof fetch;
     const checks=await loadPublicSiteObservations(fetcher);
-    expect(checks).toHaveLength(13);
+    expect(checks).toHaveLength(verifiedRenderServices.length);
     expect(checks.every(row=>row.observation==="http-response" && row.httpStatus===204)).toBe(true);
-    expect(fetcher).toHaveBeenCalledTimes(13);
+    expect(fetcher).toHaveBeenCalledTimes(verifiedRenderServices.length);
   });
 });
