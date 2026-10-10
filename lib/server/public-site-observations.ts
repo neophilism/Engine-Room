@@ -15,7 +15,7 @@ export function publicSiteUrl(website: string) {
 }
 
 export async function probePublicSite(
-  service: { id: string; website: string; healthPath?: "/healthz" | "/api/engine-health" },
+  service: { id: string; website: string; healthPath?: "/healthz" | "/api/engine-health" | "/api/ready" },
   fetcher: Fetcher = fetch
 ): Promise<PublicSiteObservation> {
   const checkedAt = new Date().toISOString();
