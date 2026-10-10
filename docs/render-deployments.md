@@ -39,3 +39,14 @@ Engine Room's 10-minute in-page HTTP readouts, source-specific Render
 deployment results, and the scheduled smoke test are independent evidence
 streams. Neither guarantees uninterrupted production uptime on sleeping
 free-tier services.
+
+## Stems White Label — dependency-aware HTTP readiness
+
+The existing Render service `srv-db39hhm7bikc73c3qcj0` was observed live
+at deployment `f40ea2c6938d989cd9e72ac9645858cc6c74419e` on October 10, 2026.
+Engine Room's allowlisted HTTP probe now calls `/api/ready` for this service;
+that route checks database connectivity and returns HTTP 503 when it cannot
+reach PostgreSQL. HEAD may return 405, in which case the monitor falls back
+to GET. A successful response proves database readiness at the time of the
+request, not worker operation, Stripe payments, or commercial launch readiness.
+The catalog remains separate from the real-asset delivery acceptance process.
