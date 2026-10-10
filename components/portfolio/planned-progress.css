@@ -1,14 +1,16 @@
 /* Unified plan: merged green, open PRs yellow, unstarted empty. */
 .planned-progress-tube {
-  display: grid;
-  grid-template-columns: 14px minmax(0, 1fr) 14px;
-  align-items: stretch;
+  /* One full-width track. Do not use the retired three-column endcap grid:
+     once the endcaps were hidden it laid the fill in a zero-width track. */
+  display: block;
+  position: relative;
   width: 100%;
   min-width: 88px;
   height: 30px;
+  overflow: hidden;
   filter: drop-shadow(0 5px 8px rgba(0,0,0,.27));
 }
-.planned-progress-compact { height: 22px; grid-template-columns: 11px minmax(0, 1fr) 11px; }
+.planned-progress-compact { height: 22px; }
 .planned-progress-endcap {
   background: var(--er-material-brass);
   box-shadow: inset 0 0 5px rgba(0,0,0,.65), 0 1px 0 rgba(255,225,164,.25);
@@ -16,7 +18,10 @@
 .planned-progress-endcap:first-child { border-radius: 8px 3px 3px 8px; }
 .planned-progress-endcap:last-child { border-radius: 3px 8px 8px 3px; }
 .planned-progress-chamber {
+  display: block;
   position: relative;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   border-block: 2px solid rgba(227,174,88,.62);
   background: linear-gradient(180deg,rgba(226,255,250,.16),transparent 25%,rgba(0,0,0,.25) 80%),var(--er-material-smoked-glass);
