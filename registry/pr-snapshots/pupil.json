@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "repository": "neophilism/pupil",
+  "roadmapVersion": 1,
+  "planVerified": false,
+  "plannedPrCount": 0,
+  "observedAt": "2026-10-11T17:41:54.900Z",
+  "units": [],
+  "pullRequests": [
+    {
+      "id": 21314381,
+      "number": 1,
+      "title": "Update from original",
+      "url": "https://github.com/neophilism/pupil/pull/1",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2014-09-16T17:29:31.000Z",
+      "updatedAt": "2014-09-16T17:30:16.000Z",
+      "closedAt": "2014-09-16T17:30:15.000Z",
+      "mergedAt": "2014-09-16T17:30:15.000Z",
+      "headSha": "751069cbd4181fa10ebe96ddb898138a687e3835",
+      "baseRef": "master",
+      "mergeCommitSha": "157aec85ad94bf6aff0dd14f1d7942c1d971f008"
+    }
+  ]
+}
