@@ -10,49 +10,73 @@
       "id": "FE-01",
       "title": "Foundation and thin-app boundary",
       "origin": "original",
-      "prs": []
+      "prs": [
+        1
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #1; directly corresponds to named roadmap unit FE-01"
     },
     {
       "id": "FE-02",
       "title": "Federal Data Encryption policy bundle",
       "origin": "original",
-      "prs": []
+      "prs": [
+        2
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #2; directly corresponds to named roadmap unit FE-02"
     },
     {
       "id": "FE-03",
       "title": "Encryption compliance evaluation",
       "origin": "original",
-      "prs": []
+      "prs": [
+        3
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #3; directly corresponds to named roadmap unit FE-03"
     },
     {
       "id": "FE-04",
       "title": "Contractor and external-system compliance",
       "origin": "original",
-      "prs": []
+      "prs": [
+        4
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #4; directly corresponds to named roadmap unit FE-04"
     },
     {
       "id": "FE-05",
       "title": "Waivers and emergency exceptions",
       "origin": "original",
-      "prs": []
+      "prs": [
+        5
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #5; directly corresponds to named roadmap unit FE-05"
     },
     {
       "id": "FE-06",
       "title": "Statutory clocks and oversight",
       "origin": "original",
-      "prs": []
+      "prs": [
+        6
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #6; directly corresponds to named roadmap unit FE-06"
     },
     {
       "id": "FE-07",
       "title": "Findings, remediation and certification",
       "origin": "original",
-      "prs": []
+      "prs": [
+        7
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #7; directly corresponds to named roadmap unit FE-07"
     },
     {
       "id": "FE-08",
       "title": "Operator UI and reporting",
       "origin": "original",
-      "prs": []
+      "prs": [
+        8
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #8; directly corresponds to named roadmap unit FE-08"
     },
     {
       "id": "FE-09",
