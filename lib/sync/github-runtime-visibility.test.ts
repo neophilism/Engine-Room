@@ -15,7 +15,7 @@ describe("GitHub repository metadata reconciliation",()=>{
     const repo={id:120,owner:{login:"neophilism"},name:"Music-Analyzer",
       full_name:"neophilism/Music-Analyzer",html_url:"https://github.com/neophilism/Music-Analyzer",
       private:true,archived:false,default_branch:"main",fork:false};
-    const out=await ensureRepository(db as unknown as Pick<PoolClient,"query">,repo,{ENGINE_ROOM_GITHUB_OWNER:"neophilism",GITHUB_READ_TOKEN:"test-only"});
+    const out=await ensureRepository(db as unknown as Pick<PoolClient,"query">,repo,{...process.env,ENGINE_ROOM_GITHUB_OWNER:"neophilism",GITHUB_READ_TOKEN:"test-only"});
     expect(out).toBe("repo-1");
     const insert=queries.find(q=>q.sql.startsWith("INSERT INTO repositories"));
     expect(insert?.sql).toContain("visibility=excluded.visibility");
