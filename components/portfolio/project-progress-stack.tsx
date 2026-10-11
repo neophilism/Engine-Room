@@ -61,12 +61,13 @@ export function ProjectProgressStack({
         <span className="count">
           {progress ? `${progress.completed}/${progress.planned} planned` : aggregatorDeferred ? "Awaiting corpus" : "Plan unavailable"}
         </span>
+        {mergedGitHubPrs > 0 && <span className="project-merged-count">{mergedGitHubPrs} GitHub PRs merged</span>}
         <span className="percentage" title={progress ? "Completed planned units divided by all planned units" : "No documented development plan"}>{progress ? `${progress.percent}%` : "N/A"}</span>
       </header>
 
       <div className="project-quick-links">
         <span className="project-activity">{unverifiedEvidence
-          ? `${unmappedUnits} planned units missing verified PR links · ${progress?.inProgress ?? 0} open mapped · ${progress?.completed ?? 0} merged mapped · ${mergedGitHubPrs} GitHub PRs merged overall`
+          ? `${unmappedUnits} planned units have no explicit PR association yet · ${progress?.inProgress ?? 0} open mapped · ${progress?.completed ?? 0} merged mapped · ${mergedGitHubPrs} GitHub PRs merged overall`
           : progress
             ? `${progress.notStarted} not started · ${progress.inProgress} open · ${progress.completed} merged`
             : missingPlanWithWork
