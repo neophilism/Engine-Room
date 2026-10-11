@@ -10,127 +10,190 @@
       "id": "NSI-001",
       "title": "Foundation, engine contract, and safe unclassified SIG manifest",
       "origin": "original",
-      "prs": []
+      "prs": [
+        1
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #1; directly corresponds to named roadmap unit NSI-001"
     },
     {
       "id": "NSI-002",
       "title": "Protected submitter identity",
       "origin": "original",
-      "prs": []
+      "prs": [
+        2
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #2; directly corresponds to named roadmap unit NSI-002"
     },
     {
       "id": "NSI-003",
       "title": "Protected participant status and messaging",
       "origin": "original",
-      "prs": []
+      "prs": [
+        3
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #3; directly corresponds to named roadmap unit NSI-003"
     },
     {
       "id": "NSI-004",
       "title": "Public supporting evidence",
       "origin": "original",
-      "prs": []
+      "prs": [
+        4
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #4; directly corresponds to named roadmap unit NSI-004"
     },
     {
       "id": "NSI-005",
       "title": "Referral ledger and agency accountability",
       "origin": "original",
-      "prs": []
+      "prs": [
+        5
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #5; directly corresponds to named roadmap unit NSI-005"
     },
     {
       "id": "NSI-006",
       "title": "Operational SIG experience",
       "origin": "original",
-      "prs": []
+      "prs": [
+        6
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #6; directly corresponds to named roadmap unit NSI-006"
     },
     {
       "id": "NSI-007",
       "title": "PR 6 post-merge rc.7 pin cleanup",
       "origin": "original",
-      "prs": []
+      "prs": [
+        7
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #7; directly corresponds to named roadmap unit NSI-007"
     },
     {
       "id": "NSI-008",
       "title": "Security/deployment acceptance",
       "origin": "original",
-      "prs": []
+      "prs": [
+        8
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #8; directly corresponds to named roadmap unit NSI-008"
     },
     {
       "id": "NSI-009",
       "title": "Production runtime enablement",
       "origin": "original",
-      "prs": []
+      "prs": [
+        9
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #9; directly corresponds to named roadmap unit NSI-009"
     },
     {
       "id": "NSI-010",
       "title": "PR 9 post-merge rc.8 pin cleanup",
       "origin": "original",
-      "prs": []
+      "prs": [
+        10
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #10; directly corresponds to named roadmap unit NSI-010"
     },
     {
       "id": "NSI-011",
       "title": "Render production Blueprint",
       "origin": "original",
-      "prs": []
+      "prs": [
+        11
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #11; directly corresponds to named roadmap unit NSI-011"
     },
     {
       "id": "NSI-012",
       "title": "Readiness-aware production routing",
       "origin": "original",
-      "prs": []
+      "prs": [
+        12
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #12; directly corresponds to named roadmap unit NSI-012"
     },
     {
       "id": "NSI-013",
       "title": "Release-evidence-driven production promotion",
       "origin": "original",
-      "prs": []
+      "prs": [
+        13
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #13; directly corresponds to named roadmap unit NSI-013"
     },
     {
       "id": "NSI-014",
       "title": "Live production smoke evidence",
       "origin": "original",
-      "prs": []
+      "prs": [
+        14
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #14; directly corresponds to named roadmap unit NSI-014"
     },
     {
       "id": "NSI-015",
       "title": "Land production deployment stack on main",
       "origin": "original",
-      "prs": []
+      "prs": [
+        15
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #15; directly corresponds to named roadmap unit NSI-015"
     },
     {
       "id": "NSI-016",
       "title": "PR 15 post-merge rc.9 pin cleanup",
       "origin": "original",
-      "prs": []
+      "prs": [
+        16
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #16; directly corresponds to named roadmap unit NSI-016"
     },
     {
       "id": "NSI-018",
       "title": "Automated release-to-production promotion bundle",
       "origin": "original",
-      "prs": []
+      "prs": [
+        18
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #18; directly corresponds to named roadmap unit NSI-018"
     },
     {
       "id": "NSI-019",
       "title": "Acceptance review package assembler",
       "origin": "original",
-      "prs": []
+      "prs": [
+        19
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #19; directly corresponds to named roadmap unit NSI-019"
     },
     {
       "id": "NSI-020",
       "title": "Final acceptance evidence validator",
       "origin": "original",
-      "prs": []
+      "prs": [
+        20
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #20; directly corresponds to named roadmap unit NSI-020"
     },
     {
       "id": "NSI-021",
       "title": "Land acceptance stack and release-capable rc.9 pin",
       "origin": "original",
-      "prs": []
+      "prs": [
+        21
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #21; directly corresponds to named roadmap unit NSI-021"
     },
     {
       "id": "NSI-022",
       "title": "Automatic production promotion request",
       "origin": "original",
-      "prs": []
+      "prs": [
+        22
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #22; directly corresponds to named roadmap unit NSI-022"
     }
   ],
   "pullRequests": [
