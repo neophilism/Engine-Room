@@ -16,6 +16,10 @@ describe("canonical repository roadmap ingestion",()=>{
   expect(items.map(x=>x.scope)).toEqual(["original","original","addition"]);
   expect(items[1]).toMatchObject({ordinal:2,sourceItemId:"PDE-02",numbers:[]});
  });
+ it("preserves a truly unverified plan as zero explicit units without inventing a denominator",()=>{
+  expect(parseCanonicalRoadmap(JSON.stringify({repository:"neophilism/Debate-Engine",version:1,planVerified:false,plannedPrCount:0,milestones:[]}),"Debate-Engine")).toEqual([]);
+  expect(()=>parseCanonicalRoadmap(JSON.stringify({version:1,planVerified:true,plannedPrCount:0,milestones:[]}),"Debate-Engine")).toThrow();
+ });
  it("rejects a root total that disagrees with its explicit item list",()=>{
   expect(()=>parseCanonicalRoadmap(JSON.stringify({...example,plannedPrCount:4}),"Debate-Engine")).toThrow(/plannedPrCount/);
  });
