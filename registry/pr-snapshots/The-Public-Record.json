@@ -1,0 +1,699 @@
+{
+  "schemaVersion": 1,
+  "repository": "neophilism/The-Public-Record",
+  "roadmapVersion": 1,
+  "planVerified": true,
+  "plannedPrCount": 52,
+  "observedAt": "2026-10-11T17:41:22.950Z",
+  "units": [
+    {
+      "id": "TPR-001",
+      "title": "Foundation and security — approved package 1 of 10",
+      "origin": "original",
+      "prs": [
+        1
+      ]
+    },
+    {
+      "id": "TPR-002",
+      "title": "Foundation and security — approved package 2 of 10",
+      "origin": "original",
+      "prs": [
+        2
+      ]
+    },
+    {
+      "id": "TPR-003",
+      "title": "Foundation and security — approved package 3 of 10",
+      "origin": "original",
+      "prs": [
+        3
+      ]
+    },
+    {
+      "id": "TPR-004",
+      "title": "Foundation and security — approved package 4 of 10",
+      "origin": "original",
+      "prs": [
+        4
+      ]
+    },
+    {
+      "id": "TPR-005",
+      "title": "Foundation and security — approved package 5 of 10",
+      "origin": "original",
+      "prs": [
+        12
+      ]
+    },
+    {
+      "id": "TPR-006",
+      "title": "Foundation and security — approved package 6 of 10",
+      "origin": "original",
+      "prs": [
+        6
+      ]
+    },
+    {
+      "id": "TPR-007",
+      "title": "Foundation and security — approved package 7 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-008",
+      "title": "Foundation and security — approved package 8 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-009",
+      "title": "Foundation and security — approved package 9 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-010",
+      "title": "Foundation and security — approved package 10 of 10",
+      "origin": "original",
+      "prs": [
+        13
+      ]
+    },
+    {
+      "id": "TPR-011",
+      "title": "Research and requests — approved package 1 of 8",
+      "origin": "original",
+      "prs": [
+        14
+      ]
+    },
+    {
+      "id": "TPR-012",
+      "title": "Research and requests — approved package 2 of 8",
+      "origin": "original",
+      "prs": [
+        16
+      ]
+    },
+    {
+      "id": "TPR-013",
+      "title": "Research and requests — approved package 3 of 8",
+      "origin": "original",
+      "prs": [
+        17
+      ]
+    },
+    {
+      "id": "TPR-014",
+      "title": "Research and requests — approved package 4 of 8",
+      "origin": "original",
+      "prs": [
+        19
+      ]
+    },
+    {
+      "id": "TPR-015",
+      "title": "Research and requests — approved package 5 of 8",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-016",
+      "title": "Research and requests — approved package 6 of 8",
+      "origin": "original",
+      "prs": [
+        22
+      ]
+    },
+    {
+      "id": "TPR-017",
+      "title": "Research and requests — approved package 7 of 8",
+      "origin": "original",
+      "prs": [
+        20
+      ]
+    },
+    {
+      "id": "TPR-018",
+      "title": "Research and requests — approved package 8 of 8",
+      "origin": "original",
+      "prs": [
+        21
+      ]
+    },
+    {
+      "id": "TPR-019",
+      "title": "Citizen filing workflow — approved package 1 of 9",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-020",
+      "title": "Citizen filing workflow — approved package 2 of 9",
+      "origin": "original",
+      "prs": [
+        23
+      ]
+    },
+    {
+      "id": "TPR-021",
+      "title": "Citizen filing workflow — approved package 3 of 9",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-022",
+      "title": "Citizen filing workflow — approved package 4 of 9",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-023",
+      "title": "Citizen filing workflow — approved package 5 of 9",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-024",
+      "title": "Citizen filing workflow — approved package 6 of 9",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-025",
+      "title": "Citizen filing workflow — approved package 7 of 9",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-026",
+      "title": "Citizen filing workflow — approved package 8 of 9",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-027",
+      "title": "Citizen filing workflow — approved package 9 of 9",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-028",
+      "title": "Safe documentary publication — approved package 1 of 5",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-029",
+      "title": "Safe documentary publication — approved package 2 of 5",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-030",
+      "title": "Safe documentary publication — approved package 3 of 5",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-031",
+      "title": "Safe documentary publication — approved package 4 of 5",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-032",
+      "title": "Safe documentary publication — approved package 5 of 5",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-033",
+      "title": "Eight companion public actions — approved package 1 of 8",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-034",
+      "title": "Eight companion public actions — approved package 2 of 8",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-035",
+      "title": "Eight companion public actions — approved package 3 of 8",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-036",
+      "title": "Eight companion public actions — approved package 4 of 8",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-037",
+      "title": "Eight companion public actions — approved package 5 of 8",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-038",
+      "title": "Eight companion public actions — approved package 6 of 8",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-039",
+      "title": "Eight companion public actions — approved package 7 of 8",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-040",
+      "title": "Eight companion public actions — approved package 8 of 8",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-041",
+      "title": "Platform integration — approved package 1 of 6",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-042",
+      "title": "Platform integration — approved package 2 of 6",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-043",
+      "title": "Platform integration — approved package 3 of 6",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-044",
+      "title": "Platform integration — approved package 4 of 6",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-045",
+      "title": "Platform integration — approved package 5 of 6",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-046",
+      "title": "Platform integration — approved package 6 of 6",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-047",
+      "title": "Production verification — approved package 1 of 6",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-048",
+      "title": "Production verification — approved package 2 of 6",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-049",
+      "title": "Production verification — approved package 3 of 6",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-050",
+      "title": "Production verification — approved package 4 of 6",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-051",
+      "title": "Production verification — approved package 5 of 6",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "TPR-052",
+      "title": "Production verification — approved package 6 of 6",
+      "origin": "original",
+      "prs": []
+    }
+  ],
+  "pullRequests": [
+    {
+      "id": 4812511944,
+      "number": 23,
+      "title": "TPR-20: Browser-local FOIA drafting and copy/print export preview",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/23",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:56:32.000Z",
+      "updatedAt": "2026-10-10T16:26:18.000Z",
+      "closedAt": "2026-10-10T16:26:18.000Z",
+      "mergedAt": "2026-10-10T16:26:18.000Z",
+      "headSha": "c2fb7965ed8187366e34fdb4099c96061b829086",
+      "baseRef": "main",
+      "mergeCommitSha": "1235ad6638d7e31b6c3c2ee7d1b2f98f8bce6a33"
+    },
+    {
+      "id": 4812500075,
+      "number": 22,
+      "title": "TPR-16: Source-aware duplicate and existing-record warnings",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/22",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:54:42.000Z",
+      "updatedAt": "2026-10-10T15:57:26.000Z",
+      "closedAt": "2026-10-10T15:57:25.000Z",
+      "mergedAt": "2026-10-10T15:57:25.000Z",
+      "headSha": "c058696ed4b303892d034839caab1288d6ace706",
+      "baseRef": "main",
+      "mergeCommitSha": "f9b561eac3cf6f67a1d010db00e553a974728896"
+    },
+    {
+      "id": 4812492037,
+      "number": 21,
+      "title": "TPR-18: Private FOIA drafting lint and documented override checks",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/21",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:53:31.000Z",
+      "updatedAt": "2026-10-10T15:56:44.000Z",
+      "closedAt": "2026-10-10T15:56:44.000Z",
+      "mergedAt": "2026-10-10T15:56:44.000Z",
+      "headSha": "ca44cf2e06d82419988f7fcf00866dfc70632536",
+      "baseRef": "main",
+      "mergeCommitSha": "ef3c54c70826999b675a26f5c26bc9d9e9e36f55"
+    },
+    {
+      "id": 4812483296,
+      "number": 20,
+      "title": "TPR-17: Independently reviewed and pinned FOIA request templates",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/20",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:52:15.000Z",
+      "updatedAt": "2026-10-10T15:54:55.000Z",
+      "closedAt": "2026-10-10T15:54:55.000Z",
+      "mergedAt": "2026-10-10T15:54:55.000Z",
+      "headSha": "08de706ac4e83dd69c22a2aee57409d609db3bba",
+      "baseRef": "main",
+      "mergeCommitSha": "cccdfe232d989cd5574637ea523290336d119e0d"
+    },
+    {
+      "id": 4812465663,
+      "number": 19,
+      "title": "TPR-14: Evidence source and citation graph validation",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/19",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:49:48.000Z",
+      "updatedAt": "2026-10-10T15:52:28.000Z",
+      "closedAt": "2026-10-10T15:52:27.000Z",
+      "mergedAt": "2026-10-10T15:52:27.000Z",
+      "headSha": "d4939a43a1a7b230ec6910c179fd54ecd5d08fea",
+      "baseRef": "main",
+      "mergeCommitSha": "3419fef86b0e122bb6f96dccfa28dff8c48f7f92"
+    },
+    {
+      "id": 4812448403,
+      "number": 18,
+      "title": "CI: Run once per PR and cancel superseded checks",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/18",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:47:39.000Z",
+      "updatedAt": "2026-10-10T15:50:17.000Z",
+      "closedAt": "2026-10-10T15:50:17.000Z",
+      "mergedAt": "2026-10-10T15:50:17.000Z",
+      "headSha": "f17a12119d09a5f7ae706548ea63c6e7fc48a831",
+      "baseRef": "main",
+      "mergeCommitSha": "0edc0b03de379ec5f864918425347dbbd0228839"
+    },
+    {
+      "id": 4812441361,
+      "number": 17,
+      "title": "TPR-13: Preserve evidence-labeled claim history and corrections",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/17",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:46:40.000Z",
+      "updatedAt": "2026-10-10T15:50:05.000Z",
+      "closedAt": "2026-10-10T15:50:05.000Z",
+      "mergedAt": "2026-10-10T15:50:05.000Z",
+      "headSha": "c16e6c1c6bdf7e33f846c85494f3437e5592773f",
+      "baseRef": "main",
+      "mergeCommitSha": "3d928a5f6833cbfaf83ecdfb3631dad05445879d"
+    },
+    {
+      "id": 4812430404,
+      "number": 16,
+      "title": "TPR-12: Reviewed agency filing destination policies",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/16",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:45:08.000Z",
+      "updatedAt": "2026-10-10T15:48:48.000Z",
+      "closedAt": "2026-10-10T15:48:48.000Z",
+      "mergedAt": "2026-10-10T15:48:48.000Z",
+      "headSha": "24f0a228161c303f19b3cdb3351393a2d1a978d4",
+      "baseRef": "main",
+      "mergeCommitSha": "d9b8bad8c2a8898eb4594a2f3696f9f362fbcee2"
+    },
+    {
+      "id": 4812418656,
+      "number": 15,
+      "title": "Reconcile accepted TPR-05 and project roadmap evidence",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/15",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:43:28.000Z",
+      "updatedAt": "2026-10-10T15:47:59.000Z",
+      "closedAt": "2026-10-10T15:47:59.000Z",
+      "mergedAt": "2026-10-10T15:47:59.000Z",
+      "headSha": "1f55ddb2066fb045c7db8636bf9a3bd01e409f50",
+      "baseRef": "main",
+      "mergeCommitSha": "43fa30caf972cc18364a214247331c72304bc893"
+    },
+    {
+      "id": 4812405343,
+      "number": 14,
+      "title": "TPR-11: FOIA.gov agency component directory adapter",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/14",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:41:33.000Z",
+      "updatedAt": "2026-10-10T15:43:44.000Z",
+      "closedAt": "2026-10-10T15:43:44.000Z",
+      "mergedAt": "2026-10-10T15:43:44.000Z",
+      "headSha": "be906fd5d041c4ba92de1e30d9bb6715c06cbbff",
+      "baseRef": "main",
+      "mergeCommitSha": "0cb0200b7cb0c50624f2cf516edec81a1d7d8891"
+    },
+    {
+      "id": 4812389223,
+      "number": 13,
+      "title": "TPR-10: Append-only audit and consent event foundations",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/13",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:39:09.000Z",
+      "updatedAt": "2026-10-10T15:41:45.000Z",
+      "closedAt": "2026-10-10T15:41:45.000Z",
+      "mergedAt": "2026-10-10T15:41:45.000Z",
+      "headSha": "c5a5aacd4e0f5684e66501ea41b1acc71d8494a0",
+      "baseRef": "main",
+      "mergeCommitSha": "d078f47fbd5466ee5c7c6f8eb3b1e15692f0b1fb"
+    },
+    {
+      "id": 4812372143,
+      "number": 12,
+      "title": "TPR-05: Verify preview Docker image and health gate",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/12",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:36:32.000Z",
+      "updatedAt": "2026-10-10T15:42:05.000Z",
+      "closedAt": "2026-10-10T15:42:05.000Z",
+      "mergedAt": "2026-10-10T15:42:05.000Z",
+      "headSha": "f3313073cd2b31db889be2957a95a6ac057b0968",
+      "baseRef": "main",
+      "mergeCommitSha": "01b68d96145bd644218917694e455cf3ef21d393"
+    },
+    {
+      "id": 4812367910,
+      "number": 11,
+      "title": "TPR-09: Scoped private quarantine upload capabilities",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/11",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:35:52.000Z",
+      "updatedAt": "2026-10-10T15:37:07.000Z",
+      "closedAt": "2026-10-10T15:37:07.000Z",
+      "mergedAt": "2026-10-10T15:37:06.000Z",
+      "headSha": "6c2fb2e7f24570950946e013b690e85f0ccb4f8b",
+      "baseRef": "main",
+      "mergeCommitSha": "a7ddb5b77a18dad4bfc63ca750451008fe98c427"
+    },
+    {
+      "id": 4812351254,
+      "number": 10,
+      "title": "TPR-08: Least-privilege role and object authorization",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/10",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:33:11.000Z",
+      "updatedAt": "2026-10-10T15:35:29.000Z",
+      "closedAt": "2026-10-10T15:35:29.000Z",
+      "mergedAt": "2026-10-10T15:35:28.000Z",
+      "headSha": "588ed42803e46c114a091bdfc38b7ddbc825f392",
+      "baseRef": "main",
+      "mergeCommitSha": "90b55fdd5ae0e318908119c8051fc2165bfb7d8a"
+    },
+    {
+      "id": 4812338615,
+      "number": 9,
+      "title": "TPR-07: Standards-based identity and session trust primitives",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/9",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:31:05.000Z",
+      "updatedAt": "2026-10-10T15:36:48.000Z",
+      "closedAt": "2026-10-10T15:36:48.000Z",
+      "mergedAt": "2026-10-10T15:36:48.000Z",
+      "headSha": "9600a333232eadcc4ef34c7b30b775656c8b4878",
+      "baseRef": "main",
+      "mergeCommitSha": "0b4faea38689339e8047bca02be54e9d3fae2d28"
+    },
+    {
+      "id": 4812319897,
+      "number": 8,
+      "title": "TPR-05: Reproducible builds, lint gate and non-root preview image",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/8",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:27:59.000Z",
+      "updatedAt": "2026-10-10T15:30:19.000Z",
+      "closedAt": "2026-10-10T15:30:19.000Z",
+      "mergedAt": "2026-10-10T15:30:19.000Z",
+      "headSha": "a4a1a2aa1a0ec37ef176dd5e44c588ce65627652",
+      "baseRef": "main",
+      "mergeCommitSha": "43294bfbf9eccce3a43f1860f0fd8c50f12b28fb"
+    },
+    {
+      "id": 4812237172,
+      "number": 7,
+      "title": "Fix CI after accepted PR mapping updates",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/7",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:15:16.000Z",
+      "updatedAt": "2026-10-10T15:16:35.000Z",
+      "closedAt": "2026-10-10T15:16:35.000Z",
+      "mergedAt": "2026-10-10T15:16:35.000Z",
+      "headSha": "5ccb82a57d6a963e6ff2920dfa98ea26f6ef90bc",
+      "baseRef": "main",
+      "mergeCommitSha": "b09a3d5c799e248d0334e677c0ab51cab8c0a60d"
+    },
+    {
+      "id": 4812216800,
+      "number": 6,
+      "title": "TPR-06: PostgreSQL schema, migrations and isolation tests",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/6",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:12:30.000Z",
+      "updatedAt": "2026-10-10T15:13:50.000Z",
+      "closedAt": "2026-10-10T15:13:50.000Z",
+      "mergedAt": "2026-10-10T15:13:50.000Z",
+      "headSha": "e5d125d744fbfec9b4da9298fcd278453c415afb",
+      "baseRef": "main",
+      "mergeCommitSha": "968fcf9f1cc8ca5f042796f3e5ae811997588757"
+    },
+    {
+      "id": 4812168590,
+      "number": 5,
+      "title": "TPR-05: Testable bootstrap, synthetic fixtures and container",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/5",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:06:03.000Z",
+      "updatedAt": "2026-10-10T15:07:26.000Z",
+      "closedAt": "2026-10-10T15:07:25.000Z",
+      "mergedAt": "2026-10-10T15:07:25.000Z",
+      "headSha": "484918fbe588af11d609f6653969bb33196ba173",
+      "baseRef": "main",
+      "mergeCommitSha": "bac61d647d4521435aa463b6f891c8d02f401461"
+    },
+    {
+      "id": 4812140701,
+      "number": 4,
+      "title": "TPR-04: Evidence-aware domain and API schemas",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/4",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:02:14.000Z",
+      "updatedAt": "2026-10-10T15:04:16.000Z",
+      "closedAt": "2026-10-10T15:04:16.000Z",
+      "mergedAt": "2026-10-10T15:04:16.000Z",
+      "headSha": "58ebd62888c938c60db0a79b70d3c436680d8c85",
+      "baseRef": "main",
+      "mergeCommitSha": "8ee6ee4810bf8b82af4f4779257582fc740934b8"
+    },
+    {
+      "id": 4812123141,
+      "number": 3,
+      "title": "TPR-03: Privacy flow inventory and publication gates",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/3",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T14:59:33.000Z",
+      "updatedAt": "2026-10-10T15:00:33.000Z",
+      "closedAt": "2026-10-10T15:00:33.000Z",
+      "mergedAt": "2026-10-10T15:00:33.000Z",
+      "headSha": "8eb388dff5ef30025359ead9dc6f5152c6314dc5",
+      "baseRef": "main",
+      "mergeCommitSha": "9fe756f7c5ac77a9a3115d16392ec8622923629c"
+    },
+    {
+      "id": 4812111721,
+      "number": 2,
+      "title": "TPR-02: Integration contract and validation",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/2",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T14:57:37.000Z",
+      "updatedAt": "2026-10-10T14:59:17.000Z",
+      "closedAt": "2026-10-10T14:59:17.000Z",
+      "mergedAt": "2026-10-10T14:59:17.000Z",
+      "headSha": "553d83f052dd2401880b60e0e589bb8884429300",
+      "baseRef": "main",
+      "mergeCommitSha": "990effb3f64022d25c1849195e4b984e75936af7"
+    },
+    {
+      "id": 4812091478,
+      "number": 1,
+      "title": "TPR-01: Preserve decisions, P0 acceptance and independent-account contribution rules",
+      "url": "https://github.com/neophilism/The-Public-Record/pull/1",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T14:54:58.000Z",
+      "updatedAt": "2026-10-10T14:57:45.000Z",
+      "closedAt": "2026-10-10T14:57:45.000Z",
+      "mergedAt": "2026-10-10T14:57:45.000Z",
+      "headSha": "30aa97ab00817aac89a4777f4d18a95f844bb4ec",
+      "baseRef": "main",
+      "mergeCommitSha": "48e71d9ed0a34ace69f6c2b545176054a63f40be"
+    }
+  ]
+}
