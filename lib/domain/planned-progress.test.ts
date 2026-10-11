@@ -67,6 +67,27 @@ describe("unified planned-work completion and open-PR progress", () => {
       .toMatchObject({planned:40,completed:40,inProgress:0,notStarted:0,percent:100});
   });
 
+  it("uses structured JSON as exact current scope and ignores stale unrelated open PRs", () => {
+    const current=plan(16,16);
+    current.items=Array.from({length:16},(_,i)=>({
+      ordinal:i+1,title:"Approved MVA unit",scope:"original" as const,numbers:[i+1],
+      state:"merged" as const,reason:"Explicit structured registry PR mapping",
+      sourceUrl:"https://github.com/neophilism/Music-Analyzer"
+    }));
+    current.documents=[{path:"registry/prs.json",url:"https://github.com/neophilism/Music-Analyzer",
+      title:"Structured PR registry",importedAt:"2026-10-11T17:38:28.617Z",versions:1}];
+    expect(summarizePlannedProgress({planned:16,completed:0,inProgress:14,
+      activity:{open:14},sourcePlan:current})).toMatchObject({
+      planned:16,completed:16,inProgress:0,notStarted:0,percent:100
+    });
+    current.items[0].state="in-progress";
+    current.originalComplete=15;
+    expect(summarizePlannedProgress({planned:16,completed:0,inProgress:14,
+      activity:{open:14},sourcePlan:current})).toMatchObject({
+      planned:16,completed:15,inProgress:1,notStarted:0,percent:93.8
+    });
+  });
+
   it("clamps yellow to unmerged capacity and preserves a zero-safe empty state", () => {
     expect(summarizePlannedProgress({ planned:100,completed:95,inProgress:22 }))
       .toMatchObject({planned:100,completed:95,inProgress:5,notStarted:0});
