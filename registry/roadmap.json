@@ -1,9 +1,9 @@
 {
   "repository": "neophilism/Engine-Room",
   "title": "Engine Room",
-  "version": 2,
+  "version": 3,
   "planVerified": true,
-  "plannedPrCount": 45,
+  "plannedPrCount": 46,
   "sourceFiles": [
     ".exechub/project.yml",
     "docs/development-plan.md",
@@ -369,6 +369,14 @@
       "origin": "addition",
       "pullRequests": [
         82
+      ]
+    },
+    {
+      "id": "ER-046",
+      "title": "Structured machine-readable PR registry, private-source recovery, and verified portfolio progress",
+      "origin": "addition",
+      "pullRequests": [
+        83
       ]
     }
   ],
