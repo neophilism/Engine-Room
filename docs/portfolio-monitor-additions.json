@@ -2,8 +2,34 @@
   "repository": "neophilism/Engine-Room",
   "note": "Additional work requested after the original 40-item roadmap. These units do not change that original denominator.",
   "items": [
-    {"repository":"Engine-Room","ordinal":1,"title":"Expand the verified deployment inventory","origin":"addition","github_prs":[56]},
-    {"repository":"Engine-Room","ordinal":2,"title":"Use credential-aware GitHub reconciliation intervals","origin":"addition","github_prs":[57]},
-    {"repository":"Engine-Room","ordinal":3,"title":"Accurate portfolio source accounting and durable live monitoring","origin":"addition","github_prs":[58]}
-  ]
+    {
+      "repository": "Engine-Room",
+      "ordinal": 1,
+      "title": "Expand the verified deployment inventory",
+      "origin": "addition",
+      "github_prs": [
+        56
+      ]
+    },
+    {
+      "repository": "Engine-Room",
+      "ordinal": 2,
+      "title": "Use credential-aware GitHub reconciliation intervals",
+      "origin": "addition",
+      "github_prs": [
+        57
+      ]
+    },
+    {
+      "repository": "Engine-Room",
+      "ordinal": 3,
+      "title": "Accurate portfolio source accounting and durable live monitoring",
+      "origin": "addition",
+      "github_prs": [
+        58
+      ]
+    }
+  ],
+  "_canonicalRoadmap": "registry/roadmap.json",
+  "_notice": "Retained evidence of additions #56-58. Do not update active PR count here; use registry/roadmap.json."
 }
