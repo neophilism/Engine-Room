@@ -1,13 +1,14 @@
 {
   "repository": "neophilism/Engine-Room",
   "title": "Engine Room",
-  "version": 1,
+  "version": 2,
   "planVerified": true,
-  "plannedPrCount": 41,
+  "plannedPrCount": 45,
   "sourceFiles": [
     ".exechub/project.yml",
     "docs/development-plan.md",
-    ".exechub/approved-pr-mapping.json"
+    ".exechub/approved-pr-mapping.json",
+    "docs/portfolio-monitor-additions.json"
   ],
   "milestones": [
     {
@@ -337,7 +338,39 @@
       "pullRequests": [
         81
       ]
+    },
+    {
+      "id": "ER-042",
+      "title": "Expand the verified deployment inventory",
+      "origin": "addition",
+      "pullRequests": [
+        56
+      ]
+    },
+    {
+      "id": "ER-043",
+      "title": "Use credential-aware GitHub reconciliation intervals",
+      "origin": "addition",
+      "pullRequests": [
+        57
+      ]
+    },
+    {
+      "id": "ER-044",
+      "title": "Accurate portfolio source accounting and durable live monitoring",
+      "origin": "addition",
+      "pullRequests": [
+        58
+      ]
+    },
+    {
+      "id": "ER-045",
+      "title": "Canonical repo roadmap support in scheduled five-minute source-plan refresh",
+      "origin": "addition",
+      "pullRequests": [
+        82
+      ]
     }
   ],
-  "scopeNote": "40 approved original work units plus user-requested portable roadmap importer. Historical fixes and follow-on PRs are not automatically mapped to a new unit unless reviewed as approved scope."
+  "scopeNote": "40 original approved work packages, 3 independently documented portfolio-monitor additions (PRs #56–58), and 2 user-requested universal repository roadmap/synchronization work packages (#81–82). Source roadmap IDs and actual PR numbers remain separate."
 }
