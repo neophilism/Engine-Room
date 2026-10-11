@@ -18,6 +18,10 @@ export function ProjectProgressStack({
 }) {
   const [expanded, setExpanded] = useState(false);
   const progress = summarizePlannedProgress(project);
+  const unmappedUnits = project.sourcePlan?.unmapped ?? 0;
+  const mergedGitHubPrs = project.activity?.merged ?? 0;
+  const unverifiedEvidence = Boolean(progress && unmappedUnits > 0);
+  const missingPlanWithWork = !progress && mergedGitHubPrs > 0;
   const drawerId = useId();
   const aggregatorDeferred = ["FOIA_Bias_Analysis", "Send_FOIA_Log_Requests"]
     .some(name => project.repositoryFullName?.endsWith("/" + name));
@@ -61,9 +65,15 @@ export function ProjectProgressStack({
       </header>
 
       <div className="project-quick-links">
-        <span className="project-activity">{progress
-          ? `${progress.notStarted} not started · ${progress.inProgress} open · ${progress.completed} merged`
-          : aggregatorDeferred ? "Development deferred until FOIA Aggregator reaches broad source coverage" : "Source plan not yet verified"}</span>
+        <span className="project-activity">{unverifiedEvidence
+          ? `${unmappedUnits} planned units missing verified PR links · ${progress?.inProgress ?? 0} open mapped · ${progress?.completed ?? 0} merged mapped · ${mergedGitHubPrs} GitHub PRs merged overall`
+          : progress
+            ? `${progress.notStarted} not started · ${progress.inProgress} open · ${progress.completed} merged`
+            : missingPlanWithWork
+              ? `Plan unverified · ${mergedGitHubPrs} GitHub PRs merged · progress not measurable`
+              : aggregatorDeferred
+                ? "Development deferred until FOIA Aggregator reaches broad source coverage"
+                : "Source plan not yet verified"}</span>
         {progress?.inProgress ? <span className="project-open-count">{progress.inProgress} PRs open / awaiting merge</span> : null}
         {githubRepositoryUrl(project.repositoryFullName) && <a href={githubRepositoryUrl(project.repositoryFullName)} target="_blank" rel="noopener noreferrer">Open repository ↗</a>}
       </div>
