@@ -23,7 +23,7 @@ export async function POST(request:Request){
   try{github=await reconcilePortfolio(pool,{force:mode==="manual",
     repositoryLimit:100,quick:mode==="manual",concurrency:mode==="manual"?5:2});}
   catch{github={repositories:0,failed:1,error:"GitHub PR synchronization unavailable; previous records retained"};}
-  const plans=await reconcilePlanSources(pool);
+  const plans=await reconcilePlanSources(pool,{concurrency:mode==='manual'?8:4});
   const snapshotNames=plans.completed.filter(item=>item.origin==="bundled").map(item=>item.repo);
   const status=github.disabled?"disabled":github.rateLimited?"rate-limited":
     github.failed||plans.failed||snapshotNames.length?"partial":"succeeded";
