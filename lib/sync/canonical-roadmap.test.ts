@@ -1,6 +1,6 @@
 // @vitest-environment node
 import {describe,it,expect} from "vitest";
-import {parseCanonicalRoadmap,candidateRoadmapPaths,useImportedPlanDocument,CANONICAL_ROADMAP_PATH} from "./canonical-roadmap.mjs";
+import {parseCanonicalRoadmap,candidateRoadmapPaths,shouldImportPlanDocument,CANONICAL_ROADMAP_PATH} from "./canonical-roadmap.mjs";
 import {parsePlanItems} from "./plan-import.mjs";
 
 const example={title:"Public Debate Engine",version:2,plannedPrCount:3,milestones:[
@@ -40,7 +40,7 @@ describe("canonical repository roadmap ingestion",()=>{
     {repository_id:"debate",repository_name:"Debate-Engine",path:"docs/DEVELOPMENT_PLAN.md"},
     {repository_id:"other",repository_name:"Other",path:"docs/roadmap.md"}
   ];
-  expect(documents.filter(doc=>useImportedPlanDocument(doc,new Set(["debate"]),{"Other":["docs/roadmap.md"]})).map(x=>x.path))
+  expect(documents.filter(doc=>shouldImportPlanDocument(doc,new Set(["debate"]),{"Other":["docs/roadmap.md"]})).map(x=>x.path))
     .toEqual([CANONICAL_ROADMAP_PATH,"docs/roadmap.md"]);
  });
  it("keeps an unmapped future unit in denominator rather than inventing its PR",()=>{

@@ -2,7 +2,7 @@ import type { PoolClient } from 'pg';
 import type { LiveSnapshot,ProjectActivitySummary,PullRequestReadout,SourcePlanSummary,PlanItemReadout } from '../domain/live-monitor';
 import { getDatabasePool } from './database';
 import planSources from '../config/portfolio-plan-sources.json';
-import { CANONICAL_ROADMAP_PATH, useImportedPlanDocument } from '../sync/canonical-roadmap.mjs';
+import { CANONICAL_ROADMAP_PATH, shouldImportPlanDocument } from '../sync/canonical-roadmap.mjs';
 
 const iso=(value:Date|string|null)=>value?new Date(value).toISOString():null;
 
@@ -67,7 +67,7 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
   for(const doc of docResult.rows){
     // Historical paths remain in the audit database but only authoritative current
     // plan sources contribute to the denominator (avoid README + canonical double-counting).
-    if(!useImportedPlanDocument(doc,canonicalRepositoryIds,planSources as Record<string,string[]>))continue;
+    if(!shouldImportPlanDocument(doc,canonicalRepositoryIds,planSources as Record<string,string[]>))continue;
     const plan=plans.get(doc.project_id)||{original:0,originalComplete:0,added:0,addedComplete:0,unmapped:0,items:[],documents:[]};
     plan.documents.push({path:doc.path,url:doc.source_url,title:doc.title,importedAt:iso(doc.imported_at)!,versions:Number(doc.versions)});
     const result=await db.query<{ordinal:number;title:string;scope:PlanItemReadout['scope'];github_pr_numbers:number[];mapping_reason:string|null;completed:boolean;underway:boolean;unverified:boolean}>(`
