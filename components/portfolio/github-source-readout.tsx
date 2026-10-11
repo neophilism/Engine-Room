@@ -16,7 +16,11 @@ export function GitHubSourceReadout() {
     };
     void refresh();
     const interval = setInterval(() => { void refresh(); }, 5 * 60 * 1000);
-    return () => { mounted = false; clearInterval(interval); };
+    window.addEventListener("engine-room-github-sync-complete", refresh);
+    return () => {
+      mounted = false; clearInterval(interval);
+      window.removeEventListener("engine-room-github-sync-complete", refresh);
+    };
   }, []);
   const observed = status?.source === "database" && status.mostRecentObservation;
   return <section className="panel" style={{marginBottom:20}} aria-label="GitHub source observation status">
