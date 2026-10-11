@@ -2,7 +2,7 @@
 import {readdir,readFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {describe,it,expect} from 'vitest';
-import {parseStructuredPrRegistry,snapshotPrToGitHub} from './structured-pr-registry.mjs';
+import {parseStructuredPrRegistry,snapshotPrToGitHub,attachObservedWorkIds} from './structured-pr-registry.mjs';
 
 const time='2026-10-11T19:00:00.000Z';
 const pr={id:1001,number:8,title:'PR-8: fix engine',url:'https://github.com/neophilism/Example/pull/8',
@@ -60,5 +60,38 @@ describe('structured PR registry, no Markdown parsing',()=>{
         expect(items.at(-1)?.numbers).toEqual([84]);
       }
     }
+  });
+});
+
+describe('live work-unit ID evidence',()=>{
+  const units=[
+    {ordinal:1,sourceItemId:'GDN-030',title:'Audit',numbers:[],scope:'original',reason:null},
+    {ordinal:2,sourceItemId:'GDN-039',title:'Review',numbers:[],scope:'original',reason:null},
+    {ordinal:3,sourceItemId:'GDN-016',title:'Existing',numbers:[16],scope:'original',reason:'Explicit'}
+  ];
+  it('maps exact unique GitHub PR title IDs without writing to source JSON',()=>{
+    const original=JSON.stringify(units);
+    const result=attachObservedWorkIds(units,[
+      {number:28,title:'GDN-030: redacted and scoped audit'},
+      {number:31,title:'GDN-039: dispute and review'},
+      {number:30,title:'Fix numeric revision history and keyset pagination'},
+      {number:17,title:'GDN-016 follow-up: concurrent recovery'}
+    ]);
+    expect(result.map(unit=>unit.numbers)).toEqual([[28],[31],[16]]);
+    expect(result[0].reason).toContain('Exact work-unit ID');
+    expect(JSON.stringify(units)).toBe(original);
+  });
+  it('does not guess when IDs are ambiguous, prefixes collide or PRs are already claimed',()=>{
+    const result=attachObservedWorkIds([
+      {ordinal:1,sourceItemId:'GDN-030',title:'Audit',numbers:[],scope:'original',reason:null},
+      {ordinal:2,sourceItemId:'GDN-031',title:'Access',numbers:[29],scope:'original',reason:null}
+    ],[
+      {number:1,title:'GDN-030: version one'},
+      {number:2,title:'GDN-030: version two'},
+      {number:3,title:'GDN-0300: different milestone'},
+      {number:29,title:'GDN-030: PR already assigned elsewhere'}
+    ]);
+    expect(result[0].numbers).toEqual([]);
+    expect(result[1].numbers).toEqual([29]);
   });
 });
