@@ -1,0 +1,343 @@
+{
+  "repository": "neophilism/Engine-Room",
+  "title": "Engine Room",
+  "version": 1,
+  "planVerified": true,
+  "plannedPrCount": 41,
+  "sourceFiles": [
+    ".exechub/project.yml",
+    "docs/development-plan.md",
+    ".exechub/approved-pr-mapping.json"
+  ],
+  "milestones": [
+    {
+      "id": "ER-001",
+      "title": "Original approved development work unit 1",
+      "origin": "original",
+      "pullRequests": [
+        1
+      ]
+    },
+    {
+      "id": "ER-002",
+      "title": "Original approved development work unit 2",
+      "origin": "original",
+      "pullRequests": [
+        2
+      ]
+    },
+    {
+      "id": "ER-003",
+      "title": "Original approved development work unit 3",
+      "origin": "original",
+      "pullRequests": [
+        3
+      ]
+    },
+    {
+      "id": "ER-004",
+      "title": "Original approved development work unit 4",
+      "origin": "original",
+      "pullRequests": [
+        4
+      ]
+    },
+    {
+      "id": "ER-005",
+      "title": "Original approved development work unit 5",
+      "origin": "original",
+      "pullRequests": [
+        5
+      ]
+    },
+    {
+      "id": "ER-006",
+      "title": "Original approved development work unit 6",
+      "origin": "original",
+      "pullRequests": [
+        6
+      ]
+    },
+    {
+      "id": "ER-007",
+      "title": "Original approved development work unit 7",
+      "origin": "original",
+      "pullRequests": [
+        7
+      ]
+    },
+    {
+      "id": "ER-008",
+      "title": "Original approved development work unit 8",
+      "origin": "original",
+      "pullRequests": [
+        8
+      ]
+    },
+    {
+      "id": "ER-009",
+      "title": "Original approved development work unit 9",
+      "origin": "original",
+      "pullRequests": [
+        9
+      ]
+    },
+    {
+      "id": "ER-010",
+      "title": "Original approved development work unit 10",
+      "origin": "original",
+      "pullRequests": [
+        10
+      ]
+    },
+    {
+      "id": "ER-011",
+      "title": "Original approved development work unit 11",
+      "origin": "original",
+      "pullRequests": [
+        11
+      ]
+    },
+    {
+      "id": "ER-012",
+      "title": "Original approved development work unit 12",
+      "origin": "original",
+      "pullRequests": [
+        12
+      ]
+    },
+    {
+      "id": "ER-013",
+      "title": "Original approved development work unit 13",
+      "origin": "original",
+      "pullRequests": [
+        13
+      ]
+    },
+    {
+      "id": "ER-014",
+      "title": "Original approved development work unit 14",
+      "origin": "original",
+      "pullRequests": [
+        14
+      ]
+    },
+    {
+      "id": "ER-015",
+      "title": "Original approved development work unit 15",
+      "origin": "original",
+      "pullRequests": [
+        15
+      ]
+    },
+    {
+      "id": "ER-016",
+      "title": "Original approved development work unit 16",
+      "origin": "original",
+      "pullRequests": [
+        16
+      ]
+    },
+    {
+      "id": "ER-017",
+      "title": "Original approved development work unit 17",
+      "origin": "original",
+      "pullRequests": [
+        17
+      ]
+    },
+    {
+      "id": "ER-018",
+      "title": "Original approved development work unit 18",
+      "origin": "original",
+      "pullRequests": [
+        18
+      ]
+    },
+    {
+      "id": "ER-019",
+      "title": "Original approved development work unit 19",
+      "origin": "original",
+      "pullRequests": [
+        19
+      ]
+    },
+    {
+      "id": "ER-020",
+      "title": "Original approved development work unit 20",
+      "origin": "original",
+      "pullRequests": [
+        20
+      ]
+    },
+    {
+      "id": "ER-021",
+      "title": "Original approved development work unit 21",
+      "origin": "original",
+      "pullRequests": [
+        21
+      ]
+    },
+    {
+      "id": "ER-022",
+      "title": "Original approved development work unit 22",
+      "origin": "original",
+      "pullRequests": [
+        22
+      ]
+    },
+    {
+      "id": "ER-023",
+      "title": "Original approved development work unit 23",
+      "origin": "original",
+      "pullRequests": [
+        23
+      ]
+    },
+    {
+      "id": "ER-024",
+      "title": "Original approved development work unit 24",
+      "origin": "original",
+      "pullRequests": [
+        24
+      ]
+    },
+    {
+      "id": "ER-025",
+      "title": "Original approved development work unit 25",
+      "origin": "original",
+      "pullRequests": [
+        25
+      ]
+    },
+    {
+      "id": "ER-026",
+      "title": "Original approved development work unit 26",
+      "origin": "original",
+      "pullRequests": [
+        26
+      ]
+    },
+    {
+      "id": "ER-027",
+      "title": "Original approved development work unit 27",
+      "origin": "original",
+      "pullRequests": [
+        27
+      ]
+    },
+    {
+      "id": "ER-028",
+      "title": "Original approved development work unit 28",
+      "origin": "original",
+      "pullRequests": [
+        28
+      ]
+    },
+    {
+      "id": "ER-029",
+      "title": "Original approved development work unit 29",
+      "origin": "original",
+      "pullRequests": [
+        29
+      ]
+    },
+    {
+      "id": "ER-030",
+      "title": "Original approved development work unit 30",
+      "origin": "original",
+      "pullRequests": [
+        30
+      ]
+    },
+    {
+      "id": "ER-031",
+      "title": "Original approved development work unit 31",
+      "origin": "original",
+      "pullRequests": [
+        31
+      ]
+    },
+    {
+      "id": "ER-032",
+      "title": "Original approved development work unit 32",
+      "origin": "original",
+      "pullRequests": [
+        32
+      ]
+    },
+    {
+      "id": "ER-033",
+      "title": "Original approved development work unit 33",
+      "origin": "original",
+      "pullRequests": [
+        33
+      ]
+    },
+    {
+      "id": "ER-034",
+      "title": "Original approved development work unit 34",
+      "origin": "original",
+      "pullRequests": [
+        34
+      ]
+    },
+    {
+      "id": "ER-035",
+      "title": "Original approved development work unit 35",
+      "origin": "original",
+      "pullRequests": [
+        35
+      ]
+    },
+    {
+      "id": "ER-036",
+      "title": "Original approved development work unit 36",
+      "origin": "original",
+      "pullRequests": [
+        36
+      ]
+    },
+    {
+      "id": "ER-037",
+      "title": "Original approved development work unit 37",
+      "origin": "original",
+      "pullRequests": [
+        37
+      ]
+    },
+    {
+      "id": "ER-038",
+      "title": "Original approved development work unit 38",
+      "origin": "original",
+      "pullRequests": [
+        39
+      ]
+    },
+    {
+      "id": "ER-039",
+      "title": "Original approved development work unit 39",
+      "origin": "original",
+      "pullRequests": [
+        43
+      ]
+    },
+    {
+      "id": "ER-040",
+      "title": "Original approved development work unit 40",
+      "origin": "original",
+      "pullRequests": [
+        45
+      ]
+    },
+    {
+      "id": "ER-041",
+      "title": "Universal per-repository PR roadmap importer, source precedence and verified dashboard counts",
+      "origin": "addition",
+      "pullRequests": [
+        81
+      ]
+    }
+  ],
+  "scopeNote": "40 approved original work units plus user-requested portable roadmap importer. Historical fixes and follow-on PRs are not automatically mapped to a new unit unless reviewed as approved scope."
+}
