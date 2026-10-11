@@ -117,7 +117,7 @@ describe("ProjectProgressStack", () => {
       }
     };
     render(<ProjectProgressStack project={missing} />);
-    expect(screen.getByText(/30 planned units missing verified PR links/)).toBeInTheDocument();
+    expect(screen.getByText(/30 planned units have no explicit PR association yet/)).toBeInTheDocument();
     expect(screen.getByText(/26 GitHub PRs merged overall/)).toBeInTheDocument();
     expect(screen.queryByText(/30 not started/)).not.toBeInTheDocument();
   });
