@@ -4,7 +4,7 @@
   "roadmapVersion": 5,
   "planVerified": true,
   "plannedPrCount": 49,
-  "observedAt": "2026-10-11T20:32:54.478Z",
+  "observedAt": "2026-10-11T20:37:15.294Z",
   "units": [
     {
       "id": "ER-001",
@@ -405,15 +405,15 @@
       "number": 87,
       "title": "Accept standard GitHub PR timestamps without fractional seconds",
       "url": "https://github.com/neophilism/Engine-Room/pull/87",
-      "state": "open",
+      "state": "closed",
       "draft": false,
       "createdAt": "2026-10-11T20:31:51.000Z",
-      "updatedAt": "2026-10-11T20:31:51.000Z",
-      "closedAt": null,
-      "mergedAt": null,
-      "headSha": "4d3ad4509c8323bee31b91a0340d5a0bbc3b390f",
+      "updatedAt": "2026-10-11T20:37:05.000Z",
+      "closedAt": "2026-10-11T20:37:05.000Z",
+      "mergedAt": "2026-10-11T20:37:05.000Z",
+      "headSha": "d31bb5cd15443ecad4f704fcf44a89852eefb062",
       "baseRef": "main",
-      "mergeCommitSha": "9ab89faf8c6714be70082fc0af4e70405b485122"
+      "mergeCommitSha": "857111a930d068ccfcc7e323950d588d96190cd7"
     },
     {
       "id": 4822129535,
