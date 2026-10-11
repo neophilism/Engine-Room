@@ -67,9 +67,10 @@ describe('structured PR registry, no Markdown parsing',()=>{
         expect(items.flatMap(i=>i.numbers)).not.toContain(18);
       }
       if(name==='Engine-Room'){
-        expect(items).toHaveLength(47);
-        expect(completed).toHaveLength(pullRequests.find(p=>p.number===84)?.mergedAt ? 47 : 46);
-        expect(items.at(-1)?.numbers).toEqual([84]);
+        expect(items).toHaveLength(49);
+        const added=[86,87].filter(n=>pullRequests.find(p=>p.number===n)?.mergedAt).length;
+        expect(completed).toHaveLength(47+added);
+        expect(items.at(-1)?.numbers).toEqual([87]);
       }
     }
   });
