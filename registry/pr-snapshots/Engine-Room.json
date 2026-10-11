@@ -4,7 +4,7 @@
   "roadmapVersion": 4,
   "planVerified": true,
   "plannedPrCount": 47,
-  "observedAt": "2026-10-11T20:16:51.241Z",
+  "observedAt": "2026-10-11T20:26:46.717Z",
   "units": [
     {
       "id": "ER-001",
@@ -389,15 +389,15 @@
       "number": 84,
       "title": "Show merged GitHub work when plan mappings are missing",
       "url": "https://github.com/neophilism/Engine-Room/pull/84",
-      "state": "open",
+      "state": "closed",
       "draft": false,
       "createdAt": "2026-10-11T20:16:41.000Z",
-      "updatedAt": "2026-10-11T20:16:41.000Z",
-      "closedAt": null,
-      "mergedAt": null,
-      "headSha": "8f20c11b43f0723917f0edd36242d71ea3608850",
+      "updatedAt": "2026-10-11T20:26:32.000Z",
+      "closedAt": "2026-10-11T20:26:32.000Z",
+      "mergedAt": "2026-10-11T20:26:32.000Z",
+      "headSha": "0bb84c40cea9798426254ed68122d4a8ffc0ee35",
       "baseRef": "main",
-      "mergeCommitSha": "428bfb344e7a127e9da1b226a01b80876a09f790"
+      "mergeCommitSha": "5187264f3e5fc9f921bf996e06c7bc2b8dcf94b9"
     },
     {
       "id": 4821055567,
