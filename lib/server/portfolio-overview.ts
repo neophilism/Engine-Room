@@ -211,6 +211,14 @@ export async function loadPortfolioOverview(
     const monitor=await loadProjectMonitorData(client);
     projects=projects.map(project=>{
       const plan=monitor.plans.get(project.id);
+      const structured=!!plan?.documents.some(doc=>doc.path==="registry/prs.json");
+      if(structured && plan){
+        const planned=plan.original+plan.added,completed=plan.originalComplete+plan.addedComplete;
+        return {...project,planned,completed,percent:percentage(completed,planned),
+          inProgress:plan.items.filter(item=>item.state==="in-progress").length,
+          completionMeasured:planned>0&&plan.unmapped===0,
+          activity:monitor.summaries.get(project.id),pullRequests:monitor.pullRequests.get(project.id)||[],sourcePlan:plan};
+      }
       return {...project,...(!project.planned&&plan?.original?{planned:plan.original,completed:plan.originalComplete,percent:percentage(plan.originalComplete,plan.original),
         inProgress:plan.items.filter(item=>item.scope==='original'&&item.state==='in-progress').length}:{}),
         completionMeasured:project.planned>0?project.completionMeasured!==false:!!plan?.original&&!plan.items.some(item=>item.scope==='original'&&item.state==='unmapped'),
