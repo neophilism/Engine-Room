@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "repository": "neophilism/Engine-Room",
-  "roadmapVersion": 4,
+  "roadmapVersion": 5,
   "planVerified": true,
-  "plannedPrCount": 47,
-  "observedAt": "2026-10-11T20:26:41.810Z",
+  "plannedPrCount": 49,
+  "observedAt": "2026-10-11T20:32:54.478Z",
   "units": [
     {
       "id": "ER-001",
@@ -381,9 +381,55 @@
       "prs": [
         84
       ]
+    },
+    {
+      "id": "ER-048",
+      "title": "Live GitHub portfolio PR reconciliation and exact work-unit ID mapping",
+      "origin": "addition",
+      "prs": [
+        86
+      ]
+    },
+    {
+      "id": "ER-049",
+      "title": "Accept GitHub-native RFC3339 UTC timestamps in structured PR evidence",
+      "origin": "addition",
+      "prs": [
+        87
+      ]
     }
   ],
   "pullRequests": [
+    {
+      "id": 4822129795,
+      "number": 87,
+      "title": "Accept standard GitHub PR timestamps without fractional seconds",
+      "url": "https://github.com/neophilism/Engine-Room/pull/87",
+      "state": "open",
+      "draft": false,
+      "createdAt": "2026-10-11T20:31:51.000Z",
+      "updatedAt": "2026-10-11T20:31:51.000Z",
+      "closedAt": null,
+      "mergedAt": null,
+      "headSha": "4d3ad4509c8323bee31b91a0340d5a0bbc3b390f",
+      "baseRef": "main",
+      "mergeCommitSha": "9ab89faf8c6714be70082fc0af4e70405b485122"
+    },
+    {
+      "id": 4822129535,
+      "number": 86,
+      "title": "Fix portfolio refresh architecture: live GitHub PRs and exact-ID progress mapping",
+      "url": "https://github.com/neophilism/Engine-Room/pull/86",
+      "state": "open",
+      "draft": false,
+      "createdAt": "2026-10-11T20:31:49.000Z",
+      "updatedAt": "2026-10-11T20:32:42.000Z",
+      "closedAt": null,
+      "mergedAt": null,
+      "headSha": "c91795c8c6846d7ae7cbc0c88120901639dc4d2d",
+      "baseRef": "main",
+      "mergeCommitSha": "a439db316cc7351fba0df2b539c7b4492866c6b7"
+    },
     {
       "id": 4822026485,
       "number": 84,

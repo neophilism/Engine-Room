@@ -35,6 +35,18 @@ describe('structured PR registry, no Markdown parsing',()=>{
     expect(parseStructuredPrRegistry(JSON.stringify(empty),'Example').items).toEqual([]);
     expect(()=>parseStructuredPrRegistry(JSON.stringify({...empty,planVerified:true}),'Example')).toThrow();
   });
+  it('accepts native GitHub RFC3339 timestamps without fractional seconds',()=>{
+    const withoutMilliseconds=(s:string|null)=>s?.replace(/\.000Z$/,'Z')??null;
+    const record={...pr,createdAt:withoutMilliseconds(pr.createdAt)!,
+      updatedAt:withoutMilliseconds(pr.updatedAt)!,
+      closedAt:withoutMilliseconds(pr.closedAt)!,
+      mergedAt:withoutMilliseconds(pr.mergedAt)!};
+    const doc={...fixture,observedAt:withoutMilliseconds(time),pullRequests:[record]};
+    expect(parseStructuredPrRegistry(JSON.stringify(doc),'Example').pullRequests[0].mergedAt)
+      .toBe('2026-10-11T18:00:00Z');
+    const invalid={...doc,pullRequests:[{...record,mergedAt:'2026-02-30T12:00:00Z'}]};
+    expect(()=>parseStructuredPrRegistry(JSON.stringify(invalid),'Example')).toThrow();
+  });
   it('validates every committed portfolio snapshot and keeps unrelated PRs outside the plan',async()=>{
     const root=join(process.cwd(),'registry/pr-snapshots');
     const files=(await readdir(root)).filter(x=>x.endsWith('.json'));
@@ -55,9 +67,10 @@ describe('structured PR registry, no Markdown parsing',()=>{
         expect(items.flatMap(i=>i.numbers)).not.toContain(18);
       }
       if(name==='Engine-Room'){
-        expect(items).toHaveLength(47);
-        expect(completed).toHaveLength(pullRequests.find(p=>p.number===84)?.mergedAt ? 47 : 46);
-        expect(items.at(-1)?.numbers).toEqual([84]);
+        expect(items).toHaveLength(49);
+        const added=[86,87].filter(n=>pullRequests.find(p=>p.number===n)?.mergedAt).length;
+        expect(completed).toHaveLength(47+added);
+        expect(items.at(-1)?.numbers).toEqual([87]);
       }
     }
   });
