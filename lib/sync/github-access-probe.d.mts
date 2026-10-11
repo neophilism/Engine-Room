@@ -4,6 +4,8 @@ export type GitHubAccessDiagnostic = {
   identityHttp: number | null;
   engineRoomHttp: number | null;
   musicAnalyzerHttp: number | null;
+  engineRoomPullsHttp: number | null;
+  musicAnalyzerPullsHttp: number | null;
   publicControlHttp: number | null;
   reason: string;
 };
