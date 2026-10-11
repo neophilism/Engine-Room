@@ -12,10 +12,10 @@ async function inbox(){
   catch{console.error('Webhook worker unavailable; durable inbox preserved.');}
   finally{inboxBusy=false;}
 }
-async function sync(){
+async function sync(force=false){
   if(stopping||syncBusy)return;
   syncBusy=true;
-  try{console.info('Portfolio reconciliation',await reconcilePortfolio(pool));}
+  try{console.info('Portfolio reconciliation',await reconcilePortfolio(pool,force?{force:true,quick:true,repositoryLimit:100,concurrency:5}:{}));}
   catch{console.error('Portfolio reconciliation unavailable; existing source records preserved.');
     await pool.query("UPDATE engine_room_live_state SET last_error='GitHub authentication or source connection unavailable' WHERE singleton=true").catch(()=>{});}
   finally{syncBusy=false;}
@@ -39,7 +39,11 @@ async function plans() {
 const plansTimer=setInterval(plans,5*60*1000);
 const inboxTimer=setInterval(inbox,2000);
 const syncTimer=setInterval(sync,60000);
-void inbox();void plans();void sync();
+// A deployment must not start with the previous container's stale PR counts.
+// Force one bounded, PR-only GitHub reconciliation, then import current plan files.
+void inbox();
+const hasAuth=!!(process.env.GITHUB_READ_TOKEN||process.env.GITHUB_APP_ID&&process.env.GITHUB_INSTALLATION_ID);
+void (async()=>{await sync(hasAuth);await plans();})();
 for(const signal of ['SIGINT','SIGTERM'])process.on(signal,async()=>{
   stopping=true;clearInterval(inboxTimer);clearInterval(syncTimer);clearInterval(plansTimer);
   // Exit safely even during a provider request. Row transactions roll back and leases expire after restart.
