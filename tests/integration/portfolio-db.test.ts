@@ -288,6 +288,7 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
       if(u.includes('/repos/test/core/pulls?'))return new Response('Unavailable',{status:503});
       if(u.includes('/repos/test/second/pulls?'))return Response.json([]);
       if(u.includes('/repos/test/second/commits/main'))return Response.json({sha:'c'.repeat(40)});
+      if(u.startsWith('https://raw.githubusercontent.com/') && u.endsWith('/registry/roadmap.json')) { const name=u.includes('/test/second/')?'second':'core'; return Response.json({repository:'neophilism/'+name,version:1,planVerified:true,plannedPrCount:1,milestones:[{id:'TEST-01',title:'Fixture work',pullRequests:[]}]}); }
       if(u.startsWith('https://raw.githubusercontent.com/'))return new Response('',{status:404});
       throw new Error('Unexpected fixture request '+u);
     };
@@ -320,12 +321,19 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
       if(u.includes('/repos/test/core/pulls?'))return Response.json([pr]);
       if(u.includes('/repos/test/core/commits/main'))return Response.json({sha:'c'.repeat(40)});
       if(u.includes('/compare/'))return Response.json({status:'behind'});
+      if(u.startsWith('https://raw.githubusercontent.com/') && u.endsWith('/registry/roadmap.json')) { const name=u.includes('/test/second/')?'second':'core'; return Response.json({repository:'neophilism/'+name,version:1,planVerified:true,plannedPrCount:1,milestones:[{id:'TEST-01',title:'Fixture work',pullRequests:[]}]}); }
       if(u.startsWith('https://raw.githubusercontent.com/'))return new Response('',{status:404});
       throw new Error('Unexpected ancestry request '+u);
     };
     expect(await reconcilePortfolio(pool,{env:syncEnv,fetcher})).toMatchObject({repositories:1,failed:0});
-    await persistPlanDocument(pool,{id:row.id,full_name:'test/core'},{path:'docs/ancestry.md',body:'Ancestry source',ref:'fixture',items:[
-      {ordinal:1,title:'Ancestry work',numbers:[85],reason:'Explicit source mapping',scope:'original'}]});
+    // Revisions must remain in the canonical roadmap; legacy plan files are intentionally ignored.
+    // Preserve baseline work and add an explicitly mapped item without treating a merge as release proof.
+    const revised=JSON.stringify({repository:'neophilism/core',version:2,planVerified:true,plannedPrCount:2,
+      milestones:[{id:'TEST-01',title:'Fixture work',pullRequests:[]},
+        {id:'TEST-02',title:'Ancestry work',origin:'addition',pullRequests:[85]}]});
+    await persistPlanDocument(pool,{id:row.id,full_name:'test/core'},{path:'registry/roadmap.json',body:revised,ref:'fixture',items:[
+      {ordinal:1,title:'Fixture work',numbers:[],reason:null,scope:'original'},
+      {ordinal:2,title:'Ancestry work',numbers:[85],reason:'Explicit canonical PR mapping',scope:'addition'}]});
     let data=await loadProjectMonitorData(pool,row.project_id);
     expect(data.pullRequests.get(row.project_id)?.find(x=>x.number===85)?.releaseMerge).toBe(true);
     expect(data.plans.get(row.project_id)?.items.find(x=>x.title==='Ancestry work')?.state).toBe('merged');

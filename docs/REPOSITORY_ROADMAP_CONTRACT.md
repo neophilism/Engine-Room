@@ -4,7 +4,7 @@ Engine Room now prefers **one authoritative file in each source repository**:
 
 \`registry/roadmap.json\`
 
-If it exists, it takes precedence over older \`docs/DEVELOPMENT_PLAN.md\`, \`.exechub/project.yml\`, or other imported representations **for that repository only**. Projects using multiple repositories still sum the independent plans of their constituent repositories. Repositories without the canonical file keep their existing discovery and import behavior.
+It is required for every repository. Both the five-minute plan refresher and the GitHub reconciliation fetch this file first and **do not use old legacy files as alternate active denominators**. Projects using multiple repositories still sum the independent plans of their constituent repositories. A repository without a canonical file is flagged as missing; historical source documents remain available but are not active PR-count sources.
 
 ## File contract
 
@@ -48,7 +48,7 @@ Engine Room fetches that one canonical file during its existing authorized GitHu
 - **Empty:** all other planned work, including new approved PRs before creation.
 - **Operational acceptance:** distinct from merge status; a green source PR does **not** prove deployment or completion of product acceptance.
 
-If the file is absent, the legacy recognized plan paths remain. If malformed, the repository sync fails that source and retains the last valid materialized record instead of silently replacing it with a fabricated count. Explicit additions must be appended with stable IDs; update \`version\` and \`plannedPrCount\` as the owner approves new units. Unapproved proposals must **not** be added to the canonical count.
+If the file is absent, the project is flagged as missing a canonical source; old paths do not substitute for it. If malformed, the repository sync fails that source and retains the last valid materialized record instead of silently replacing it with a fabricated count. Explicit additions must be appended with stable IDs; update \`version\` and \`plannedPrCount\` as the owner approves new units. Unapproved proposals must **not** be added to the canonical count.
 
 The Engine Room project heading already displays \`merged/planned\`. Adding more work units to an approved repository roadmap will increase the denominator on the **next successful** GitHub reconciliation; no manual Engine Room project-count edits should be necessary.
 
@@ -60,3 +60,5 @@ The Engine Room project heading already displays \`merged/planned\`. Adding more
 4. Merge a mapped PR and synchronize; it should change from yellow to green.
 5. Append a new planned unit, increase \`plannedPrCount\`, synchronize and confirm the progress denominator rises while the merged count does not.
 6. Verify historical source-plan revisions remain readable and source-freshness indicators are correct. Do not claim a refresh succeeded if the service is rate-limited.
+
+**No-plan repositories:** Use `{"repository":"neophilism/Example","version":1,"planVerified":false,"plannedPrCount":0,"milestones":[]}`. The importer stores this explicit unverified record and reports no verified plan (N/A). Never invent work units to populate the total.
