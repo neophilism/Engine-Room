@@ -1,0 +1,1725 @@
+{
+  "schemaVersion": 1,
+  "repository": "neophilism/The-Garden",
+  "roadmapVersion": 2,
+  "planVerified": true,
+  "plannedPrCount": 210,
+  "observedAt": "2026-10-11T17:41:28.823Z",
+  "units": [
+    {
+      "id": "GDN-001",
+      "title": "Repository charter and complete feature contract",
+      "origin": "original",
+      "prs": [
+        2
+      ]
+    },
+    {
+      "id": "GDN-002",
+      "title": "Baseline evidence and source-access manifest",
+      "origin": "original",
+      "prs": [
+        3
+      ]
+    },
+    {
+      "id": "GDN-003",
+      "title": "Canonical security-standard reconciliation",
+      "origin": "original",
+      "prs": [
+        4
+      ]
+    },
+    {
+      "id": "GDN-004",
+      "title": "Existing engines and external contract discovery",
+      "origin": "original",
+      "prs": [
+        5
+      ]
+    },
+    {
+      "id": "GDN-005",
+      "title": "Threat model and data classification",
+      "origin": "original",
+      "prs": [
+        6
+      ]
+    },
+    {
+      "id": "GDN-006",
+      "title": "Public information architecture and design studies",
+      "origin": "original",
+      "prs": [
+        7
+      ]
+    },
+    {
+      "id": "GDN-007",
+      "title": "Content, expert review and image commissioning plan",
+      "origin": "original",
+      "prs": [
+        9
+      ]
+    },
+    {
+      "id": "GDN-008",
+      "title": "Machine-readable plan and release dependency graph",
+      "origin": "original",
+      "prs": [
+        8
+      ]
+    },
+    {
+      "id": "GDN-009",
+      "title": "Application monorepo and reproducible toolchain",
+      "origin": "original",
+      "prs": [
+        10
+      ]
+    },
+    {
+      "id": "GDN-010",
+      "title": "CI, test harness and supply-chain checks",
+      "origin": "original",
+      "prs": [
+        12
+      ]
+    },
+    {
+      "id": "GDN-011",
+      "title": "Branch protection and autonomous merge protocol",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-012",
+      "title": "Environment, secret and cost-authorization registry",
+      "origin": "original",
+      "prs": [
+        13
+      ]
+    },
+    {
+      "id": "GDN-013",
+      "title": "Neon foundation and migration roles",
+      "origin": "original",
+      "prs": [
+        14
+      ]
+    },
+    {
+      "id": "GDN-014",
+      "title": "First Render staging deployment",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-015",
+      "title": "Object storage and immutable originals",
+      "origin": "original",
+      "prs": [
+        15
+      ]
+    },
+    {
+      "id": "GDN-016",
+      "title": "Transactional jobs, outbox and retries",
+      "origin": "original",
+      "prs": [
+        16
+      ]
+    },
+    {
+      "id": "GDN-017",
+      "title": "Observability with content-safe telemetry",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-018",
+      "title": "Staged deployment and database migration pipeline",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-019",
+      "title": "Engine Room adapter and reconciliation contract",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-020",
+      "title": "Safe preview environments and cleanup",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-021",
+      "title": "Identity provider integration and account lifecycle",
+      "origin": "original",
+      "prs": [
+        18
+      ]
+    },
+    {
+      "id": "GDN-022",
+      "title": "Sessions, passkeys and privileged authentication",
+      "origin": "original",
+      "prs": [
+        27
+      ]
+    },
+    {
+      "id": "GDN-023",
+      "title": "Roles, membership and researcher onboarding",
+      "origin": "original",
+      "prs": [
+        19
+      ]
+    },
+    {
+      "id": "GDN-024",
+      "title": "Database row-level security and policy context",
+      "origin": "original",
+      "prs": [
+        20
+      ]
+    },
+    {
+      "id": "GDN-025",
+      "title": "Unified authorization at every delivery path",
+      "origin": "original",
+      "prs": [
+        21
+      ]
+    },
+    {
+      "id": "GDN-026",
+      "title": "Key management and trusted-processing encryption",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-027",
+      "title": "Sealed client-side encryption and recipient keys",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-028",
+      "title": "Encrypted collaboration and controlled disclosure",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-029",
+      "title": "Consent, purpose and permitted-use enforcement",
+      "origin": "original",
+      "prs": [
+        26
+      ]
+    },
+    {
+      "id": "GDN-030",
+      "title": "Tamper-evident audit and sensitive-action ledger",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-031",
+      "title": "Authorization abuse and isolation regression suite",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-032",
+      "title": "Retention, deletion and legal-hold workflow",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-033",
+      "title": "Web hardening, dependency defense and secure headers",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-034",
+      "title": "Publication and retraction safety kernel",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-035",
+      "title": "Typed historical entities and reversible relationships",
+      "origin": "original",
+      "prs": [
+        22
+      ]
+    },
+    {
+      "id": "GDN-036",
+      "title": "Sources, repositories and archival hierarchy",
+      "origin": "original",
+      "prs": [
+        23
+      ]
+    },
+    {
+      "id": "GDN-037",
+      "title": "Atomic claims, evidence links and placements",
+      "origin": "original",
+      "prs": [
+        25
+      ]
+    },
+    {
+      "id": "GDN-038",
+      "title": "Durable locators and Web Annotation selectors",
+      "origin": "original",
+      "prs": [
+        24
+      ]
+    },
+    {
+      "id": "GDN-039",
+      "title": "Independent research, rights and publication states",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-040",
+      "title": "Structured editorial content and policy versions",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-041",
+      "title": "Import quarantine and content inventory service",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-042",
+      "title": "Baseline documents and manual-review publication seed",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-043",
+      "title": "Public-only data projection and delivery API",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-044",
+      "title": "Explicit mapping of all 106 source tables",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-045",
+      "title": "Idempotent corpus staging importer",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-046",
+      "title": "Manuscript structure, citations and comments migration",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-047",
+      "title": "Image, rights and derivative migration",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-048",
+      "title": "Full migration reconciliation and recovery exceptions",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-049",
+      "title": "Accessible public shell and navigation",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-050",
+      "title": "Design system and readable content components",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-051",
+      "title": "Homepage and first-screen explanation",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-052",
+      "title": "Layered overview and guided introduction",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-053",
+      "title": "Human-centered story templates",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-054",
+      "title": "Meaning of The Garden and institutional vision",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-055",
+      "title": "Image galleries and pose-pair storytelling",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-056",
+      "title": "Introductory film, audio and transcript experience",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-057",
+      "title": "Historical exhibits and curated learning paths",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-058",
+      "title": "Contextual glossary and terminology explanations",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-059",
+      "title": "Public visitor routes and reading continuity",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-060",
+      "title": "About, ownership and proposal status",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-061",
+      "title": "Public FAQ and searchable questions",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-062",
+      "title": "Print, lightweight reading and slow-network modes",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-063",
+      "title": "Multilingual public content and review freshness",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-064",
+      "title": "Public experience acceptance and launch content audit",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-065",
+      "title": "Program-stage explorer and decision authority",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-066",
+      "title": "Rights and informational eligibility guide",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-067",
+      "title": "Legislative reader with provision anchors",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-068",
+      "title": "Policy version comparison and change notices",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-069",
+      "title": "Deterministic funding calculation library",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-070",
+      "title": "Funding center and assumption transparency",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-071",
+      "title": "Fiscal scenario explorer and reproducible exports",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-072",
+      "title": "Examples of benefits, choices and failure",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-073",
+      "title": "Objections, alternatives and unresolved analysis",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-074",
+      "title": "Legal research, authority and ambiguity register",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-075",
+      "title": "Public current-documents registry and downloads",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-076",
+      "title": "Policy and fiscal launch integration gate",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-077",
+      "title": "Secure resumable source uploads",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-078",
+      "title": "Repository links and bibliographic intake",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-079",
+      "title": "Safe document conversion and derivative workers",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-080",
+      "title": "Page, text and exact-source viewer",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-081",
+      "title": "IIIF manifest and interoperability support",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-082",
+      "title": "Audio/video archival viewer and time-linked transcripts",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-083",
+      "title": "Document and witness comparison workspace",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-084",
+      "title": "Source annotations and evidence capture",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-085",
+      "title": "Source acquisition queue and repository requests",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-086",
+      "title": "Source context, reliability and independence reviews",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-087",
+      "title": "Source citation, rights-aware download and reuse",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-088",
+      "title": "Intake-to-viewer integrated acceptance",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-089",
+      "title": "Historical subject pages and dossier navigation",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-090",
+      "title": "Names, aliases and historical terminology resolution",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-091",
+      "title": "Public text index and simple search",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-092",
+      "title": "Research search with permission-first retrieval",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-093",
+      "title": "Advanced structured query builder",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-094",
+      "title": "Reproducible queries, saved searches and citations",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-095",
+      "title": "Historical geography and uncertainty data layer",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-096",
+      "title": "Accessible atlas map and linked list view",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-097",
+      "title": "Timelines and temporal investigation",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-098",
+      "title": "Relationship and movement exploration",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-099",
+      "title": "Claim evidence drawer and review history",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-100",
+      "title": "Reading shelf and private notes",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-101",
+      "title": "Public curated collections and share controls",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-102",
+      "title": "Dataset and bibliography exports with manifests",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-103",
+      "title": "Search relevance, language and load evaluation",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-104",
+      "title": "Public investigation journey acceptance",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-105",
+      "title": "Diplomatic transcription editor",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-106",
+      "title": "Structured registers, tables and row alignment",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-107",
+      "title": "Translation and normalized-text layers",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-108",
+      "title": "Independent second-reading and adjudication queues",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-109",
+      "title": "Entity matching proposals and reversible merge UI",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-110",
+      "title": "Atomic claim authoring and evidence linking",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-111",
+      "title": "Peer review, reviewer conflicts and decisions",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-112",
+      "title": "Shared writing with durable version history",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-113",
+      "title": "Autosave, interruption recovery and handoff checkpoints",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-114",
+      "title": "Comments, mentions and review conversations",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-115",
+      "title": "Research task boards, assignments and dependencies",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-116",
+      "title": "Notifications, subscriptions and quiet controls",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-117",
+      "title": "Dossier workspace and evidence completeness",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-118",
+      "title": "Coverage matrix and research-gap analysis",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-119",
+      "title": "Search logs and citation-chain discovery",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-120",
+      "title": "Reopening findings and research dispute handling",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-121",
+      "title": "Researcher workbench, onboarding and training",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-122",
+      "title": "Research collaboration integration gate",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-123",
+      "title": "Editorial CMS with structured evidence blocks",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-124",
+      "title": "Editorial release workflow and independent sign-offs",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-125",
+      "title": "Preview, scheduled publication and release rollback",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-126",
+      "title": "Correction dependency graph and impact review",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-127",
+      "title": "Public correction notices and superseded editions",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-128",
+      "title": "Image asset registry and provenance interface",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-129",
+      "title": "Licensing requests, restrictions and costs",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-130",
+      "title": "Generated-image reconstruction and historical review",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-131",
+      "title": "Crops, responsive derivatives and alt-text review",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-132",
+      "title": "Coordinated web and book edition exports",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-133",
+      "title": "Metadata, SEO and safe public discovery",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-134",
+      "title": "Editorial and image release acceptance",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-135",
+      "title": "Contributor portal and separate program charter",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-136",
+      "title": "Family archive submissions and private receipts",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-137",
+      "title": "Oral-history consent and narrator review",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-138",
+      "title": "Redaction, minors and sensitive contributor material",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-139",
+      "title": "Withdrawal, embargo and contributor communication",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-140",
+      "title": "Community advisory groups and public participation",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-141",
+      "title": "Community annotations and representation concerns",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-142",
+      "title": "Consultation responses and participation transparency",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-143",
+      "title": "Public interviews, conversations and endorsements",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-144",
+      "title": "Moderated public questions and discussions",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-145",
+      "title": "Research conduct and confidential misconduct reports",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-146",
+      "title": "Authorship, contributor credit and conflicts",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-147",
+      "title": "Public appeals and independent dispute review",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-148",
+      "title": "Community contribution acceptance and safeguarding gate",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-149",
+      "title": "Teaching collections and classroom resources",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-150",
+      "title": "Source exercises and guided research tutorials",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-151",
+      "title": "Press center and verified media assets",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-152",
+      "title": "Shareable explainers and accessible social graphics",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-153",
+      "title": "Events, public conversations and registration",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-154",
+      "title": "Volunteer opportunities and matching",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-155",
+      "title": "Public updates and consented subscriptions",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-156",
+      "title": "Representative lookup and user-controlled civic actions",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-157",
+      "title": "Donations and purpose-separated financial records",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-158",
+      "title": "Public organizational finances and funding disclosures",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-159",
+      "title": "Public contact, support and accessibility reporting",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-160",
+      "title": "Participation and communications acceptance",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-161",
+      "title": "Reproducible research datasets and snapshots",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-162",
+      "title": "Controlled analysis jobs and notebook execution",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-163",
+      "title": "Data cleaning, reconciliation and reproducible transformations",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-164",
+      "title": "Evidence-based charts, statistics and map outputs",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-165",
+      "title": "Computational review and reproducibility gate",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-166",
+      "title": "Assistant retrieval, provider and cost boundary",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-167",
+      "title": "Citation-grounded assistant answer interface",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-168",
+      "title": "Prompt-injection and tool isolation defense",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-169",
+      "title": "Assistant evaluation, bias and abstention",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-170",
+      "title": "Assistant feedback, cost visibility and opt-out",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-171",
+      "title": "Bounded research automation proposals",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-172",
+      "title": "Analysis and assistant controlled-release gate",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-173",
+      "title": "Administrative console and least-privilege operations",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-174",
+      "title": "Moderation tools, abuse response and appeals",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-175",
+      "title": "Public governance, research standards and independence",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-176",
+      "title": "Accurate research progress and coverage dashboards",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-177",
+      "title": "Software plan, PR and production status reporting",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-178",
+      "title": "Data stewardship, rights expiry and access reviews",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-179",
+      "title": "Content-safe analytics and usability measurement",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-180",
+      "title": "Operational dashboards and dependency health",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-181",
+      "title": "Financial, cost and resource-capacity controls",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-182",
+      "title": "Governance, administration and status acceptance",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-183",
+      "title": "Preservation packages and verifiable backups",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-184",
+      "title": "Restore drills, key recovery and deletion replay",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-185",
+      "title": "Master current-work index and portable continuation",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-186",
+      "title": "Portability and repository-only developer handoff",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-187",
+      "title": "Full accessibility and assistive-technology audit",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-188",
+      "title": "Performance, capacity and resilience testing",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-189",
+      "title": "Backup, outage and incident response playbooks",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-190",
+      "title": "Independent security assessment and canonical crosswalk closure",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-191",
+      "title": "Full-corpus import and public-clearance release audit",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-192",
+      "title": "Public launch deployment and smoke gate",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-193",
+      "title": "Research beta deployment and real cohort verification",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-194",
+      "title": "Complete public/research capability release",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-195",
+      "title": "Production monitoring and release regression controls",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-196",
+      "title": "Final non-government acceptance and operational handoff",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-197",
+      "title": "Legal authority and governmental product activation contract",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-198",
+      "title": "Government repository, tenancy and assurance boundary",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-199",
+      "title": "Official roster publication and administrative record",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-200",
+      "title": "Statutory comments, petitions and reasoned responses",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-201",
+      "title": "Enrollment evidence submission and private casework",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-202",
+      "title": "Duplicate enrollment, minors and affiliation changes",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-203",
+      "title": "Eligibility decisions, notices and impartial appeals",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-204",
+      "title": "Nation certification and public instruments",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-205",
+      "title": "Official opportunity register and equal access",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-206",
+      "title": "Sealed preferences and auditable closing process",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-207",
+      "title": "Voluntary negotiation and compact workspaces",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-208",
+      "title": "Government public finance and compact reporting",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-209",
+      "title": "Nation portals and government service boundaries",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "GDN-210",
+      "title": "Government legal, security and production acceptance",
+      "origin": "original",
+      "prs": []
+    }
+  ],
+  "pullRequests": [
+    {
+      "id": 4820967259,
+      "number": 27,
+      "title": "GDN-022: verified passkeys, current session assurance and protected recovery",
+      "url": "https://github.com/neophilism/The-Garden/pull/27",
+      "state": "open",
+      "draft": false,
+      "createdAt": "2026-10-11T17:32:56.000Z",
+      "updatedAt": "2026-10-11T17:40:40.000Z",
+      "closedAt": null,
+      "mergedAt": null,
+      "headSha": "bc0d1e55890fe0daceba72ae5e4af44596bbb8fd",
+      "baseRef": "main",
+      "mergeCommitSha": "3ec300bb0dbf508cd9c320a507f846a0c6866bcf"
+    },
+    {
+      "id": 4820100345,
+      "number": 26,
+      "title": "GDN-029: purpose-specific consent, derivative limits and live withdrawal enforcement",
+      "url": "https://github.com/neophilism/The-Garden/pull/26",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T15:19:33.000Z",
+      "updatedAt": "2026-10-11T15:21:38.000Z",
+      "closedAt": "2026-10-11T15:21:38.000Z",
+      "mergedAt": "2026-10-11T15:21:38.000Z",
+      "headSha": "779cd85db8562e8764bad9caf7a9fdd8b791b2c1",
+      "baseRef": "main",
+      "mergeCommitSha": "b62396cf1715d51c2d396ef24d276a7a3306f017"
+    },
+    {
+      "id": 4819967019,
+      "number": 25,
+      "title": "GDN-037: atomic claims, explicit evidence relations and correction propagation",
+      "url": "https://github.com/neophilism/The-Garden/pull/25",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T14:58:47.000Z",
+      "updatedAt": "2026-10-11T15:01:37.000Z",
+      "closedAt": "2026-10-11T15:01:37.000Z",
+      "mergedAt": "2026-10-11T15:01:37.000Z",
+      "headSha": "07c2111c32f465ad98ce445da2f83c6a614cd5df",
+      "baseRef": "main",
+      "mergeCommitSha": "38eea9c6cf2a3af390270db0ef248cd48be242fd"
+    },
+    {
+      "id": 4818219151,
+      "number": 24,
+      "title": "GDN-038: version-bound source locators and explicit reanchoring proposals",
+      "url": "https://github.com/neophilism/The-Garden/pull/24",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T09:59:09.000Z",
+      "updatedAt": "2026-10-11T10:01:28.000Z",
+      "closedAt": "2026-10-11T10:01:28.000Z",
+      "mergedAt": "2026-10-11T10:01:28.000Z",
+      "headSha": "328e4242dd4d704edc665862bb254389ae852ad4",
+      "baseRef": "main",
+      "mergeCommitSha": "9886c7e52026b89cef7d8a0949972ec5f238a71d"
+    },
+    {
+      "id": 4818139988,
+      "number": 23,
+      "title": "GDN-036: archival hierarchy, source provenance and conflicting catalog assertions",
+      "url": "https://github.com/neophilism/The-Garden/pull/23",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T09:44:34.000Z",
+      "updatedAt": "2026-10-11T09:46:29.000Z",
+      "closedAt": "2026-10-11T09:46:29.000Z",
+      "mergedAt": "2026-10-11T09:46:29.000Z",
+      "headSha": "2c6445f995e05fe608e5a350cab795f49c0cb6c7",
+      "baseRef": "main",
+      "mergeCommitSha": "940356a72bc60fb7f484195467e9f157b58feb4c"
+    },
+    {
+      "id": 4818068066,
+      "number": 22,
+      "title": "GDN-035: typed historical entities, reversible merges and protected revision history",
+      "url": "https://github.com/neophilism/The-Garden/pull/22",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T09:30:37.000Z",
+      "updatedAt": "2026-10-11T09:34:59.000Z",
+      "closedAt": "2026-10-11T09:34:59.000Z",
+      "mergedAt": "2026-10-11T09:34:59.000Z",
+      "headSha": "7734e0759ce6341739ea3f8c96eb7f3458c73621",
+      "baseRef": "main",
+      "mergeCommitSha": "8fee8457a4bff214ab09b20da67ed877a34aba46"
+    },
+    {
+      "id": 4817901578,
+      "number": 21,
+      "title": "GDN-025: permission-filtered search, secondary views and private byte delivery",
+      "url": "https://github.com/neophilism/The-Garden/pull/21",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T08:59:57.000Z",
+      "updatedAt": "2026-10-11T09:14:06.000Z",
+      "closedAt": "2026-10-11T09:14:05.000Z",
+      "mergedAt": "2026-10-11T09:14:05.000Z",
+      "headSha": "8fa10d03356c267f06e47a528c65913d27bad908",
+      "baseRef": "main",
+      "mergeCommitSha": "9dab5f939c987d7b67e1f20d60ff33f812004a35"
+    },
+    {
+      "id": 4817794416,
+      "number": 20,
+      "title": "GDN-024: forced record security and transaction-bound researcher identity",
+      "url": "https://github.com/neophilism/The-Garden/pull/20",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T08:40:53.000Z",
+      "updatedAt": "2026-10-11T08:45:46.000Z",
+      "closedAt": "2026-10-11T08:45:45.000Z",
+      "mergedAt": "2026-10-11T08:45:45.000Z",
+      "headSha": "90c04ba9a0f1a8182541cbd5a25544f076762a96",
+      "baseRef": "main",
+      "mergeCommitSha": "c6483bb22a6319a28ad0d486cf7e4dd12613cf01"
+    },
+    {
+      "id": 4817724669,
+      "number": 19,
+      "title": "GDN-023: researcher membership, expiring invitations and accountable review assignment",
+      "url": "https://github.com/neophilism/The-Garden/pull/19",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T08:27:47.000Z",
+      "updatedAt": "2026-10-11T08:30:04.000Z",
+      "closedAt": "2026-10-11T08:30:04.000Z",
+      "mergedAt": "2026-10-11T08:30:04.000Z",
+      "headSha": "35e2351361dcdd6e3c9fc8ad14af04264a438ca8",
+      "baseRef": "main",
+      "mergeCommitSha": "c8ecf194dc6fe755cd9b2d652023aaf12a74b0f4"
+    },
+    {
+      "id": 4817538344,
+      "number": 18,
+      "title": "GDN-021: verified-email identity lifecycle and fail-closed researcher sessions",
+      "url": "https://github.com/neophilism/The-Garden/pull/18",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T07:52:11.000Z",
+      "updatedAt": "2026-10-11T08:01:53.000Z",
+      "closedAt": "2026-10-11T08:01:53.000Z",
+      "mergedAt": "2026-10-11T08:01:52.000Z",
+      "headSha": "8072e9eeaa33f87c0f6161f6295631abdd8bca24",
+      "baseRef": "main",
+      "mergeCommitSha": "d9f6699da3c009c282bf52d3fdacc76b3cf96e48"
+    },
+    {
+      "id": 4817515654,
+      "number": 17,
+      "title": "GDN-016 follow-up: prove concurrent queue claims and atomic consumer recovery",
+      "url": "https://github.com/neophilism/The-Garden/pull/17",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T07:48:07.000Z",
+      "updatedAt": "2026-10-11T07:51:57.000Z",
+      "closedAt": "2026-10-11T07:51:57.000Z",
+      "mergedAt": "2026-10-11T07:51:57.000Z",
+      "headSha": "b55db60f22aa99ae3c85cc487eb763c8047cb265",
+      "baseRef": "main",
+      "mergeCommitSha": "2939c1235fe7de6b6e66f172f698d43c9ea5f350"
+    },
+    {
+      "id": 4817458181,
+      "number": 16,
+      "title": "GDN-016: transactional jobs, retry leases and permission-aware outbox",
+      "url": "https://github.com/neophilism/The-Garden/pull/16",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T07:38:57.000Z",
+      "updatedAt": "2026-10-11T07:42:14.000Z",
+      "closedAt": "2026-10-11T07:42:14.000Z",
+      "mergedAt": "2026-10-11T07:42:14.000Z",
+      "headSha": "8416cf24334c7f9f2105e5a55f369f8afaebe232",
+      "baseRef": "main",
+      "mergeCommitSha": "83806d9e1f99f50cb5d819d6e69c0f97f57427cd"
+    },
+    {
+      "id": 4817414928,
+      "number": 15,
+      "title": "GDN-015: private archive storage with immutable references and review gates",
+      "url": "https://github.com/neophilism/The-Garden/pull/15",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T07:31:35.000Z",
+      "updatedAt": "2026-10-11T07:37:28.000Z",
+      "closedAt": "2026-10-11T07:37:28.000Z",
+      "mergedAt": "2026-10-11T07:37:28.000Z",
+      "headSha": "a84d44556d634ede2cf549de709bbe386bcca43d",
+      "baseRef": "main",
+      "mergeCommitSha": "7f2c738e008a0a9de5ad1bddde60682c7f4376a5"
+    },
+    {
+      "id": 4817374217,
+      "number": 14,
+      "title": "GDN-013: isolated Neon staging, atomic migrations and permission tests",
+      "url": "https://github.com/neophilism/The-Garden/pull/14",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T07:24:14.000Z",
+      "updatedAt": "2026-10-11T07:32:55.000Z",
+      "closedAt": "2026-10-11T07:32:54.000Z",
+      "mergedAt": "2026-10-11T07:32:54.000Z",
+      "headSha": "b57815aa65a753e574d802aefc867a570839c1db",
+      "baseRef": "main",
+      "mergeCommitSha": "e37b220875ea93b5416119244ab346780f4da769"
+    },
+    {
+      "id": 4815600027,
+      "number": 13,
+      "title": "GDN-012: enforce environment, secret and spending isolation",
+      "url": "https://github.com/neophilism/The-Garden/pull/13",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T00:54:00.000Z",
+      "updatedAt": "2026-10-11T00:59:01.000Z",
+      "closedAt": "2026-10-11T00:59:01.000Z",
+      "mergedAt": "2026-10-11T00:59:01.000Z",
+      "headSha": "3555cdae6a2365c4859cad6e6babc0e1472ea42a",
+      "baseRef": "main",
+      "mergeCommitSha": "671bfe5d4c31f49dae9f18035509d5d0d28bd7a6"
+    },
+    {
+      "id": 4815523418,
+      "number": 12,
+      "title": "GDN-010: browser, accessibility, supply-chain and fail-closed quality gates",
+      "url": "https://github.com/neophilism/The-Garden/pull/12",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T00:37:46.000Z",
+      "updatedAt": "2026-10-11T00:49:22.000Z",
+      "closedAt": "2026-10-11T00:49:22.000Z",
+      "mergedAt": "2026-10-11T00:49:22.000Z",
+      "headSha": "c19065616ba3ca2006459eb5b74ad14448679dec",
+      "baseRef": "main",
+      "mergeCommitSha": "04e8d5cb23938e6a15db7403c50026eeeff5ff9c"
+    },
+    {
+      "id": 4815431330,
+      "number": 11,
+      "title": "Integration: verify named Render and Neon resources",
+      "url": "https://github.com/neophilism/The-Garden/pull/11",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T00:19:06.000Z",
+      "updatedAt": "2026-10-11T00:19:56.000Z",
+      "closedAt": "2026-10-11T00:19:56.000Z",
+      "mergedAt": "2026-10-11T00:19:56.000Z",
+      "headSha": "0869292b652fcb912222b69949358736cda06653",
+      "baseRef": "main",
+      "mergeCommitSha": "b8614abf72c12eb887fc3595f1b48340df8677f1"
+    },
+    {
+      "id": 4815429016,
+      "number": 10,
+      "title": "GDN-009: runnable Next.js public/research monorepo foundation",
+      "url": "https://github.com/neophilism/The-Garden/pull/10",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T00:18:44.000Z",
+      "updatedAt": "2026-10-11T00:30:06.000Z",
+      "closedAt": "2026-10-11T00:30:06.000Z",
+      "mergedAt": "2026-10-11T00:30:06.000Z",
+      "headSha": "c15970bc911f523c376f29b45f2e6ef0b2b7c3b0",
+      "baseRef": "main",
+      "mergeCommitSha": "78c7e9a5b2b4d3b79ef4d55b9b6d29f3bcb79c4d"
+    },
+    {
+      "id": 4815402249,
+      "number": 9,
+      "title": "GDN-007: editorial source coverage and image-rights review gates",
+      "url": "https://github.com/neophilism/The-Garden/pull/9",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T00:14:17.000Z",
+      "updatedAt": "2026-10-11T00:14:48.000Z",
+      "closedAt": "2026-10-11T00:14:47.000Z",
+      "mergedAt": "2026-10-11T00:14:47.000Z",
+      "headSha": "8b57225d0c0668ac8830bc7b15d244dfe057fb47",
+      "baseRef": "main",
+      "mergeCommitSha": "ba59a29cbe5399c5a96f0bda2a9139588754643f"
+    },
+    {
+      "id": 4815390461,
+      "number": 8,
+      "title": "GDN-008: reconcile 210-item roadmap with verified PR evidence",
+      "url": "https://github.com/neophilism/The-Garden/pull/8",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T00:11:49.000Z",
+      "updatedAt": "2026-10-11T00:14:11.000Z",
+      "closedAt": "2026-10-11T00:14:10.000Z",
+      "mergedAt": "2026-10-11T00:14:10.000Z",
+      "headSha": "746cd66d905a8dbe16b96ebddd148af36c0a1821",
+      "baseRef": "main",
+      "mergeCommitSha": "7932bab5dbf5492270dc4c59bc599461215aa114"
+    },
+    {
+      "id": 4815385030,
+      "number": 7,
+      "title": "GDN-006: accessible public-orientation prototype and visitor journeys",
+      "url": "https://github.com/neophilism/The-Garden/pull/7",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T00:10:42.000Z",
+      "updatedAt": "2026-10-11T00:11:02.000Z",
+      "closedAt": "2026-10-11T00:11:02.000Z",
+      "mergedAt": "2026-10-11T00:11:01.000Z",
+      "headSha": "89589dd5d8fd5f7fdbbd7437693ba4990f82a3ee",
+      "baseRef": "main",
+      "mergeCommitSha": "6cf5c7517691f7582ee674aae4512d36f71ba087"
+    },
+    {
+      "id": 4815372085,
+      "number": 6,
+      "title": "GDN-005: classify data flows and fail-closed threat model",
+      "url": "https://github.com/neophilism/The-Garden/pull/6",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T00:08:11.000Z",
+      "updatedAt": "2026-10-11T00:10:35.000Z",
+      "closedAt": "2026-10-11T00:10:35.000Z",
+      "mergedAt": "2026-10-11T00:10:35.000Z",
+      "headSha": "583cb44b9991aa5c470a58d71839f2719dced8b0",
+      "baseRef": "main",
+      "mergeCommitSha": "cd9e31cf8ade1a7cdb9a9beca58f1786b7203d60"
+    },
+    {
+      "id": 4815361808,
+      "number": 5,
+      "title": "GDN-004: authorized provider inventory and Engine Room plan manifest",
+      "url": "https://github.com/neophilism/The-Garden/pull/5",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T00:06:15.000Z",
+      "updatedAt": "2026-10-11T00:07:05.000Z",
+      "closedAt": "2026-10-11T00:07:05.000Z",
+      "mergedAt": "2026-10-11T00:07:05.000Z",
+      "headSha": "df5be0fded17483434e356caf958c8da8a296a7b",
+      "baseRef": "main",
+      "mergeCommitSha": "2350f0523c9ab5accebbaec147da7548af9109f4"
+    },
+    {
+      "id": 4815352074,
+      "number": 4,
+      "title": "GDN-003: pin canonical E2EESA revision and fail closed on unassessed controls",
+      "url": "https://github.com/neophilism/The-Garden/pull/4",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T00:04:16.000Z",
+      "updatedAt": "2026-10-11T00:05:01.000Z",
+      "closedAt": "2026-10-11T00:05:01.000Z",
+      "mergedAt": "2026-10-11T00:05:01.000Z",
+      "headSha": "dde6135afa4a5df3e7549eb27ef1f32693dfab3c",
+      "baseRef": "main",
+      "mergeCommitSha": "91307ffc3831d8a908f2ecebd97b5baf18303fab"
+    },
+    {
+      "id": 4815340818,
+      "number": 3,
+      "title": "GDN-002: verified CP-017 source baseline and read-only validation",
+      "url": "https://github.com/neophilism/The-Garden/pull/3",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T00:02:18.000Z",
+      "updatedAt": "2026-10-11T00:03:11.000Z",
+      "closedAt": "2026-10-11T00:03:10.000Z",
+      "mergedAt": "2026-10-11T00:03:10.000Z",
+      "headSha": "de5c0687ec8272eda5a179fc2a10c5ebb994e115",
+      "baseRef": "main",
+      "mergeCommitSha": "19cce0f73ea06e6be70f09c350d4eaceac1e6903"
+    },
+    {
+      "id": 4813375279,
+      "number": 2,
+      "title": "GDN-001: project charter, feature ownership and execution contracts",
+      "url": "https://github.com/neophilism/The-Garden/pull/2",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T18:10:03.000Z",
+      "updatedAt": "2026-10-10T18:11:04.000Z",
+      "closedAt": "2026-10-10T18:11:04.000Z",
+      "mergedAt": "2026-10-10T18:11:04.000Z",
+      "headSha": "a3ffa6605e2cd10da25e46a76cd407fa6a54097e",
+      "baseRef": "main",
+      "mergeCommitSha": "84995389795271438c61f14ea629c412d3814c5b"
+    },
+    {
+      "id": 4813335921,
+      "number": 1,
+      "title": "Bootstrap: import complete approved Garden development baseline",
+      "url": "https://github.com/neophilism/The-Garden/pull/1",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T18:03:33.000Z",
+      "updatedAt": "2026-10-10T18:05:39.000Z",
+      "closedAt": "2026-10-10T18:05:39.000Z",
+      "mergedAt": "2026-10-10T18:05:39.000Z",
+      "headSha": "fedf621f2b6acc738684cf13b0c3e2d4ac0410e4",
+      "baseRef": "main",
+      "mergeCommitSha": "ae4e04ce000afaeea24e3936a9feb45489ceb127"
+    }
+  ]
+}
