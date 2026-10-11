@@ -20,7 +20,7 @@ describe("canonical repository roadmap ingestion",()=>{
   expect(()=>parseCanonicalRoadmap(JSON.stringify({...example,plannedPrCount:4}),"Debate-Engine")).toThrow(/plannedPrCount/);
  });
  it("rejects wrong-repository GitHub URLs, duplicates, and unverifiable PR strings",()=>{
-  const changed=(milestones: typeof example.milestones)=>JSON.stringify({...example,milestones});
+  const changed=(milestones: unknown[])=>JSON.stringify({...example,milestones});
   const first=example.milestones[0];
   expect(()=>parseCanonicalRoadmap(changed([{...first,pullRequests:["https://github.com/neophilism/Live-Debate-Engine/pull/1"]}]),"Debate-Engine")).toThrow();
   expect(()=>parseCanonicalRoadmap(changed([first,first]),"Debate-Engine")).toThrow();
