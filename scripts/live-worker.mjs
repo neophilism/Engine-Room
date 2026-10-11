@@ -1,5 +1,6 @@
 import { Pool } from 'pg';
 import { processWebhookInbox } from '../lib/sync/github-runtime.mjs';
+import { probeGitHubAccess } from '../lib/sync/github-access-probe.mjs';
 import { reconcilePortfolio } from '../lib/sync/reconcile.mjs';
 import { reconcilePlanSources } from '../lib/sync/plan-source-sync.mjs';
 
@@ -43,7 +44,13 @@ const syncTimer=setInterval(sync,60000);
 // Force one bounded, PR-only GitHub reconciliation, then import current plan files.
 void inbox();
 const hasAuth=!!(process.env.GITHUB_READ_TOKEN||process.env.GITHUB_APP_ID&&process.env.GITHUB_INSTALLATION_ID);
-void (async()=>{await sync(hasAuth);await plans();})();
+void (async()=>{
+  try{
+    // HTTP codes only; no token, identities or response bodies in logs.
+    console.info('GitHub read access diagnostic',JSON.stringify(await probeGitHubAccess()));
+  }catch{console.warn('GitHub read access diagnostic unavailable');}
+  await sync(hasAuth);await plans();
+})();
 for(const signal of ['SIGINT','SIGTERM'])process.on(signal,async()=>{
   stopping=true;clearInterval(inboxTimer);clearInterval(syncTimer);clearInterval(plansTimer);
   // Exit safely even during a provider request. Row transactions roll back and leases expire after restart.
