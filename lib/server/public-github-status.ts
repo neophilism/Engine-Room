@@ -6,6 +6,7 @@ export type RepositoryGitHubStatus = {
   lastAttemptAt: string | null;
   error: string | null;
   planSource: "repository" | "bundled" | "missing";
+  visibility: "private" | "public";
 };
 
 import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
@@ -18,6 +19,7 @@ export type PublicGitHubStatus = {
   mergedPullRequestCount: number | null;
   mostRecentObservation: string | null;
   repositories?: RepositoryGitHubStatus[];
+  githubCredentialConfigured?: boolean;
 };
 
 type ObservationRow = {
@@ -55,7 +57,7 @@ export async function loadPublicGitHubStatus(env: EnvironmentSource = process.en
         max(gpr.last_synced_at) as latest_observation
        from repositories r
        left join github_pull_requests gpr on gpr.repository_id = r.id
-       where r.visibility = 'public' and lower(r.owner_login) = lower($1)`,
+       where lower(r.owner_login) = lower($1) and not r.archived`,
       [owner]
     );
     if (!result.rows[0]) return unavailable("error");
@@ -64,7 +66,7 @@ export async function loadPublicGitHubStatus(env: EnvironmentSource = process.en
     // This is read-only, and contains no provider tokens or private materials.
     try {
       const rows=await getDatabasePool(env).query<{
-        name:string; merged:string|number; total:string|number;
+        name:string; visibility:"public"|"private"; merged:string|number; total:string|number;
         last_success_at:Date|null;last_attempt_at:Date|null;last_error:string|null;source_ref:string|null
       }>(`select r.name,
         count(g.id)::integer as total,
@@ -76,11 +78,12 @@ export async function loadPublicGitHubStatus(env: EnvironmentSource = process.en
        from repositories r
        left join github_repository_sync s on s.repository_id=r.id
        left join github_pull_requests g on g.repository_id=r.id
-       where r.visibility='public' and lower(r.owner_login)=lower($1) and not r.archived
+       where lower(r.owner_login)=lower($1) and not r.archived
        group by r.id,s.last_success_at,s.last_attempt_at,s.last_error
        order by r.name`,[owner]);
-      return {...status,repositories:rows.rows.map(r=>({
-        name:r.name,merged:Number(r.merged),total:Number(r.total),
+      return {...status,githubCredentialConfigured:Boolean(env.GITHUB_READ_TOKEN?.trim() ||
+        env.GITHUB_APP_ID && env.GITHUB_APP_PRIVATE_KEY && env.GITHUB_INSTALLATION_ID),repositories:rows.rows.map(r=>({
+        name:r.name,visibility:r.visibility,merged:Number(r.merged),total:Number(r.total),
         lastSuccessAt:r.last_success_at?new Date(r.last_success_at).toISOString():null,
         lastAttemptAt:r.last_attempt_at?new Date(r.last_attempt_at).toISOString():null,
         error:r.last_error,planSource:r.source_ref?

@@ -29,8 +29,9 @@ export function GitHubSourceReadout() {
       <a href="https://github.com/neophilism" target="_blank" rel="noopener noreferrer">GitHub portfolio ↗</a>
     </div>
     {status?.source === "database" ? <>
-      <p>Observed public repositories: <strong>{status.repositoryCount}</strong> · Imported PR records: <strong>{status.pullRequestCount}</strong> · Recorded merges: <strong>{status.mergedPullRequestCount}</strong></p>
+      <p>Tracked repositories: <strong>{status.repositoryCount}</strong> · Imported PR records: <strong>{status.pullRequestCount}</strong> · Recorded merges: <strong>{status.mergedPullRequestCount}</strong></p>
       <p className="metric-freshness" aria-live="polite">
+        {status.githubCredentialConfigured===false ? "GitHub read credentials are not configured for private repositories; private PR counts may be historical. " : ""}
         {observed ? `Latest stored PR observation: ${status.mostRecentObservation?.slice(0,16).replace("T"," ")} UTC` : "No stored PR refresh observed yet."}
       </p>
     </> : <p aria-live="polite">GitHub import status {status ? status.source === "error" ? "unavailable from database" : "not configured" : "loading or unavailable"}.</p>}
@@ -38,12 +39,13 @@ export function GitHubSourceReadout() {
       <summary>Repository synchronization diagnostics ({status.repositories.length})</summary>
       <div className="monitor-table-wrap">
         <table className="monitor-table" aria-label="GitHub repository synchronization diagnostics">
-          <thead><tr><th>Repository</th><th>Merged PRs</th><th>GitHub PR sync</th><th>Plan source</th></tr></thead>
+          <thead><tr><th>Repository</th><th>Access</th><th>Merged PRs</th><th>GitHub PR sync</th><th>Plan source</th></tr></thead>
           <tbody>{status.repositories.map(repo => {
             const old=repo.lastSuccessAt ? Date.now()-Date.parse(repo.lastSuccessAt)>25*60*1000 : true;
             const state=repo.error || (old ? "Stale" : "Current");
             return <tr key={repo.name}>
               <td><a href={"https://github.com/neophilism/"+repo.name} target="_blank" rel="noopener noreferrer">{repo.name}</a></td>
+              <td>{repo.visibility === "private" ? "Private" : repo.error?.includes("HTTP 404") ? "Access unknown (404)" : "Public"}</td>
               <td>{repo.merged}/{repo.total}</td>
               <td>{state}<small>{repo.lastSuccessAt ? new Date(repo.lastSuccessAt).toLocaleString() : "Never synced"}</small></td>
               <td>{repo.planSource==="repository" ? "Live repository" :

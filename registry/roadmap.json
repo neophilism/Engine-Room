@@ -1,9 +1,9 @@
 {
   "repository": "neophilism/Engine-Room",
   "title": "Engine Room",
-  "version": 5,
+  "version": 6,
   "planVerified": true,
-  "plannedPrCount": 49,
+  "plannedPrCount": 50,
   "sourceFiles": [
     ".exechub/project.yml",
     "docs/development-plan.md",
@@ -401,6 +401,14 @@
       "origin": "addition",
       "pullRequests": [
         87
+      ]
+    },
+    {
+      "id": "ER-050",
+      "title": "Private repository visibility reconciliation and actionable GitHub source access diagnostics",
+      "origin": "addition",
+      "pullRequests": [
+        88
       ]
     }
   ],
