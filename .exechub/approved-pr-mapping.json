@@ -44,5 +44,7 @@
     39,
     43,
     45
-  ]
+  ],
+  "_canonicalRoadmap": "registry/roadmap.json",
+  "_notice": "Historical 40-unit mapping; future planned units are in the canonical registry."
 }
