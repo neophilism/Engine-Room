@@ -27,8 +27,9 @@ async function plans() {
   plansBusy=true;
   try {
     const result=await reconcilePlanSources(pool);
-    console.info('Source plans refreshed:',result.imported,'of',result.withDocumentedSource,
-      'documented repositories;',result.failed,'source failures');
+    console.info('Structured PR registers processed:',result.imported,'of',result.registered,
+      'repositories;',result.fromRepository,'live files;',result.fromSnapshot,'bundled snapshots;',
+      result.prObservations,'new PR observations;',result.failed,'failures');
     for(const problem of result.errors)console.warn('Source plan import incomplete:',
       problem.repo,problem.error);
   } catch {

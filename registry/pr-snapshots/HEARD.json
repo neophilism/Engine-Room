@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 1,
+  "repository": "neophilism/HEARD",
+  "roadmapVersion": 1,
+  "planVerified": true,
+  "plannedPrCount": 48,
+  "observedAt": "2026-10-11T17:41:26.229Z",
+  "units": [
+    {
+      "id": "HEARD-01",
+      "title": "Product charter and requirements ledger",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-02",
+      "title": "Threat model, data map and privacy architecture",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-03",
+      "title": "Monorepo, type safety, development tooling and CI",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-04",
+      "title": "Versioned PostgreSQL schema and fixtures",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-05",
+      "title": "Secure Intake engine adapter and compatibility contracts",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-06",
+      "title": "Environment configuration, readiness and operational skeleton",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-07",
+      "title": "Accounts, pseudonyms and anonymous recovery",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-08",
+      "title": "Deny-by-default resource authorization",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-09",
+      "title": "Privacy choice and versioned consent engine",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-10",
+      "title": "Accessible testimony intake wizard",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-11",
+      "title": "Secure drafts, recovery and submit receipt",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-12",
+      "title": "Resumable private object uploads",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-13",
+      "title": "Malware quarantine and parser safety",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-14",
+      "title": "Evidence integrity, provenance and handling ledger",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-15",
+      "title": "Durable constrained media-job framework",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-16",
+      "title": "Original-preserving media normalization",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-17",
+      "title": "Anonymization and visual/audio redaction editor",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-18",
+      "title": "Editable transcripts and accessible captions",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-19",
+      "title": "Contributor/redaction-review approval gate",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-20",
+      "title": "Complete case workflow state machine",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-21",
+      "title": "Restricted reviewer console and triage",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-22",
+      "title": "Contributor status and follow-up inbox",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-23",
+      "title": "Consent-bound publication projector",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-24",
+      "title": "Public Archive pages and media player",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-25",
+      "title": "Public search, filtering and discovery",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-26",
+      "title": "Evidentiary and source-status presentation",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-27",
+      "title": "Amendments, corrections, withdrawal and public revisions",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-28",
+      "title": "Content disputes, abuse reports and legally reviewed release policy",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-29",
+      "title": "Helper registry, categories and credential verification",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-30",
+      "title": "Mediated “I can help” offers",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-31",
+      "title": "Contributor-controlled fine-grained evidence grants",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-32",
+      "title": "Protected contributor-helper messaging",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-33",
+      "title": "Restricted case collaboration, tasks and notes",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-34",
+      "title": "Minimal, reliable participant notifications",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-35",
+      "title": "Partner organizations and scoped referrals",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-36",
+      "title": "Justice For All core platform integration",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-37",
+      "title": "FOIA Aggregator citation and public-source bridge",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-38",
+      "title": "Optional Liberty Nodes public dissemination export",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-39",
+      "title": "Typed public/partner API, signed events and SDK",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-40",
+      "title": "E2EESA evidence register and conformance remediation",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-41",
+      "title": "Participant data export, retention and deletion requests",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-42",
+      "title": "Privacy-preserving analytics and administrator operations",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-43",
+      "title": "Security hardening and adversarial test suite",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-44",
+      "title": "WCAG 2.2 AA, usability and language review",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-45",
+      "title": "Reliability, recovery, capacity and cost safety",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-46",
+      "title": "Production-ready Render/Neon/B2 deployment",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-47",
+      "title": "Engine Room integration and operating evidence",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "HEARD-48",
+      "title": "Controlled beta, independent review and GA release gate",
+      "origin": "original",
+      "prs": []
+    }
+  ],
+  "pullRequests": []
+}

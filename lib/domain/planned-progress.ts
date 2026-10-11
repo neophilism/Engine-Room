@@ -48,8 +48,11 @@ export function summarizePlannedProgress(source: PlanSource): PlannedProgress | 
   // A newer canonical source plan may expand beyond the legacy approved-plan
   // table; never discard legitimate additions merely because the old totals
   // differ. A legacy approved base and an additions-only document also combine.
-  const originalPlanned = Math.max(source.planned,documentedOriginal);
-  const originalCompleted = Math.max(source.completed,documentedOriginalComplete);
+  // A structured registry is the complete current approved unit list.
+  // Never union an obsolete original plan into the current denominator.
+  const structured = !!published?.documents.some(document => document.path === "registry/prs.json");
+  const originalPlanned = structured ? documentedOriginal : Math.max(source.planned,documentedOriginal);
+  const originalCompleted = structured ? documentedOriginalComplete : Math.max(source.completed,documentedOriginalComplete);
   const planned = originalPlanned + addedPlanned;
   const completed = originalCompleted + addedCompleted;
   if (!validCount(planned) || !validCount(completed) ||
@@ -61,7 +64,9 @@ export function summarizePlannedProgress(source: PlanSource): PlannedProgress | 
   // open counts cover other opened PRs whose individual plan mapping is still
   // incomplete. Take the maximum rather than adding overlapping observations.
   // Cap yellow to the unmerged plan capacity: green and yellow never overlap.
-  const observedOpen = [
+  // Only explicitly mapped plan units may paint a structured progress bar
+  // yellow. Stale or unrelated repository PRs cannot masquerade as planned work.
+  const observedOpen = structured ? [published?.items.filter(item => item.state === "in-progress").length ?? 0] : [
     source.inProgress ?? 0,
     source.activity?.open ?? 0,
     published?.items.filter(item => item.state === "in-progress").length ?? 0
