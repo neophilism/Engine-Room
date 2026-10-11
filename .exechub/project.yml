@@ -1,3 +1,4 @@
+# CANONICAL PR ROADMAP: registry/roadmap.json. This is the historical original 40-unit manifest. Approved future scope and current PR mappings belong in the canonical registry.
 project:
   name: Engine-Room
   display_name: Engine Room
