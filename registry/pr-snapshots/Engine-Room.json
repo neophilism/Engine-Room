@@ -1,0 +1,1572 @@
+{
+  "schemaVersion": 1,
+  "repository": "neophilism/Engine-Room",
+  "roadmapVersion": 2,
+  "planVerified": true,
+  "plannedPrCount": 45,
+  "observedAt": "2026-10-11T17:38:32.027Z",
+  "units": [
+    {
+      "id": "ER-001",
+      "title": "Original approved development work unit 1",
+      "origin": "original",
+      "prs": [
+        1
+      ]
+    },
+    {
+      "id": "ER-002",
+      "title": "Original approved development work unit 2",
+      "origin": "original",
+      "prs": [
+        2
+      ]
+    },
+    {
+      "id": "ER-003",
+      "title": "Original approved development work unit 3",
+      "origin": "original",
+      "prs": [
+        3
+      ]
+    },
+    {
+      "id": "ER-004",
+      "title": "Original approved development work unit 4",
+      "origin": "original",
+      "prs": [
+        4
+      ]
+    },
+    {
+      "id": "ER-005",
+      "title": "Original approved development work unit 5",
+      "origin": "original",
+      "prs": [
+        5
+      ]
+    },
+    {
+      "id": "ER-006",
+      "title": "Original approved development work unit 6",
+      "origin": "original",
+      "prs": [
+        6
+      ]
+    },
+    {
+      "id": "ER-007",
+      "title": "Original approved development work unit 7",
+      "origin": "original",
+      "prs": [
+        7
+      ]
+    },
+    {
+      "id": "ER-008",
+      "title": "Original approved development work unit 8",
+      "origin": "original",
+      "prs": [
+        8
+      ]
+    },
+    {
+      "id": "ER-009",
+      "title": "Original approved development work unit 9",
+      "origin": "original",
+      "prs": [
+        9
+      ]
+    },
+    {
+      "id": "ER-010",
+      "title": "Original approved development work unit 10",
+      "origin": "original",
+      "prs": [
+        10
+      ]
+    },
+    {
+      "id": "ER-011",
+      "title": "Original approved development work unit 11",
+      "origin": "original",
+      "prs": [
+        11
+      ]
+    },
+    {
+      "id": "ER-012",
+      "title": "Original approved development work unit 12",
+      "origin": "original",
+      "prs": [
+        12
+      ]
+    },
+    {
+      "id": "ER-013",
+      "title": "Original approved development work unit 13",
+      "origin": "original",
+      "prs": [
+        13
+      ]
+    },
+    {
+      "id": "ER-014",
+      "title": "Original approved development work unit 14",
+      "origin": "original",
+      "prs": [
+        14
+      ]
+    },
+    {
+      "id": "ER-015",
+      "title": "Original approved development work unit 15",
+      "origin": "original",
+      "prs": [
+        15
+      ]
+    },
+    {
+      "id": "ER-016",
+      "title": "Original approved development work unit 16",
+      "origin": "original",
+      "prs": [
+        16
+      ]
+    },
+    {
+      "id": "ER-017",
+      "title": "Original approved development work unit 17",
+      "origin": "original",
+      "prs": [
+        17
+      ]
+    },
+    {
+      "id": "ER-018",
+      "title": "Original approved development work unit 18",
+      "origin": "original",
+      "prs": [
+        18
+      ]
+    },
+    {
+      "id": "ER-019",
+      "title": "Original approved development work unit 19",
+      "origin": "original",
+      "prs": [
+        19
+      ]
+    },
+    {
+      "id": "ER-020",
+      "title": "Original approved development work unit 20",
+      "origin": "original",
+      "prs": [
+        20
+      ]
+    },
+    {
+      "id": "ER-021",
+      "title": "Original approved development work unit 21",
+      "origin": "original",
+      "prs": [
+        21
+      ]
+    },
+    {
+      "id": "ER-022",
+      "title": "Original approved development work unit 22",
+      "origin": "original",
+      "prs": [
+        22
+      ]
+    },
+    {
+      "id": "ER-023",
+      "title": "Original approved development work unit 23",
+      "origin": "original",
+      "prs": [
+        23
+      ]
+    },
+    {
+      "id": "ER-024",
+      "title": "Original approved development work unit 24",
+      "origin": "original",
+      "prs": [
+        24
+      ]
+    },
+    {
+      "id": "ER-025",
+      "title": "Original approved development work unit 25",
+      "origin": "original",
+      "prs": [
+        25
+      ]
+    },
+    {
+      "id": "ER-026",
+      "title": "Original approved development work unit 26",
+      "origin": "original",
+      "prs": [
+        26
+      ]
+    },
+    {
+      "id": "ER-027",
+      "title": "Original approved development work unit 27",
+      "origin": "original",
+      "prs": [
+        27
+      ]
+    },
+    {
+      "id": "ER-028",
+      "title": "Original approved development work unit 28",
+      "origin": "original",
+      "prs": [
+        28
+      ]
+    },
+    {
+      "id": "ER-029",
+      "title": "Original approved development work unit 29",
+      "origin": "original",
+      "prs": [
+        29
+      ]
+    },
+    {
+      "id": "ER-030",
+      "title": "Original approved development work unit 30",
+      "origin": "original",
+      "prs": [
+        30
+      ]
+    },
+    {
+      "id": "ER-031",
+      "title": "Original approved development work unit 31",
+      "origin": "original",
+      "prs": [
+        31
+      ]
+    },
+    {
+      "id": "ER-032",
+      "title": "Original approved development work unit 32",
+      "origin": "original",
+      "prs": [
+        32
+      ]
+    },
+    {
+      "id": "ER-033",
+      "title": "Original approved development work unit 33",
+      "origin": "original",
+      "prs": [
+        33
+      ]
+    },
+    {
+      "id": "ER-034",
+      "title": "Original approved development work unit 34",
+      "origin": "original",
+      "prs": [
+        34
+      ]
+    },
+    {
+      "id": "ER-035",
+      "title": "Original approved development work unit 35",
+      "origin": "original",
+      "prs": [
+        35
+      ]
+    },
+    {
+      "id": "ER-036",
+      "title": "Original approved development work unit 36",
+      "origin": "original",
+      "prs": [
+        36
+      ]
+    },
+    {
+      "id": "ER-037",
+      "title": "Original approved development work unit 37",
+      "origin": "original",
+      "prs": [
+        37
+      ]
+    },
+    {
+      "id": "ER-038",
+      "title": "Original approved development work unit 38",
+      "origin": "original",
+      "prs": [
+        39
+      ]
+    },
+    {
+      "id": "ER-039",
+      "title": "Original approved development work unit 39",
+      "origin": "original",
+      "prs": [
+        43
+      ]
+    },
+    {
+      "id": "ER-040",
+      "title": "Original approved development work unit 40",
+      "origin": "original",
+      "prs": [
+        45
+      ]
+    },
+    {
+      "id": "ER-041",
+      "title": "Universal per-repository PR roadmap importer, source precedence and verified dashboard counts",
+      "origin": "addition",
+      "prs": [
+        81
+      ]
+    },
+    {
+      "id": "ER-042",
+      "title": "Expand the verified deployment inventory",
+      "origin": "addition",
+      "prs": [
+        56
+      ]
+    },
+    {
+      "id": "ER-043",
+      "title": "Use credential-aware GitHub reconciliation intervals",
+      "origin": "addition",
+      "prs": [
+        57
+      ]
+    },
+    {
+      "id": "ER-044",
+      "title": "Accurate portfolio source accounting and durable live monitoring",
+      "origin": "addition",
+      "prs": [
+        58
+      ]
+    },
+    {
+      "id": "ER-045",
+      "title": "Canonical repo roadmap support in scheduled five-minute source-plan refresh",
+      "origin": "addition",
+      "prs": [
+        82
+      ]
+    }
+  ],
+  "pullRequests": [
+    {
+      "id": 4817810485,
+      "number": 82,
+      "title": "Engine Room: Enforce canonical roadmap in scheduled five-minute plan refresh",
+      "url": "https://github.com/neophilism/Engine-Room/pull/82",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T08:44:06.000Z",
+      "updatedAt": "2026-10-11T17:13:29.000Z",
+      "closedAt": "2026-10-11T17:13:28.000Z",
+      "mergedAt": "2026-10-11T17:13:28.000Z",
+      "headSha": "6e50bbbe1bed002a374c1dbaec63248946a22538",
+      "baseRef": "main",
+      "mergeCommitSha": "d79b79c00f0674c294f875006e2fcce8554fdc98"
+    },
+    {
+      "id": 4817714934,
+      "number": 81,
+      "title": "Engine Room: Automatically read canonical per-repo roadmap and PR counts",
+      "url": "https://github.com/neophilism/Engine-Room/pull/81",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-11T08:26:09.000Z",
+      "updatedAt": "2026-10-11T08:35:18.000Z",
+      "closedAt": "2026-10-11T08:35:18.000Z",
+      "mergedAt": "2026-10-11T08:35:18.000Z",
+      "headSha": "bc9eec87afe236b14d9a29034a3fcb02a9670b76",
+      "baseRef": "main",
+      "mergeCommitSha": "56a8b46156c687dd981195dc8e5c94a3177aea58"
+    },
+    {
+      "id": 4813145391,
+      "number": 80,
+      "title": "Prevent manual refresh from exhausting GitHub API quota",
+      "url": "https://github.com/neophilism/Engine-Room/pull/80",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T17:31:57.000Z",
+      "updatedAt": "2026-10-10T17:36:08.000Z",
+      "closedAt": "2026-10-10T17:36:08.000Z",
+      "mergedAt": "2026-10-10T17:36:08.000Z",
+      "headSha": "f446cb7bb76cd694f003661079bbee902fdedb51",
+      "baseRef": "main",
+      "mergeCommitSha": "f9056ecfb88ec20fc92f9220437b4fb5a09f2024"
+    },
+    {
+      "id": 4812989776,
+      "number": 79,
+      "title": "Make GitHub freshness status clickable to reconcile portfolio",
+      "url": "https://github.com/neophilism/Engine-Room/pull/79",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T17:08:18.000Z",
+      "updatedAt": "2026-10-10T17:25:34.000Z",
+      "closedAt": "2026-10-10T17:25:34.000Z",
+      "mergedAt": "2026-10-10T17:25:34.000Z",
+      "headSha": "6f9be231fb2b1dd26d146d153921fc4e25fdb6c5",
+      "baseRef": "main",
+      "mergeCommitSha": "f7be3bf1188da9c7b53ef34ecee857f5b976da99"
+    },
+    {
+      "id": 4812586837,
+      "number": 78,
+      "title": "Fix progress bars rendering as tiny slivers instead of filled tracks",
+      "url": "https://github.com/neophilism/Engine-Room/pull/78",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T16:07:00.000Z",
+      "updatedAt": "2026-10-10T16:09:38.000Z",
+      "closedAt": "2026-10-10T16:09:37.000Z",
+      "mergedAt": "2026-10-10T16:09:37.000Z",
+      "headSha": "0af97f15ae46218f1c41dfdce7fbde5a31dc9e7b",
+      "baseRef": "main",
+      "mergeCommitSha": "dea4c538853ce0cf07a8dda4e56c294d4e8b4bc1"
+    },
+    {
+      "id": 4812375198,
+      "number": 77,
+      "title": "Streamline Engine Room and show merged-green / open-yellow unified plan bars",
+      "url": "https://github.com/neophilism/Engine-Room/pull/77",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:36:59.000Z",
+      "updatedAt": "2026-10-10T15:52:28.000Z",
+      "closedAt": "2026-10-10T15:52:27.000Z",
+      "mergedAt": "2026-10-10T15:52:27.000Z",
+      "headSha": "09a5a098a7ba1a3254ef5123db214dcbdd64ad65",
+      "baseRef": "main",
+      "mergeCommitSha": "ce38f971a37d302646648335d4a62a943cff0845"
+    },
+    {
+      "id": 4812265704,
+      "number": 76,
+      "title": "Fix all development-plan progress bars independently of GitHub API rate limits",
+      "url": "https://github.com/neophilism/Engine-Room/pull/76",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:19:52.000Z",
+      "updatedAt": "2026-10-10T15:25:56.000Z",
+      "closedAt": "2026-10-10T15:25:55.000Z",
+      "mergedAt": "2026-10-10T15:25:55.000Z",
+      "headSha": "323ff562087d68a515ddfd68a8734966a728b523",
+      "baseRef": "main",
+      "mergeCommitSha": "9e5c9d754017a75084272b6ca4e8521e6364b1a5"
+    },
+    {
+      "id": 4812190453,
+      "number": 75,
+      "title": "Import new project roadmaps and test truthful progress",
+      "url": "https://github.com/neophilism/Engine-Room/pull/75",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:09:08.000Z",
+      "updatedAt": "2026-10-10T15:12:04.000Z",
+      "closedAt": "2026-10-10T15:12:04.000Z",
+      "mergedAt": "2026-10-10T15:12:04.000Z",
+      "headSha": "d231ce9352780f626a5c1068a4c6895e1d595f2f",
+      "baseRef": "main",
+      "mergeCommitSha": "50f93b405c17a95dae0f44755966f49367f59aae"
+    },
+    {
+      "id": 4812054265,
+      "number": 74,
+      "title": "Document new Justice For All and Public Record repository reconciliation",
+      "url": "https://github.com/neophilism/Engine-Room/pull/74",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T14:49:25.000Z",
+      "updatedAt": "2026-10-10T14:56:23.000Z",
+      "closedAt": "2026-10-10T14:56:23.000Z",
+      "mergedAt": "2026-10-10T14:56:23.000Z",
+      "headSha": "51d3d39704e652689bafbe94ec79245ec6938cb6",
+      "baseRef": "main",
+      "mergeCommitSha": "3e331741cd352a0a4974eb19a84ff920f87642f0"
+    },
+    {
+      "id": 4811908928,
+      "number": 73,
+      "title": "Restore canonical roadmap tracking and progress across all 26 projects",
+      "url": "https://github.com/neophilism/Engine-Room/pull/73",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T14:28:07.000Z",
+      "updatedAt": "2026-10-10T14:39:16.000Z",
+      "closedAt": "2026-10-10T14:39:16.000Z",
+      "mergedAt": "2026-10-10T14:39:16.000Z",
+      "headSha": "b967cdf81b278b9b9e7d0179040d357a15e1b822",
+      "baseRef": "main",
+      "mergeCommitSha": "5c79f93edc2fa750c3b2a98ed2dc665c60559e7e"
+    },
+    {
+      "id": 4811872580,
+      "number": 72,
+      "title": "Show large red authenticated congressional podcast production lead alert",
+      "url": "https://github.com/neophilism/Engine-Room/pull/72",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T14:22:23.000Z",
+      "updatedAt": "2026-10-10T14:27:21.000Z",
+      "closedAt": "2026-10-10T14:27:21.000Z",
+      "mergedAt": "2026-10-10T14:27:21.000Z",
+      "headSha": "15bf60c88069418c99d2fec4c0a06b6785512393",
+      "baseRef": "main",
+      "mergeCommitSha": "3b79d03f202382c7bd5a6470e344a89174c2aceb"
+    },
+    {
+      "id": 4811393089,
+      "number": 70,
+      "title": "Separate merged planned PR completion from default-branch release inclusion",
+      "url": "https://github.com/neophilism/Engine-Room/pull/70",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T13:02:24.000Z",
+      "updatedAt": "2026-10-10T13:05:21.000Z",
+      "closedAt": "2026-10-10T13:05:21.000Z",
+      "mergedAt": "2026-10-10T13:05:21.000Z",
+      "headSha": "33316a015f8ded673a0e5464d302e5eccddc80d4",
+      "baseRef": "main",
+      "mergeCommitSha": "69833adc7277aa65584fc934a9ced46b3400ba9b"
+    },
+    {
+      "id": 4811350675,
+      "number": 69,
+      "title": "Repair missing development-plan imports and false-zero progress",
+      "url": "https://github.com/neophilism/Engine-Room/pull/69",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T12:55:10.000Z",
+      "updatedAt": "2026-10-10T12:59:51.000Z",
+      "closedAt": "2026-10-10T12:59:51.000Z",
+      "mergedAt": "2026-10-10T12:59:51.000Z",
+      "headSha": "c42ebedcb85adb998a4389f42cc39c3dc6a4f6f1",
+      "baseRef": "main",
+      "mergeCommitSha": "6ff0df394984c5375105a154ce29baaee74fc4aa"
+    },
+    {
+      "id": 4811198031,
+      "number": 68,
+      "title": "Fix planned PR progress: 9 completed / 100 planned = 9%, never 90%",
+      "url": "https://github.com/neophilism/Engine-Room/pull/68",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T12:29:39.000Z",
+      "updatedAt": "2026-10-10T12:36:30.000Z",
+      "closedAt": "2026-10-10T12:36:30.000Z",
+      "mergedAt": "2026-10-10T12:36:30.000Z",
+      "headSha": "b6888fbd3a833629d25d6cf24cd123e0191a077d",
+      "baseRef": "main",
+      "mergeCommitSha": "2b3fe09454f8973d2f4fb44008a0772b00b8f0c5"
+    },
+    {
+      "id": 4807532497,
+      "number": 66,
+      "title": "Show actual GitHub PR progress for all projects, even without roadmap mappings",
+      "url": "https://github.com/neophilism/Engine-Room/pull/66",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T01:03:18.000Z",
+      "updatedAt": "2026-10-10T12:32:45.000Z",
+      "closedAt": "2026-10-10T12:32:45.000Z",
+      "mergedAt": null,
+      "headSha": "6e2ae7c29507a90958320532f536f09386619085",
+      "baseRef": "main",
+      "mergeCommitSha": "75840f50e225f52e5229dfd5d9387e5c061f11db"
+    },
+    {
+      "id": 4807519873,
+      "number": 65,
+      "title": "Monitor Stems White Label PostgreSQL readiness in Engine Room",
+      "url": "https://github.com/neophilism/Engine-Room/pull/65",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T01:01:32.000Z",
+      "updatedAt": "2026-10-10T17:27:33.000Z",
+      "closedAt": "2026-10-10T17:27:33.000Z",
+      "mergedAt": "2026-10-10T17:27:33.000Z",
+      "headSha": "96add8d5cd550d65326f8a2e46f14678c3c06d6b",
+      "baseRef": "main",
+      "mergeCommitSha": "4bc8badf31c6cb27cf76ea307e3a70ee888b42a1"
+    },
+    {
+      "id": 4807483298,
+      "number": 64,
+      "title": "Distinguish worker presence from website availability in operations telemetry",
+      "url": "https://github.com/neophilism/Engine-Room/pull/64",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T00:56:16.000Z",
+      "updatedAt": "2026-10-10T16:09:39.000Z",
+      "closedAt": "2026-10-10T16:09:38.000Z",
+      "mergedAt": "2026-10-10T16:09:38.000Z",
+      "headSha": "76eaa61f4d5eb3d98d7da77cd6ea207e89c79fcc",
+      "baseRef": "main",
+      "mergeCommitSha": "b602600661a82939f3fbfb92fa251f0220d09f0f"
+    },
+    {
+      "id": 4807482559,
+      "number": 63,
+      "title": "Monitor Algorithmic Accountability health in Engine Room",
+      "url": "https://github.com/neophilism/Engine-Room/pull/63",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T00:56:08.000Z",
+      "updatedAt": "2026-10-10T17:22:23.000Z",
+      "closedAt": "2026-10-10T17:22:23.000Z",
+      "mergedAt": "2026-10-10T17:22:23.000Z",
+      "headSha": "0ad8cb61a8dd6a217f855bfd9e1f9c1dfb267e6d",
+      "baseRef": "main",
+      "mergeCommitSha": "f260a32949508ba522746dcc68e5d086b3b6b32d"
+    },
+    {
+      "id": 4807474485,
+      "number": 62,
+      "title": "Gate production readiness on live-monitor schema migration 0017",
+      "url": "https://github.com/neophilism/Engine-Room/pull/62",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T00:54:49.000Z",
+      "updatedAt": "2026-10-10T16:00:48.000Z",
+      "closedAt": "2026-10-10T16:00:48.000Z",
+      "mergedAt": "2026-10-10T16:00:48.000Z",
+      "headSha": "50c0cc48a6f33c8ea86033cb14d2fd6e1be03649",
+      "baseRef": "main",
+      "mergeCommitSha": "ae6f8c2d422ccb05e540b05a669affe936d0475d"
+    },
+    {
+      "id": 4807447743,
+      "number": 61,
+      "title": "Monitor production availability and deployed Render commit independently",
+      "url": "https://github.com/neophilism/Engine-Room/pull/61",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T00:50:18.000Z",
+      "updatedAt": "2026-10-10T00:55:28.000Z",
+      "closedAt": "2026-10-10T00:55:28.000Z",
+      "mergedAt": "2026-10-10T00:55:28.000Z",
+      "headSha": "e9a615481b756acdeda0cdc8997c9599060d073f",
+      "baseRef": "main",
+      "mergeCommitSha": "84917982d3508852acdadf22b23ed3fe49c2dba2"
+    },
+    {
+      "id": 4807422503,
+      "number": 60,
+      "title": "Monitor Fireside Chat ingestion health in Engine Room",
+      "url": "https://github.com/neophilism/Engine-Room/pull/60",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T00:45:48.000Z",
+      "updatedAt": "2026-10-10T00:55:48.000Z",
+      "closedAt": "2026-10-10T00:55:48.000Z",
+      "mergedAt": "2026-10-10T00:55:48.000Z",
+      "headSha": "ab0da76b9dd695da43d38c7d631af6ff4ee28584",
+      "baseRef": "main",
+      "mergeCommitSha": "e9906c31357b81308670c9924d1fcb2f434a2d53"
+    },
+    {
+      "id": 4807420438,
+      "number": 59,
+      "title": "Monitor FOIA Aggregator database health from Engine Room",
+      "url": "https://github.com/neophilism/Engine-Room/pull/59",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T00:45:25.000Z",
+      "updatedAt": "2026-10-10T00:48:21.000Z",
+      "closedAt": "2026-10-10T00:48:20.000Z",
+      "mergedAt": "2026-10-10T00:48:20.000Z",
+      "headSha": "6c2ccd9f5c096f851802a07c2e5fddcb84467a59",
+      "baseRef": "main",
+      "mergeCommitSha": "560364cbb6208aaaffca69ed5b61bda9be160abf"
+    },
+    {
+      "id": 4807319056,
+      "number": 58,
+      "title": "Show accurate portfolio plans and durable live GitHub activity",
+      "url": "https://github.com/neophilism/Engine-Room/pull/58",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T00:28:44.000Z",
+      "updatedAt": "2026-10-10T00:52:28.000Z",
+      "closedAt": "2026-10-10T00:52:28.000Z",
+      "mergedAt": "2026-10-10T00:52:28.000Z",
+      "headSha": "6c0739042e265a8b6daae7ae80cab05bfeea302a",
+      "baseRef": "main",
+      "mergeCommitSha": "22f584fc55286c716175121d686581bf74a78aa7"
+    },
+    {
+      "id": 4805703788,
+      "number": 57,
+      "title": "Refresh GitHub portfolio every 15 minutes with server-side token",
+      "url": "https://github.com/neophilism/Engine-Room/pull/57",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-09T20:48:38.000Z",
+      "updatedAt": "2026-10-10T00:47:33.000Z",
+      "closedAt": "2026-10-10T00:47:33.000Z",
+      "mergedAt": "2026-10-10T00:47:33.000Z",
+      "headSha": "09920fa5c5ad92d91790b4291cd9428213321ab3",
+      "baseRef": "main",
+      "mergeCommitSha": "82b5e9df8ec5808d72c09d24554e70b7b65e2bcc"
+    },
+    {
+      "id": 4787802096,
+      "number": 56,
+      "title": "Track E2EESA standards portal deployments and Smart Cities deployment evidence",
+      "url": "https://github.com/neophilism/Engine-Room/pull/56",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T13:49:37.000Z",
+      "updatedAt": "2026-10-10T00:43:10.000Z",
+      "closedAt": "2026-10-10T00:43:10.000Z",
+      "mergedAt": "2026-10-10T00:43:10.000Z",
+      "headSha": "955e2f33d9e3ad4f6628ec7f8294d5c6660b3277",
+      "baseRef": "main",
+      "mergeCommitSha": "cebccbdf050c9b790df9f1beb3d7c96d8d20a727"
+    },
+    {
+      "id": 4787714567,
+      "number": 55,
+      "title": "Group engine implementations immediately under their parent engines",
+      "url": "https://github.com/neophilism/Engine-Room/pull/55",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T13:42:44.000Z",
+      "updatedAt": "2026-10-08T13:55:57.000Z",
+      "closedAt": "2026-10-08T13:55:57.000Z",
+      "mergedAt": "2026-10-08T13:55:57.000Z",
+      "headSha": "bb5c96f6b8de47e53667dd3f8c7c2b611bd58520",
+      "baseRef": "main",
+      "mergeCommitSha": "89adcb036158f3202fc208c429ff557fe03bdfe0"
+    },
+    {
+      "id": 4787404054,
+      "number": 54,
+      "title": "Connect RAM Marketplace public anonymized preview listing count",
+      "url": "https://github.com/neophilism/Engine-Room/pull/54",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T13:18:32.000Z",
+      "updatedAt": "2026-10-08T13:20:57.000Z",
+      "closedAt": "2026-10-08T13:20:57.000Z",
+      "mergedAt": "2026-10-08T13:20:56.000Z",
+      "headSha": "b54892ecae46053df1385f055c90454a6d28308d",
+      "baseRef": "main",
+      "mergeCommitSha": "d41375a35a5df71e1a2a4a3094e5dbb6fc273c00"
+    },
+    {
+      "id": 4787355795,
+      "number": 53,
+      "title": "Secure Engine Room with invite-only registered-user login",
+      "url": "https://github.com/neophilism/Engine-Room/pull/53",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T13:14:41.000Z",
+      "updatedAt": "2026-10-08T13:32:20.000Z",
+      "closedAt": "2026-10-08T13:32:20.000Z",
+      "mergedAt": "2026-10-08T13:32:20.000Z",
+      "headSha": "1dde84479b5424cdec18df93b8cdc2b2b54d455e",
+      "baseRef": "main",
+      "mergeCommitSha": "d160072c14d93db162435592ff0cfb6020d235df"
+    },
+    {
+      "id": 4787297537,
+      "number": 52,
+      "title": "Show stored GitHub synchronization counts and observation freshness",
+      "url": "https://github.com/neophilism/Engine-Room/pull/52",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T13:10:10.000Z",
+      "updatedAt": "2026-10-08T13:20:17.000Z",
+      "closedAt": "2026-10-08T13:20:17.000Z",
+      "mergedAt": "2026-10-08T13:20:17.000Z",
+      "headSha": "5404153c527081d564d57db9c91ca602fada68f2",
+      "baseRef": "main",
+      "mergeCommitSha": "c11e172cb1065a25c3b48c8bbc762d6312a471a1"
+    },
+    {
+      "id": 4787244943,
+      "number": 51,
+      "title": "Display real Fireside Chat show, episode, and archive-hour metrics",
+      "url": "https://github.com/neophilism/Engine-Room/pull/51",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T13:06:02.000Z",
+      "updatedAt": "2026-10-08T13:13:46.000Z",
+      "closedAt": "2026-10-08T13:13:46.000Z",
+      "mergedAt": "2026-10-08T13:13:46.000Z",
+      "headSha": "2c1f28d9fe42aae79c32c7233eaf77b8daa6b09f",
+      "baseRef": "main",
+      "mergeCommitSha": "c7d43513e5385f5e86ba0863c147c55dde9e22b7"
+    },
+    {
+      "id": 4787196991,
+      "number": 50,
+      "title": "Show fresh HTTP response observations for 13 deployed platforms",
+      "url": "https://github.com/neophilism/Engine-Room/pull/50",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T13:02:09.000Z",
+      "updatedAt": "2026-10-08T13:06:28.000Z",
+      "closedAt": "2026-10-08T13:06:28.000Z",
+      "mergedAt": "2026-10-08T13:06:28.000Z",
+      "headSha": "724f8c0700f59e7693479aacb5f549a933f9ff92",
+      "baseRef": "main",
+      "mergeCommitSha": "b9a0eb9025a931fe2078bf19bda56a1820161adc"
+    },
+    {
+      "id": 4787147332,
+      "number": 49,
+      "title": "Populate real GitHub portfolio automatically on production startup",
+      "url": "https://github.com/neophilism/Engine-Room/pull/49",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T12:57:56.000Z",
+      "updatedAt": "2026-10-08T13:01:29.000Z",
+      "closedAt": "2026-10-08T13:01:29.000Z",
+      "mergedAt": "2026-10-08T13:01:29.000Z",
+      "headSha": "85dce7014cd9b96198cd16a37549c43b0ab1095a",
+      "baseRef": "main",
+      "mergeCommitSha": "4016e34f2764726513c4890b8c5f57183454fb0e"
+    },
+    {
+      "id": 4783574338,
+      "number": 48,
+      "title": "Map approved 40-PR Engine Room roadmap to verified GitHub merge evidence",
+      "url": "https://github.com/neophilism/Engine-Room/pull/48",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T07:43:44.000Z",
+      "updatedAt": "2026-10-08T07:46:53.000Z",
+      "closedAt": "2026-10-08T07:46:53.000Z",
+      "mergedAt": "2026-10-08T07:46:53.000Z",
+      "headSha": "88531f0e38b31e3aa3039877105d68e3201b8ee1",
+      "baseRef": "main",
+      "mergeCommitSha": "3db864c8fac2a64fc5a2f6fa604d35ffefe6e82d"
+    },
+    {
+      "id": 4783480119,
+      "number": 47,
+      "title": "Distinguish unscored real GitHub projects from approved roadmap completion",
+      "url": "https://github.com/neophilism/Engine-Room/pull/47",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T07:35:36.000Z",
+      "updatedAt": "2026-10-08T07:40:55.000Z",
+      "closedAt": "2026-10-08T07:40:55.000Z",
+      "mergedAt": "2026-10-08T07:40:55.000Z",
+      "headSha": "fddca8165dd4be5f6fccb8d13d4a68ddae18423c",
+      "baseRef": "main",
+      "mergeCommitSha": "de2f44f9a30d40df2fcddb07ad375b059f023a63"
+    },
+    {
+      "id": 4783346821,
+      "number": 46,
+      "title": "Show verified Render deployments and refresh status through Render API",
+      "url": "https://github.com/neophilism/Engine-Room/pull/46",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T07:22:57.000Z",
+      "updatedAt": "2026-10-08T07:28:20.000Z",
+      "closedAt": "2026-10-08T07:28:20.000Z",
+      "mergedAt": "2026-10-08T07:28:19.000Z",
+      "headSha": "e48198806c6840999bedbca0d67537f3ba47757f",
+      "baseRef": "main",
+      "mergeCommitSha": "6c298adf9401388d80f8969fce211268865baa88"
+    },
+    {
+      "id": 4783274825,
+      "number": 45,
+      "title": "Production release: readiness, migration, sync and verification runbook",
+      "url": "https://github.com/neophilism/Engine-Room/pull/45",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T07:16:12.000Z",
+      "updatedAt": "2026-10-08T07:32:14.000Z",
+      "closedAt": "2026-10-08T07:32:14.000Z",
+      "mergedAt": "2026-10-08T07:32:14.000Z",
+      "headSha": "b29e631a47cc2be39b43e423c4ccf22d39f4c241",
+      "baseRef": "main",
+      "mergeCommitSha": "f1fc417b66924880eb52827d09917d214b34e896"
+    },
+    {
+      "id": 4783267102,
+      "number": 44,
+      "title": "Fix SQL migration discovery and enforce startup schema initialization",
+      "url": "https://github.com/neophilism/Engine-Room/pull/44",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T07:15:30.000Z",
+      "updatedAt": "2026-10-08T07:19:17.000Z",
+      "closedAt": "2026-10-08T07:19:16.000Z",
+      "mergedAt": "2026-10-08T07:19:16.000Z",
+      "headSha": "c540b5c4e95861f8a04d79ee9649cd19b80773db",
+      "baseRef": "main",
+      "mergeCommitSha": "893e058ad897c05be243df426434c8a0532e1f5d"
+    },
+    {
+      "id": 4783247783,
+      "number": 43,
+      "title": "Acceptance suite: security hardening and operational evidence protocol",
+      "url": "https://github.com/neophilism/Engine-Room/pull/43",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T07:13:37.000Z",
+      "updatedAt": "2026-10-08T07:17:05.000Z",
+      "closedAt": "2026-10-08T07:17:05.000Z",
+      "mergedAt": "2026-10-08T07:17:05.000Z",
+      "headSha": "ef59bcb33917dda93cb4cd314495842ee0b78493",
+      "baseRef": "main",
+      "mergeCommitSha": "415dbd40f6341c6efcce138acd273c7f5603d9cf"
+    },
+    {
+      "id": 4783219175,
+      "number": 42,
+      "title": "PR 40: discover and register real GitHub portfolio projects",
+      "url": "https://github.com/neophilism/Engine-Room/pull/42",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T07:10:48.000Z",
+      "updatedAt": "2026-10-08T07:14:04.000Z",
+      "closedAt": "2026-10-08T07:14:04.000Z",
+      "mergedAt": "2026-10-08T07:14:04.000Z",
+      "headSha": "926d5cdd25332917c1853205c035a78ff727805b",
+      "baseRef": "main",
+      "mergeCommitSha": "24b0953ea372fa401704882cca7021457cb6517d"
+    },
+    {
+      "id": 4783191334,
+      "number": 41,
+      "title": "Enhance Engine Room onboarding with responsive illustrated machine guide",
+      "url": "https://github.com/neophilism/Engine-Room/pull/41",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T07:08:11.000Z",
+      "updatedAt": "2026-10-08T12:49:19.000Z",
+      "closedAt": "2026-10-08T12:49:19.000Z",
+      "mergedAt": "2026-10-08T12:49:19.000Z",
+      "headSha": "ebe9e64047d363b0b40b18fd864a5e9db84c2581",
+      "baseRef": "main",
+      "mergeCommitSha": "041144a0196ed93b8ff4119b7c03f5f2921f4b43"
+    },
+    {
+      "id": 4783177976,
+      "number": 40,
+      "title": "Import real GitHub projects and pull request activity",
+      "url": "https://github.com/neophilism/Engine-Room/pull/40",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T07:06:54.000Z",
+      "updatedAt": "2026-10-08T07:12:10.000Z",
+      "closedAt": "2026-10-08T07:12:10.000Z",
+      "mergedAt": "2026-10-08T07:12:10.000Z",
+      "headSha": "94b051fec1e2e9144ad733f4657000a067224c2f",
+      "baseRef": "main",
+      "mergeCommitSha": "a45914cd54ab55c9f8cccb665c5e417ceade71c3"
+    },
+    {
+      "id": 4783166856,
+      "number": 39,
+      "title": "PR 38: interactive onboarding and evidence glossary",
+      "url": "https://github.com/neophilism/Engine-Room/pull/39",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T07:05:51.000Z",
+      "updatedAt": "2026-10-08T07:10:36.000Z",
+      "closedAt": "2026-10-08T07:10:35.000Z",
+      "mergedAt": "2026-10-08T07:10:35.000Z",
+      "headSha": "e2b7ff1a0f1c7fcf6e3d435376630fb765ed297e",
+      "baseRef": "main",
+      "mergeCommitSha": "eac0fe11fa3c7a3401af5efaf62a30dcd4e088c9"
+    },
+    {
+      "id": 4783158796,
+      "number": 38,
+      "title": "Operationalize Neon schema migrations and readiness checks",
+      "url": "https://github.com/neophilism/Engine-Room/pull/38",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T07:05:07.000Z",
+      "updatedAt": "2026-10-08T07:07:50.000Z",
+      "closedAt": "2026-10-08T07:07:50.000Z",
+      "mergedAt": "2026-10-08T07:07:50.000Z",
+      "headSha": "21f34cc2a9ce091f0f4be0e2a0828862ae3c2c13",
+      "baseRef": "main",
+      "mergeCommitSha": "74f7d0e555218cbba1c2cdde870db17370681e78"
+    },
+    {
+      "id": 4783011003,
+      "number": 37,
+      "title": "PR 37: auditable settings and GitHub reconciliation controls",
+      "url": "https://github.com/neophilism/Engine-Room/pull/37",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T06:51:16.000Z",
+      "updatedAt": "2026-10-08T07:04:25.000Z",
+      "closedAt": "2026-10-08T07:04:24.000Z",
+      "mergedAt": "2026-10-08T07:04:24.000Z",
+      "headSha": "33c779a8f6006035b8d4d8de01ce87f346d01123",
+      "baseRef": "main",
+      "mergeCommitSha": "cc451a3e7a5e979ff8b63f4d17bbaa931e6e558c"
+    },
+    {
+      "id": 4782305137,
+      "number": 36,
+      "title": "Add cross project identity organization and security analytics",
+      "url": "https://github.com/neophilism/Engine-Room/pull/36",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T05:33:41.000Z",
+      "updatedAt": "2026-10-08T05:39:12.000Z",
+      "closedAt": "2026-10-08T05:39:12.000Z",
+      "mergedAt": "2026-10-08T05:39:12.000Z",
+      "headSha": "b2a7c1bb6506f167a2857b2e65846249304180ed",
+      "baseRef": "main",
+      "mergeCommitSha": "8d5db4323b1d24b3498ac78bef52dd1d35bf74b0"
+    },
+    {
+      "id": 4782266136,
+      "number": 35,
+      "title": "Add source scoped identities and the Users Access dashboard",
+      "url": "https://github.com/neophilism/Engine-Room/pull/35",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T05:28:42.000Z",
+      "updatedAt": "2026-10-08T05:32:12.000Z",
+      "closedAt": "2026-10-08T05:32:12.000Z",
+      "mergedAt": "2026-10-08T05:32:12.000Z",
+      "headSha": "93971501d626c8200c06dec4d35acd4e4eaa4971",
+      "baseRef": "main",
+      "mergeCommitSha": "b513c52ca17bdba21702b9f6519ad6599b4a4e63"
+    },
+    {
+      "id": 4782225486,
+      "number": 34,
+      "title": "Add signed financial adapters and a financial flow machine",
+      "url": "https://github.com/neophilism/Engine-Room/pull/34",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T05:23:38.000Z",
+      "updatedAt": "2026-10-08T05:28:19.000Z",
+      "closedAt": "2026-10-08T05:28:19.000Z",
+      "mergedAt": "2026-10-08T05:28:19.000Z",
+      "headSha": "0f9f5c14ec21ace5ceb60dc50318d549fdfd0b94",
+      "baseRef": "main",
+      "mergeCommitSha": "75a1d505a1af0d04fa248a96acd20936f6ede236"
+    },
+    {
+      "id": 4782171672,
+      "number": 33,
+      "title": "Add currency aware financial records and the Finance dashboard",
+      "url": "https://github.com/neophilism/Engine-Room/pull/33",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T05:17:06.000Z",
+      "updatedAt": "2026-10-08T05:23:23.000Z",
+      "closedAt": "2026-10-08T05:23:22.000Z",
+      "mergedAt": "2026-10-08T05:23:22.000Z",
+      "headSha": "bd0dde8ebdd4b8dcfd49d1fba0b199af24ac349a",
+      "baseRef": "main",
+      "mergeCommitSha": "ad4455c40f4cb9cbe6edf69f8be0c9fa54d966a2"
+    },
+    {
+      "id": 4782121520,
+      "number": 32,
+      "title": "Add signed scoped telemetry ingestion and adapters",
+      "url": "https://github.com/neophilism/Engine-Room/pull/32",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T05:11:13.000Z",
+      "updatedAt": "2026-10-08T05:14:30.000Z",
+      "closedAt": "2026-10-08T05:14:30.000Z",
+      "mergedAt": "2026-10-08T05:14:30.000Z",
+      "headSha": "e26ccb1f6d658a17e4c1e0c071be1026b0fe9a33",
+      "baseRef": "main",
+      "mergeCommitSha": "3270d3e44e03ba7abf83dd4e4383455feffa82c8"
+    },
+    {
+      "id": 4782072991,
+      "number": 31,
+      "title": "Add audited incidents and a response dashboard",
+      "url": "https://github.com/neophilism/Engine-Room/pull/31",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T05:05:04.000Z",
+      "updatedAt": "2026-10-08T05:09:54.000Z",
+      "closedAt": "2026-10-08T05:09:53.000Z",
+      "mergedAt": "2026-10-08T05:09:53.000Z",
+      "headSha": "554357e2720ada0a9b3effe2f87b7fc3141f03b0",
+      "baseRef": "main",
+      "mergeCommitSha": "51bf658d6cfb3b91986ec9cf3b62488986a8697f"
+    },
+    {
+      "id": 4782027922,
+      "number": 30,
+      "title": "Add immutable releases and an audited approval pipeline",
+      "url": "https://github.com/neophilism/Engine-Room/pull/30",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T04:59:21.000Z",
+      "updatedAt": "2026-10-08T05:02:12.000Z",
+      "closedAt": "2026-10-08T05:02:12.000Z",
+      "mergedAt": "2026-10-08T05:02:12.000Z",
+      "headSha": "3e8876216be857d5d5b4764ba30bff4a480d0691",
+      "baseRef": "main",
+      "mergeCommitSha": "3d14da6fcd31f0ddc6bef7e7cf737b0f84da0d84"
+    },
+    {
+      "id": 4781991752,
+      "number": 29,
+      "title": "PR 29: measured Operations and Performance dashboard",
+      "url": "https://github.com/neophilism/Engine-Room/pull/29",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T04:54:45.000Z",
+      "updatedAt": "2026-10-08T04:57:21.000Z",
+      "closedAt": "2026-10-08T04:57:21.000Z",
+      "mergedAt": "2026-10-08T04:57:21.000Z",
+      "headSha": "dc6972b88a824d31670f1fefd915f33057065830",
+      "baseRef": "main",
+      "mergeCommitSha": "72cc414548dda59c0b69a7f44ca67f62a5126d46"
+    },
+    {
+      "id": 4781926969,
+      "number": 28,
+      "title": "PR 28: risks, blockers, next actions, and release evidence",
+      "url": "https://github.com/neophilism/Engine-Room/pull/28",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T04:46:29.000Z",
+      "updatedAt": "2026-10-08T04:49:12.000Z",
+      "closedAt": "2026-10-08T04:49:12.000Z",
+      "mergedAt": "2026-10-08T04:49:12.000Z",
+      "headSha": "48445b9781eb06b243323fa1da89e129090d80fe",
+      "baseRef": "main",
+      "mergeCommitSha": "882566d2f17e1a1d445f216d3eb259986a057eaa"
+    },
+    {
+      "id": 4781903756,
+      "number": 27,
+      "title": "PR 27: GitHub development activity timelines",
+      "url": "https://github.com/neophilism/Engine-Room/pull/27",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T04:43:39.000Z",
+      "updatedAt": "2026-10-08T04:46:36.000Z",
+      "closedAt": "2026-10-08T04:46:36.000Z",
+      "mergedAt": "2026-10-08T04:46:36.000Z",
+      "headSha": "98ec74ed8dca890fd11f5e030eabbd7891bba0bd",
+      "baseRef": "main",
+      "mergeCommitSha": "4ba5fd08e7e4b33d5df93f286e8c42091c635ba0"
+    },
+    {
+      "id": 4781843743,
+      "number": 26,
+      "title": "PR 26: approved-plan feature tracking",
+      "url": "https://github.com/neophilism/Engine-Room/pull/26",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T04:36:09.000Z",
+      "updatedAt": "2026-10-08T04:40:55.000Z",
+      "closedAt": "2026-10-08T04:40:55.000Z",
+      "mergedAt": "2026-10-08T04:40:55.000Z",
+      "headSha": "c44a94ac16079bc737b7c109fec16e52c4cc74fa",
+      "baseRef": "main",
+      "mergeCommitSha": "8bf697ab9bcd20e81a502c2f550ffef1c03d9b87"
+    },
+    {
+      "id": 4781807396,
+      "number": 25,
+      "title": "PR 25: individual project dashboards and verified merge counts",
+      "url": "https://github.com/neophilism/Engine-Room/pull/25",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T04:31:31.000Z",
+      "updatedAt": "2026-10-08T04:37:38.000Z",
+      "closedAt": "2026-10-08T04:37:38.000Z",
+      "mergedAt": "2026-10-08T04:37:38.000Z",
+      "headSha": "dae582019442d7f78e622e8773df14cb5d2cf899",
+      "baseRef": "main",
+      "mergeCommitSha": "face3182fe1eeb075abdd5279c59c2a52d965abb"
+    },
+    {
+      "id": 4781761509,
+      "number": 24,
+      "title": "PR 24: lifecycle lanes and mechanical stage lights",
+      "url": "https://github.com/neophilism/Engine-Room/pull/24",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T04:25:47.000Z",
+      "updatedAt": "2026-10-08T04:29:15.000Z",
+      "closedAt": "2026-10-08T04:29:15.000Z",
+      "mergedAt": "2026-10-08T04:29:15.000Z",
+      "headSha": "c3f615a469780f88595b112acac9eedc999b9d71",
+      "baseRef": "main",
+      "mergeCommitSha": "6040fc4d80e8c9b862d64c714acfe4f2fec3c12e"
+    },
+    {
+      "id": 4781749100,
+      "number": 23,
+      "title": "PR 23: live project comparison dashboard",
+      "url": "https://github.com/neophilism/Engine-Room/pull/23",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T04:24:12.000Z",
+      "updatedAt": "2026-10-08T04:28:47.000Z",
+      "closedAt": "2026-10-08T04:28:47.000Z",
+      "mergedAt": "2026-10-08T04:28:47.000Z",
+      "headSha": "8ac8b1b4db372afe136aa7af2c8c331b03999c85",
+      "baseRef": "main",
+      "mergeCommitSha": "58ea050d3bf76cad56083fa30c81adf2f28be8ef"
+    },
+    {
+      "id": 4781724045,
+      "number": 22,
+      "title": "PR 22: live portfolio search, filters, sorting, and GitHub links",
+      "url": "https://github.com/neophilism/Engine-Room/pull/22",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T04:20:50.000Z",
+      "updatedAt": "2026-10-08T04:22:59.000Z",
+      "closedAt": "2026-10-08T04:22:58.000Z",
+      "mergedAt": "2026-10-08T04:22:58.000Z",
+      "headSha": "82fb1e0e8bab2f2c44eea0f1f1dfef4223eb2f31",
+      "baseRef": "main",
+      "mergeCommitSha": "1a2d7ca227c0bbdb2693b55e785fd043adf48b8b"
+    },
+    {
+      "id": 4781697611,
+      "number": 21,
+      "title": "PR 21: weighted Total Portfolio Progress machine",
+      "url": "https://github.com/neophilism/Engine-Room/pull/21",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T04:17:28.000Z",
+      "updatedAt": "2026-10-08T04:20:06.000Z",
+      "closedAt": "2026-10-08T04:20:06.000Z",
+      "mergedAt": "2026-10-08T04:20:05.000Z",
+      "headSha": "9b3066bea02dd4a07396aecc4c6b2a7778e1b510",
+      "baseRef": "main",
+      "mergeCommitSha": "14c2ab1558fbbf2bbae56d676a9fbb30fa9fd58e"
+    },
+    {
+      "id": 4781389332,
+      "number": 20,
+      "title": "PR 20: project detail accordions",
+      "url": "https://github.com/neophilism/Engine-Room/pull/20",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:33:20.000Z",
+      "updatedAt": "2026-10-08T04:17:03.000Z",
+      "closedAt": "2026-10-08T04:17:03.000Z",
+      "mergedAt": "2026-10-08T04:17:03.000Z",
+      "headSha": "75e04f57f153ec4ba25aea1e6d10eb190e912eb7",
+      "baseRef": "main",
+      "mergeCommitSha": "2c0fccabbb273d3f200d3fdd2f52f7f6348e84a5"
+    },
+    {
+      "id": 4781380411,
+      "number": 19,
+      "title": "PR 19: expandable project drawer",
+      "url": "https://github.com/neophilism/Engine-Room/pull/19",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:31:55.000Z",
+      "updatedAt": "2026-10-08T04:12:39.000Z",
+      "closedAt": "2026-10-08T04:12:39.000Z",
+      "mergedAt": "2026-10-08T04:12:39.000Z",
+      "headSha": "de36884b430b18f5ba0c6118a82f8e974bdcda78",
+      "baseRef": "main",
+      "mergeCommitSha": "afbec7700cbb7c5dd2ce90c70d107ca3e7c836a6"
+    },
+    {
+      "id": 4781361802,
+      "number": 18,
+      "title": "PR 18: stacked repository progress tubes",
+      "url": "https://github.com/neophilism/Engine-Room/pull/18",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:29:04.000Z",
+      "updatedAt": "2026-10-08T03:59:29.000Z",
+      "closedAt": "2026-10-08T03:59:29.000Z",
+      "mergedAt": "2026-10-08T03:59:29.000Z",
+      "headSha": "7a921a1a26f5812592f123f008a15b2e6ae7077c",
+      "baseRef": "main",
+      "mergeCommitSha": "101827e619da7738e26eefdae81bd75fba122ab3"
+    },
+    {
+      "id": 4781349582,
+      "number": 17,
+      "title": "PR 17: live portfolio overview",
+      "url": "https://github.com/neophilism/Engine-Room/pull/17",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:27:09.000Z",
+      "updatedAt": "2026-10-08T03:38:56.000Z",
+      "closedAt": "2026-10-08T03:38:56.000Z",
+      "mergedAt": "2026-10-08T03:38:56.000Z",
+      "headSha": "51c39a3773d28c504674b244f9e1e587b96486c5",
+      "baseRef": "main",
+      "mergeCommitSha": "105fdf6ceb1397b4f1d914a64bfcd60b9991a40c"
+    },
+    {
+      "id": 4781334921,
+      "number": 16,
+      "title": "PR 16: automatic project registration",
+      "url": "https://github.com/neophilism/Engine-Room/pull/16",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:24:57.000Z",
+      "updatedAt": "2026-10-08T03:33:37.000Z",
+      "closedAt": "2026-10-08T03:33:37.000Z",
+      "mergedAt": "2026-10-08T03:33:37.000Z",
+      "headSha": "be08647d1dfa4fb713d36f31ea1fb048c350733c",
+      "baseRef": "pr-15-milestone-lifecycle",
+      "mergeCommitSha": "387cd42e1b4221fab5c415cc21a95fe106608fde"
+    },
+    {
+      "id": 4781301345,
+      "number": 15,
+      "title": "PR 15: milestone and lifecycle calculations",
+      "url": "https://github.com/neophilism/Engine-Room/pull/15",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:19:46.000Z",
+      "updatedAt": "2026-10-08T03:34:43.000Z",
+      "closedAt": "2026-10-08T03:26:43.000Z",
+      "mergedAt": "2026-10-08T03:26:43.000Z",
+      "headSha": "9f086b289925d95f15c831146cac46bc544b2d16",
+      "baseRef": "pr-14-planned-pr-completion",
+      "mergeCommitSha": "fa6ebb18a39a70756ed5d0f75ca644c9932f19e6"
+    },
+    {
+      "id": 4781149976,
+      "number": 14,
+      "title": "PR 14: planned PR completion engine",
+      "url": "https://github.com/neophilism/Engine-Room/pull/14",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T02:56:50.000Z",
+      "updatedAt": "2026-10-08T03:26:30.000Z",
+      "closedAt": "2026-10-08T03:26:30.000Z",
+      "mergedAt": "2026-10-08T03:26:30.000Z",
+      "headSha": "f0c143e1223bd818801459e4fd8521727b182045",
+      "baseRef": "main",
+      "mergeCommitSha": "3b9f592df8c9f175206befd58368c4b025cec133"
+    },
+    {
+      "id": 4781143370,
+      "number": 13,
+      "title": "PR 13: versioned approved development plans",
+      "url": "https://github.com/neophilism/Engine-Room/pull/13",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T02:55:49.000Z",
+      "updatedAt": "2026-10-08T03:17:14.000Z",
+      "closedAt": "2026-10-08T03:17:14.000Z",
+      "mergedAt": "2026-10-08T03:17:14.000Z",
+      "headSha": "ac78660d205fa9f9fd1e05492837791322507d74",
+      "baseRef": "pr-12-project-manifest-parser",
+      "mergeCommitSha": "b227801df13ed5f412deaf912a939bda78698733"
+    },
+    {
+      "id": 4781134328,
+      "number": 12,
+      "title": "PR 12: development-plan manifest parser",
+      "url": "https://github.com/neophilism/Engine-Room/pull/12",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T02:54:30.000Z",
+      "updatedAt": "2026-10-08T03:17:05.000Z",
+      "closedAt": "2026-10-08T03:17:05.000Z",
+      "mergedAt": "2026-10-08T03:17:05.000Z",
+      "headSha": "00c206093b963e4ee608c592f731b2aace0fd247",
+      "baseRef": "pr-11-github-reconciliation",
+      "mergeCommitSha": "e634e6717f6e866bee4af6b6a06a2ce864a93569"
+    },
+    {
+      "id": 4781124710,
+      "number": 11,
+      "title": "PR 11: repository and PR synchronization",
+      "url": "https://github.com/neophilism/Engine-Room/pull/11",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T02:53:04.000Z",
+      "updatedAt": "2026-10-08T03:16:56.000Z",
+      "closedAt": "2026-10-08T03:16:56.000Z",
+      "mergedAt": "2026-10-08T03:16:56.000Z",
+      "headSha": "f042f072f1f99c4ad6702c8866f87a3c531d4064",
+      "baseRef": "pr-10-github-webhooks",
+      "mergeCommitSha": "351ae84712ce0dbfe790d5384f0f08627bffb7b2"
+    },
+    {
+      "id": 4781108335,
+      "number": 10,
+      "title": "PR 10: signed GitHub webhook ingestion",
+      "url": "https://github.com/neophilism/Engine-Room/pull/10",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T02:50:32.000Z",
+      "updatedAt": "2026-10-08T03:16:45.000Z",
+      "closedAt": "2026-10-08T03:16:45.000Z",
+      "mergedAt": "2026-10-08T03:16:45.000Z",
+      "headSha": "c17efa6d7d7e6c6455c2800064eb9d25e6de8e41",
+      "baseRef": "pr-9-github-integration",
+      "mergeCommitSha": "5802351f14f55d93293ac483e8ddbaf3988558b6"
+    },
+    {
+      "id": 4781097395,
+      "number": 9,
+      "title": "PR 9: GitHub App integration and repository discovery",
+      "url": "https://github.com/neophilism/Engine-Room/pull/9",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T02:48:51.000Z",
+      "updatedAt": "2026-10-08T03:16:34.000Z",
+      "closedAt": "2026-10-08T03:16:34.000Z",
+      "mergedAt": "2026-10-08T03:16:34.000Z",
+      "headSha": "3729278af792964915c2c6350e24363b648e2f63",
+      "baseRef": "main",
+      "mergeCommitSha": "4eb2d41ee6d8ad5572039dc4c5db2d9bcfe5de8e"
+    },
+    {
+      "id": 4780521159,
+      "number": 8,
+      "title": "PR 8: machine animation, state transitions, and reduced motion",
+      "url": "https://github.com/neophilism/Engine-Room/pull/8",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T01:26:28.000Z",
+      "updatedAt": "2026-10-08T01:33:51.000Z",
+      "closedAt": "2026-10-08T01:33:51.000Z",
+      "mergedAt": "2026-10-08T01:33:50.000Z",
+      "headSha": "58ba01df09dcbb3da51b1ea69039ac31d1d4308d",
+      "baseRef": "main",
+      "mergeCommitSha": "0cc45b5249dc2979f08066241af768879f449dd9"
+    },
+    {
+      "id": 4779611404,
+      "number": 7,
+      "title": "PR 7: responsive machine layout and pipe routing",
+      "url": "https://github.com/neophilism/Engine-Room/pull/7",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T23:13:58.000Z",
+      "updatedAt": "2026-10-07T23:58:51.000Z",
+      "closedAt": "2026-10-07T23:58:50.000Z",
+      "mergedAt": "2026-10-07T23:58:50.000Z",
+      "headSha": "177898e159c64076c28998e12849a787d3fde540",
+      "baseRef": "main",
+      "mergeCommitSha": "9bae9a2649fe1a587ab278d4c35b7ff67b6ca2e7"
+    },
+    {
+      "id": 4779483365,
+      "number": 6,
+      "title": "PR 6: reusable mechanical component library",
+      "url": "https://github.com/neophilism/Engine-Room/pull/6",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T22:57:06.000Z",
+      "updatedAt": "2026-10-07T23:09:34.000Z",
+      "closedAt": "2026-10-07T23:09:34.000Z",
+      "mergedAt": "2026-10-07T23:09:34.000Z",
+      "headSha": "442d71808e6a302d70c29fb2fd71e84e0bff6b42",
+      "baseRef": "main",
+      "mergeCommitSha": "3bcc6d5f6869fcbaef01fbe01641e307769b1b8a"
+    },
+    {
+      "id": 4779364833,
+      "number": 5,
+      "title": "PR 5: machine design system",
+      "url": "https://github.com/neophilism/Engine-Room/pull/5",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T22:42:23.000Z",
+      "updatedAt": "2026-10-07T22:50:00.000Z",
+      "closedAt": "2026-10-07T22:49:59.000Z",
+      "mergedAt": "2026-10-07T22:49:59.000Z",
+      "headSha": "5fd59515822603a59266d2790c5ce1a3b741e097",
+      "baseRef": "main",
+      "mergeCommitSha": "6d2c6742dfe0400a0232be94f7e79ae501eb71b9"
+    },
+    {
+      "id": 4778853009,
+      "number": 4,
+      "title": "PR 4: global responsive application shell",
+      "url": "https://github.com/neophilism/Engine-Room/pull/4",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T21:43:55.000Z",
+      "updatedAt": "2026-10-07T22:38:07.000Z",
+      "closedAt": "2026-10-07T22:38:07.000Z",
+      "mergedAt": "2026-10-07T22:38:07.000Z",
+      "headSha": "a2b38fbccd7c8aef6614352d0c9263475a90cbbf",
+      "baseRef": "main",
+      "mergeCommitSha": "c161fdda455583c6c2220796bb65e3fd39ccad1f"
+    },
+    {
+      "id": 4778759402,
+      "number": 3,
+      "title": "PR 3: portfolio domain model",
+      "url": "https://github.com/neophilism/Engine-Room/pull/3",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T21:34:12.000Z",
+      "updatedAt": "2026-10-07T21:38:07.000Z",
+      "closedAt": "2026-10-07T21:38:06.000Z",
+      "mergedAt": "2026-10-07T21:38:06.000Z",
+      "headSha": "066db88bfa27693965a394ae7145674e506d0ba7",
+      "baseRef": "main",
+      "mergeCommitSha": "942ca960e4bbf5d000a21a0542f39a54e6b01e35"
+    },
+    {
+      "id": 4778402118,
+      "number": 2,
+      "title": "PR 2: core application architecture",
+      "url": "https://github.com/neophilism/Engine-Room/pull/2",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T20:58:10.000Z",
+      "updatedAt": "2026-10-07T21:28:38.000Z",
+      "closedAt": "2026-10-07T21:28:38.000Z",
+      "mergedAt": "2026-10-07T21:28:38.000Z",
+      "headSha": "96005ff7326a82be3a5e94e8a069ffdf36ebc855",
+      "baseRef": "main",
+      "mergeCommitSha": "6f3a4bc7e6f2ef603341466939dd313a1792b334"
+    },
+    {
+      "id": 4777303468,
+      "number": 1,
+      "title": "PR 1: repository foundation",
+      "url": "https://github.com/neophilism/Engine-Room/pull/1",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T19:15:21.000Z",
+      "updatedAt": "2026-10-07T20:47:58.000Z",
+      "closedAt": "2026-10-07T20:47:58.000Z",
+      "mergedAt": "2026-10-07T20:47:58.000Z",
+      "headSha": "456e246f49262e9a02b27c403a7466af756c1dbf",
+      "baseRef": "main",
+      "mergeCommitSha": "80ebe19bd3bffeaa8b4e39f4e71e0424b566e7d2"
+    }
+  ]
+}
