@@ -10,73 +10,109 @@
       "id": "AA-001",
       "title": "Foundation and thin-app boundary",
       "origin": "original",
-      "prs": []
+      "prs": [
+        1
+      ],
+      "mappingEvidence": "GitHub merged PR title explicitly labels approved numbered work unit"
     },
     {
       "id": "AA-002",
       "title": "System, deployment, and version inventory",
       "origin": "original",
-      "prs": []
+      "prs": [
+        2
+      ],
+      "mappingEvidence": "GitHub merged PR title explicitly labels approved numbered work unit"
     },
     {
       "id": "AA-003",
       "title": "Impact assessment and risk classification",
       "origin": "original",
-      "prs": []
+      "prs": [
+        3
+      ],
+      "mappingEvidence": "GitHub merged PR title explicitly labels approved numbered work unit"
     },
     {
       "id": "AA-004",
       "title": "Authorization before deployment",
       "origin": "original",
-      "prs": []
+      "prs": [
+        4
+      ],
+      "mappingEvidence": "GitHub merged PR title explicitly labels approved numbered work unit"
     },
     {
       "id": "AA-005",
       "title": "Material change and reassessment",
       "origin": "original",
-      "prs": []
+      "prs": [
+        5
+      ],
+      "mappingEvidence": "GitHub merged PR title explicitly labels approved numbered work unit"
     },
     {
       "id": "AA-006",
       "title": "Continuous monitoring",
       "origin": "original",
-      "prs": []
+      "prs": [
+        6
+      ],
+      "mappingEvidence": "GitHub merged PR title explicitly labels approved numbered work unit"
     },
     {
       "id": "AA-007",
       "title": "Complaints, incidents, and findings",
       "origin": "original",
-      "prs": []
+      "prs": [
+        7
+      ],
+      "mappingEvidence": "GitHub merged PR title explicitly labels approved numbered work unit"
     },
     {
       "id": "AA-008",
       "title": "Remediation, suspension, and corrective action",
       "origin": "original",
-      "prs": []
+      "prs": [
+        8
+      ],
+      "mappingEvidence": "GitHub merged PR title explicitly labels approved numbered work unit"
     },
     {
       "id": "AA-009",
       "title": "Deadlines, periodic review, and renewal",
       "origin": "original",
-      "prs": []
+      "prs": [
+        9
+      ],
+      "mappingEvidence": "GitHub merged PR title explicitly labels approved numbered work unit"
     },
     {
       "id": "AA-010",
       "title": "Reporting, transparency, and certification",
       "origin": "original",
-      "prs": []
+      "prs": [
+        10
+      ],
+      "mappingEvidence": "GitHub merged PR title explicitly labels approved numbered work unit"
     },
     {
       "id": "AA-011",
       "title": "Full demonstration",
       "origin": "original",
-      "prs": []
+      "prs": [
+        11
+      ],
+      "mappingEvidence": "GitHub merged PR title explicitly labels approved numbered work unit"
     },
     {
       "id": "AA-012",
       "title": "Abstraction review and upstream hardening",
       "origin": "original",
-      "prs": []
+      "prs": [
+        12
+      ],
+      "mappingEvidence": "GitHub merged PR title explicitly labels approved numbered work unit"
     }
   ],
   "pullRequests": [
