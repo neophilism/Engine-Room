@@ -288,6 +288,7 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
       if(u.includes('/repos/test/core/pulls?'))return new Response('Unavailable',{status:503});
       if(u.includes('/repos/test/second/pulls?'))return Response.json([]);
       if(u.includes('/repos/test/second/commits/main'))return Response.json({sha:'c'.repeat(40)});
+      if(u.startsWith('https://raw.githubusercontent.com/') && u.endsWith('/registry/roadmap.json')) { const name=u.includes('/test/second/')?'second':'core'; return Response.json({repository:'neophilism/'+name,version:1,planVerified:true,plannedPrCount:1,milestones:[{id:'TEST-01',title:'Fixture work',pullRequests:[]}]}); }
       if(u.startsWith('https://raw.githubusercontent.com/'))return new Response('',{status:404});
       throw new Error('Unexpected fixture request '+u);
     };
@@ -320,6 +321,7 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
       if(u.includes('/repos/test/core/pulls?'))return Response.json([pr]);
       if(u.includes('/repos/test/core/commits/main'))return Response.json({sha:'c'.repeat(40)});
       if(u.includes('/compare/'))return Response.json({status:'behind'});
+      if(u.startsWith('https://raw.githubusercontent.com/') && u.endsWith('/registry/roadmap.json')) { const name=u.includes('/test/second/')?'second':'core'; return Response.json({repository:'neophilism/'+name,version:1,planVerified:true,plannedPrCount:1,milestones:[{id:'TEST-01',title:'Fixture work',pullRequests:[]}]}); }
       if(u.startsWith('https://raw.githubusercontent.com/'))return new Response('',{status:404});
       throw new Error('Unexpected ancestry request '+u);
     };
