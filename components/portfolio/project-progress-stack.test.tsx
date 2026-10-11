@@ -103,6 +103,39 @@ describe("ProjectProgressStack", () => {
     expect(screen.queryByText(/Original 50\/50/)).not.toBeInTheDocument();
   });
 
+  it("does not label Smart Cities merged-but-unmapped work as unstarted", () => {
+    const missing = {
+      ...project,
+      id: "smart", displayName: "Smart Cities",
+      planned: 30, completed: 0, inProgress: 0,
+      repositories: [{...project.repositories[0], id:"smart-repo", planned:30,completed:0,inProgress:0}],
+      activity: { total:26, open:0, merged:26, drafts:0, failedChecks:0, runningChecks:0, lastObservedAt:null },
+      sourcePlan: {
+        original:30, originalComplete:0, added:0, addedComplete:0, unmapped:30, items:[],
+        documents:[{path:"registry/prs.json",url:"https://github.com/neophilism/Smart-Cities-Surveillance-Registry",
+          title:"Structured PR registry",importedAt:"2026-10-11T18:03:05.869Z",versions:1}]
+      }
+    };
+    render(<ProjectProgressStack project={missing} />);
+    expect(screen.getByText(/30 planned units missing verified PR links/)).toBeInTheDocument();
+    expect(screen.getByText(/26 GitHub PRs merged overall/)).toBeInTheDocument();
+    expect(screen.queryByText(/30 not started/)).not.toBeInTheDocument();
+  });
+
+  it("shows real merged activity when a private/unpublished plan cannot be scored", () => {
+    const unpublished = {
+      ...project, id:"cornerstone", displayName:"The Cornerstone",
+      planned:0,completed:0,inProgress:0,repositories:[],
+      activity: {total:11,open:0,merged:11,drafts:0,failedChecks:0,runningChecks:0,lastObservedAt:null},
+      sourcePlan:{original:0,originalComplete:0,added:0,addedComplete:0,unmapped:0,items:[],
+        documents:[{path:"registry/prs.json",url:"https://github.com/neophilism/The-Cornerstone",
+          title:"Unverified source",importedAt:"2026-10-11T18:03:06.242Z",versions:1}]}
+    };
+    render(<ProjectProgressStack project={unpublished} />);
+    expect(screen.getByText(/Plan unverified · 11 GitHub PRs merged/)).toBeInTheDocument();
+    expect(screen.getByText("Plan unavailable")).toBeInTheDocument();
+  });
+
   it("does not infer added planned work from an unrelated open GitHub PR", () => {
     const mapped = {
       ...project, id: "original-complete", displayName: "Original Done",

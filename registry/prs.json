@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "repository": "neophilism/Engine-Room",
-  "roadmapVersion": 3,
+  "roadmapVersion": 4,
   "planVerified": true,
-  "plannedPrCount": 46,
-  "observedAt": "2026-10-11T18:01:36.719Z",
+  "plannedPrCount": 47,
+  "observedAt": "2026-10-11T20:16:51.241Z",
   "units": [
     {
       "id": "ER-001",
@@ -373,9 +373,32 @@
       "prs": [
         83
       ]
+    },
+    {
+      "id": "ER-047",
+      "title": "Surface unlinked PR evidence and unverified plans without mislabeling development as not started",
+      "origin": "addition",
+      "prs": [
+        84
+      ]
     }
   ],
   "pullRequests": [
+    {
+      "id": 4822026485,
+      "number": 84,
+      "title": "Show merged GitHub work when plan mappings are missing",
+      "url": "https://github.com/neophilism/Engine-Room/pull/84",
+      "state": "open",
+      "draft": false,
+      "createdAt": "2026-10-11T20:16:41.000Z",
+      "updatedAt": "2026-10-11T20:16:41.000Z",
+      "closedAt": null,
+      "mergedAt": null,
+      "headSha": "8f20c11b43f0723917f0edd36242d71ea3608850",
+      "baseRef": "main",
+      "mergeCommitSha": "428bfb344e7a127e9da1b226a01b80876a09f790"
+    },
     {
       "id": 4821055567,
       "number": 83,

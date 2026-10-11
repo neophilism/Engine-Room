@@ -1,9 +1,9 @@
 {
   "repository": "neophilism/Engine-Room",
   "title": "Engine Room",
-  "version": 3,
+  "version": 4,
   "planVerified": true,
-  "plannedPrCount": 46,
+  "plannedPrCount": 47,
   "sourceFiles": [
     ".exechub/project.yml",
     "docs/development-plan.md",
@@ -377,6 +377,14 @@
       "origin": "addition",
       "pullRequests": [
         83
+      ]
+    },
+    {
+      "id": "ER-047",
+      "title": "Surface unlinked PR evidence and unverified plans without mislabeling development as not started",
+      "origin": "addition",
+      "pullRequests": [
+        84
       ]
     }
   ],
