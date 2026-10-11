@@ -67,7 +67,7 @@ export function ProjectProgressStack({
       <div className="project-quick-links">
         {mergedGitHubPrs > 0 && <strong className="project-merged-count">{mergedGitHubPrs} GitHub PRs merged overall</strong>}
         <span className="project-activity">{unverifiedEvidence
-          ? `${unmappedUnits} planned units have no explicit PR association yet · ${progress?.inProgress ?? 0} open mapped · ${progress?.completed ?? 0} merged mapped · ${mergedGitHubPrs} GitHub PRs merged overall`
+          ? `${unmappedUnits} planned units have no explicit PR association yet · ${progress?.inProgress ?? 0} open mapped · ${progress?.completed ?? 0} merged mapped`
           : progress
             ? `${progress.notStarted} not started · ${progress.inProgress} open · ${progress.completed} merged`
             : missingPlanWithWork
