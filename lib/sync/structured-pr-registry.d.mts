@@ -24,6 +24,6 @@ export declare function snapshotPrToGitHub(record:StructuredPrRecord): {
 export type StructuredWorkItem={
   ordinal:number;sourceItemId:string;title:string;scope:"original"|"addition";numbers:number[];reason:string|null;
 };
-export declare function attachObservedWorkIds<T extends StructuredWorkItem>(
+export declare function attachObservedWorkIds<T extends {sourceItemId?:string;numbers:number[];reason?:string|null}>(
   items:T[], observedPullRequests:Array<{number:number;title:string}>
 ):T[];
