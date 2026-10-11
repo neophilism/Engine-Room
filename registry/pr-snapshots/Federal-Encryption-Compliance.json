@@ -1,0 +1,246 @@
+{
+  "schemaVersion": 1,
+  "repository": "neophilism/Federal-Encryption-Compliance",
+  "roadmapVersion": 1,
+  "planVerified": true,
+  "plannedPrCount": 9,
+  "observedAt": "2026-10-11T17:39:48.034Z",
+  "units": [
+    {
+      "id": "FE-01",
+      "title": "Foundation and thin-app boundary",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "FE-02",
+      "title": "Federal Data Encryption policy bundle",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "FE-03",
+      "title": "Encryption compliance evaluation",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "FE-04",
+      "title": "Contractor and external-system compliance",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "FE-05",
+      "title": "Waivers and emergency exceptions",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "FE-06",
+      "title": "Statutory clocks and oversight",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "FE-07",
+      "title": "Findings, remediation and certification",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "FE-08",
+      "title": "Operator UI and reporting",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "FE-09",
+      "title": "End-to-end abstraction test",
+      "origin": "original",
+      "prs": []
+    }
+  ],
+  "pullRequests": [
+    {
+      "id": 4778367491,
+      "number": 12,
+      "title": "PR 12: Full fictional demo mode",
+      "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/12",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T20:54:54.000Z",
+      "updatedAt": "2026-10-07T20:55:51.000Z",
+      "closedAt": "2026-10-07T20:55:51.000Z",
+      "mergedAt": "2026-10-07T20:55:51.000Z",
+      "headSha": "725e568d52450ac7982b4cb798428bf64e789feb",
+      "baseRef": "main",
+      "mergeCommitSha": "6c6cc8fab6d8f074fcce687e97c0c0ac88f5d859"
+    },
+    {
+      "id": 4778314573,
+      "number": 11,
+      "title": "PR 11: Reproducible preview deployment",
+      "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/11",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T20:49:53.000Z",
+      "updatedAt": "2026-10-07T20:50:59.000Z",
+      "closedAt": "2026-10-07T20:50:59.000Z",
+      "mergedAt": "2026-10-07T20:50:59.000Z",
+      "headSha": "bf70fb0e3e9a171a321ff2fcf510b7c9f66945d1",
+      "baseRef": "main",
+      "mergeCommitSha": "faec3ae831eb93a0d8d846dc0b60294781f32727"
+    },
+    {
+      "id": 4777769191,
+      "number": 10,
+      "title": "Preview runtime cleanup",
+      "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/10",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T19:58:35.000Z",
+      "updatedAt": "2026-10-07T19:59:44.000Z",
+      "closedAt": "2026-10-07T19:59:44.000Z",
+      "mergedAt": "2026-10-07T19:59:44.000Z",
+      "headSha": "a889e01130f98f30ceec5422b772a0e1e36100a2",
+      "baseRef": "main",
+      "mergeCommitSha": "81c7ecfd4c38cd48fd2b0d5ee1e862f91f4e39e5"
+    },
+    {
+      "id": 4775847592,
+      "number": 9,
+      "title": "PR 9: Abstraction review and upstream improvements",
+      "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/9",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T17:04:13.000Z",
+      "updatedAt": "2026-10-07T18:51:04.000Z",
+      "closedAt": "2026-10-07T18:51:04.000Z",
+      "mergedAt": "2026-10-07T18:51:04.000Z",
+      "headSha": "ed14bd3d77e52fbf1316a4d73523b669814d51c6",
+      "baseRef": "main",
+      "mergeCommitSha": "094f029a7c25df9f08e16ad22a80470924d63af7"
+    },
+    {
+      "id": 4775534765,
+      "number": 8,
+      "title": "PR 8: Federal Encryption UI and reporting",
+      "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/8",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T16:32:08.000Z",
+      "updatedAt": "2026-10-07T16:41:15.000Z",
+      "closedAt": "2026-10-07T16:41:15.000Z",
+      "mergedAt": "2026-10-07T16:41:14.000Z",
+      "headSha": "ca1f664b96e0d074396fec5ce03221102db4b326",
+      "baseRef": "main",
+      "mergeCommitSha": "9685d34d0497acaa432e855201144263656429c2"
+    },
+    {
+      "id": 4774647296,
+      "number": 7,
+      "title": "PR 7: Findings, remediation, and certification",
+      "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/7",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T15:18:19.000Z",
+      "updatedAt": "2026-10-07T16:10:56.000Z",
+      "closedAt": "2026-10-07T16:10:56.000Z",
+      "mergedAt": "2026-10-07T16:10:56.000Z",
+      "headSha": "847011b39c6d9b98cff9f8060b1a2b160137c380",
+      "baseRef": "main",
+      "mergeCommitSha": "76ebb3838544f590e7eacd001b23f98670198935"
+    },
+    {
+      "id": 4762606208,
+      "number": 6,
+      "title": "PR 6: Statutory clocks and oversight",
+      "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/6",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-06T17:51:20.000Z",
+      "updatedAt": "2026-10-06T18:00:27.000Z",
+      "closedAt": "2026-10-06T18:00:27.000Z",
+      "mergedAt": "2026-10-06T18:00:27.000Z",
+      "headSha": "80cb2c206bcb23652264cd5e4cc0fab3fae9d169",
+      "baseRef": "main",
+      "mergeCommitSha": "4d5655ad08892fca88177f61c4e91e354adf2dd2"
+    },
+    {
+      "id": 4762399456,
+      "number": 5,
+      "title": "PR 5: Waivers and emergency exceptions",
+      "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/5",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-06T17:32:28.000Z",
+      "updatedAt": "2026-10-06T17:34:50.000Z",
+      "closedAt": "2026-10-06T17:34:49.000Z",
+      "mergedAt": "2026-10-06T17:34:49.000Z",
+      "headSha": "c67d51f715e4b2bc4976f3b959df8c0c982b4327",
+      "baseRef": "main",
+      "mergeCommitSha": "6c7571c3c56d466396476a48bc18ec8e6dee058f"
+    },
+    {
+      "id": 4762197213,
+      "number": 4,
+      "title": "PR 4: Contractor and external-system compliance",
+      "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/4",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-06T17:13:54.000Z",
+      "updatedAt": "2026-10-06T17:17:53.000Z",
+      "closedAt": "2026-10-06T17:17:53.000Z",
+      "mergedAt": "2026-10-06T17:17:53.000Z",
+      "headSha": "9370e0cb58feddc71b27414fef2e580a7225aabf",
+      "baseRef": "main",
+      "mergeCommitSha": "d86c9889b9198952d36abc76e172effc2140f12b"
+    },
+    {
+      "id": 4761915005,
+      "number": 3,
+      "title": "PR 3: Encryption compliance evaluation",
+      "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/3",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-06T16:48:42.000Z",
+      "updatedAt": "2026-10-06T16:52:29.000Z",
+      "closedAt": "2026-10-06T16:52:29.000Z",
+      "mergedAt": "2026-10-06T16:52:29.000Z",
+      "headSha": "f1802d202167fa6b4e0e22f793be171e2059defb",
+      "baseRef": "main",
+      "mergeCommitSha": "579e0ee9d004c7748ad4944a7a837de54a30f424"
+    },
+    {
+      "id": 4761687900,
+      "number": 2,
+      "title": "PR 2: Federal Data Encryption policy bundle",
+      "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/2",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-06T16:27:37.000Z",
+      "updatedAt": "2026-10-06T16:40:21.000Z",
+      "closedAt": "2026-10-06T16:40:21.000Z",
+      "mergedAt": "2026-10-06T16:40:21.000Z",
+      "headSha": "c29857c678dcc64b8ca918ff2b316a45ea2ddafe",
+      "baseRef": "main",
+      "mergeCommitSha": "6950703abe2d466ece57f659a4658c62b01e4b7f"
+    },
+    {
+      "id": 4761541331,
+      "number": 1,
+      "title": "PR 1: Foundation and thin-app SDK boundary",
+      "url": "https://github.com/neophilism/Federal-Encryption-Compliance/pull/1",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-06T16:14:31.000Z",
+      "updatedAt": "2026-10-06T16:18:16.000Z",
+      "closedAt": "2026-10-06T16:18:15.000Z",
+      "mergedAt": "2026-10-06T16:18:15.000Z",
+      "headSha": "706d055754181854dc5156a7cc1c6437c5672ef8",
+      "baseRef": "main",
+      "mergeCommitSha": "1750aecff8e87bda267c959b38ec1b36d61cb385"
+    }
+  ]
+}
