@@ -1,0 +1,279 @@
+{
+  "schemaVersion": 1,
+  "repository": "neophilism/Algorithmic-Accountability",
+  "roadmapVersion": 1,
+  "planVerified": true,
+  "plannedPrCount": 12,
+  "observedAt": "2026-10-11T17:40:38.129Z",
+  "units": [
+    {
+      "id": "AA-001",
+      "title": "Foundation and thin-app boundary",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "AA-002",
+      "title": "System, deployment, and version inventory",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "AA-003",
+      "title": "Impact assessment and risk classification",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "AA-004",
+      "title": "Authorization before deployment",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "AA-005",
+      "title": "Material change and reassessment",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "AA-006",
+      "title": "Continuous monitoring",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "AA-007",
+      "title": "Complaints, incidents, and findings",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "AA-008",
+      "title": "Remediation, suspension, and corrective action",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "AA-009",
+      "title": "Deadlines, periodic review, and renewal",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "AA-010",
+      "title": "Reporting, transparency, and certification",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "AA-011",
+      "title": "Full demonstration",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "AA-012",
+      "title": "Abstraction review and upstream hardening",
+      "origin": "original",
+      "prs": []
+    }
+  ],
+  "pullRequests": [
+    {
+      "id": 4807477920,
+      "number": 13,
+      "title": "PR 13: Recurring live preview smoke monitoring",
+      "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/13",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T00:55:23.000Z",
+      "updatedAt": "2026-10-10T16:08:02.000Z",
+      "closedAt": "2026-10-10T16:08:02.000Z",
+      "mergedAt": "2026-10-10T16:08:02.000Z",
+      "headSha": "f0f1c44acfa2c4d8cd74dd274cefff9cbfeb5969",
+      "baseRef": "main",
+      "mergeCommitSha": "ff6319f8abd074f4b03c750ff2960e1be8fba770"
+    },
+    {
+      "id": 4807438687,
+      "number": 12,
+      "title": "PR 12: CAIAE abstraction audit, real-data access gate, and Engine Room registration",
+      "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/12",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T00:48:39.000Z",
+      "updatedAt": "2026-10-10T00:49:46.000Z",
+      "closedAt": "2026-10-10T00:49:46.000Z",
+      "mergedAt": "2026-10-10T00:49:46.000Z",
+      "headSha": "444734e8b23e3e040f64a42f3268d43eedcc6ba7",
+      "baseRef": "main",
+      "mergeCommitSha": "411c56ed36db3f7d500c1c6cdd84db746a370dc6"
+    },
+    {
+      "id": 4780537026,
+      "number": 11,
+      "title": "PR 11: Full fictional demonstration",
+      "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/11",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T01:28:54.000Z",
+      "updatedAt": "2026-10-08T01:31:21.000Z",
+      "closedAt": "2026-10-08T01:31:20.000Z",
+      "mergedAt": "2026-10-08T01:31:20.000Z",
+      "headSha": "98906e640f79facc6638936aeba99ff4f65ce9b9",
+      "baseRef": "main",
+      "mergeCommitSha": "66a627a88165e392271dc9dfd8f7b186ce8f0854"
+    },
+    {
+      "id": 4780475122,
+      "number": 10,
+      "title": "PR 10: Reporting, transparency, and certification",
+      "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/10",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T01:19:32.000Z",
+      "updatedAt": "2026-10-08T01:20:45.000Z",
+      "closedAt": "2026-10-08T01:20:45.000Z",
+      "mergedAt": "2026-10-08T01:20:45.000Z",
+      "headSha": "8d8a00cd798405db46e1d6f618f0805ecdeb03ce",
+      "baseRef": "main",
+      "mergeCommitSha": "3945d47c4f6ab074084b2f00e840ade8f3650241"
+    },
+    {
+      "id": 4780417532,
+      "number": 9,
+      "title": "PR 9: Deadlines, periodic review, and renewal",
+      "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/9",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T01:10:57.000Z",
+      "updatedAt": "2026-10-08T01:11:59.000Z",
+      "closedAt": "2026-10-08T01:11:59.000Z",
+      "mergedAt": "2026-10-08T01:11:59.000Z",
+      "headSha": "c7cbdf07cbe9fef254d62b318526f616563f4754",
+      "baseRef": "main",
+      "mergeCommitSha": "be504c01537790be7acb9f39e5ba16ef72a16b50"
+    },
+    {
+      "id": 4780350387,
+      "number": 8,
+      "title": "PR 8: Remediation, suspension, and corrective action",
+      "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/8",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T01:01:00.000Z",
+      "updatedAt": "2026-10-08T01:02:33.000Z",
+      "closedAt": "2026-10-08T01:02:33.000Z",
+      "mergedAt": "2026-10-08T01:02:33.000Z",
+      "headSha": "67f3c367c42f57678f5dd5425baead7f9eb6b29a",
+      "baseRef": "main",
+      "mergeCommitSha": "88c2568cd1b90af1cfb17933918744e23b365df9"
+    },
+    {
+      "id": 4780299808,
+      "number": 7,
+      "title": "PR 7: Complaints, incidents, and findings",
+      "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/7",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T00:53:26.000Z",
+      "updatedAt": "2026-10-08T00:57:07.000Z",
+      "closedAt": "2026-10-08T00:57:07.000Z",
+      "mergedAt": "2026-10-08T00:57:07.000Z",
+      "headSha": "7d1cb053223e9d68ea9d98475ee1922d5110d33a",
+      "baseRef": "main",
+      "mergeCommitSha": "d46489ac8ac82a06f5a318cf552aeaa7c2929515"
+    },
+    {
+      "id": 4780255857,
+      "number": 6,
+      "title": "PR 6: Continuous monitoring and threshold-driven reassessment",
+      "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/6",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T00:46:37.000Z",
+      "updatedAt": "2026-10-08T00:48:38.000Z",
+      "closedAt": "2026-10-08T00:48:38.000Z",
+      "mergedAt": "2026-10-08T00:48:38.000Z",
+      "headSha": "61b05c85c28b7f1671710eb0786c9588b01cf609",
+      "baseRef": "main",
+      "mergeCommitSha": "1b503f903b2579ed08d911343eb327fc10f21304"
+    },
+    {
+      "id": 4780225328,
+      "number": 5,
+      "title": "PR 5: Material change and reassessment",
+      "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/5",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T00:41:56.000Z",
+      "updatedAt": "2026-10-08T00:43:18.000Z",
+      "closedAt": "2026-10-08T00:43:18.000Z",
+      "mergedAt": "2026-10-08T00:43:18.000Z",
+      "headSha": "000302810328d8dc7100ed24033f9fce05910def",
+      "baseRef": "main",
+      "mergeCommitSha": "6447d0f65d89eb97372917ea91416226065d373b"
+    },
+    {
+      "id": 4780197400,
+      "number": 4,
+      "title": "PR 4: Authorization before deployment",
+      "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/4",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T00:37:41.000Z",
+      "updatedAt": "2026-10-08T00:39:14.000Z",
+      "closedAt": "2026-10-08T00:39:14.000Z",
+      "mergedAt": "2026-10-08T00:39:14.000Z",
+      "headSha": "0ec16d8130d4d9d87a88267d8f71f91062b7cb9e",
+      "baseRef": "main",
+      "mergeCommitSha": "ce23408194c4b084d71007f8c442c247980268df"
+    },
+    {
+      "id": 4780158707,
+      "number": 3,
+      "title": "PR 3: Impact assessment and risk classification",
+      "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/3",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T00:32:11.000Z",
+      "updatedAt": "2026-10-08T00:34:18.000Z",
+      "closedAt": "2026-10-08T00:34:18.000Z",
+      "mergedAt": "2026-10-08T00:34:18.000Z",
+      "headSha": "be9471fc343d04d944a9864f8dfd9c5ae4e8aa0c",
+      "baseRef": "main",
+      "mergeCommitSha": "df93df2de9921eb7c9ce0f0216f6ee3e262a5311"
+    },
+    {
+      "id": 4780063734,
+      "number": 2,
+      "title": "PR 2: System, deployment, and model-version inventory",
+      "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/2",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T00:18:40.000Z",
+      "updatedAt": "2026-10-08T00:24:38.000Z",
+      "closedAt": "2026-10-08T00:24:38.000Z",
+      "mergedAt": "2026-10-08T00:24:38.000Z",
+      "headSha": "09309010efd362d5418041b2308f5932f0bd97c2",
+      "baseRef": "main",
+      "mergeCommitSha": "c8ab3e71f5be038e18674bfd04e62bb57a91fc3f"
+    },
+    {
+      "id": 4779675620,
+      "number": 1,
+      "title": "PR 1: Foundation and CAIAE thin-app boundary",
+      "url": "https://github.com/neophilism/Algorithmic-Accountability/pull/1",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T23:22:23.000Z",
+      "updatedAt": "2026-10-08T00:13:34.000Z",
+      "closedAt": "2026-10-08T00:13:34.000Z",
+      "mergedAt": "2026-10-08T00:13:34.000Z",
+      "headSha": "ef0e37db5263e7b31bbde5d14c9dc8533df3883a",
+      "baseRef": "main",
+      "mergeCommitSha": "00e47cfc63c912c196bda96b1d8d0e1ee8b49dde"
+    }
+  ]
+}
