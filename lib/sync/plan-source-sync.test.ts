@@ -29,7 +29,7 @@ function database(rows:Repo[],prior:Array<{number:number;updated_at:Date}>=[]){
 describe('structured PR importer independent of private GitHub access',()=>{
   it('imports repository-owned JSON directly when accessible',async()=>{
     const db=database([{id:'a',name:'Live-Competition-Engine',full_name:'neophilism/Live-Competition-Engine',default_branch:'main'}]);
-    const fetcher=vi.fn(async()=>new Response(registry('Live-Competition-Engine',3)));
+    const fetcher=vi.fn(async(_url:string)=>new Response(registry('Live-Competition-Engine',3)));
     const fallback=vi.fn(async()=>{throw Error('No snapshot expected');});
     const out=await reconcilePlanSources(db.pool,{fetcher:fetcher as unknown as typeof fetch,readSnapshot:fallback});
     expect(out).toMatchObject({registered:1,imported:1,failed:0,fromRepository:1,fromSnapshot:0});
