@@ -49,7 +49,7 @@ export function GitHubSourceReadout() {
         </table>
       </div>
       <p className="metric-freshness">A fresh GitHub PR count and a fresh approved roadmap import are separate checks. An old saved snapshot does not certify a successful live plan import.</p>
-    </details>
+    </details>}
     <p className="metric-freshness">PR records and actual merge timestamps are evidence; a recent record does not prove that every repository completed a fresh synchronization.</p>
   </section>;
 }
