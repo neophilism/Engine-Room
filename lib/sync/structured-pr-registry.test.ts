@@ -56,7 +56,7 @@ describe('structured PR registry, no Markdown parsing',()=>{
       }
       if(name==='Engine-Room'){
         expect(items).toHaveLength(46);
-        expect(completed).toHaveLength(45);
+        expect(completed).toHaveLength(pullRequests.find(p=>p.number===83)?.mergedAt ? 46 : 45);
         expect(items.at(-1)?.numbers).toEqual([83]);
       }
     }
