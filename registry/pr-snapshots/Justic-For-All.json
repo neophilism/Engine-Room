@@ -1,0 +1,636 @@
+{
+  "schemaVersion": 1,
+  "repository": "neophilism/Justic-For-All",
+  "roadmapVersion": 1,
+  "planVerified": true,
+  "plannedPrCount": 50,
+  "observedAt": "2026-10-11T17:41:20.239Z",
+  "units": [
+    {
+      "id": "JFA-001",
+      "title": "Foundations and architecture — approved package 1 of 8",
+      "origin": "original",
+      "prs": [
+        1
+      ]
+    },
+    {
+      "id": "JFA-002",
+      "title": "Foundations and architecture — approved package 2 of 8",
+      "origin": "original",
+      "prs": [
+        2
+      ]
+    },
+    {
+      "id": "JFA-003",
+      "title": "Foundations and architecture — approved package 3 of 8",
+      "origin": "original",
+      "prs": [
+        3
+      ]
+    },
+    {
+      "id": "JFA-004",
+      "title": "Foundations and architecture — approved package 4 of 8",
+      "origin": "original",
+      "prs": [
+        4
+      ]
+    },
+    {
+      "id": "JFA-005",
+      "title": "Foundations and architecture — approved package 5 of 8",
+      "origin": "original",
+      "prs": [
+        5
+      ]
+    },
+    {
+      "id": "JFA-006",
+      "title": "Foundations and architecture — approved package 6 of 8",
+      "origin": "original",
+      "prs": [
+        6
+      ]
+    },
+    {
+      "id": "JFA-007",
+      "title": "Foundations and architecture — approved package 7 of 8",
+      "origin": "original",
+      "prs": [
+        7
+      ]
+    },
+    {
+      "id": "JFA-008",
+      "title": "Foundations and architecture — approved package 8 of 8",
+      "origin": "original",
+      "prs": [
+        12
+      ]
+    },
+    {
+      "id": "JFA-009",
+      "title": "Public experience and publishing — approved package 1 of 10",
+      "origin": "original",
+      "prs": [
+        14
+      ]
+    },
+    {
+      "id": "JFA-010",
+      "title": "Public experience and publishing — approved package 2 of 10",
+      "origin": "original",
+      "prs": [
+        15
+      ]
+    },
+    {
+      "id": "JFA-011",
+      "title": "Public experience and publishing — approved package 3 of 10",
+      "origin": "original",
+      "prs": [
+        16
+      ]
+    },
+    {
+      "id": "JFA-012",
+      "title": "Public experience and publishing — approved package 4 of 10",
+      "origin": "original",
+      "prs": [
+        17
+      ]
+    },
+    {
+      "id": "JFA-013",
+      "title": "Public experience and publishing — approved package 5 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-014",
+      "title": "Public experience and publishing — approved package 6 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-015",
+      "title": "Public experience and publishing — approved package 7 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-016",
+      "title": "Public experience and publishing — approved package 8 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-017",
+      "title": "Public experience and publishing — approved package 9 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-018",
+      "title": "Public experience and publishing — approved package 10 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-019",
+      "title": "Identity privacy and moderation — approved package 1 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-020",
+      "title": "Identity privacy and moderation — approved package 2 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-021",
+      "title": "Identity privacy and moderation — approved package 3 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-022",
+      "title": "Identity privacy and moderation — approved package 4 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-023",
+      "title": "Identity privacy and moderation — approved package 5 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-024",
+      "title": "Identity privacy and moderation — approved package 6 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-025",
+      "title": "Identity privacy and moderation — approved package 7 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-026",
+      "title": "Identity privacy and moderation — approved package 8 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-027",
+      "title": "Identity privacy and moderation — approved package 9 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-028",
+      "title": "Identity privacy and moderation — approved package 10 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-029",
+      "title": "Identity privacy and moderation — approved package 11 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-030",
+      "title": "Cross-platform integrations — approved package 1 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-031",
+      "title": "Cross-platform integrations — approved package 2 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-032",
+      "title": "Cross-platform integrations — approved package 3 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-033",
+      "title": "Cross-platform integrations — approved package 4 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-034",
+      "title": "Cross-platform integrations — approved package 5 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-035",
+      "title": "Cross-platform integrations — approved package 6 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-036",
+      "title": "Cross-platform integrations — approved package 7 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-037",
+      "title": "Cross-platform integrations — approved package 8 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-038",
+      "title": "Cross-platform integrations — approved package 9 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-039",
+      "title": "Cross-platform integrations — approved package 10 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-040",
+      "title": "Cross-platform integrations — approved package 11 of 11",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-041",
+      "title": "Operations and release — approved package 1 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-042",
+      "title": "Operations and release — approved package 2 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-043",
+      "title": "Operations and release — approved package 3 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-044",
+      "title": "Operations and release — approved package 4 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-045",
+      "title": "Operations and release — approved package 5 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-046",
+      "title": "Operations and release — approved package 6 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-047",
+      "title": "Operations and release — approved package 7 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-048",
+      "title": "Operations and release — approved package 8 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-049",
+      "title": "Operations and release — approved package 9 of 10",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "JFA-050",
+      "title": "Operations and release — approved package 10 of 10",
+      "origin": "original",
+      "prs": []
+    }
+  ],
+  "pullRequests": [
+    {
+      "id": 4812420317,
+      "number": 20,
+      "title": "JFA-13B: Accessible local editorial editor and HTML-free draft preview",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/20",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:43:41.000Z",
+      "updatedAt": "2026-10-10T15:57:12.000Z",
+      "closedAt": "2026-10-10T15:57:12.000Z",
+      "mergedAt": "2026-10-10T15:57:12.000Z",
+      "headSha": "dff33f170b444e7f78465dd2646d2a260bad241b",
+      "baseRef": "main",
+      "mergeCommitSha": "2b0ef7f33fa2dda5ea94e7864feb335e59dc855c"
+    },
+    {
+      "id": 4812390402,
+      "number": 19,
+      "title": "JFA-13A: Structured editorial document validation and private draft storage",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/19",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:39:19.000Z",
+      "updatedAt": "2026-10-10T15:42:13.000Z",
+      "closedAt": "2026-10-10T15:42:13.000Z",
+      "mergedAt": "2026-10-10T15:42:12.000Z",
+      "headSha": "5138ea67665a3972a102da07b221fd9d7bceb9ce",
+      "baseRef": "main",
+      "mergeCommitSha": "618a08ff1d78ad713f8351db327cc8bebfe56c04"
+    },
+    {
+      "id": 4812372466,
+      "number": 18,
+      "title": "Track JFA-01–12 as verified roadmap PR evidence in Engine Room",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/18",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:36:35.000Z",
+      "updatedAt": "2026-10-10T15:37:33.000Z",
+      "closedAt": "2026-10-10T15:37:33.000Z",
+      "mergedAt": "2026-10-10T15:37:33.000Z",
+      "headSha": "7ce1fa45cf0712129b1bab956a8a90692f6d18d3",
+      "baseRef": "main",
+      "mergeCommitSha": "ed732d1ca7c29f31044b96148012a5447a56d292"
+    },
+    {
+      "id": 4812357206,
+      "number": 17,
+      "title": "JFA-12: Validated public initiative registry and accessible detail pages",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/17",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:34:10.000Z",
+      "updatedAt": "2026-10-10T15:36:02.000Z",
+      "closedAt": "2026-10-10T15:36:02.000Z",
+      "mergedAt": "2026-10-10T15:36:02.000Z",
+      "headSha": "7af3bc2cd04b78393cb13da0eb8388d0406ca638",
+      "baseRef": "main",
+      "mergeCommitSha": "7d5ecb822d40fbcacecfb668d20e4b078b9228dc"
+    },
+    {
+      "id": 4812337972,
+      "number": 16,
+      "title": "JFA-11: Inclusive mission, public journeys and Git-reviewed editorial baseline",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/16",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:30:59.000Z",
+      "updatedAt": "2026-10-10T15:31:57.000Z",
+      "closedAt": "2026-10-10T15:31:57.000Z",
+      "mergedAt": "2026-10-10T15:31:57.000Z",
+      "headSha": "566b25e93e573d2e7fd5e06eafb34b86a572d6d9",
+      "baseRef": "main",
+      "mergeCommitSha": "d1dc7ae6609e7ecc76065b8b76e1b6eec73224d1"
+    },
+    {
+      "id": 4812318097,
+      "number": 15,
+      "title": "JFA-10: Public route manifest, legal navigation and accessible error states",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/15",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:27:41.000Z",
+      "updatedAt": "2026-10-10T15:28:54.000Z",
+      "closedAt": "2026-10-10T15:28:54.000Z",
+      "mergedAt": "2026-10-10T15:28:54.000Z",
+      "headSha": "38fdee8a168fbb8a5593c741e7d6f08af5d5d4a4",
+      "baseRef": "main",
+      "mergeCommitSha": "0dbaf1d5bbcbe9b125b7baa2d2b1739c038e9ea2"
+    },
+    {
+      "id": 4812291678,
+      "number": 14,
+      "title": "JFA-09: Accessible civic UI components, contrast tests and visual reference",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/14",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:23:22.000Z",
+      "updatedAt": "2026-10-10T15:26:54.000Z",
+      "closedAt": "2026-10-10T15:26:54.000Z",
+      "mergedAt": "2026-10-10T15:26:54.000Z",
+      "headSha": "102bda0443da372892c21683b68d19190969f940",
+      "baseRef": "main",
+      "mergeCommitSha": "ec699d8471bfa4e87e43c922724e9480a9a46f53"
+    },
+    {
+      "id": 4812277353,
+      "number": 13,
+      "title": "chore(deps): bump pg and @types/pg",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/13",
+      "state": "open",
+      "draft": false,
+      "createdAt": "2026-10-10T15:21:21.000Z",
+      "updatedAt": "2026-10-10T15:21:26.000Z",
+      "closedAt": null,
+      "mergedAt": null,
+      "headSha": "00b79ad9381b2a647e352f239b66d84a3136e56e",
+      "baseRef": "main",
+      "mergeCommitSha": "a8323ecaf8326e79ec4465a5c21d6de5c37bf638"
+    },
+    {
+      "id": 4812275924,
+      "number": 12,
+      "title": "JFA-08: Component threat model and E2EESA applicability inventory",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/12",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:21:08.000Z",
+      "updatedAt": "2026-10-10T15:21:53.000Z",
+      "closedAt": "2026-10-10T15:21:53.000Z",
+      "mergedAt": "2026-10-10T15:21:53.000Z",
+      "headSha": "b86af90dc331798a0577c55bb0d29a315b82d897",
+      "baseRef": "main",
+      "mergeCommitSha": "1a284e5aa99b5ceb9f4b3a65a73480f2d6c16cea"
+    },
+    {
+      "id": 4812275621,
+      "number": 11,
+      "title": "chore(deps-dev): bump @types/node from 24.5.2 to 26.6.4",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/11",
+      "state": "open",
+      "draft": false,
+      "createdAt": "2026-10-10T15:21:05.000Z",
+      "updatedAt": "2026-10-10T15:21:09.000Z",
+      "closedAt": null,
+      "mergedAt": null,
+      "headSha": "83051f0660bb1b199752c04dc9ed7ae2ad777e77",
+      "baseRef": "main",
+      "mergeCommitSha": "977433530404e72c82065886de0ad59ccfbb402c"
+    },
+    {
+      "id": 4812275538,
+      "number": 10,
+      "title": "chore(deps-dev): bump typescript from 5.9.2 to 7.0.2",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/10",
+      "state": "open",
+      "draft": false,
+      "createdAt": "2026-10-10T15:21:04.000Z",
+      "updatedAt": "2026-10-10T15:21:09.000Z",
+      "closedAt": null,
+      "mergedAt": null,
+      "headSha": "6fb69018765cef84beebf624908d84eb6bb35d37",
+      "baseRef": "main",
+      "mergeCommitSha": "70c5cd3f34b27d996406cb2e8789db6d6a3b03e1"
+    },
+    {
+      "id": 4812273961,
+      "number": 9,
+      "title": "chore(deps): bump react-dom and @types/react-dom",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/9",
+      "state": "open",
+      "draft": false,
+      "createdAt": "2026-10-10T15:20:52.000Z",
+      "updatedAt": "2026-10-10T15:20:56.000Z",
+      "closedAt": null,
+      "mergedAt": null,
+      "headSha": "9679e4112aaa997bbcb98799eb6de51105128322",
+      "baseRef": "main",
+      "mergeCommitSha": "c655ac9101f6c7c094654ab9964cc07cdf6f91aa"
+    },
+    {
+      "id": 4812273674,
+      "number": 8,
+      "title": "chore(deps-dev): bump eslint from 9.36.0 to 10.12.0",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/8",
+      "state": "open",
+      "draft": false,
+      "createdAt": "2026-10-10T15:20:49.000Z",
+      "updatedAt": "2026-10-10T15:20:54.000Z",
+      "closedAt": null,
+      "mergedAt": null,
+      "headSha": "677c44326ac0189d71ebfaba1d76b671b156416b",
+      "baseRef": "main",
+      "mergeCommitSha": "d99bf3f28cc9dcce6bfa1b83dfd5b18a2be2d7e2"
+    },
+    {
+      "id": 4812205736,
+      "number": 7,
+      "title": "JFA-07: Reproducible dependency and supply-chain CI baseline",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/7",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:11:06.000Z",
+      "updatedAt": "2026-10-10T15:19:28.000Z",
+      "closedAt": "2026-10-10T15:19:27.000Z",
+      "mergedAt": "2026-10-10T15:19:27.000Z",
+      "headSha": "a2f62d85dca8144809a4477a2c181cb5dc21941c",
+      "baseRef": "main",
+      "mergeCommitSha": "711286bff61ad827f8cb5751a0be1287d9acd41e"
+    },
+    {
+      "id": 4812189044,
+      "number": 6,
+      "title": "JFA-06: Local developer environment and migration-backed readiness",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/6",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:08:55.000Z",
+      "updatedAt": "2026-10-10T15:09:44.000Z",
+      "closedAt": "2026-10-10T15:09:44.000Z",
+      "mergedAt": "2026-10-10T15:09:44.000Z",
+      "headSha": "cc29372b7ad2ae91b0a3c806649910413ed204bd",
+      "baseRef": "main",
+      "mergeCommitSha": "f9507e061c13dbfc5c7f61a97407d9324f8f2f46"
+    },
+    {
+      "id": 4812173029,
+      "number": 5,
+      "title": "JFA-05: Core PostgreSQL schema, integrity gates and integration tests",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/5",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:06:38.000Z",
+      "updatedAt": "2026-10-10T15:07:48.000Z",
+      "closedAt": "2026-10-10T15:07:48.000Z",
+      "mergedAt": "2026-10-10T15:07:48.000Z",
+      "headSha": "280b6e8a5a465bd3380f7ad8cf34bf07e9895d19",
+      "baseRef": "main",
+      "mergeCommitSha": "0bdc3fa6e3bd54fa4e21ce586c23fd7730a953d0"
+    },
+    {
+      "id": 4812148651,
+      "number": 4,
+      "title": "JFA-04: Versioned public API and fail-closed readiness",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/4",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:03:26.000Z",
+      "updatedAt": "2026-10-10T15:04:32.000Z",
+      "closedAt": "2026-10-10T15:04:32.000Z",
+      "mergedAt": "2026-10-10T15:04:31.000Z",
+      "headSha": "adf0d29f505e831d8f18ba193cf0bd988f7011bd",
+      "baseRef": "main",
+      "mergeCommitSha": "9d4db34c9b571558a1deea8ced6b0e8fc1d47dc8"
+    },
+    {
+      "id": 4812136050,
+      "number": 3,
+      "title": "JFA-03: Pinned pnpm workspaces and isolated Next.js web runtime",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/3",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T15:01:28.000Z",
+      "updatedAt": "2026-10-10T15:02:16.000Z",
+      "closedAt": "2026-10-10T15:02:16.000Z",
+      "mergedAt": "2026-10-10T15:02:16.000Z",
+      "headSha": "abc448361231890a00cdbcc93d326d1c1460288d",
+      "baseRef": "main",
+      "mergeCommitSha": "7fb43d89828b813ea1debeaf0e23405bbbc71c0e"
+    },
+    {
+      "id": 4812119905,
+      "number": 2,
+      "title": "JFA-02: Source-pinned integration census and runtime safety gates",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/2",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T14:59:01.000Z",
+      "updatedAt": "2026-10-10T15:00:05.000Z",
+      "closedAt": "2026-10-10T15:00:05.000Z",
+      "mergedAt": "2026-10-10T15:00:05.000Z",
+      "headSha": "a6c759d81d9397a174942e4e646b04b9ff3695f3",
+      "baseRef": "main",
+      "mergeCommitSha": "c70ec2f14d1cc7905422737cd4c27aec594b23e5"
+    },
+    {
+      "id": 4812109190,
+      "number": 1,
+      "title": "JFA-01: Repository ownership, security, and canonical handoff",
+      "url": "https://github.com/neophilism/Justic-For-All/pull/1",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T14:57:13.000Z",
+      "updatedAt": "2026-10-10T14:58:03.000Z",
+      "closedAt": "2026-10-10T14:58:03.000Z",
+      "mergedAt": "2026-10-10T14:58:03.000Z",
+      "headSha": "07c6a1f1c20997a9e6f21e3ab6ef934fb5f58eae",
+      "baseRef": "main",
+      "mergeCommitSha": "29329f412ac876733cd17736fcd97d6ece6ddae3"
+    }
+  ]
+}
