@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "repository": "neophilism/Engine-Room",
-  "roadmapVersion": 2,
+  "roadmapVersion": 3,
   "planVerified": true,
-  "plannedPrCount": 45,
-  "observedAt": "2026-10-11T17:38:32.027Z",
+  "plannedPrCount": 46,
+  "observedAt": "2026-10-11T17:49:55.439Z",
   "units": [
     {
       "id": "ER-001",
@@ -365,9 +365,32 @@
       "prs": [
         82
       ]
+    },
+    {
+      "id": "ER-046",
+      "title": "Structured machine-readable PR registry, private-source recovery, and verified portfolio progress",
+      "origin": "addition",
+      "prs": [
+        83
+      ]
     }
   ],
   "pullRequests": [
+    {
+      "id": 4821055567,
+      "number": 83,
+      "title": "Import structured JSON PR records with private-repository fallback and truthful progress",
+      "url": "https://github.com/neophilism/Engine-Room/pull/83",
+      "state": "open",
+      "draft": false,
+      "createdAt": "2026-10-11T17:46:40.000Z",
+      "updatedAt": "2026-10-11T17:49:05.000Z",
+      "closedAt": null,
+      "mergedAt": null,
+      "headSha": "8b6caae867daa5977a28bed5a075742ce9cfab62",
+      "baseRef": "main",
+      "mergeCommitSha": "0d9cb3994e9bc32c30d1ec42e3b35bc6daaf9a7a"
+    },
     {
       "id": 4817810485,
       "number": 82,
