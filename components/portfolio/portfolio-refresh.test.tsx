@@ -22,7 +22,7 @@ describe("portfolio refresh", () => {
     visibility = "visible";
     fireEvent(document, new Event("visibilitychange"));
     expect(refresh).toHaveBeenCalledTimes(2);
-    fireEvent.click(screen.getByRole("button", { name: "Refresh now" }));
+    fireEvent.click(screen.getByRole("button", { name: "Reload display" }));
     expect(refresh).toHaveBeenCalledTimes(3);
     unmount();
     act(() => vi.advanceTimersByTime(PORTFOLIO_REFRESH_MS));

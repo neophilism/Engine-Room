@@ -1,3 +1,13 @@
+export type RepositoryGitHubStatus = {
+  name: string;
+  merged: number;
+  total: number;
+  lastSuccessAt: string | null;
+  lastAttemptAt: string | null;
+  error: string | null;
+  planSource: "repository" | "bundled" | "missing";
+};
+
 import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
 import { getDatabasePool } from "./database";
 
@@ -7,6 +17,7 @@ export type PublicGitHubStatus = {
   pullRequestCount: number | null;
   mergedPullRequestCount: number | null;
   mostRecentObservation: string | null;
+  repositories?: RepositoryGitHubStatus[];
 };
 
 type ObservationRow = {
@@ -48,7 +59,34 @@ export async function loadPublicGitHubStatus(env: EnvironmentSource = process.en
       [owner]
     );
     if (!result.rows[0]) return unavailable("error");
-    return normalizePublicGitHubObservation(result.rows[0]);
+    const status=normalizePublicGitHubObservation(result.rows[0]);
+    // Expose source provenance and actual GitHub refresh time for every repo.
+    // This is read-only, and contains no provider tokens or private materials.
+    try {
+      const rows=await getDatabasePool(env).query<{
+        name:string; merged:string|number; total:string|number;
+        last_success_at:Date|null;last_attempt_at:Date|null;last_error:string|null;source_ref:string|null
+      }>(`select r.name,
+        count(g.id)::integer as total,
+        count(g.id) filter(where g.merged_at is not null)::integer as merged,
+        s.last_success_at,s.last_attempt_at,s.last_error,
+        (select d.source_ref from project_plan_documents d
+         where d.repository_id=r.id and d.path='registry/prs.json'
+         order by d.version_id desc limit 1) as source_ref
+       from repositories r
+       left join github_repository_sync s on s.repository_id=r.id
+       left join github_pull_requests g on g.repository_id=r.id
+       where r.visibility='public' and lower(r.owner_login)=lower($1) and not r.archived
+       group by r.id,s.last_success_at,s.last_attempt_at,s.last_error
+       order by r.name`,[owner]);
+      return {...status,repositories:rows.rows.map(r=>({
+        name:r.name,merged:Number(r.merged),total:Number(r.total),
+        lastSuccessAt:r.last_success_at?new Date(r.last_success_at).toISOString():null,
+        lastAttemptAt:r.last_attempt_at?new Date(r.last_attempt_at).toISOString():null,
+        error:r.last_error,planSource:r.source_ref?
+          r.source_ref.startsWith('bundled:')?'bundled' as const:'repository' as const:'missing' as const
+      }))};
+    } catch { return status; }
   } catch {
     return unavailable("error");
   }

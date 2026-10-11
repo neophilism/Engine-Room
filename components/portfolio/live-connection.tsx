@@ -12,7 +12,7 @@ type SynchronizationOutcome = {
   processed?: number;
   error?: string;
   rateLimitResetAt?: string | null;
-  structured?: {imported:number;failed:number;fromSnapshot:number;fromRepository:number;prObservations:number};
+  structured?: {imported:number;failed:number;registered?:number;fromSnapshot:number;fromRepository:number;prObservations:number;inferredByExactId?:number;};
 };
 
 type SyncFeedback = { kind: "success" | "warning" | "error"; message: string };
@@ -22,7 +22,7 @@ function describeSynchronization(outcome: SynchronizationOutcome): SyncFeedback 
   const failed = Number(outcome.failed || 0);
   const planned = outcome.structured;
   const saved = planned?.imported || 0;
-  const detail = saved > 0 ? " Structured PR registry: "+saved+" projects processed ("+(planned?.fromSnapshot||0)+" saved snapshots; "+(planned?.fromRepository||0)+" repository files).": "";
+  const detail = saved > 0 ? " Approved plans: "+saved+" processed ("+(planned?.fromRepository||0)+" live repository files; "+(planned?.fromSnapshot||0)+" historical fallbacks; "+(planned?.inferredByExactId||0)+" live work IDs matched).": "";
 
   if (outcome.status === "disabled") {
     return { kind: "warning", message: "GitHub synchronization is paused in Settings. Enable it to fetch new data." };
@@ -32,10 +32,10 @@ function describeSynchronization(outcome: SynchronizationOutcome): SyncFeedback 
     return { kind: "warning", message: "GitHub API rate limit: " + synced + " repositories refreshed." + reset + detail + " Live GitHub status remains stale for unrefreshed repositories." };
   }
   if (outcome.status === "partial" || failed > 0) {
-    return { kind: "warning", message: "Partial GitHub refresh: " + synced + " repositories refreshed, " + failed + " failed." + detail + " Unrefreshed GitHub records are still marked stale." };
+    return { kind: "warning", message: "Partial GitHub refresh: " + synced + " repositories checked, " + failed + " PR queries failed." + detail + " Any fallback plan is historical, not a successful live file refresh." };
   }
   if (outcome.status === "succeeded" && synced > 0) {
-    return { kind: "success", message: "GitHub refresh complete: " + synced + " repositories checked." + detail + " Click again to refresh further repositories." };
+    return { kind: "success", message: "GitHub refresh complete: " + synced + " repositories checked." + detail };
   }
   return { kind: "warning", message: detail || "No repositories were refreshed. Another synchronization may be running; try again shortly." };
 }
@@ -161,8 +161,8 @@ export function LiveConnection() {
       >
         <span className={"system-light live-state-" + (unavailable || expired ? "disconnected" : snapshot?.state || "disconnected")} aria-hidden="true" />
         <span className="live-refresh-copy">
-          <small>{connected ? "GITHUB · PUSH CONNECTED" : "GITHUB · POLLING / RECOVERY"}</small>
-          <strong>{syncing ? "Refreshing…" : state}</strong>
+          <small>{connected ? "GITHUB · PUSH CONNECTED" : "GITHUB · POLLING / RECOVERY"} · {state}</small>
+          <strong>{syncing ? "Refreshing…" : "Refresh"}</strong>
         </span>
       </button>
       {expired && <Link href="/login">Sign in again</Link>}

@@ -16,13 +16,23 @@ export async function POST(request:Request){
   const value=JSON.parse(raw);if(!value||Object.keys(value).join(",")!=="mode"||!["manual","scheduled"].includes(value.mode))throw new Error();mode=value.mode;
  }catch{return reply({error:"Choose manual or scheduled synchronization"},400);}
  try{const pool=getDatabasePool();const inbox=await processWebhookInbox(pool);
-  // Structured records work even when private GitHub API access fails.
-  const plans=await reconcilePlanSources(pool);
-  let github:{repositories:number;failed:number;disabled?:boolean;rateLimited?:boolean;rateLimitResetAt?:string|null;error?:string};
-  try{github=await reconcilePortfolio(pool,{force:mode==="manual",repositoryLimit:mode==="manual"?12:100});}
-  catch{github={repositories:0,failed:1,error:"GitHub API unavailable; structured records retained"};}
-  return reply({status:github.disabled?"disabled":github.rateLimited?"rate-limited":github.failed||plans.failed?"partial":"succeeded",
-    ...github,...inbox,structured:{imported:plans.imported,failed:plans.failed,fromSnapshot:plans.fromSnapshot,
-    fromRepository:plans.fromRepository,prObservations:plans.prObservations}});
+  // A genuine manual refresh checks every registered repository, rather than
+  // the old fixed subset of 12. PRs are authoritative before plan ID mapping.
+  let github:{repositories:number;failed:number;attempted?:number;optionalFailures?:number;
+    failures?:{repo:string;reason:string}[];disabled?:boolean;rateLimited?:boolean;rateLimitResetAt?:string|null;error?:string};
+  try{github=await reconcilePortfolio(pool,{force:mode==="manual",
+    repositoryLimit:100,quick:mode==="manual",concurrency:mode==="manual"?5:2});}
+  catch{github={repositories:0,failed:1,error:"GitHub PR synchronization unavailable; previous records retained"};}
+  const plans=await reconcilePlanSources(pool,{concurrency:mode==='manual'?8:4});
+  const snapshotNames=plans.completed.filter(item=>item.origin==="bundled").map(item=>item.repo);
+  const skipped=mode==="manual"?Math.max(0,plans.registered-(github.attempted??0)):0;
+  const status=github.disabled?"disabled":github.rateLimited?"rate-limited":
+    github.failed||plans.failed||snapshotNames.length||skipped?"partial":"succeeded";
+  return reply({status,...github,skipped,...inbox,structured:{
+    imported:plans.imported,failed:plans.failed,registered:plans.registered,
+    fromSnapshot:plans.fromSnapshot,fromRepository:plans.fromRepository,
+    snapshotRepositories:snapshotNames,sourceErrors:plans.errors,
+    inferredByExactId:plans.completed.reduce((sum,item)=>sum+(item.autoLinked||0),0),
+    prObservations:plans.prObservations}});
  }catch{return reply({error:"Synchronization unavailable; previous records preserved"},503);}
 }
