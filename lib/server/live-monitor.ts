@@ -3,6 +3,7 @@ import type { LiveSnapshot,ProjectActivitySummary,PullRequestReadout,SourcePlanS
 import { getDatabasePool } from './database';
 import planSources from '../config/portfolio-plan-sources.json';
 import { CANONICAL_ROADMAP_PATH, shouldImportPlanDocument } from '../sync/canonical-roadmap.mjs';
+import { STRUCTURED_PR_PATH } from '../sync/structured-pr-registry.mjs';
 
 const iso=(value:Date|string|null)=>value?new Date(value).toISOString():null;
 
@@ -64,14 +65,18 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
     ORDER BY pr.project_id,d.repository_id,d.path,d.version_id DESC`,[projectId||null]);
   const plans=new Map<string,SourcePlanSummary>();
   const canonicalRepositoryIds=new Set(docResult.rows.filter(doc=>doc.path===CANONICAL_ROADMAP_PATH).map(doc=>doc.repository_id));
+  const structuredRepositoryIds=new Set(docResult.rows.filter(doc=>doc.path===STRUCTURED_PR_PATH).map(doc=>doc.repository_id));
   for(const doc of docResult.rows){
     // Historical paths remain in the audit database but only authoritative current
     // plan sources contribute to the denominator (avoid README + canonical double-counting).
-    if(!shouldImportPlanDocument(doc,canonicalRepositoryIds,planSources as Record<string,string[]>))continue;
+    if(structuredRepositoryIds.has(doc.repository_id) ? doc.path!==STRUCTURED_PR_PATH :
+      !shouldImportPlanDocument(doc,canonicalRepositoryIds,planSources as Record<string,string[]>))continue;
     const plan=plans.get(doc.project_id)||{original:0,originalComplete:0,added:0,addedComplete:0,unmapped:0,items:[],documents:[]};
     plan.documents.push({path:doc.path,url:doc.source_url,title:doc.title,importedAt:iso(doc.imported_at)!,versions:Number(doc.versions)});
-    const result=await db.query<{ordinal:number;title:string;scope:PlanItemReadout['scope'];github_pr_numbers:number[];mapping_reason:string|null;completed:boolean;underway:boolean;unverified:boolean}>(`
-      WITH baseline AS (SELECT fingerprint FROM project_plan_documents WHERE repository_id=$1 AND path=$2 ORDER BY version_id LIMIT 1),
+    const unitsSql=doc.path===STRUCTURED_PR_PATH ? `
+      units AS (SELECT ordinal,title,scope,github_pr_numbers,mapping_reason
+        FROM project_plan_items WHERE repository_id=$1 AND path=$2 AND fingerprint=$3)` : `
+      baseline AS (SELECT fingerprint FROM project_plan_documents WHERE repository_id=$1 AND path=$2 ORDER BY version_id LIMIT 1),
       additions AS (SELECT DISTINCT ON(c.ordinal,c.title) c.ordinal,c.title,c.github_pr_numbers,c.mapping_reason
         FROM project_plan_items c JOIN project_plan_documents d USING(repository_id,path,fingerprint)
         WHERE c.repository_id=$1 AND c.path=$2 AND c.scope='addition' ORDER BY c.ordinal,c.title,d.version_id DESC),
@@ -82,7 +87,8 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
         WHERE b.repository_id=$1 AND b.path=$2 AND b.scope='original'
         UNION ALL
         SELECT c.ordinal,c.title,'addition',c.github_pr_numbers,c.mapping_reason FROM additions c
-      ) SELECT u.*,
+      )`;
+    const result=await db.query<{ordinal:number;title:string;scope:PlanItemReadout['scope'];github_pr_numbers:number[];mapping_reason:string|null;completed:boolean;underway:boolean;unverified:boolean}>(`WITH ${unitsSql} SELECT u.*,
       jsonb_array_length(github_pr_numbers)>0 AND NOT EXISTS(SELECT 1 FROM jsonb_array_elements_text(u.github_pr_numbers) n
         LEFT JOIN github_pull_requests g ON g.repository_id=$1 AND g.number=n.value::integer
         WHERE g.merged_at IS NULL) AS completed,
