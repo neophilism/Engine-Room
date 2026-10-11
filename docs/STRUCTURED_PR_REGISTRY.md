@@ -77,3 +77,37 @@ and validate Neon records, source timestamps, and dashboard counts. Music
 Analyzer must show 16/16 green, zero yellow. Clicking the freshness control
 must separately disclose structured snapshot imports and actual GitHub API
 refreshes. Never call the API live when only a bundled snapshot was loaded.
+
+## Runtime authority and Refresh behavior
+
+The **owning repository** supplies the approved planned-work units and explicit
+PR links in `registry/prs.json`. **GitHub's live Pull Requests API is the
+authority on open and merged status**. The `pullRequests` array inside a
+source JSON file is a historical observation, never a requirement to edit JSON
+after every merge. A change to one repository's code or plan must **never**
+require an Engine Room PR solely to update a bundled snapshot.
+
+Clicking **Refresh** in the header checks **all registered repositories** for
+current GitHub PR status, then imports the owners' JSON plan files and derives
+the resulting completion fraction. The secondary **Reload display** control
+only reloads previously stored server data and is intentionally labeled
+differently. The startup worker performs a bounded refresh on deployment;
+subsequent scheduled reconciliations are incremental. Optional review/check
+API failures must not block PR timestamps or counts.
+
+Previously unmapped units can acquire a database-derived PR reference when
+one real GitHub PR title starts with the unit's **exact stable ID**, e.g.
+`GDN-040: Content revision`. This does not change the owner-authored
+roadmap, its denominator, or stored GitHub PR titles. Similar wording,
+coincidental numeric ordinals, and ambiguous IDs never count as verified
+completion. All unmapped-but-merged PRs remain visible in the **total merged
+GitHub PRs** readout instead of being falsely counted as planned items.
+
+A historical `registry/pr-snapshots/*.json` is strictly a degraded-read
+fallback for source-access failures, **not a second source of truth**. Its
+original observed timestamp remains unchanged. The portfolio reports live
+source, fallback, and per-repository GitHub sync errors separately.
+
+Never manually update those snapshots to make a progress bar appear fuller.
+Repair source connectivity or record approved mappings in the **source**
+repository. PR-derived statuses always come from GitHub.
