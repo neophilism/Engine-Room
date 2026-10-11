@@ -10,67 +10,104 @@
       "id": "MVP-01",
       "title": "Application and PostgreSQL data foundation",
       "origin": "original",
-      "prs": []
+      "prs": [
+        1
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "MVP-02",
       "title": "Verified politician and podcast registry",
       "origin": "original",
-      "prs": []
+      "prs": [
+        2
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "MVP-03",
       "title": "RSS/Atom ingestion and automatic episode updates",
       "origin": "original",
-      "prs": []
+      "prs": [
+        3
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "MVP-04",
       "title": "Homepage and podcast directory",
       "origin": "original",
-      "prs": []
+      "prs": [
+        5
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "MVP-05",
       "title": "Persistent bottom audio player",
       "origin": "original",
-      "prs": []
+      "prs": [
+        24,
+        33
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "MVP-06",
       "title": "Person pages and episode browsing",
       "origin": "original",
-      "prs": []
+      "prs": [
+        9,
+        13,
+        23
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "MVP-07",
       "title": "Publisher transcript ingestion",
       "origin": "original",
-      "prs": []
+      "prs": [
+        12
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "MVP-08",
       "title": "Automatic transcription when publisher transcripts are absent",
       "origin": "original",
-      "prs": []
+      "prs": [
+        17
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "MVP-09",
       "title": "Full-text transcript search and timestamp playback",
       "origin": "original",
-      "prs": []
+      "prs": [
+        14,
+        15
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "MVP-10",
       "title": "Private admin and source-health console",
       "origin": "original",
-      "prs": []
+      "prs": [
+        18
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "MVP-11",
       "title": "Production hardening and deployment",
       "origin": "original",
-      "prs": []
+      "prs": [
+        19
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "FC-P01",
@@ -82,13 +119,22 @@
       "id": "FC-P02",
       "title": "Complete officeholder identity universe",
       "origin": "addition",
-      "prs": []
+      "prs": [
+        41,
+        46
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "FC-P03",
       "title": "Multi-source podcast discovery across every eligible official",
       "origin": "addition",
-      "prs": []
+      "prs": [
+        31,
+        42,
+        45
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "FC-P04",
@@ -112,7 +158,12 @@
       "id": "FC-P07",
       "title": "First-pass full archive ingestion for all verified shows",
       "origin": "addition",
-      "prs": []
+      "prs": [
+        25,
+        30,
+        32
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "FC-P08",
@@ -124,13 +175,19 @@
       "id": "FC-P09",
       "title": "Feed identity, history and anti-truncation hardening",
       "origin": "addition",
-      "prs": []
+      "prs": [
+        39
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "FC-P10",
       "title": "Full publisher-transcript bulk recovery",
       "origin": "addition",
-      "prs": []
+      "prs": [
+        47
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "FC-P11",
@@ -166,7 +223,11 @@
       "id": "FC-P16",
       "title": "Complete listening experience and accessible historical browsing",
       "origin": "addition",
-      "prs": []
+      "prs": [
+        27,
+        28
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "FC-P17",
@@ -178,13 +239,19 @@
       "id": "FC-P18",
       "title": "Durable automation and operating cost model",
       "origin": "addition",
-      "prs": []
+      "prs": [
+        48
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "FC-P19",
       "title": "Operations, monitoring and Engine Room integration",
       "origin": "addition",
-      "prs": []
+      "prs": [
+        21
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     },
     {
       "id": "FC-P20",
@@ -196,7 +263,10 @@
       "id": "FC-P21",
       "title": "Congressional podcast production services inquiries (October 10, 2026)",
       "origin": "addition",
-      "prs": []
+      "prs": [
+        49
+      ],
+      "mappingEvidence": "Reviewed GitHub PR title/scope against the explicitly named planned capability"
     }
   ],
   "pullRequests": [
