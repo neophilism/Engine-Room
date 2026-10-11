@@ -48,7 +48,7 @@ Engine Room fetches that one canonical file during its existing authorized GitHu
 - **Empty:** all other planned work, including new approved PRs before creation.
 - **Operational acceptance:** distinct from merge status; a green source PR does **not** prove deployment or completion of product acceptance.
 
-If the file is absent, the legacy recognized plan paths remain. If malformed, the repository sync fails that source and retains the last valid materialized record instead of silently replacing it with a fabricated count. Explicit additions must be appended with stable IDs; update \`version\` and \`plannedPrCount\` as the owner approves new units. Unapproved proposals must **not** be added to the canonical count.
+Repositories whose plans could not be verified may instead use `planVerified: false`, `plannedPrCount: 0` and `milestones: []`. This means **N/A / verification required**, not 0% complete and not proof of zero work. An explicit verification report must identify these repos.\n\nIf the file is absent, the legacy recognized plan paths remain. If malformed, the repository sync fails that source and retains the last valid materialized record instead of silently replacing it with a fabricated count. Explicit additions must be appended with stable IDs; update \`version\` and \`plannedPrCount\` as the owner approves new units. Unapproved proposals must **not** be added to the canonical count.
 
 The Engine Room project heading already displays \`merged/planned\`. Adding more work units to an approved repository roadmap will increase the denominator on the **next successful** GitHub reconciliation; no manual Engine Room project-count edits should be necessary.
 
