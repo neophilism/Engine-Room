@@ -20,6 +20,13 @@ describe("GitHub credential diagnostic (no secrets)",()=>{
     const report=await probeGitHubAccess({env,fetcher:async()=>new Response("",{status:401})});
     expect(report).toMatchObject({identityHttp:401,reason:"credential-rejected"});
   });
+  it("detects missing private pull-request permission even when repository metadata is readable",async()=>{
+    const fetcher=async(input:string)=>new Response("",{status:input.includes("/pulls?")?403:200});
+    const report=await probeGitHubAccess({env,fetcher:fetcher as unknown as typeof fetch});
+    expect(report).toMatchObject({engineRoomHttp:200,musicAnalyzerHttp:200,
+      engineRoomPullsHttp:403,musicAnalyzerPullsHttp:403,
+      reason:"private-repository-metadata-readable-but-pull-request-permission-denied"});
+  });
   it("recognizes successful private-repository access",async()=>{
     const report=await probeGitHubAccess({env,fetcher:async()=>new Response("",{status:200})});
     expect(report).toMatchObject({engineRoomHttp:200,musicAnalyzerHttp:200,reason:"private-access-confirmed"});
