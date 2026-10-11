@@ -12,6 +12,7 @@ type SynchronizationOutcome = {
   processed?: number;
   error?: string;
   rateLimitResetAt?: string | null;
+  structured?: {imported:number;failed:number;fromSnapshot:number;fromRepository:number;prObservations:number};
 };
 
 type SyncFeedback = { kind: "success" | "warning" | "error"; message: string };
@@ -19,21 +20,24 @@ type SyncFeedback = { kind: "success" | "warning" | "error"; message: string };
 function describeSynchronization(outcome: SynchronizationOutcome): SyncFeedback {
   const synced = Number(outcome.repositories || 0);
   const failed = Number(outcome.failed || 0);
+  const planned = outcome.structured;
+  const saved = planned?.imported || 0;
+  const detail = saved > 0 ? " Structured PR registry: "+saved+" projects processed ("+(planned?.fromSnapshot||0)+" saved snapshots; "+(planned?.fromRepository||0)+" repository files).": "";
 
   if (outcome.status === "disabled") {
     return { kind: "warning", message: "GitHub synchronization is paused in Settings. Enable it to fetch new data." };
   }
   if (outcome.status === "rate-limited") {
     const reset = outcome.rateLimitResetAt ? " Try again after " + new Date(outcome.rateLimitResetAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) + "." : " Please try again after GitHub resets its API allowance.";
-    return { kind: "warning", message: "GitHub API rate limit: " + synced + " repositories refreshed." + reset + " Existing data has not been replaced with newer GitHub records." };
+    return { kind: "warning", message: "GitHub API rate limit: " + synced + " repositories refreshed." + reset + detail + " Live GitHub status remains stale for unrefreshed repositories." };
   }
   if (outcome.status === "partial" || failed > 0) {
-    return { kind: "warning", message: "Partial GitHub refresh: " + synced + " repositories refreshed, " + failed + " failed. Unavailable sources retain their previous data." };
+    return { kind: "warning", message: "Partial GitHub refresh: " + synced + " repositories refreshed, " + failed + " failed." + detail + " Unrefreshed GitHub records are still marked stale." };
   }
   if (outcome.status === "succeeded" && synced > 0) {
-    return { kind: "success", message: "GitHub refresh complete: " + synced + " repositories checked. Click again to refresh further repositories." };
+    return { kind: "success", message: "GitHub refresh complete: " + synced + " repositories checked." + detail + " Click again to refresh further repositories." };
   }
-  return { kind: "warning", message: "No repositories were refreshed. Another synchronization may be running; try again shortly." };
+  return { kind: "warning", message: detail || "No repositories were refreshed. Another synchronization may be running; try again shortly." };
 }
 
 export function LiveConnection() {
@@ -119,7 +123,7 @@ export function LiveConnection() {
       }
 
       setFeedback(describeSynchronization(outcome));
-      if ((outcome.repositories || 0) > 0 || (outcome.processed || 0) > 0) {
+      if ((outcome.repositories || 0) > 0 || (outcome.processed || 0) > 0 || (outcome.structured?.imported || 0) > 0) {
         router.refresh();
         window.dispatchEvent(new CustomEvent("engine-room-github-sync-complete"));
         try {
