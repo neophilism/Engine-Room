@@ -4,7 +4,7 @@
   "roadmapVersion": 3,
   "planVerified": true,
   "plannedPrCount": 46,
-  "observedAt": "2026-10-11T17:49:55.439Z",
+  "observedAt": "2026-10-11T18:01:36.719Z",
   "units": [
     {
       "id": "ER-001",
@@ -381,15 +381,15 @@
       "number": 83,
       "title": "Import structured JSON PR records with private-repository fallback and truthful progress",
       "url": "https://github.com/neophilism/Engine-Room/pull/83",
-      "state": "open",
+      "state": "closed",
       "draft": false,
       "createdAt": "2026-10-11T17:46:40.000Z",
-      "updatedAt": "2026-10-11T17:49:05.000Z",
-      "closedAt": null,
-      "mergedAt": null,
-      "headSha": "8b6caae867daa5977a28bed5a075742ce9cfab62",
+      "updatedAt": "2026-10-11T18:01:26.000Z",
+      "closedAt": "2026-10-11T18:01:26.000Z",
+      "mergedAt": "2026-10-11T18:01:26.000Z",
+      "headSha": "3e84965b24e5170e2cb86680c08c0b2bd63f4634",
       "baseRef": "main",
-      "mergeCommitSha": "0d9cb3994e9bc32c30d1ec42e3b35bc6daaf9a7a"
+      "mergeCommitSha": "55649dca5ed881e51b735a69e709059ed9bbcdad"
     },
     {
       "id": 4817810485,
