@@ -1,3 +1,5 @@
+> **Canonical and expanded PR work registry:** [`registry/roadmap.json`](../registry/roadmap.json). This 40-item original plan is preserved intact below; all later additions and PR evidence are maintained only in the canonical registry.
+
 # Engine-Room: complete development plan and handoff
 
 **Source:** [docs/development-plan.md](../docs/development-plan.md) (existing approved project plan, preserved below without omissions).
