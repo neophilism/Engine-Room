@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "repository": "neophilism/Engine-Room",
-  "roadmapVersion": 5,
+  "roadmapVersion": 6,
   "planVerified": true,
-  "plannedPrCount": 49,
-  "observedAt": "2026-10-11T20:37:19.938Z",
+  "plannedPrCount": 50,
+  "observedAt": "2026-10-11T22:57:44.640Z",
   "units": [
     {
       "id": "ER-001",
@@ -397,9 +397,32 @@
       "prs": [
         87
       ]
+    },
+    {
+      "id": "ER-050",
+      "title": "Private repository visibility reconciliation and actionable GitHub source access diagnostics",
+      "origin": "addition",
+      "prs": [
+        88
+      ]
     }
   ],
   "pullRequests": [
+    {
+      "id": 4823024940,
+      "number": 88,
+      "title": "Report private GitHub access failures accurately and keep repository visibility current",
+      "url": "https://github.com/neophilism/Engine-Room/pull/88",
+      "state": "open",
+      "draft": false,
+      "createdAt": "2026-10-11T22:57:13.000Z",
+      "updatedAt": "2026-10-11T22:57:13.000Z",
+      "closedAt": null,
+      "mergedAt": null,
+      "headSha": "11456532a9efbd7d906909ef3dec924ba39cdc0a",
+      "baseRef": "main",
+      "mergeCommitSha": "2e7cd2a80e058de76f472492014e8f997e9705bc"
+    },
     {
       "id": 4822129795,
       "number": 87,
