@@ -1,9 +1,9 @@
 {
   "repository": "neophilism/Engine-Room",
   "title": "Engine Room",
-  "version": 4,
+  "version": 5,
   "planVerified": true,
-  "plannedPrCount": 47,
+  "plannedPrCount": 49,
   "sourceFiles": [
     ".exechub/project.yml",
     "docs/development-plan.md",
@@ -385,6 +385,22 @@
       "origin": "addition",
       "pullRequests": [
         84
+      ]
+    },
+    {
+      "id": "ER-048",
+      "title": "Live GitHub portfolio PR reconciliation and exact work-unit ID mapping",
+      "origin": "addition",
+      "pullRequests": [
+        86
+      ]
+    },
+    {
+      "id": "ER-049",
+      "title": "Accept GitHub-native RFC3339 UTC timestamps in structured PR evidence",
+      "origin": "addition",
+      "pullRequests": [
+        87
       ]
     }
   ],
