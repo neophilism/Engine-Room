@@ -7,9 +7,12 @@ export function SourcePlan({ plan, historyHref }: { plan: SourcePlanSummary | un
   const planned=plan.original+plan.added;
   const completed=plan.originalComplete+plan.addedComplete;
   const inProgress=plan.items.filter(item=>item.state==="in-progress").length;
+  const remaining=Math.max(0,planned-completed-inProgress);
+  const unlinked=Math.min(remaining,plan.unmapped);
+  const otherUnfinished=remaining-unlinked;
   return <div className="source-plan">
     <p><strong>{completed}/{planned} merged</strong> · {inProgress} mapped open / unmerged ·
-      {" "}{Math.max(0,planned-completed-inProgress)} not started or awaiting evidence.
+      {" "}{unlinked} missing verified PR mapping · {otherUnfinished} other unfinished / unverified units.
       All original and later work counts in one roadmap total.</p>
     <ul>{plan.documents.map(doc=><li key={doc.path}>
       {/^https:\/\//.test(doc.url)?
