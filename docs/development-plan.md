@@ -1,3 +1,5 @@
+> **Canonical Engine Room PR roadmap:** [`registry/roadmap.json`](../registry/roadmap.json). This remains the original detailed scope document; changes to planned work and PR mappings are made in the canonical file.
+
 # Engine Room Development Plan
 
 Engine Room is tracked against a 40-PR approved development plan. Roadmap completion is based on merged planned PRs divided by the approved planned PR count.
