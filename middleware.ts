@@ -11,7 +11,7 @@ export const config={
  matcher:["/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)"]
 };
 const pages=new Set(["/login","/setup","/register"]);
-const adminOnly=["/finance","/users","/operations","/releases","/alerts","/settings","/api/admin"];
+const adminOnly=["/finance","/users","/operations","/releases","/alerts","/settings","/api/admin","/api/public-github-status"];
 const apis=new Set(["/api/health","/api/ready","/api/auth/login","/api/auth/bootstrap","/api/auth/register","/api/github/webhook","/api/telemetry"]);
 export async function middleware(request:NextRequest){
  const path=request.nextUrl.pathname;
