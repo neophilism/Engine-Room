@@ -161,7 +161,7 @@ export function LiveConnection() {
       >
         <span className={"system-light live-state-" + (unavailable || expired ? "disconnected" : snapshot?.state || "disconnected")} aria-hidden="true" />
         <span className="live-refresh-copy">
-          <small>{`GITHUB · ${state.toUpperCase()} · ${connected ? "CONNECTED" : "POLLING"}`}</small>
+          <small>{connected ? "GITHUB · PUSH CONNECTED" : "GITHUB · POLLING / RECOVERY"} · {state}</small>
           <strong>{syncing ? "Refreshing…" : "Refresh"}</strong>
         </span>
       </button>
