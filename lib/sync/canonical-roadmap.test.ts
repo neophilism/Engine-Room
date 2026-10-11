@@ -48,6 +48,11 @@ describe("canonical repository roadmap ingestion",()=>{
   expect(parsed).toHaveLength(3);
   expect(parsed[1].numbers).toEqual([]);
  });
+ it("records an explicitly unverified repository as unscored rather than inventing PR work",()=>{
+  const marker={version:1,planVerified:false,plannedPrCount:0,milestones:[]};
+  expect(parseCanonicalRoadmap(JSON.stringify(marker),"The-Cornerstone")).toEqual([]);
+  expect(()=>parseCanonicalRoadmap(JSON.stringify({...marker,plannedPrCount:10}),"The-Cornerstone")).toThrow();
+ });
  it("rejects missing version or unsupported row ID",()=>{
   expect(()=>parseCanonicalRoadmap(JSON.stringify({...example,version:0}),"Debate-Engine")).toThrow();
   expect(()=>parseCanonicalRoadmap(JSON.stringify({...example,milestones:[{id:"1",title:"Bad"}]}),"Debate-Engine")).toThrow();
