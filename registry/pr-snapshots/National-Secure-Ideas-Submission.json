@@ -1,0 +1,468 @@
+{
+  "schemaVersion": 1,
+  "repository": "neophilism/National-Secure-Ideas-Submission",
+  "roadmapVersion": 1,
+  "planVerified": true,
+  "plannedPrCount": 21,
+  "observedAt": "2026-10-11T17:39:51.496Z",
+  "units": [
+    {
+      "id": "NSI-001",
+      "title": "Foundation, engine contract, and safe unclassified SIG manifest",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-002",
+      "title": "Protected submitter identity",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-003",
+      "title": "Protected participant status and messaging",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-004",
+      "title": "Public supporting evidence",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-005",
+      "title": "Referral ledger and agency accountability",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-006",
+      "title": "Operational SIG experience",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-007",
+      "title": "PR 6 post-merge rc.7 pin cleanup",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-008",
+      "title": "Security/deployment acceptance",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-009",
+      "title": "Production runtime enablement",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-010",
+      "title": "PR 9 post-merge rc.8 pin cleanup",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-011",
+      "title": "Render production Blueprint",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-012",
+      "title": "Readiness-aware production routing",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-013",
+      "title": "Release-evidence-driven production promotion",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-014",
+      "title": "Live production smoke evidence",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-015",
+      "title": "Land production deployment stack on main",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-016",
+      "title": "PR 15 post-merge rc.9 pin cleanup",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-018",
+      "title": "Automated release-to-production promotion bundle",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-019",
+      "title": "Acceptance review package assembler",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-020",
+      "title": "Final acceptance evidence validator",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-021",
+      "title": "Land acceptance stack and release-capable rc.9 pin",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "NSI-022",
+      "title": "Automatic production promotion request",
+      "origin": "original",
+      "prs": []
+    }
+  ],
+  "pullRequests": [
+    {
+      "id": 4781444921,
+      "number": 22,
+      "title": "PR 22: Automatic production promotion request",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/22",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:41:51.000Z",
+      "updatedAt": "2026-10-08T03:51:57.000Z",
+      "closedAt": "2026-10-08T03:51:57.000Z",
+      "mergedAt": "2026-10-08T03:51:57.000Z",
+      "headSha": "84856915245d6cc8f0116b5325ede791f0e2f0ad",
+      "baseRef": "main",
+      "mergeCommitSha": "44004486f314e659024682d445de20ea565bdcf1"
+    },
+    {
+      "id": 4781284074,
+      "number": 21,
+      "title": "PR 21: Land acceptance stack and release-capable rc.9 pin",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/21",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:17:06.000Z",
+      "updatedAt": "2026-10-08T03:24:59.000Z",
+      "closedAt": "2026-10-08T03:24:59.000Z",
+      "mergedAt": "2026-10-08T03:24:58.000Z",
+      "headSha": "ae0bb4e42b4a1a8e84ee256c13ca960bdfa2ceba",
+      "baseRef": "main",
+      "mergeCommitSha": "dc283562156a0bd8972d50bbf7d94520f8a831c8"
+    },
+    {
+      "id": 4781199176,
+      "number": 20,
+      "title": "PR 20: Final acceptance evidence validator",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/20",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:04:29.000Z",
+      "updatedAt": "2026-10-08T03:12:03.000Z",
+      "closedAt": "2026-10-08T03:12:03.000Z",
+      "mergedAt": "2026-10-08T03:12:03.000Z",
+      "headSha": "edb04975b1322967809bc5124963f71b71eb3f5e",
+      "baseRef": "pr-19-acceptance-package-assembler",
+      "mergeCommitSha": "5b6f7d8b675da6ed361aa7b67bd4e590c68dd2e9"
+    },
+    {
+      "id": 4781183994,
+      "number": 19,
+      "title": "PR 19: Acceptance review package assembler",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/19",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:02:07.000Z",
+      "updatedAt": "2026-10-08T03:11:52.000Z",
+      "closedAt": "2026-10-08T03:11:52.000Z",
+      "mergedAt": "2026-10-08T03:11:52.000Z",
+      "headSha": "503884f503b13bdcb378f07bd50ca0249830c01e",
+      "baseRef": "pr-17-automated-release-promotion-bundle",
+      "mergeCommitSha": "91ba74b124a20622970338d7e557c7b0a0f9dba7"
+    },
+    {
+      "id": 4781158452,
+      "number": 18,
+      "title": "PR 18: Automated release-to-production promotion bundle",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/18",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T02:58:10.000Z",
+      "updatedAt": "2026-10-08T03:11:37.000Z",
+      "closedAt": "2026-10-08T03:11:36.000Z",
+      "mergedAt": "2026-10-08T03:11:36.000Z",
+      "headSha": "cdcfec75c43ee0d51423467272f387b010582ef6",
+      "baseRef": "main",
+      "mergeCommitSha": "8ec1d05026f6bb4f84638f24036961c1740138fc"
+    },
+    {
+      "id": 4780705560,
+      "number": 17,
+      "title": "PR 15: Mainline production deployment reconciliation",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/17",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T01:51:14.000Z",
+      "updatedAt": "2026-10-08T01:51:39.000Z",
+      "closedAt": "2026-10-08T01:51:39.000Z",
+      "mergedAt": null,
+      "headSha": "8f7cea06b5e53bccd04f453ea2c9c5d000c913a0",
+      "baseRef": "main",
+      "mergeCommitSha": null
+    },
+    {
+      "id": 4780474391,
+      "number": 16,
+      "title": "PR 16: Canonical rc.9 merged-engine pin",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/16",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T01:19:25.000Z",
+      "updatedAt": "2026-10-08T01:50:59.000Z",
+      "closedAt": "2026-10-08T01:50:59.000Z",
+      "mergedAt": "2026-10-08T01:50:59.000Z",
+      "headSha": "fd062c4c3514b96abae808575e25c11eac59065a",
+      "baseRef": "main",
+      "mergeCommitSha": "efed292aec3b7f6e5bc8046d8a21453d3e0ffaf2"
+    },
+    {
+      "id": 4780423292,
+      "number": 15,
+      "title": "PR 15: Land production deployment stack on main",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/15",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T01:11:43.000Z",
+      "updatedAt": "2026-10-08T01:15:24.000Z",
+      "closedAt": "2026-10-08T01:15:24.000Z",
+      "mergedAt": "2026-10-08T01:15:24.000Z",
+      "headSha": "15c25ae53cbeed24500f9105f8c934b7b7b91893",
+      "baseRef": "main",
+      "mergeCommitSha": "f6a472b8a1ddb7f06c99a7a8be1214712274e5c6"
+    },
+    {
+      "id": 4780289536,
+      "number": 14,
+      "title": "PR 14: Live production smoke evidence",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/14",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T00:51:51.000Z",
+      "updatedAt": "2026-10-08T01:03:54.000Z",
+      "closedAt": "2026-10-08T01:03:54.000Z",
+      "mergedAt": "2026-10-08T01:03:54.000Z",
+      "headSha": "b132a20413f221f27fd03c2a2966f706e305924a",
+      "baseRef": "pr-13-release-evidence-promotion",
+      "mergeCommitSha": "8f7cea06b5e53bccd04f453ea2c9c5d000c913a0"
+    },
+    {
+      "id": 4780259565,
+      "number": 13,
+      "title": "PR 13: Release-evidence-driven production promotion",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/13",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T00:47:12.000Z",
+      "updatedAt": "2026-10-08T01:03:52.000Z",
+      "closedAt": "2026-10-08T01:03:51.000Z",
+      "mergedAt": "2026-10-08T01:03:51.000Z",
+      "headSha": "e88eef9afb037e97a2ef910e4a2484c5fce69915",
+      "baseRef": "pr-12-readiness-aware-production",
+      "mergeCommitSha": "1b5b026517e7410cfc186f0bd19a0a4bcfd0d793"
+    },
+    {
+      "id": 4780216488,
+      "number": 12,
+      "title": "PR 12: Readiness-aware production routing",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/12",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T00:40:35.000Z",
+      "updatedAt": "2026-10-08T01:03:49.000Z",
+      "closedAt": "2026-10-08T01:03:49.000Z",
+      "mergedAt": "2026-10-08T01:03:49.000Z",
+      "headSha": "314f0838db1994161986ef61797b48565344a68c",
+      "baseRef": "pr-11-render-production-blueprint",
+      "mergeCommitSha": "e08821e11892bbf0da02e08700e19151acc23e6b"
+    },
+    {
+      "id": 4780179894,
+      "number": 11,
+      "title": "PR 11: Render production Blueprint",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/11",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T00:35:13.000Z",
+      "updatedAt": "2026-10-08T01:05:16.000Z",
+      "closedAt": "2026-10-08T01:03:47.000Z",
+      "mergedAt": "2026-10-08T01:03:47.000Z",
+      "headSha": "a8316315a6c33b6db95a1b61b51ea1402818a112",
+      "baseRef": "pr-10-rc8-merged-pin-cleanup",
+      "mergeCommitSha": "c7f36512b260b614101f023f4562b546286acda4"
+    },
+    {
+      "id": 4780155203,
+      "number": 10,
+      "title": "PR 10: PR 9 post-merge rc.8 pin cleanup",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/10",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T00:31:40.000Z",
+      "updatedAt": "2026-10-08T01:03:06.000Z",
+      "closedAt": "2026-10-08T01:03:06.000Z",
+      "mergedAt": "2026-10-08T01:03:06.000Z",
+      "headSha": "c82cc658f9df11150c809c942687a388137998df",
+      "baseRef": "main",
+      "mergeCommitSha": "8c23a47baec9fd0fe5990044dfd866245f60d34b"
+    },
+    {
+      "id": 4779745752,
+      "number": 9,
+      "title": "PR 9: Production runtime enablement",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/9",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T23:32:14.000Z",
+      "updatedAt": "2026-10-08T00:08:10.000Z",
+      "closedAt": "2026-10-08T00:08:10.000Z",
+      "mergedAt": "2026-10-08T00:08:10.000Z",
+      "headSha": "c246fcb19205a1c4f8efb3d902796c746a3abd60",
+      "baseRef": "main",
+      "mergeCommitSha": "53d71437eefb95ae1d451fa6a015e01e88c2d08c"
+    },
+    {
+      "id": 4778923436,
+      "number": 8,
+      "title": "PR 8: Security and deployment acceptance",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/8",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T21:51:44.000Z",
+      "updatedAt": "2026-10-07T22:53:09.000Z",
+      "closedAt": "2026-10-07T22:53:09.000Z",
+      "mergedAt": "2026-10-07T22:53:09.000Z",
+      "headSha": "39efac77604bd4a5357b42900afbffcdf5dbd60b",
+      "baseRef": "main",
+      "mergeCommitSha": "c002b2738114e02c7451b809a40f00424a6671de"
+    },
+    {
+      "id": 4778508741,
+      "number": 7,
+      "title": "PR 7: PR 6 post-merge rc.7 pin cleanup",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/7",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T21:08:38.000Z",
+      "updatedAt": "2026-10-07T21:33:44.000Z",
+      "closedAt": "2026-10-07T21:33:44.000Z",
+      "mergedAt": "2026-10-07T21:33:44.000Z",
+      "headSha": "9ffeeb6cd00e1dba46716f4764ad8d8d47c99d1e",
+      "baseRef": "main",
+      "mergeCommitSha": "dba2f3b6078280a2dabab2c4d5159a1f54be8222"
+    },
+    {
+      "id": 4777953140,
+      "number": 6,
+      "title": "PR 6: Operational SIG experience",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/6",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T20:15:52.000Z",
+      "updatedAt": "2026-10-07T20:45:32.000Z",
+      "closedAt": "2026-10-07T20:45:32.000Z",
+      "mergedAt": "2026-10-07T20:45:32.000Z",
+      "headSha": "ab348a7cb63ef90b566c409c87d70226f39d9b58",
+      "baseRef": "main",
+      "mergeCommitSha": "f8d05d1e20f952c83ada8097ea3f512dfce8a136"
+    },
+    {
+      "id": 4777488627,
+      "number": 5,
+      "title": "PR 5: Parallel agency referrals and accountability",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/5",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T19:32:04.000Z",
+      "updatedAt": "2026-10-07T19:57:00.000Z",
+      "closedAt": "2026-10-07T19:57:00.000Z",
+      "mergedAt": "2026-10-07T19:57:00.000Z",
+      "headSha": "7dc8a0ebcb311ecc011009333c23afbb89c83e0c",
+      "baseRef": "main",
+      "mergeCommitSha": "3fea79e05600987ff8c3c124d84f57f2bf11e20a"
+    },
+    {
+      "id": 4777163601,
+      "number": 4,
+      "title": "PR 4: Public supporting evidence",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/4",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T19:02:56.000Z",
+      "updatedAt": "2026-10-07T19:08:32.000Z",
+      "closedAt": "2026-10-07T19:08:32.000Z",
+      "mergedAt": "2026-10-07T19:08:32.000Z",
+      "headSha": "b2e35595b01be85d379524df6d3dbe4a08e2b1fb",
+      "baseRef": "main",
+      "mergeCommitSha": "67f785a2ff2e8be8f4364c5174259e2f78e57b6e"
+    },
+    {
+      "id": 4775435548,
+      "number": 3,
+      "title": "PR 3: Protected participant status and conditional secure messaging",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/3",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T16:23:46.000Z",
+      "updatedAt": "2026-10-07T16:41:26.000Z",
+      "closedAt": "2026-10-07T16:41:26.000Z",
+      "mergedAt": "2026-10-07T16:41:26.000Z",
+      "headSha": "9d12b5a081cd8ce0a61d9deb8eb5ba2434bbf9c7",
+      "baseRef": "main",
+      "mergeCommitSha": "8bd63675b53bf6ec5a95d92609e0c968fb015f18"
+    },
+    {
+      "id": 4762295637,
+      "number": 2,
+      "title": "PR 2: Protected submitter identity and source-defined privacy modes",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/2",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-06T17:23:10.000Z",
+      "updatedAt": "2026-10-06T17:26:01.000Z",
+      "closedAt": "2026-10-06T17:26:01.000Z",
+      "mergedAt": "2026-10-06T17:26:01.000Z",
+      "headSha": "60b4c12563d0d0aacda1eef5779f3bde145009cd",
+      "baseRef": "main",
+      "mergeCommitSha": "d62d3cdf64c95fefa0d3181113ff6e589cddbca1"
+    },
+    {
+      "id": 4761562709,
+      "number": 1,
+      "title": "PR 1: Foundation, engine contract, and safe unclassified SIG manifest",
+      "url": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/1",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-06T16:16:23.000Z",
+      "updatedAt": "2026-10-06T16:40:46.000Z",
+      "closedAt": "2026-10-06T16:40:45.000Z",
+      "mergedAt": "2026-10-06T16:40:45.000Z",
+      "headSha": "ff7efdbdb12c7715e569fed87b4d73971ca0905a",
+      "baseRef": "main",
+      "mergeCommitSha": "2bd635389bfac14f5ca1e3b4af075e162dd935ff"
+    }
+  ]
+}
