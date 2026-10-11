@@ -46,7 +46,7 @@ describe("header GitHub synchronization", () => {
     setup({ status: "partial", repositories: 1, failed: 3 });
     render(<LiveConnection />);
     fireEvent.click(screen.getByRole("button", { name: "Refresh GitHub data" }));
-    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("3 failed"));
+    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("3 PR queries failed"));
     expect(refresh).toHaveBeenCalledTimes(1);
   });
 
