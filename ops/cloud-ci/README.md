@@ -6,7 +6,7 @@ This is a **prepared bootstrap**, not a deployed runner. No Oracle account, VM, 
 
 Render Free is not an always-on runner solution: it sleeps on inbound inactivity, limits RAM and consumes shared free instance hours. Use an Always Free compute VM instead.
 
-Oracle Always Free ARM Ampere A1 allowance (October 2026): **2 OCPUs / 12 GB RAM equivalent**. Choose an Always Free eligible Ubuntu ARM64 VM within limits in your **home region**, with its free-tier-eligible boot volume, and check the console estimate is **$0** before creating it. Availability is not guaranteed. Do not upgrade to pay-as-you-go or accept paid addons. Account identity/payment-method verification may be required by the cloud provider.
+Oracle Always Free ARM Ampere A1 allowance (October 2026): **2 OCPUs / 12 GB RAM equivalent**. Choose an Always Free eligible Ubuntu ARM64 VM within limits in your **home region**, with its free-tier-eligible boot volume, and check the console estimate is **$0** before creating it. Availability is not guaranteed. Oracle may reclaim instances that remain under its idle-CPU, memory and network thresholds for seven days; this is best-effort cloud capacity, not guaranteed always-on availability. Do not defeat idle reclamation with artificial load. Do not upgrade to pay-as-you-go or accept paid addons. Registration requires a credit/debit card and can produce a temporary verification authorization hold, even though qualifying free resources are not charged.
 
 ## Bootstrap one repository (first pilot: HEARD)
 
