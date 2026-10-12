@@ -82,6 +82,28 @@ describe('structured PR importer independent of private GitHub access',()=>{
     expect(db.statements.some(x=>x.includes('INSERT INTO project_plan_documents'))).toBe(false);
     expect(db.statements.some(x=>x.includes('INSERT INTO project_plan_items'))).toBe(false);
   });
+  it('skips unmodified materialized roadmap rows rather than rewriting them',async()=>{
+    const db=database([{id:'a',name:'Live-Competition-Engine',
+      full_name:'neophilism/Live-Competition-Engine',default_branch:'main'}]);
+    const actual=db.pool.query.bind(db.pool);
+    const client={query:async(sql:string,params?:unknown[])=>{
+      if(sql.includes('SELECT 1 FROM project_plan_documents') && sql.includes('fingerprint=$3'))
+        return {rows:[{exists:1}],rowCount:1};
+      if(sql.includes('SELECT ordinal,github_pr_numbers,mapping_reason,contributing_pr_numbers'))
+        return {rows:[
+          {ordinal:1,github_pr_numbers:[],mapping_reason:null,contributing_pr_numbers:[]},
+          {ordinal:2,github_pr_numbers:[],mapping_reason:null,contributing_pr_numbers:[]}
+        ],rowCount:2};
+      return actual(sql,params);
+    },release:vi.fn()};
+    db.pool.connect=async()=>client as never;
+    const out=await reconcilePlanSources(db.pool,{
+      fetcher:async()=>new Response(registry('Live-Competition-Engine',2))
+    });
+    expect(out).toMatchObject({registered:1,imported:1,failed:0});
+    expect(db.statements.some(sql=>sql.includes('INSERT INTO project_plan_items'))).toBe(false);
+    expect(db.statements.some(sql=>sql.includes('INSERT INTO project_plan_documents'))).toBe(false);
+  });
   it('never overwrites a newer webhook observation from a stale snapshot',async()=>{
     const db=database([{id:'m',name:'Music-Analyzer',full_name:'neophilism/Music-Analyzer',default_branch:'main'}],
       [{number:1,updated_at:new Date('2026-10-11T20:00:00.000Z')}]);
