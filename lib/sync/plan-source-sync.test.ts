@@ -14,12 +14,15 @@ function registry(name:string,n:number,prs:unknown[]=[]){
     units:Array.from({length:n},(_,i)=>({id:'T-'+String(i+1).padStart(2,'0'),title:'Approved work '+(i+1),
       origin:'original',prs:i===0&&prs.length?[1]:[]})),pullRequests:prs});
 }
-function database(rows:Repo[],prior:Array<{number:number;updated_at:Date}>=[]){
+function database(rows:Repo[],prior:Array<{number:number;updated_at:Date}>=[],savedPlan=false){
   const statements:string[]=[];
   const query=async(sql:string)=>{
     statements.push(sql);
     if(sql.includes('SELECT DISTINCT r.id'))return {rows,rowCount:rows.length};
     if(sql.includes('SELECT number,updated_at FROM github_pull_requests'))return {rows:prior,rowCount:prior.length};
+    if(sql.includes('SELECT 1 FROM project_plan_documents'))return {
+      rows:savedPlan?[{exists:1}]:[],rowCount:savedPlan?1:0
+    };
     if(sql.includes('SELECT fingerprint FROM project_plan_documents'))return {rows:[],rowCount:0};
     return {rows:[],rowCount:1};
   };
@@ -46,6 +49,18 @@ describe('structured PR importer independent of private GitHub access',()=>{
     expect(db.statements.filter(x=>x.includes('INSERT INTO project_plan_items'))).toHaveLength(16);
     expect(db.statements.filter(x=>x.includes('INSERT INTO github_pull_requests'))).toHaveLength(1);
     expect(db.statements.some(x=>x.includes('last_success_at'))).toBe(false);
+  });
+  it('never downgrades a previously imported plan when GitHub is inaccessible',async()=>{
+    const db=database([{id:'m',name:'Music-Analyzer',
+      full_name:'neophilism/Music-Analyzer',default_branch:'main'}],[],true);
+    const out=await reconcilePlanSources(db.pool,{
+      fetcher:async()=>new Response('',{status:404}),
+      readSnapshot:async()=>registry('Music-Analyzer',16,[pr])
+    });
+    expect(out).toMatchObject({registered:1,imported:0,failed:1});
+    expect(out.errors[0].error).toContain('previous plan retained');
+    expect(db.statements.some(x=>x.includes('INSERT INTO project_plan_documents'))).toBe(false);
+    expect(db.statements.some(x=>x.includes('INSERT INTO project_plan_items'))).toBe(false);
   });
   it('never overwrites a newer webhook observation from a stale snapshot',async()=>{
     const db=database([{id:'m',name:'Music-Analyzer',full_name:'neophilism/Music-Analyzer',default_branch:'main'}],
