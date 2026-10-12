@@ -11,7 +11,8 @@ export type {
   PortfolioRepositoryProgress,
   PortfolioStatistics
 } from "../domain/portfolio-overview";
-import { calculatePortfolioStatistics } from "../domain/portfolio-statistics";
+import { calculatePortfolioStatistics, effectiveProjectStatus } from "../domain/portfolio-statistics";
+import aboutSeeds from "../config/repository-about-seed.json";
 export { calculatePortfolioStatistics } from "../domain/portfolio-statistics";
 import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
 import { getDatabasePool } from "./database";
@@ -28,6 +29,7 @@ export type PortfolioOverviewRow = {
   status: ProjectStatus;
   repository_full_name: string | null;
   repository_html_url: string | null;
+  github_description?: string | null;
   planned_pr_total: number | null;
   completed_count: string | number;
   in_progress_count: string | number;
@@ -61,7 +63,7 @@ export function normalizePortfolioRows(
       id: row.id,
       displayName: row.display_name,
       slug: row.slug,
-      summary: row.summary ?? undefined,
+      summary: row.github_description?.trim() || row.summary?.trim() || undefined,
       status: row.status,
       repositoryFullName: row.repository_full_name ?? undefined,
       repositoryUrl: row.repository_html_url ?? undefined,
@@ -141,6 +143,7 @@ export async function loadPortfolioOverview(
            p.slug,
            p.summary,
            p.status,
+           r.github_description,
            r.full_name as repository_full_name,
            r.html_url as repository_html_url,
            dp.planned_pr_total,
@@ -166,6 +169,7 @@ export async function loadPortfolioOverview(
            p.summary,
            p.status,
            p.slug,
+           r.github_description,
            r.full_name,
            r.default_branch,
            r.html_url,
@@ -213,18 +217,25 @@ export async function loadPortfolioOverview(
     const monitor=await loadProjectMonitorData(client);
     const latestUpdates=await loadProjectUpdates(client);
     const securityStatuses=await loadProjectSecurityStatuses(client);
-    projects=projects.map(project=>({...project,latestUpdate:latestUpdates.get(project.id),securityStatuses:securityStatuses.get(project.id)||[]}));
+    const seededDescriptions=new Map(aboutSeeds.entries.map(entry=>[entry.repository,entry.description]));
+    projects=projects.map(project=>({
+      ...project,
+      summary:project.summary?.trim() || (project.repositoryFullName ? seededDescriptions.get(project.repositoryFullName) : undefined),
+      latestUpdate:latestUpdates.get(project.id),
+      securityStatuses:securityStatuses.get(project.id)||[]
+    }));
     projects=projects.map(project=>{
       const plan=monitor.plans.get(project.id);
+      const status=effectiveProjectStatus(project.status,monitor.summaries.get(project.id)?.total ?? 0);
       const structured=!!plan?.documents.some(doc=>doc.path==="registry/prs.json");
       if(structured && plan){
         const planned=plan.original+plan.added,completed=plan.originalComplete+plan.addedComplete;
-        return {...project,planned,completed,percent:percentage(completed,planned),
+        return {...project,status,planned,completed,percent:percentage(completed,planned),
           inProgress:plan.items.filter(item=>item.state==="in-progress").length,
           completionMeasured:planned>0&&plan.unmapped===0,
           activity:monitor.summaries.get(project.id),pullRequests:monitor.pullRequests.get(project.id)||[],sourcePlan:plan};
       }
-      return {...project,...(!project.planned&&plan?.original?{planned:plan.original,completed:plan.originalComplete,percent:percentage(plan.originalComplete,plan.original),
+      return {...project,status,...(!project.planned&&plan?.original?{planned:plan.original,completed:plan.originalComplete,percent:percentage(plan.originalComplete,plan.original),
         inProgress:plan.items.filter(item=>item.scope==='original'&&item.state==='in-progress').length}:{}),
         completionMeasured:project.planned>0?project.completionMeasured!==false:!!plan?.original&&!plan.items.some(item=>item.scope==='original'&&item.state==='unmapped'),
         activity:monitor.summaries.get(project.id),pullRequests:monitor.pullRequests.get(project.id)||[],sourcePlan:plan};
