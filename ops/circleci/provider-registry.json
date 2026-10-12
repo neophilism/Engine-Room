@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "circleci_org": {
+    "slug": "circleci/6Vqi2CTeH5RHCx66K21Noh",
+    "url": "https://app.circleci.com/organization/circleci/6Vqi2CTeH5RHCx66K21Noh",
+    "selection": "user-specified-2026-10-12",
+    "vcs_provider": "GitHub App Cloud",
+    "github_owner": "neophilism",
+    "connection_state": "connected-verified-by-user-screenshot",
+    "other_circleci_organizations_allowed_for_this_onboarding": false
+  },
+  "billing": {
+    "plan": "Free only",
+    "monthly_spend_usd_max": 0,
+    "account_rotation_to_circumvent_quotas": false,
+    "stop_on_credits_exhausted": true
+  },
+  "acceptance": {
+    "status": "pending-provider-run-verification",
+    "all_required_jobs_must_pass": true,
+    "matching_tested_sha_required": true,
+    "merges_blocked_on_failed_or_unrun_required_checks": true,
+    "security_record_not_certification": true
+  },
+  "project_activation": {
+    "project_name_strategy": "match GitHub repository name",
+    "config_file": ".circleci/config.yml",
+    "config_and_checkout_source": "same GitHub repository",
+    "trigger_policy": "pilot first, avoid all-repo launch and credit exhaustion"
+  },
+  "projects": [
+    {
+      "name": "Algorithmic-Accountability",
+      "repository": "neophilism/Algorithmic-Accountability",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/Algorithmic-Accountability/pull/15",
+      "verification_scope": "full",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "Engine-Room",
+      "repository": "neophilism/Engine-Room",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/Engine-Room/pull/97",
+      "verification_scope": "full",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "FiresideChat",
+      "repository": "neophilism/FiresideChat",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/FiresideChat/pull/51",
+      "verification_scope": "full",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "Galinsky-2028",
+      "repository": "neophilism/Galinsky-2028",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/Galinsky-2028/pull/70",
+      "verification_scope": "full",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "HEARD",
+      "repository": "neophilism/HEARD",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/HEARD/pull/3",
+      "verification_scope": "full",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "Justic-For-All",
+      "repository": "neophilism/Justic-For-All",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/Justic-For-All/pull/22",
+      "verification_scope": "full",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "MMS",
+      "repository": "neophilism/MMS",
+      "config_branch": "ci/circleci-status-integrity-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/MMS/pull/2",
+      "verification_scope": "status-only",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "Music-Analyzer",
+      "repository": "neophilism/Music-Analyzer",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/Music-Analyzer/pull/20",
+      "verification_scope": "full-with-macos",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "Music_Video_Wizard",
+      "repository": "neophilism/Music_Video_Wizard",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/Music_Video_Wizard/pull/66",
+      "verification_scope": "full",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "National-Secure-Ideas-Submission",
+      "repository": "neophilism/National-Secure-Ideas-Submission",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/National-Secure-Ideas-Submission/pull/25",
+      "verification_scope": "full-excluding-release-operations",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "NFT-Minting-Console",
+      "repository": "neophilism/NFT-Minting-Console",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/NFT-Minting-Console/pull/19",
+      "verification_scope": "full",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "RAM-Marketplace",
+      "repository": "neophilism/RAM-Marketplace",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/RAM-Marketplace/pull/24",
+      "verification_scope": "full",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "Rap-Battle-Platform",
+      "repository": "neophilism/Rap-Battle-Platform",
+      "config_branch": "ci/circleci-status-integrity-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/Rap-Battle-Platform/pull/2",
+      "verification_scope": "status-only",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "SceneSignal",
+      "repository": "neophilism/SceneSignal",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/SceneSignal/pull/18",
+      "verification_scope": "full",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "Smart-Cities-Surveillance-Registry",
+      "repository": "neophilism/Smart-Cities-Surveillance-Registry",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/29",
+      "verification_scope": "full",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "Stems-White-Label",
+      "repository": "neophilism/Stems-White-Label",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/Stems-White-Label/pull/31",
+      "verification_scope": "full",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "The-Cornerstone",
+      "repository": "neophilism/The-Cornerstone",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/The-Cornerstone/pull/22",
+      "verification_scope": "full",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "The-Garden",
+      "repository": "neophilism/The-Garden",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/The-Garden/pull/44",
+      "verification_scope": "full",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "The-Public-Record",
+      "repository": "neophilism/The-Public-Record",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/The-Public-Record/pull/25",
+      "verification_scope": "full",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "TrackZero",
+      "repository": "neophilism/TrackZero",
+      "config_branch": "ci/circleci-native-full-suite-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/TrackZero/pull/3",
+      "verification_scope": "planning-and-status-only",
+      "provider_pipeline_state": "not_verified"
+    },
+    {
+      "name": "Unsealed-Records-Command-Center",
+      "repository": "neophilism/Unsealed-Records-Command-Center",
+      "config_branch": "ci/circleci-status-integrity-20261012",
+      "config_path": ".circleci/config.yml",
+      "github_pr": "https://github.com/neophilism/Unsealed-Records-Command-Center/pull/3",
+      "verification_scope": "status-only",
+      "provider_pipeline_state": "not_verified"
+    }
+  ]
+}
