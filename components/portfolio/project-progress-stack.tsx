@@ -22,6 +22,8 @@ export function ProjectProgressStack({
   const unmappedUnits = project.sourcePlan?.unmapped ?? 0;
   const mergedGitHubPrs = project.activity?.merged ?? 0;
   const unverifiedEvidence = Boolean(progress && unmappedUnits > 0);
+  const contributingPackages=project.sourcePlan?.items.filter(item=>
+    item.state==="in-progress" && (item.contributingNumbers?.length??0)>0).length??0;
   const missingPlanWithWork = !progress && mergedGitHubPrs > 0;
   const drawerId = useId();
   const aggregatorDeferred = ["FOIA_Bias_Analysis", "Send_FOIA_Log_Requests"]
@@ -70,15 +72,15 @@ export function ProjectProgressStack({
       <div className="project-quick-links">
         {mergedGitHubPrs > 0 && <strong className="project-merged-count">{mergedGitHubPrs} GitHub PRs merged overall</strong>}
         <span className="project-activity">{unverifiedEvidence
-          ? `${unmappedUnits} planned units have no explicit PR association yet · ${progress?.inProgress ?? 0} open mapped · ${progress?.completed ?? 0} merged mapped`
+          ? `${unmappedUnits} packages await accepted completion evidence · ${contributingPackages} show contributing PR activity · ${progress?.inProgress ?? 0} underway · ${progress?.completed ?? 0} accepted`
           : progress
-            ? `${progress.notStarted} not started · ${progress.inProgress} open · ${progress.completed} merged`
+            ? `${progress.notStarted} not started · ${progress.inProgress} underway · ${progress.completed} accepted`
             : missingPlanWithWork
               ? `Plan unverified · ${mergedGitHubPrs} GitHub PRs merged · progress not measurable`
               : aggregatorDeferred
                 ? "Development deferred until FOIA Aggregator reaches broad source coverage"
                 : "Source plan not yet verified"}</span>
-        {progress?.inProgress ? <span className="project-open-count">{progress.inProgress} PRs open / awaiting merge</span> : null}
+        {progress?.inProgress ? <span className="project-open-count">{progress.inProgress} packages underway / awaiting acceptance</span> : null}
         {githubRepositoryUrl(project.repositoryFullName) && <a href={githubRepositoryUrl(project.repositoryFullName)} target="_blank" rel="noopener noreferrer">Open repository ↗</a>}
       </div>
 
