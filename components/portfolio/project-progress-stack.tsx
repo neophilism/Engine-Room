@@ -9,7 +9,6 @@ import { summarizePlannedProgress } from "../../lib/domain/planned-progress";
 import { ProjectAccordions } from "./project-accordions";
 import { githubRepositoryUrl } from "../../lib/domain/portfolio-query";
 import {ProjectLastUpdate} from '../projects/project-last-update';
-import {SecurityStandardStatus} from '../projects/security-standard-status';
 
 export function ProjectProgressStack({
   project,
@@ -67,7 +66,6 @@ export function ProjectProgressStack({
         <span className="percentage" title={progress ? "Completed planned units divided by all planned units" : "No documented development plan"}>{progress ? `${progress.percent}%` : "N/A"}</span>
       </header>
       <ProjectLastUpdate update={project.latestUpdate}/>
-      <SecurityStandardStatus statuses={project.securityStatuses}/>
 
       <div className="project-quick-links">
         {mergedGitHubPrs > 0 && <strong className="project-merged-count">{mergedGitHubPrs} GitHub PRs merged overall</strong>}
