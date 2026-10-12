@@ -50,6 +50,26 @@ describe('structured PR importer independent of private GitHub access',()=>{
     expect(db.statements.filter(x=>x.includes('INSERT INTO github_pull_requests'))).toHaveLength(1);
     expect(db.statements.some(x=>x.includes('last_success_at'))).toBe(false);
   });
+  it('imports existing repository-owned canonical roadmap without requiring prs.json or a snapshot',async()=>{
+    const db=database([{id:'s',name:'Superintelligence-Academy',
+      full_name:'neophilism/Superintelligence-Academy',default_branch:'main'}]);
+    const canonical=JSON.stringify({repository:'neophilism/Superintelligence-Academy',
+      version:1,planVerified:true,plannedPrCount:2,milestones:[
+        {id:'SIA-001',title:'Application foundation',pullRequests:[1]},
+        {id:'SIA-002',title:'Shared SSO',pullRequests:[]}
+      ]});
+    const fetcher=vi.fn(async(url:string)=>{
+      if(url.includes('/registry/roadmap.json'))return new Response(canonical);
+      return new Response('',{status:404});
+    });
+    const fallback=vi.fn(async()=>{throw Error('Bundled snapshot should not be read');});
+    const out=await reconcilePlanSources(db.pool,{fetcher:fetcher as unknown as typeof fetch,readSnapshot:fallback});
+    expect(out).toMatchObject({registered:1,imported:1,failed:0,fromRepository:1,fromSnapshot:0});
+    expect(out.completed[0]).toMatchObject({repo:'Superintelligence-Academy',units:2});
+    expect(db.statements.filter(sql=>sql.includes('INSERT INTO project_plan_items'))).toHaveLength(2);
+    expect(fetcher.mock.calls.some(call=>String(call[0]).endsWith('/registry/roadmap.json'))).toBe(true);
+    expect(fallback).not.toHaveBeenCalled();
+  });
   it('never downgrades a previously imported plan when GitHub is inaccessible',async()=>{
     const db=database([{id:'m',name:'Music-Analyzer',
       full_name:'neophilism/Music-Analyzer',default_branch:'main'}],[],true);
