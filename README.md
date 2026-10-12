@@ -1,5 +1,10 @@
 # Engine Room
 
+GitHub About descriptions supply project summaries on every background and
+manual source refresh. Engine-dependent project cards are nested, and each card
+shows the latest GitHub development update with its source timestamp and type.
+See [GitHub metadata and activity](docs/GITHUB_METADATA_AND_ACTIVITY.md).
+
 **Full development plan and cross-account handoff:** [docs/DEVELOPMENT_PLAN.md](docs/DEVELOPMENT_PLAN.md).
 
 Engine Room is an invite-only executive software-portfolio control room for tracking real projects, GitHub development activity, verified development plans, deployments, service operations, releases, and monitoring.
@@ -40,3 +45,4 @@ For production, the existing `npm start` launcher enforces migrations before sta
 - Production sign-off requires verified backups/restores, monitoring alerts, credential handling, accessibility, security review, and measured runtime performance.
 
 Quality gates include typecheck, lint, migrations, roadmap checks, unit/integration tests, build, and browser acceptance. See [production-availability monitoring](docs/production-availability.md) for independent public checks and release-identity verification.
+

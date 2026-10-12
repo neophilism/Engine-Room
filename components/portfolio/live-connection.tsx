@@ -9,6 +9,8 @@ type SynchronizationOutcome = {
   status?: "succeeded" | "partial" | "disabled" | "rate-limited";
   repositories?: number;
   failed?: number;
+  metadataFailures?: number;
+  activityFailures?: number;
   processed?: number;
   error?: string;
   rateLimitResetAt?: string | null;
@@ -16,13 +18,16 @@ type SynchronizationOutcome = {
 };
 
 type SyncFeedback = { kind: "success" | "warning" | "error"; message: string };
+export const SYNC_FEEDBACK_MS = 10_000;
 
 function describeSynchronization(outcome: SynchronizationOutcome): SyncFeedback {
   const synced = Number(outcome.repositories || 0);
   const failed = Number(outcome.failed || 0);
   const planned = outcome.structured;
   const saved = planned?.imported || 0;
-  const detail = saved > 0 ? " Approved plans: "+saved+" processed ("+(planned?.fromRepository||0)+" live repository files; "+(planned?.fromSnapshot||0)+" historical fallbacks; "+(planned?.inferredByExactId||0)+" live work IDs matched).": "";
+  const metadataErrors=(outcome.metadataFailures||0)+(outcome.activityFailures||0);
+  const detail = (saved > 0 ? " Approved plans: "+saved+" processed ("+(planned?.fromRepository||0)+" live repository files; "+(planned?.fromSnapshot||0)+" historical fallbacks; "+(planned?.inferredByExactId||0)+" live work IDs matched).": "")+
+    (metadataErrors>0?` ${outcome.metadataFailures||0} About queries and ${outcome.activityFailures||0} activity queries failed.`:'');
 
   if (outcome.status === "disabled") {
     return { kind: "warning", message: "GitHub synchronization is paused in Settings. Enable it to fetch new data." };
@@ -31,7 +36,7 @@ function describeSynchronization(outcome: SynchronizationOutcome): SyncFeedback 
     const reset = outcome.rateLimitResetAt ? " Try again after " + new Date(outcome.rateLimitResetAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) + "." : " Please try again after GitHub resets its API allowance.";
     return { kind: "warning", message: "GitHub API rate limit: " + synced + " repositories refreshed." + reset + detail + " Live GitHub status remains stale for unrefreshed repositories." };
   }
-  if (outcome.status === "partial" || failed > 0) {
+  if (outcome.status === "partial" || failed > 0 || metadataErrors > 0) {
     return { kind: "warning", message: "Partial GitHub refresh: " + synced + " repositories checked, " + failed + " PR queries failed." + detail + " Any fallback plan is historical, not a successful live file refresh." };
   }
   if (outcome.status === "succeeded" && synced > 0) {
@@ -48,6 +53,12 @@ export function LiveConnection() {
   const [unavailable, setUnavailable] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [feedback, setFeedback] = useState<SyncFeedback | null>(null);
+
+  useEffect(() => {
+    if (!feedback) return;
+    const timer = window.setTimeout(() => setFeedback(null), SYNC_FEEDBACK_MS);
+    return () => window.clearTimeout(timer);
+  }, [feedback]);
 
   useEffect(() => {
     let source: EventSource | undefined, active = true, revision: string | undefined, sessionExpired = false;
@@ -109,7 +120,8 @@ export function LiveConnection() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mode: "manual" }),
-        cache: "no-store"
+        cache: "no-store",
+        signal: AbortSignal.timeout(150_000)
       });
       let outcome: SynchronizationOutcome = {};
       try { outcome = await response.json() as SynchronizationOutcome; }
@@ -166,7 +178,11 @@ export function LiveConnection() {
         </span>
       </button>
       {expired && <Link href="/login">Sign in again</Link>}
-      {feedback && <div className={"live-sync-feedback is-" + feedback.kind} role="status">{feedback.message}</div>}
+      {feedback && <div className={"live-sync-feedback is-" + feedback.kind} role="status">
+        <span>{feedback.message}</span>
+        <button type="button" aria-label="Dismiss refresh notification" onClick={() => setFeedback(null)}>×</button>
+      </div>}
     </div>
   );
 }
+

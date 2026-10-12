@@ -1,9 +1,9 @@
 {
   "repository": "neophilism/Engine-Room",
   "title": "Engine Room",
-  "version": 6,
+  "version": 7,
   "planVerified": true,
-  "plannedPrCount": 50,
+  "plannedPrCount": 51,
   "sourceFiles": [
     ".exechub/project.yml",
     "docs/development-plan.md",
@@ -410,7 +410,14 @@
       "pullRequests": [
         88
       ]
+    },
+    {
+      "id": "ER-051",
+      "title": "Dismiss refresh feedback, nest engine implementations and sync GitHub About descriptions and latest source activity",
+      "origin": "addition",
+      "pullRequests": []
     }
   ],
   "scopeNote": "40 original approved work packages, 3 independently documented portfolio-monitor additions (PRs #56–58), and 2 user-requested universal repository roadmap/synchronization work packages (#81–82). Source roadmap IDs and actual PR numbers remain separate."
 }
+

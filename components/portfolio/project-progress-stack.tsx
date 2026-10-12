@@ -8,6 +8,7 @@ import { PlannedProgressTube } from "./planned-progress-tube";
 import { summarizePlannedProgress } from "../../lib/domain/planned-progress";
 import { ProjectAccordions } from "./project-accordions";
 import { githubRepositoryUrl } from "../../lib/domain/portfolio-query";
+import {ProjectLastUpdate} from '../projects/project-last-update';
 
 export function ProjectProgressStack({
   project,
@@ -40,7 +41,8 @@ export function ProjectProgressStack({
     repositories.reduce((total, repository) => total + repository.planned, 0) === progress.planned;
 
   return (
-    <article className="project-progress-stack">
+    <article className="project-progress-stack" data-hierarchy-depth={nameIndent}
+      style={{ "--project-depth": nameIndent } as React.CSSProperties}>
       <header className="project-progress-heading">
         <button
           className="disclosure"
@@ -57,12 +59,13 @@ export function ProjectProgressStack({
             ▶
           </span>
         </button>
-        <strong className={nameIndent > 0 ? "project-name-indent" : undefined}><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>
+        <strong><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>
         <span className="count">
           {progress ? `${progress.completed}/${progress.planned} planned` : aggregatorDeferred ? "Awaiting corpus" : "Plan unavailable"}
         </span>
         <span className="percentage" title={progress ? "Completed planned units divided by all planned units" : "No documented development plan"}>{progress ? `${progress.percent}%` : "N/A"}</span>
       </header>
+      <ProjectLastUpdate update={project.latestUpdate}/>
 
       <div className="project-quick-links">
         {mergedGitHubPrs > 0 && <strong className="project-merged-count">{mergedGitHubPrs} GitHub PRs merged overall</strong>}
@@ -127,3 +130,4 @@ export function ProjectProgressStack({
     </article>
   );
 }
+

@@ -1,7 +1,7 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { LiveConnection } from "./live-connection";
+import { LiveConnection,SYNC_FEEDBACK_MS } from "./live-connection";
 
 const refresh = vi.hoisted(() => vi.fn());
 vi.mock("next/navigation", () => ({ useRouter: () => ({ refresh }) }));
@@ -20,6 +20,7 @@ afterEach(() => {
   globalThis.EventSource = originalEventSource;
   fetchMock.mockReset();
   refresh.mockReset();
+  vi.useRealTimers();
 });
 
 function setup(outcome: object, status = 200) {
@@ -31,6 +32,23 @@ function setup(outcome: object, status = 200) {
 }
 
 describe("header GitHub synchronization", () => {
+  it("automatically removes the completed refresh notification", async () => {
+    vi.useFakeTimers();
+    setup({status:'succeeded',repositories:2,failed:0});
+    render(<LiveConnection/>);
+    await act(async()=>{fireEvent.click(screen.getByRole('button',{name:'Refresh GitHub data'}));});
+    expect(screen.getByRole('status')).toHaveTextContent('2 repositories checked');
+    await act(async()=>{vi.advanceTimersByTime(SYNC_FEEDBACK_MS);});
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
+  it("allows an error notice to be dismissed immediately", async () => {
+    setup({error:'Unavailable'},503);
+    render(<LiveConnection/>);
+    fireEvent.click(screen.getByRole('button',{name:'Refresh GitHub data'}));
+    await waitFor(()=>expect(screen.getByRole('status')).toHaveTextContent('Unavailable'));
+    fireEvent.click(screen.getByRole('button',{name:'Dismiss refresh notification'}));
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
   it("performs a manual GitHub sync, then refreshes the dashboard", async () => {
     setup({ status: "succeeded", repositories: 2, failed: 0 });
     render(<LiveConnection />);
@@ -74,3 +92,4 @@ describe("header GitHub synchronization", () => {
     expect(refresh).not.toHaveBeenCalled();
   });
 });
+

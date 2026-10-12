@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "repository": "neophilism/Engine-Room",
-  "roadmapVersion": 6,
+  "roadmapVersion": 7,
   "planVerified": true,
-  "plannedPrCount": 50,
+  "plannedPrCount": 51,
   "observedAt": "2026-10-11T22:57:44.640Z",
   "units": [
     {
@@ -405,6 +405,12 @@
       "prs": [
         88
       ]
+    },
+    {
+      "id": "ER-051",
+      "title": "Dismiss refresh feedback, nest engine implementations and sync GitHub About descriptions and latest source activity",
+      "origin": "addition",
+      "prs": []
     }
   ],
   "pullRequests": [
@@ -1685,3 +1691,4 @@
     }
   ]
 }
+
