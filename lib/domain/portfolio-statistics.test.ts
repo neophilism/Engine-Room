@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calculatePortfolioWorkload } from "./portfolio-statistics";
+import { calculatePortfolioStatistics, calculatePortfolioWorkload } from "./portfolio-statistics";
 import type { PortfolioProjectOverview } from "./portfolio-overview";
 
 const project = (id: string, completed: number, planned: number, inProgress = 0): PortfolioProjectOverview => ({
@@ -42,4 +42,22 @@ describe("portfolio workload", () => {
       .toMatchObject({ completedRoadmapPrs: 49, plannedRoadmapPrs: 100, percent: 49, remaining: 51 });
   });
 
+});
+
+describe("automatic active project classification", () => {
+  it("counts 42 developing projects even when 16 retain the original registration state", () => {
+    const projects=Array.from({length:42},(_,i)=>({
+      ...project("project-"+i,0,1),status:i<16?"planned" as const:"active-development" as const,
+      activity:{total:1,merged:1,open:0,drafts:0,failedChecks:0,runningChecks:0,lastObservedAt:null}
+    }));
+    expect(calculatePortfolioStatistics(projects)).toMatchObject({projects:42,activeProjects:42});
+  });
+  it("does not count genuinely unstarted or deliberately paused projects", () => {
+    const projects=["planned","paused","archived","complete","live"].map((status,i)=>({
+      ...project("project-"+i,0,1),
+      status:status as PortfolioProjectOverview["status"],
+      activity:{total:i===0?0:4,merged:0,open:0,drafts:0,failedChecks:0,runningChecks:0,lastObservedAt:null}
+    }));
+    expect(calculatePortfolioStatistics(projects)).toMatchObject({projects:5,activeProjects:1});
+  });
 });

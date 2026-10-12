@@ -4,6 +4,7 @@ import { SourcePlan } from "../projects/source-plan";
 import { ProjectFeatures } from "../projects/project-features";
 import {projectDashboardHref} from '../../lib/domain/project-dashboard';
 import { summarizePlannedProgress } from "../../lib/domain/planned-progress";
+import { SecurityStandardStatus } from "../projects/security-standard-status";
 
 export function ProjectAccordions({
   project
@@ -22,10 +23,17 @@ export function ProjectAccordions({
             {project.summary?.trim() ||
               "No project summary has been registered yet."}
           </p>
-          {project.repositoryFullName && <small>Summary from the repository’s GitHub About description.</small>}
+          {project.repositoryFullName && <small>GitHub About description when available; approved project description otherwise.</small>}
         </div>
       </details>
 
+      {!!project.securityStatuses?.some(status=>status.state!=="excluded") && (
+        <details className="project-accordion"><summary>End-to-End Everywhere</summary>
+          <div className="project-accordion-body">
+            <SecurityStandardStatus statuses={project.securityStatuses}/>
+          </div>
+        </details>
+      )}
       <details className="project-accordion"><summary>Original roadmap and added work</summary><div className="project-accordion-body"><SourcePlan plan={project.sourcePlan} historyHref={projectDashboardHref(project)+'/plans'}/></div></details>
       <details className="project-accordion">
         <summary>Features</summary>
