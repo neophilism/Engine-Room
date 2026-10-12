@@ -41,7 +41,7 @@ export function GitHubSourceReadout() {
         {failures.length > 0 ? ` ${failures.length} have synchronization errors; their counts may be historical.` : " No repository synchronization errors are recorded."}
       </p>}
       {denied > 0 && <p className="metric-freshness">
-        <strong>{denied} repositories are inaccessible to Engine Room's current GitHub credential.</strong>
+        <strong>{denied} repositories are inaccessible to Engine Room&apos;s current GitHub credential.</strong>
         {" "}For private repository monitoring, update the existing <code>GITHUB_READ_TOKEN</code> in Render
         using a GitHub token authorized for the repositories, with read-only Contents and Pull requests
         permissions (and Metadata read access). The token must also have access to the private repositories
