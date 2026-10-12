@@ -23,8 +23,6 @@ export function PortfolioRefresh() {
   }, [router, pending]);
 
   return <div className="portfolio-refresh">
-    <span aria-live="polite">{pending ? "Refreshing portfolio…" : "Reloads saved dashboard data every 30 seconds · GitHub sync is in the header"}</span>
-    <button type="button" className="portfolio-control-button" disabled={pending}
-      onClick={() => startTransition(() => router.refresh())}>Reload display</button>
+    <span aria-live="polite">{pending ? "Updating the dashboard…" : "Dashboard updates every 30 seconds · use Refresh in the header to fetch GitHub"}</span>
   </div>;
 }
