@@ -73,8 +73,8 @@ export async function loadPublicGitHubStatus(env: EnvironmentSource = process.en
         count(g.id) filter(where g.merged_at is not null)::integer as merged,
         s.last_success_at,s.last_attempt_at,s.last_error,
         (select d.source_ref from project_plan_documents d
-         where d.repository_id=r.id and d.path='registry/prs.json'
-         order by d.version_id desc limit 1) as source_ref
+         where d.repository_id=r.id and d.path in ('registry/prs.json','registry/roadmap.json')
+         order by case when d.path='registry/prs.json' then 0 else 1 end, d.version_id desc limit 1) as source_ref
        from repositories r
        left join github_repository_sync s on s.repository_id=r.id
        left join github_pull_requests g on g.repository_id=r.id

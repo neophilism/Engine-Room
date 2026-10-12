@@ -73,6 +73,8 @@ export function PortfolioHome({
         <span>Original and newly added work share the same total.</span>
       </p>
 
+      <GitHubSourceReadout />
+
       <section className="dashboard-primary-section" aria-label="Project development progress">
         <BrassPanel
           eyebrow="Development overview"
@@ -105,7 +107,6 @@ export function PortfolioHome({
         <div className="dashboard-operations-content">
           <ActivityMonitor projects={projects} />
           <RenderServiceReadouts services={renderServices} />
-          <GitHubSourceReadout />
           <PlatformMetrics />
         </div>
       </details>
