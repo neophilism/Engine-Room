@@ -239,7 +239,12 @@
       "description": "Independently deployed command interface using the version-pinned shared Superintelligence Engine and workspace UI. Provider integration and production workflows remain separate milestones.",
       "source": "README.md",
       "sourceBlob": "c4ccb04cb655cd6668b20dd826d1a6f60c94644c"
+    },
+    {
+      "repository": "neophilism/Boardroom",
+      "description": "Coordinates authorized, nonoverlapping AI development sessions across GitHub repositories through priority scheduling, durable handoffs, private owner actions, and a bounded peer-question channel. Production automation remains under development.",
+      "source": "README.md",
+      "sourceBlob": "6900fba91188ccdc37c83700df18acea5de61cff"
     }
   ]
 }
-
