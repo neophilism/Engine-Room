@@ -1,5 +1,7 @@
 import type { DevelopmentPlanGraph, Project, Repository } from "../domain/portfolio";
 import { calculateRoadmapProgress } from "../domain/portfolio";
+import { effectiveProjectStatus } from "../domain/portfolio-statistics";
+import aboutSeeds from "../config/repository-about-seed.json";
 import { calculateMilestoneProgress } from "../domain/milestone-lifecycle";
 import type { ProjectDashboardData } from "../domain/project-dashboard";
 import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
@@ -73,6 +75,16 @@ export async function loadProjectDashboard(slug: string, source: EnvironmentSour
       dashboard.latestUpdate=(await loadProjectUpdates(client,project.id)).get(project.id);
       dashboard.securityStatuses=(await loadProjectSecurityStatuses(client,project.id)).get(project.id)||[];
       const monitor=await loadProjectMonitorData(client,project.id);
+      if(dashboard.project){
+        dashboard.project.status=effectiveProjectStatus(
+          dashboard.project.status,monitor.summaries.get(project.id)?.total ?? 0
+        );
+        const repo=dashboard.repositories[0]?.fullName;
+        if(repo){
+          const description=aboutSeeds.entries.find(entry=>entry.repository===repo)?.description;
+          dashboard.project.summary=dashboard.project.summary?.trim()||description||undefined;
+        }
+      }
       dashboard.sourcePlan=monitor.plans.get(project.id);
       dashboard.pullRequests=monitor.pullRequests.get(project.id)||[];
       dashboard.features = await loadCurrentFeatures(client, project.id);
