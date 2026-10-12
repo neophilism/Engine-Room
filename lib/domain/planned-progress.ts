@@ -58,14 +58,17 @@ export function summarizePlannedProgress(source: PlanSource): PlannedProgress | 
   if (!validCount(planned) || !validCount(completed) ||
       originalCompleted > originalPlanned || completed > planned || planned === 0) return null;
 
-  // "Written" means a real, currently open GitHub PR, including drafts, work
+  // "In progress" means an explicitly linked real PR is open OR a merged/open
+  // contributing PR advances a larger package whose acceptance remains pending.
+  // Such contributions paint yellow, never green. The link is source-owned.
+  // Legacy "Written" means a real, currently open GitHub PR, including drafts, work
   // undergoing CI, and work with green checks waiting for merge. The plan-item
   // state is the precise signal when a PR has been mapped. Legacy plan/monitor
   // open counts cover other opened PRs whose individual plan mapping is still
   // incomplete. Take the maximum rather than adding overlapping observations.
   // Cap yellow to the unmerged plan capacity: green and yellow never overlap.
-  // Only explicitly mapped plan units may paint a structured progress bar
-  // yellow. Stale or unrelated repository PRs cannot masquerade as planned work.
+  // Only explicitly linked accepted or contributing PRs may paint a structured
+  // progress bar yellow. Unrelated PRs cannot masquerade as planned work.
   const observedOpen = structured ? [published?.items.filter(item => item.state === "in-progress").length ?? 0] : [
     source.inProgress ?? 0,
     source.activity?.open ?? 0,

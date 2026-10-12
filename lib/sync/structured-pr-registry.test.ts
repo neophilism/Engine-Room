@@ -21,6 +21,19 @@ describe('structured PR registry, no Markdown parsing',()=>{
     expect(r.items.map(x=>x.scope)).toEqual(['original','addition']);
     expect(snapshotPrToGitHub(r.pullRequests[0])).toMatchObject({id:1001,number:8,merged_at:pr.mergedAt});
   });
+  it('tracks merged contribution evidence without accepting the larger package',()=>{
+    const pending={...fixture,units:[
+      {...fixture.units[0],prs:[],contributingPrs:[8]},
+      fixture.units[1]
+    ]};
+    const result=parseStructuredPrRegistry(JSON.stringify(pending),'Example');
+    expect(result.items[0]).toMatchObject({numbers:[],contributions:[8]});
+    expect(result.items[1]).toMatchObject({numbers:[],contributions:[]});
+    const duplicate={...pending,units:[{...pending.units[0],prs:[8]},fixture.units[1]]};
+    expect(()=>parseStructuredPrRegistry(JSON.stringify(duplicate),'Example')).toThrow();
+    const bad={...pending,units:[{...pending.units[0],contributingPrs:[0]},fixture.units[1]]};
+    expect(()=>parseStructuredPrRegistry(JSON.stringify(bad),'Example')).toThrow();
+  });
   it('rejects fabricated totals, cross-repository records and ambiguous IDs',()=>{
     expect(()=>parseStructuredPrRegistry(JSON.stringify({...fixture,plannedPrCount:3}),'Example')).toThrow();
     expect(()=>parseStructuredPrRegistry(JSON.stringify(fixture),'Wrong')).toThrow();

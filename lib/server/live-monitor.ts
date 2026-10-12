@@ -74,27 +74,36 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
     const plan=plans.get(doc.project_id)||{original:0,originalComplete:0,added:0,addedComplete:0,unmapped:0,items:[],documents:[]};
     plan.documents.push({path:doc.path,url:doc.source_url,title:doc.title,importedAt:iso(doc.imported_at)!,versions:Number(doc.versions)});
     const unitsSql=doc.path===STRUCTURED_PR_PATH ? `
-      units AS (SELECT ordinal,title,scope,github_pr_numbers,mapping_reason
+      units AS (SELECT ordinal,title,scope,github_pr_numbers,contributing_pr_numbers,mapping_reason
         FROM project_plan_items WHERE repository_id=$1 AND path=$2 AND fingerprint=$3)` : `
       baseline AS (SELECT fingerprint FROM project_plan_documents WHERE repository_id=$1 AND path=$2 ORDER BY version_id LIMIT 1),
-      additions AS (SELECT DISTINCT ON(c.ordinal,c.title) c.ordinal,c.title,c.github_pr_numbers,c.mapping_reason
+      additions AS (SELECT DISTINCT ON(c.ordinal,c.title) c.ordinal,c.title,c.github_pr_numbers,c.contributing_pr_numbers,c.mapping_reason
         FROM project_plan_items c JOIN project_plan_documents d USING(repository_id,path,fingerprint)
         WHERE c.repository_id=$1 AND c.path=$2 AND c.scope='addition' ORDER BY c.ordinal,c.title,d.version_id DESC),
       units AS (
-        SELECT b.ordinal,b.title,b.scope,coalesce(c.github_pr_numbers,b.github_pr_numbers) AS github_pr_numbers,coalesce(c.mapping_reason,b.mapping_reason) AS mapping_reason
+        SELECT b.ordinal,b.title,b.scope,coalesce(c.github_pr_numbers,b.github_pr_numbers) AS github_pr_numbers,
+          coalesce(c.contributing_pr_numbers,b.contributing_pr_numbers) AS contributing_pr_numbers,
+          coalesce(c.mapping_reason,b.mapping_reason) AS mapping_reason
         FROM project_plan_items b JOIN baseline ON baseline.fingerprint=b.fingerprint
         LEFT JOIN project_plan_items c ON c.repository_id=b.repository_id AND c.path=b.path AND c.fingerprint=$3 AND c.ordinal=b.ordinal AND c.scope='original'
         WHERE b.repository_id=$1 AND b.path=$2 AND b.scope='original'
         UNION ALL
-        SELECT c.ordinal,c.title,'addition',c.github_pr_numbers,c.mapping_reason FROM additions c
+        SELECT c.ordinal,c.title,'addition',c.github_pr_numbers,c.contributing_pr_numbers,c.mapping_reason FROM additions c
       )`;
-    const result=await db.query<{ordinal:number;title:string;scope:PlanItemReadout['scope'];github_pr_numbers:number[];mapping_reason:string|null;completed:boolean;underway:boolean;unverified:boolean}>(`WITH ${unitsSql} SELECT u.*,
+    const result=await db.query<{ordinal:number;title:string;scope:PlanItemReadout['scope'];github_pr_numbers:number[];contributing_pr_numbers:number[];mapping_reason:string|null;completed:boolean;underway:boolean;unverified:boolean}>(`WITH ${unitsSql} SELECT u.*,
       jsonb_array_length(github_pr_numbers)>0 AND NOT EXISTS(SELECT 1 FROM jsonb_array_elements_text(u.github_pr_numbers) n
         LEFT JOIN github_pull_requests g ON g.repository_id=$1 AND g.number=n.value::integer
         WHERE g.merged_at IS NULL) AS completed,
       EXISTS(SELECT 1 FROM jsonb_array_elements_text(u.github_pr_numbers) n LEFT JOIN github_pull_requests g ON g.repository_id=$1 AND g.number=n.value::integer
         WHERE g.id IS NULL) AS unverified,
-      EXISTS(SELECT 1 FROM jsonb_array_elements_text(u.github_pr_numbers) n JOIN github_pull_requests g ON g.repository_id=$1 AND g.number=n.value::integer WHERE g.state='open') AS underway
+      (
+        EXISTS(SELECT 1 FROM jsonb_array_elements_text(u.github_pr_numbers) n
+          JOIN github_pull_requests g ON g.repository_id=$1 AND g.number=n.value::integer
+          WHERE g.state='open')
+        OR EXISTS(SELECT 1 FROM jsonb_array_elements_text(u.contributing_pr_numbers) n
+          JOIN github_pull_requests g ON g.repository_id=$1 AND g.number=n.value::integer
+          WHERE g.merged_at IS NOT NULL OR g.state='open')
+      ) AS underway
       FROM units u ORDER BY scope DESC,ordinal`,[doc.repository_id,doc.path,doc.fingerprint]);
     for(const item of result.rows){
       const completed=item.completed;
@@ -102,7 +111,9 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
       else{plan.added++;plan.addedComplete+=Number(completed);}
       if(!item.github_pr_numbers.length||item.unverified)plan.unmapped++;
       plan.items.push({ordinal:item.ordinal,title:item.title,scope:item.scope,numbers:item.github_pr_numbers,
-        state:completed?'merged':item.unverified?'unmapped':item.underway?'in-progress':item.github_pr_numbers.length?'planned':'unmapped',reason:item.mapping_reason,sourceUrl:doc.source_url,repositoryUrl:doc.repository_url});
+        contributingNumbers:item.contributing_pr_numbers,
+        state:completed?'merged':item.unverified?'unmapped':item.underway?'in-progress':item.github_pr_numbers.length?'planned':'unmapped',
+        reason:item.mapping_reason,sourceUrl:doc.source_url,repositoryUrl:doc.repository_url});
     }
     plans.set(doc.project_id,plan);
   }

@@ -23,6 +23,21 @@ describe("unified planned-work completion and open-PR progress", () => {
     });
   });
 
+  it("paints real merged contributions yellow without falsely completing their package",()=>{
+    const pending=plan(60,0);
+    pending.documents=[{path:"registry/prs.json",url:"https://github.com/neophilism/Galinsky-2028",
+      title:"Current",importedAt:"2026-10-12T15:00:00Z",versions:2}];
+    pending.items=[
+      {ordinal:1,title:"Campaign site",scope:"original",numbers:[],
+        contributingNumbers:[1,35],state:"in-progress",reason:null,
+        sourceUrl:"https://github.com/neophilism/Galinsky-2028"},
+      {ordinal:2,title:"Treasury production approval",scope:"original",numbers:[],
+        state:"unmapped",reason:null,sourceUrl:"https://github.com/neophilism/Galinsky-2028"}
+    ];
+    expect(summarizePlannedProgress({planned:60,completed:0,sourcePlan:pending})).toMatchObject({
+      planned:60,completed:0,inProgress:1,notStarted:59,percent:0
+    });
+  });
   it("a completed 50-unit plan drops to half green when another 50 units are added", () => {
     expect(summarizePlannedProgress({ planned:50,completed:50,sourcePlan:plan(50,50) }))
       .toMatchObject({planned:50,completed:50,percent:100});
