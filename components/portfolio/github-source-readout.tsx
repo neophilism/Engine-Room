@@ -2,24 +2,51 @@
 import React, { useEffect, useState } from "react";
 import type { PublicGitHubStatus } from "../../lib/server/public-github-status";
 
+export const SOURCE_STATUS_REFRESH_MS = 30_000;
+
 export function GitHubSourceReadout() {
   const [status, setStatus] = useState<PublicGitHubStatus | null>(null);
   useEffect(() => {
     let mounted = true;
+    let loading = false;
+    let queued = false;
     const refresh = async () => {
-      try {
-        const response = await fetch("/api/public-github-status", { cache: "no-store" });
-        if (!response.ok) return;
-        const data: PublicGitHubStatus = await response.json();
-        if (mounted) setStatus(data);
-      } catch { if (mounted) setStatus(null); }
+      if (loading) {
+        queued = true;
+        return;
+      }
+      loading = true;
+      do {
+        queued = false;
+        try {
+          const response = await fetch("/api/public-github-status", { cache: "no-store" });
+          if (!response.ok) throw new Error("GitHub health unavailable");
+          const data: PublicGitHubStatus = await response.json();
+          if (mounted) setStatus(data);
+        } catch {
+          // Never keep displaying a previously successful status as current when
+          // the actual health endpoint has failed or the admin session expired.
+          if (mounted) setStatus(null);
+        }
+      } while (mounted && queued);
+      loading = false;
+    };
+    const refreshIfVisible = () => {
+      if (document.visibilityState === "visible") void refresh();
     };
     void refresh();
-    const interval = setInterval(() => { void refresh(); }, 5 * 60 * 1000);
-    window.addEventListener("engine-room-github-sync-complete", refresh);
+    // Background PR reconciliation increments the portfolio revision; react to
+    // that event instead of leaving client state frozen for five minutes.
+    window.addEventListener("engine-room-data-changed", refreshIfVisible);
+    window.addEventListener("engine-room-github-sync-complete", refreshIfVisible);
+    document.addEventListener("visibilitychange", refreshIfVisible);
+    const interval = window.setInterval(refreshIfVisible, SOURCE_STATUS_REFRESH_MS);
     return () => {
-      mounted = false; clearInterval(interval);
-      window.removeEventListener("engine-room-github-sync-complete", refresh);
+      mounted = false;
+      window.clearInterval(interval);
+      window.removeEventListener("engine-room-data-changed", refreshIfVisible);
+      window.removeEventListener("engine-room-github-sync-complete", refreshIfVisible);
+      document.removeEventListener("visibilitychange", refreshIfVisible);
     };
   }, []);
   const observed = status?.source === "database" && status.mostRecentObservation;
