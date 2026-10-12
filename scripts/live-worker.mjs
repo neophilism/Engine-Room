@@ -7,11 +7,23 @@ import {seedRepositoryAbout} from '../lib/sync/repository-about.mjs';
 
 const pool=new Pool({connectionString:process.env.DATABASE_URL||process.env.DATABASE_URL_UNPOOLED,max:3,connectionTimeoutMillis:10000});
 let stopping=false,inboxBusy=false,syncBusy=false,plansBusy=false;
+let inboxFailureCount=0,nextInboxAttemptAt=0;
 async function inbox(){
-  if(stopping||inboxBusy)return;
+  if(stopping||inboxBusy||Date.now()<nextInboxAttemptAt)return;
   inboxBusy=true;
-  try{await processWebhookInbox(pool);await pool.query('UPDATE engine_room_live_state SET last_worker_at=now() WHERE singleton=true');}
-  catch{console.error('Webhook worker unavailable; durable inbox preserved.');}
+  try{
+    const result=await processWebhookInbox(pool);
+    inboxFailureCount=0;
+    nextInboxAttemptAt=Date.now()+(result.processed?2000:30000);
+    // The reconciliation loop updates worker presence. No need to write the
+    // same timestamp on every idle inbox poll, even when no events exist.
+  }
+  catch{
+    inboxFailureCount++;
+    nextInboxAttemptAt=Date.now()+Math.min(5*60*1000,5000*2**Math.min(inboxFailureCount-1,6));
+    if(inboxFailureCount===1||inboxFailureCount%10===0)
+      console.error('Webhook worker unavailable; durable inbox preserved.');
+  }
   finally{inboxBusy=false;}
 }
 async function sync(force=false){
