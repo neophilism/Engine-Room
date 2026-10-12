@@ -1,8 +1,8 @@
 # Production GitHub synchronization acceptance and access runbook
 
 Engine Room never needs a new Engine Room pull request when another repository
-merges a change. Each owning repository publishes its approved `registry/prs.json`
-for work-unit definitions and explicit associations. Current pull-request status
+merges a change. Each owning repository publishes approved `registry/prs.json` or
+`registry/roadmap.json` for work-unit definitions and explicit associations. Current pull-request status
 comes from GitHub's API and is materialized into the Engine Room database.
 
 ## Production credential
@@ -30,7 +30,8 @@ codes and a reason classification, never secrets or response bodies.
    all eligible repositories and only then imports plan documents.
 2. The display silently refreshes saved dashboard data every 30 seconds.
    This is not a second GitHub sync button.
-3. Source plans prefer each repository's current `registry/prs.json`.
+3. Source plans prefer each repository's current `registry/prs.json`, then
+   a current `registry/roadmap.json` if the first file is not present.
    Historical bundled snapshots may bootstrap a previously unmeasured
    repository, but may **never overwrite an already persisted source plan**
    during an auth, transport, or permission outage.
