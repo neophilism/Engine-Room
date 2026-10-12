@@ -72,7 +72,7 @@
       "config_path": ".circleci/config.yml",
       "github_pr": "https://github.com/neophilism/HEARD/pull/3",
       "verification_scope": "full",
-      "provider_pipeline_state": "manual_full_pipeline_passed",
+      "provider_pipeline_state": "verified_manual_and_automatic_pr",
       "verified_commit_sha": "a9d68b7d805bda436d333035a834041f68150ee9",
       "verified_at_utc": "2026-10-12T20:40:43Z",
       "verified_workflow": {
@@ -98,7 +98,26 @@
       },
       "merge_state": "merged",
       "merged_to_main_sha": "05e83c94a56c63788781ae62824f82eb27ec16f7",
-      "next_acceptance_gate": "Verify automatic push-to-open-PR trigger on new PR/commit and enable separate default-branch trigger; ensure main branch status checks use equivalent CircleCI checks."
+      "next_acceptance_gate": "Add default branch push trigger in CircleCI UI and verify exact main commit status, then consider legacy GitHub-hosted workflow decommission with equivalent check enforcement.",
+      "verified_auto_pr": {
+        "pr_url": "https://github.com/neophilism/HEARD/pull/4",
+        "tested_sha": "2fcda3b8b081293a327ec7f866b248a9b68bc356",
+        "trigger": "github_push_to_open_non_draft_pr",
+        "event_verified_from_github_status": true,
+        "required_statuses": [
+          {
+            "name": "ci/circleci: full-verification",
+            "status": "success",
+            "url": "https://app.circleci.com/workflow/6d6b426b-f7a2-40c4-8ff8-db1834814bdc/job/900de026-6d46-44b0-a949-5f43fd653725"
+          },
+          {
+            "name": "ci/circleci: security-status-record",
+            "status": "success",
+            "url": "https://app.circleci.com/workflow/6d6b426b-f7a2-40c4-8ff8-db1834814bdc/job/2846fd9b-d599-4468-902e-daff03d11864"
+          }
+        ],
+        "merged_doc_sha": "2b85b0b380bc9453ae7351880039849710939a22"
+      }
     },
     {
       "name": "Justic-For-All",
