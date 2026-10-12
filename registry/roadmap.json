@@ -1,9 +1,9 @@
 {
   "repository": "neophilism/Engine-Room",
   "title": "Engine Room",
-  "version": 7,
+  "version": 8,
   "planVerified": true,
-  "plannedPrCount": 51,
+  "plannedPrCount": 52,
   "sourceFiles": [
     ".exechub/project.yml",
     "docs/development-plan.md",
@@ -416,8 +416,13 @@
       "title": "Dismiss refresh feedback, nest engine implementations and sync GitHub About descriptions and latest source activity",
       "origin": "addition",
       "pullRequests": []
+    },
+    {
+      "id": "ER-052",
+      "title": "Automatically import source-bound E2EESA implementation, testing and independent expert-review status records",
+      "origin": "addition",
+      "pullRequests": []
     }
   ],
   "scopeNote": "40 original approved work packages, 3 independently documented portfolio-monitor additions (PRs #56–58), and 2 user-requested universal repository roadmap/synchronization work packages (#81–82). Source roadmap IDs and actual PR numbers remain separate."
 }
-

@@ -18,7 +18,7 @@ export async function POST(request:Request){
  try{const pool=getDatabasePool();const inbox=await processWebhookInbox(pool);
   // A genuine manual refresh checks every registered repository, rather than
   // the old fixed subset of 12. PRs are authoritative before plan ID mapping.
-  let github:{repositories:number;failed:number;attempted?:number;optionalFailures?:number;metadataFailures?:number;activityFailures?:number;
+  let github:{repositories:number;failed:number;attempted?:number;optionalFailures?:number;metadataFailures?:number;activityFailures?:number;securityFailures?:number;
     failures?:{repo:string;reason:string}[];disabled?:boolean;rateLimited?:boolean;rateLimitResetAt?:string|null;error?:string};
   try{github=await reconcilePortfolio(pool,{force:mode==="manual",
     repositoryLimit:100,quick:mode==="manual",concurrency:mode==="manual"?5:2});}
@@ -27,7 +27,7 @@ export async function POST(request:Request){
   const snapshotNames=plans.completed.filter(item=>item.origin==="bundled").map(item=>item.repo);
   const skipped=mode==="manual"?Math.max(0,plans.registered-(github.attempted??0)):0;
   const status=github.disabled?"disabled":github.rateLimited?"rate-limited":
-    github.failed||github.metadataFailures||github.activityFailures||plans.failed||snapshotNames.length||skipped?"partial":"succeeded";
+    github.failed||github.metadataFailures||github.activityFailures||github.securityFailures||plans.failed||snapshotNames.length||skipped?"partial":"succeeded";
   return reply({status,...github,skipped,...inbox,structured:{
     imported:plans.imported,failed:plans.failed,registered:plans.registered,
     fromSnapshot:plans.fromSnapshot,fromRepository:plans.fromRepository,

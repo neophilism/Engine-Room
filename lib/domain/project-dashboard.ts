@@ -6,11 +6,13 @@ import type { ProjectFeature } from "./project-features";
 import type { DevelopmentActivity } from "./development-activity";
 import type { ProjectReadiness } from "./project-readiness";
 import type {ProjectUpdate} from './project-update';
+import type {RepositorySecurityStatus} from './security-status';
 
 export type ProjectDashboardData = {
   source: PortfolioOverviewData["source"];
   project: Project | null;
   latestUpdate?:ProjectUpdate;
+  securityStatuses?:RepositorySecurityStatus[];
   repositories: Repository[];
   graph?: DevelopmentPlanGraph;
   progress?: RoadmapProgress;

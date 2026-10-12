@@ -1,5 +1,6 @@
 import type { ProjectStatus } from "./portfolio";
 import type {ProjectUpdate} from './project-update';
+import type {RepositorySecurityStatus} from './security-status';
 import type { ProjectFeature } from "./project-features";
 import type { ProjectActivitySummary,PullRequestReadout,SourcePlanSummary } from './live-monitor';
 
@@ -19,6 +20,7 @@ export type PortfolioProjectOverview = {
   slug?: string;
   summary?: string;
   latestUpdate?: ProjectUpdate;
+  securityStatuses?:RepositorySecurityStatus[];
   status: ProjectStatus;
   repositoryFullName?: string;
   repositoryUrl?: string;

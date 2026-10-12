@@ -11,6 +11,7 @@ type SynchronizationOutcome = {
   failed?: number;
   metadataFailures?: number;
   activityFailures?: number;
+  securityFailures?: number;
   processed?: number;
   error?: string;
   rateLimitResetAt?: string | null;
@@ -25,9 +26,9 @@ function describeSynchronization(outcome: SynchronizationOutcome): SyncFeedback 
   const failed = Number(outcome.failed || 0);
   const planned = outcome.structured;
   const saved = planned?.imported || 0;
-  const metadataErrors=(outcome.metadataFailures||0)+(outcome.activityFailures||0);
+  const metadataErrors=(outcome.metadataFailures||0)+(outcome.activityFailures||0)+(outcome.securityFailures||0);
   const detail = (saved > 0 ? " Approved plans: "+saved+" processed ("+(planned?.fromRepository||0)+" live repository files; "+(planned?.fromSnapshot||0)+" historical fallbacks; "+(planned?.inferredByExactId||0)+" live work IDs matched).": "")+
-    (metadataErrors>0?` ${outcome.metadataFailures||0} About queries and ${outcome.activityFailures||0} activity queries failed.`:'');
+    (metadataErrors>0?` ${outcome.metadataFailures||0} About, ${outcome.activityFailures||0} activity and ${outcome.securityFailures||0} security evidence queries failed.`:'');
 
   if (outcome.status === "disabled") {
     return { kind: "warning", message: "GitHub synchronization is paused in Settings. Enable it to fetch new data." };
