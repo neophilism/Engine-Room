@@ -1,4 +1,5 @@
 import type { ProjectStatus } from "./portfolio";
+import type {ProjectUpdate} from './project-update';
 import type { ProjectFeature } from "./project-features";
 import type { ProjectActivitySummary,PullRequestReadout,SourcePlanSummary } from './live-monitor';
 
@@ -17,6 +18,7 @@ export type PortfolioProjectOverview = {
   displayName: string;
   slug?: string;
   summary?: string;
+  latestUpdate?: ProjectUpdate;
   status: ProjectStatus;
   repositoryFullName?: string;
   repositoryUrl?: string;
@@ -45,3 +47,4 @@ export type PortfolioOverviewData = {
   projects: PortfolioProjectOverview[];
   statistics: PortfolioStatistics;
 };
+

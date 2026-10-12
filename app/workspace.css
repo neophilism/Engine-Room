@@ -509,4 +509,14 @@ h2 { font: 680 clamp(1.06rem, 1.5vw, 1.35rem)/1.28 var(--er-font-body); letter-s
 }
 .live-sync-feedback.is-warning { border-color: #b88a42; }
 .live-sync-feedback.is-error { border-color: #c77c74; }
+.project-last-update { color: #abc0cf; font-size: .76rem; margin: 4px 0 10px 34px; overflow-wrap: anywhere; }
+.project-last-update a { color: #8ccfdf; }
+.live-sync-feedback { display: flex; align-items: flex-start; gap: 12px; }
+.live-sync-feedback button { flex: none; background: transparent; color: inherit; border: 0; font-size: 1.3rem; cursor: pointer; padding: 0 4px; }
+.project-progress-stack[data-hierarchy-depth] { margin-inline-start: calc(var(--project-depth, 0) * 1.5rem); }
+.project-progress-stack[data-hierarchy-depth]:not([data-hierarchy-depth="0"]) { border-inline-start: 2px solid #42606b; padding-inline-start: 12px; }
+@media (max-width: 760px) {
+  .project-progress-stack[data-hierarchy-depth] { margin-inline-start: calc(var(--project-depth, 0) * .75rem); }
+}
 @media (max-width: 760px) { .live-readout { display: flex; } .live-refresh-trigger { padding: 8px; } }
+

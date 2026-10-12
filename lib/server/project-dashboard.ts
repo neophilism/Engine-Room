@@ -8,6 +8,7 @@ import { loadCurrentFeatures } from "./project-features";
 import { loadProjectActivity } from "./development-activity";
 import { loadProjectMonitorData } from "./live-monitor";
 import { loadProjectReadiness } from "./project-readiness";
+import {loadProjectUpdates} from './project-update';
 
 type ProjectRow = { id: string; slug: string; display_name: string; summary: string | null; status: Project["status"] };
 type RepositoryRow = { id: string; github_repository_id: string | number; owner_login: string; name: string; full_name: string; html_url: string; default_branch: string; visibility: Repository["visibility"]; archived: boolean };
@@ -68,6 +69,7 @@ export async function loadProjectDashboard(slug: string, source: EnvironmentSour
           where ppr.development_plan_id = $1 order by ppr.ordinal`, [plan.id])).rows;
       }
       const dashboard = normalizeProjectDashboard(project, repositories.rows, plan, milestones, plannedPrs);
+      dashboard.latestUpdate=(await loadProjectUpdates(client,project.id)).get(project.id);
       const monitor=await loadProjectMonitorData(client,project.id);
       dashboard.sourcePlan=monitor.plans.get(project.id);
       dashboard.pullRequests=monitor.pullRequests.get(project.id)||[];
@@ -80,3 +82,4 @@ export async function loadProjectDashboard(slug: string, source: EnvironmentSour
     finally { client.release(); }
   } catch { return empty("error"); }
 }
+

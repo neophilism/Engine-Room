@@ -17,6 +17,7 @@ import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
 import { getDatabasePool } from "./database";
 import { loadCurrentFeatures } from "./project-features";
 import { loadProjectMonitorData } from './live-monitor';
+import {loadProjectUpdates} from './project-update';
 
 export type PortfolioOverviewRow = {
   id: string;
@@ -209,6 +210,8 @@ export async function loadPortfolioOverview(
     const features = await loadCurrentFeatures(client);
     projects = projects.map((project) => ({ ...project, features: features.filter((feature) => feature.projectId === project.id) }));
     const monitor=await loadProjectMonitorData(client);
+    const latestUpdates=await loadProjectUpdates(client);
+    projects=projects.map(project=>({...project,latestUpdate:latestUpdates.get(project.id)}));
     projects=projects.map(project=>{
       const plan=monitor.plans.get(project.id);
       const structured=!!plan?.documents.some(doc=>doc.path==="registry/prs.json");
@@ -238,3 +241,4 @@ export async function loadPortfolioOverview(
     return emptyOverview("error");
   }
 }
+

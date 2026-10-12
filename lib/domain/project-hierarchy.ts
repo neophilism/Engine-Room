@@ -15,6 +15,9 @@ export const IMPLEMENTATION_PARENTS: Readonly<Record<string, string>> = {
   ,"distributed-radio-engine":"distributed-audio-engine"
   ,"trackzero":"distributed-radio-engine"
   ,"unsealed-records-command-center":"music-operations-engine"
+  ,"superintelligence-academy":"superintelligence-engine"
+  ,"superintelligence-command-center":"superintelligence-engine"
+  ,"ubc-debates":"live-debate-engine"
 };
 
 export type ProjectHierarchyIdentity = {
@@ -75,7 +78,7 @@ export function orderProjectsByHierarchy<T extends ProjectHierarchyIdentity>(
   return ordered;
 }
 
-/** The number of visible ancestors; use it ONLY in the project name cell. */
+/** The number of visible ancestors, used to nest dependent project cards. */
 export function projectNameIndent(
   project: ProjectHierarchyIdentity,
   visible: readonly ProjectHierarchyIdentity[]
@@ -93,3 +96,4 @@ export function projectNameIndent(
   }
   return depth;
 }
+

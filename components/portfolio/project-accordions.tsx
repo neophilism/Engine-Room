@@ -22,6 +22,7 @@ export function ProjectAccordions({
             {project.summary?.trim() ||
               "No project summary has been registered yet."}
           </p>
+          {project.repositoryFullName && <small>Summary from the repository’s GitHub About description.</small>}
         </div>
       </details>
 
@@ -59,3 +60,4 @@ export function ProjectAccordions({
     </div>
   );
 }
+

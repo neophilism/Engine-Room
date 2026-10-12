@@ -5,10 +5,12 @@ import type { PortfolioOverviewData } from "./portfolio-overview";
 import type { ProjectFeature } from "./project-features";
 import type { DevelopmentActivity } from "./development-activity";
 import type { ProjectReadiness } from "./project-readiness";
+import type {ProjectUpdate} from './project-update';
 
 export type ProjectDashboardData = {
   source: PortfolioOverviewData["source"];
   project: Project | null;
+  latestUpdate?:ProjectUpdate;
   repositories: Repository[];
   graph?: DevelopmentPlanGraph;
   progress?: RoadmapProgress;
@@ -25,3 +27,4 @@ export type ProjectDashboardData = {
 export function projectDashboardHref(project: { id: string; slug?: string }) {
   return `/projects/${encodeURIComponent(project.slug ?? project.id)}`;
 }
+

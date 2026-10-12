@@ -3,6 +3,7 @@ import { processWebhookInbox } from '../lib/sync/github-runtime.mjs';
 import { probeGitHubAccess } from '../lib/sync/github-access-probe.mjs';
 import { reconcilePortfolio } from '../lib/sync/reconcile.mjs';
 import { reconcilePlanSources } from '../lib/sync/plan-source-sync.mjs';
+import {seedRepositoryAbout} from '../lib/sync/repository-about.mjs';
 
 const pool=new Pool({connectionString:process.env.DATABASE_URL||process.env.DATABASE_URL_UNPOOLED,max:3,connectionTimeoutMillis:10000});
 let stopping=false,inboxBusy=false,syncBusy=false,plansBusy=false;
@@ -49,6 +50,8 @@ void (async()=>{
     // HTTP codes only; no token, identities or response bodies in logs.
     console.info('GitHub read access diagnostic',JSON.stringify(await probeGitHubAccess()));
   }catch{console.warn('GitHub read access diagnostic unavailable');}
+  try{console.info('Owner-requested GitHub About initialization',await seedRepositoryAbout(pool));}
+  catch{console.warn('GitHub About initialization unavailable; existing descriptions preserved.');}
   await sync(hasAuth);await plans();
 })();
 for(const signal of ['SIGINT','SIGTERM'])process.on(signal,async()=>{
@@ -56,3 +59,4 @@ for(const signal of ['SIGINT','SIGTERM'])process.on(signal,async()=>{
   // Exit safely even during a provider request. Row transactions roll back and leases expire after restart.
   await pool.end();process.exit(0);
 });
+

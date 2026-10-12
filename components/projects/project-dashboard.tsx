@@ -12,6 +12,7 @@ import { SourcePlan } from "./source-plan";
 import { ActivityMonitor } from "../portfolio/activity-monitor";
 import { PortfolioRefresh } from "../portfolio/portfolio-refresh";
 import { ProjectReadinessPanel } from "./project-readiness";
+import {ProjectLastUpdate} from './project-last-update';
 
 export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
   const project = data.project;
@@ -30,6 +31,7 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
   return <main className="content">
     <header className="hero"><p className="eyebrow">Project intelligence</p><h1>{project.displayName}</h1><p>{project.summary || "No project summary has been registered yet."}</p>
       <Link href="/projects">← Compare projects</Link></header>
+    <ProjectLastUpdate update={data.latestUpdate}/>
     <div className="project-dashboard-grid">
       <BrassPanel title="Approved roadmap" status={<IndicatorLamp state={stage.state} label={stage.label} />}>
         {planProgress ? <>
@@ -79,3 +81,4 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
     </BrassPanel>}
   </main>;
 }
+

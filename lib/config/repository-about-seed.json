@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "scopeYear": 2026,
+  "olderExceptions": [
+    "neophilism/FOIA_Bias_Analysis"
+  ],
+  "authorization": "Owner requested repository About descriptions on 2026-10-12. Preserve later owner-authored descriptions.",
+  "entries": [
+    {
+      "repository": "neophilism/FOIA_Bias_Analysis",
+      "description": "Analyze the shared, multi-source FOIA Aggregator corpus for disclosure and government-access patterns using reproducible labels and comparable completed-term periods. The corpus consumer and statistical workflow are under development.",
+      "source": "README.md",
+      "sourceBlob": "683a7f7663a99690e21554fd5a502d99d244ef60"
+    },
+    {
+      "repository": "neophilism/FiresideChat",
+      "description": "Nonpartisan podcast player and searchable archive for shows hosted, co-hosted, or officially produced by current and former members of the U.S. Congress and U.S. presidents.",
+      "source": "README.md",
+      "sourceBlob": "7e24b19172b80589b5a06622ee41755681936cda"
+    },
+    {
+      "repository": "neophilism/RAM-Marketplace",
+      "description": "A marketplace and operating platform connecting biomedical researchers with naturally occurring animal disease cases, with veterinary review and controlled farm-identity disclosure.",
+      "source": "README.md",
+      "sourceBlob": "dcedd03ac29ec1d377e2a3b8247af30b7436638d"
+    },
+    {
+      "repository": "neophilism/Civic-Registry-Transparency-Engine",
+      "description": "Reusable, domain-neutral infrastructure for public registries, source documents, transparency workflows, statutory deadlines, search, APIs and revision history.",
+      "source": "README.md",
+      "sourceBlob": "37741ef25f0a6332d073b430d5e248af52629777"
+    },
+    {
+      "repository": "neophilism/Secure-Intake-Case-Workflow-Engine",
+      "description": "Reusable infrastructure for organization-scoped secure intake, case management, workflow routing, deadlines, review and administrative due process.",
+      "source": "README.md",
+      "sourceBlob": "a915a4b7aff44cc086438b019f76903a5783706e"
+    },
+    {
+      "repository": "neophilism/Compliance-Authorization-Immutable-Audit-Engine",
+      "description": "Reusable, domain-neutral infrastructure for compliance rules, authorization, tamper-evident audits, evidence, findings, remediation and reporting.",
+      "source": "README.md",
+      "sourceBlob": "afc52424a2057309bfacd207fd126412610ca185"
+    },
+    {
+      "repository": "neophilism/Stems-White-Label",
+      "description": "Multi-tenant, white-label storefronts for artists and labels to present, sell and license musical source material and creator-defined stem groups.",
+      "source": "README.md",
+      "sourceBlob": "7caeb376ceeaf44bb87642eff8f313604f5b60c1"
+    },
+    {
+      "repository": "neophilism/Music_Video_Wizard",
+      "description": "Creator-directed music-video production from an immutable audio master through creative specifications, storyboards, generated shots, first cuts, refinement and final rendering.",
+      "source": "README.md",
+      "sourceBlob": "7a1129b382da91b9bf6147bc51675bf7d7f8ee7c"
+    },
+    {
+      "repository": "neophilism/End-To-End-Everywhere-Security-Architecture-Standard",
+      "description": "Implementation-neutral security architecture standard defining invariants, versioned profiles, component-scoped capabilities and evidence-based conformance. Independent expert review and release gates remain separate.",
+      "source": "README.md",
+      "sourceBlob": "b2ce78b0cf2a22564818a5568afd0a0a4a0c775b"
+    },
+    {
+      "repository": "neophilism/Federal-Encryption-Compliance",
+      "description": "Federal Data Encryption Act policy application built on the Compliance, Authorization & Immutable Audit Engine, with application-specific rules, schemas and interfaces.",
+      "source": "README.md",
+      "sourceBlob": "43916f079acc31dcd2366c4fb7c55ca7a5e6f5a9"
+    },
+    {
+      "repository": "neophilism/National-Secure-Ideas-Submission",
+      "description": "Secure Innovation Gateway application built on the Secure Intake & Case Workflow Engine for the National Secure Ideas Submission Act. Classified submissions require separately approved secure channels.",
+      "source": "README.md",
+      "sourceBlob": "7d9cb11eab1f03ddfd8aa505fba658a812a8fd48"
+    },
+    {
+      "repository": "neophilism/Smart-Cities-Surveillance-Registry",
+      "description": "Public transparency platform for smart-city surveillance technologies, agencies, vendors, authorizations, procurement and evidence, built on the Civic Registry & Transparency Engine.",
+      "source": "README.md",
+      "sourceBlob": "9b9cac2db21518837023d82b2ffdc975d4ed4aee"
+    },
+    {
+      "repository": "neophilism/Engine-Room",
+      "description": "Invite-only executive dashboard for software projects, live GitHub PR activity, repository-owned roadmaps, security-standard evidence, deployment health and operational status.",
+      "source": "README.md",
+      "sourceBlob": "3f6ff61d931bc8764652fdafa1d812c88c42ad6f"
+    },
+    {
+      "repository": "neophilism/Live-Competition-Engine",
+      "description": "Reusable, domain-neutral infrastructure for live competitions, performers, judges, audiences, rounds, monetization and operator controls.",
+      "source": "README.md",
+      "sourceBlob": "2794201fae338569d1e0dcc921a6c14071b272fc"
+    },
+    {
+      "repository": "neophilism/MMS",
+      "description": "Timed monologue competition application for performers and the industry, using Live Competition Engine while owning its own interface, policy and defaults.",
+      "source": "README.md",
+      "sourceBlob": "882c9887f2ed03b23fa645871d509f4f71b149d4"
+    },
+    {
+      "repository": "neophilism/Rap-Battle-Platform",
+      "description": "Multi-tenant, white-label rap-battle and local-league platform using Live Competition Engine, with independently owned and branded promoter-operated leagues.",
+      "source": "README.md",
+      "sourceBlob": "4e86d2e15797b685d62704e58ebb80398386a884"
+    },
+    {
+      "repository": "neophilism/Algorithmic-Accountability",
+      "description": "Compliance Engine application for algorithmic-system inventories, impact assessments, authorization before deployment and continuing accountability afterward.",
+      "source": "README.md",
+      "sourceBlob": "23f7b099e0caee441b2e602f9a8c1f436f38e48c"
+    },
+    {
+      "repository": "neophilism/End-To-End-Everywhere-Suite",
+      "description": "Products and reusable components for usable end-to-end encryption across messaging, files, notes, email and developer tools, governed by the separate E2EESA standard.",
+      "source": "README.md",
+      "sourceBlob": "c5032b269bc53f055315e1ff1e85251837fe98da"
+    },
+    {
+      "repository": "neophilism/Distributed-Audio-Engine",
+      "description": "Neutral audio foundation for encrypted media delivery, synchronized playback, spatial rendering, device evidence and reusable commerce, consumed by SceneSignal and Distributed Radio Engine.",
+      "source": "README.md",
+      "sourceBlob": "bd0c39156b41cadf4db1493fd83745754182fedc"
+    },
+    {
+      "repository": "neophilism/Distributed-Radio-Engine",
+      "description": "Radio programming, contribution economics, creator wallets and bonus-release infrastructure built on Distributed Audio Engine and consumed by TrackZero.",
+      "source": "README.md",
+      "sourceBlob": "c7f3450bcd87bcde447a9411beef18e3b12681eb"
+    },
+    {
+      "repository": "neophilism/SceneSignal",
+      "description": "Community spatial music sessions built directly on Distributed Audio Engine, with organizer controls, instrument placement, encrypted media and permit or no-permit-required evidence.",
+      "source": "README.md",
+      "sourceBlob": "e1e820d59d88e0587ec1eb7729c5c8f719c3bac9"
+    },
+    {
+      "repository": "neophilism/TrackZero",
+      "description": "Artist-controlled streaming radio and whole-album commerce application using Distributed Radio Engine, with rewards tied to qualifying external Bluetooth-speaker playback.",
+      "source": "README.md",
+      "sourceBlob": "657dfe8a2d8c7ecede95e9977f9cb476bb8ea38f"
+    },
+    {
+      "repository": "neophilism/Music-Operations-Engine",
+      "description": "Provider-agnostic music-business ingestion and analytics backend for label-scoped catalog, distribution and financial reports.",
+      "source": "README.md",
+      "sourceBlob": "0784ef5fe613e2086f05f57973355d79b0779601"
+    },
+    {
+      "repository": "neophilism/Unsealed-Records-Command-Center",
+      "description": "Unsealed Records' label-specific operations dashboard, consuming the separate Music Operations Engine API.",
+      "source": "README.md",
+      "sourceBlob": "fe770a7438d0cada7ae7724d528882232ed038d1"
+    },
+    {
+      "repository": "neophilism/NFT-Minting-Console",
+      "description": "NFT release-management and minting console under development, with generic token, rights, royalty, ownership and immutable-evidence workflows. Private artwork and mainnet use remain gated.",
+      "source": "README.md",
+      "sourceBlob": "0c3a8002ea20a93b35bdae65c592c5cea1384ce8"
+    },
+    {
+      "repository": "neophilism/Music-Analyzer",
+      "description": "Native desktop workspace for arranging instrumental music by measured dynamics, rhythm and perceived emotion, with audio and analysis kept on the user's computer.",
+      "source": "README.md",
+      "sourceBlob": "2c30f922867822d0c85fe0238362bf19babe40f6"
+    },
+    {
+      "repository": "neophilism/Justic-For-All",
+      "description": "Justice For All's shared public website, initiative directory, editorial experience, consent boundaries and integration shell.",
+      "source": "README.md",
+      "sourceBlob": "e7ee299d5e24d606ff0d6306a3dc9fc3498bfae9"
+    },
+    {
+      "repository": "neophilism/The-Public-Record",
+      "description": "Justice For All civic-records and FOIA participation platform for individual self-filed requests, private correspondence and reviewed documentary evidence.",
+      "source": "README.md",
+      "sourceBlob": "5c8a5ff116c304d4082352abba3eeffe947827fa"
+    },
+    {
+      "repository": "neophilism/HEARD",
+      "description": "Public-interest platform under development for understanding rights, documenting government actions, organizing firsthand accounts and finding support and paths to accountability.",
+      "source": "README.md",
+      "sourceBlob": "0389e9368ecbe015ce0ac0ed2678b819be02b5d3"
+    },
+    {
+      "repository": "neophilism/The-Garden",
+      "description": "Public-information and historical-research platform for The Garden's voluntary, self-governing remedy framework for nations harmed by the slave trade. Official governmental capabilities remain conditional.",
+      "source": "README.md",
+      "sourceBlob": "7a9de2d7b6de4f5393d44117e6251c3cce5412f1"
+    },
+    {
+      "repository": "neophilism/The-Cornerstone",
+      "description": "Public policy website and scoped workspaces supporting The Cornerstone's worker-owned replacement-enterprise remedy, private preparation and synthetic program training.",
+      "source": "README.md",
+      "sourceBlob": "2de35bbcafc4e0f053b20bfd89a6e650615b160a"
+    },
+    {
+      "repository": "neophilism/Galinsky-2028",
+      "description": "Phillip Galinsky's 2028 campaign website and volunteer application, with issue presentations, campaign information and controlled volunteer workflows.",
+      "source": "README.md",
+      "sourceBlob": "8754b0f7b9ec21ecfbc59a9a222fb3e27313dfa9"
+    },
+    {
+      "repository": "neophilism/Our-Jam",
+      "description": "Live collaborative music application where fans contribute Sound Waves, move votes among them and help an artist turn an album into a new release at each show.",
+      "source": "README.md",
+      "sourceBlob": "3f51d65abc06afffd3657f9d69f0522ffc08fd55"
+    },
+    {
+      "repository": "neophilism/Debate-Engine",
+      "description": "Reusable, candidate-neutral platform for asynchronous policy debates, intact contributions, direct questions, reciprocal answers and a permanent public record.",
+      "source": "README.md",
+      "sourceBlob": "9486efbd49397c8be6b7675928c44f926706ffbb"
+    },
+    {
+      "repository": "neophilism/Live-Debate-Engine",
+      "description": "White-label operating software for structured, motion-based debate competitions, rulesets, participants, ballots and competition operations.",
+      "source": "README.md",
+      "sourceBlob": "ff2004369269a0bbb4876a7d9056b1cb41907109"
+    },
+    {
+      "repository": "neophilism/UBC-Debates",
+      "description": "Planned thin, branded debate-competition application consuming Live Debate Engine. Development depends on the shared engine reaching its documented readiness gates.",
+      "source": "neophilism/Live-Debate-Engine:README.md",
+      "sourceBlob": "ff2004369269a0bbb4876a7d9056b1cb41907109"
+    },
+    {
+      "repository": "neophilism/Superintelligence-Engine",
+      "description": "Shared Superintelligence platform foundation with versioned APIs and reusable workspace interfaces for Superintelligence Academy and Superintelligence Command Center.",
+      "source": "README.md",
+      "sourceBlob": "cb448c6cdecf6e828d4a5865d8c75281e2bc7433"
+    },
+    {
+      "repository": "neophilism/Superintelligence-Academy",
+      "description": "Independently deployed learning application using the version-pinned shared Superintelligence Engine and workspace UI. Courses and provider integration are separate development milestones.",
+      "source": "README.md",
+      "sourceBlob": "f93bcb4bb282ad07237db8253f74fb2e5fb0cda1"
+    },
+    {
+      "repository": "neophilism/Superintelligence-Command-Center",
+      "description": "Independently deployed command interface using the version-pinned shared Superintelligence Engine and workspace UI. Provider integration and production workflows remain separate milestones.",
+      "source": "README.md",
+      "sourceBlob": "c4ccb04cb655cd6668b20dd826d1a6f60c94644c"
+    }
+  ]
+}
+
