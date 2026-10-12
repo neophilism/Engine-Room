@@ -2,6 +2,12 @@ import type { ProjectStatus } from "./portfolio";
 import type { PortfolioProjectOverview, PortfolioStatistics } from "./portfolio-overview";
 import { summarizePlannedProgress } from "./planned-progress";
 
+export function effectiveProjectStatus(status: ProjectStatus, prCount: number): ProjectStatus {
+  // "planned" is the discovery default. Real PRs prove engineering has begun.
+  // Do not override deliberate pause, archival, completion or release states.
+  return status === "planned" && prCount > 0 ? "active-development" : status;
+}
+
 export function calculatePortfolioStatistics(
   projects: readonly PortfolioProjectOverview[]
 ): PortfolioStatistics {
@@ -14,7 +20,7 @@ export function calculatePortfolioStatistics(
 
   return {
     projects: projects.length,
-    activeProjects: projects.filter((project) => activeStatuses.has(project.status)).length,
+    activeProjects: projects.filter((project) => activeStatuses.has(effectiveProjectStatus(project.status, project.activity?.total ?? 0))).length,
     completedRoadmapPrs,
     plannedRoadmapPrs,
     percent: plannedRoadmapPrs === 0 ? 0 : Math.round(completedRoadmapPrs / plannedRoadmapPrs * 1000) / 10
