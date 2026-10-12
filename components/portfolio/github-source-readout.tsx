@@ -23,12 +23,31 @@ export function GitHubSourceReadout() {
     };
   }, []);
   const observed = status?.source === "database" && status.mostRecentObservation;
+  const repositories = status?.repositories ?? [];
+  const failures = repositories.filter(repo => Boolean(repo.error));
+  const fresh = repositories.filter(repo => !repo.error && repo.lastSuccessAt &&
+    Date.now() - Date.parse(repo.lastSuccessAt) < 25 * 60_000).length;
+  const denied = failures.filter(repo => repo.error?.includes("HTTP 404") || repo.error?.includes("HTTP 403")).length;
+  const ordered = [...repositories].sort((a, b) =>
+    Number(Boolean(b.error)) - Number(Boolean(a.error)) || a.name.localeCompare(b.name));
   return <section className="panel" style={{marginBottom:20}} aria-label="GitHub source observation status">
     <div className="section-heading">
       <div><p className="eyebrow">Source provenance</p><h2>GitHub data connection</h2></div>
       <a href="https://github.com/neophilism" target="_blank" rel="noopener noreferrer">GitHub portfolio ↗</a>
     </div>
     {status?.source === "database" ? <>
+      {repositories.length > 0 && <p role="status" className="metric-freshness">
+        <strong>{fresh} of {repositories.length} repositories synchronized recently.</strong>
+        {failures.length > 0 ? ` ${failures.length} have synchronization errors; their counts may be historical.` : " No repository synchronization errors are recorded."}
+      </p>}
+      {denied > 0 && <p className="metric-freshness">
+        <strong>{denied} repositories are inaccessible to Engine Room's current GitHub credential.</strong>
+        {" "}For private repository monitoring, update the existing <code>GITHUB_READ_TOKEN</code> in Render
+        using a GitHub token authorized for the repositories, with read-only Contents and Pull requests
+        permissions (and Metadata read access). The token must also have access to the private repositories
+        in its repository selection. Never paste the token into Engine Room or chat.
+        {" "}<a href="https://github.com/settings/personal-access-tokens" target="_blank" rel="noopener noreferrer">Review GitHub token access ↗</a>
+      </p>}
       <p>Tracked repositories: <strong>{status.repositoryCount}</strong> · Imported PR records: <strong>{status.pullRequestCount}</strong> · Recorded merges: <strong>{status.mergedPullRequestCount}</strong></p>
       <p className="metric-freshness" aria-live="polite">
         {status.githubCredentialConfigured===false ? "GitHub read credentials are not configured for private repositories; private PR counts may be historical. " : ""}
@@ -40,7 +59,7 @@ export function GitHubSourceReadout() {
       <div className="monitor-table-wrap">
         <table className="monitor-table" aria-label="GitHub repository synchronization diagnostics">
           <thead><tr><th>Repository</th><th>Access</th><th>Merged PRs</th><th>GitHub PR sync</th><th>Plan source</th></tr></thead>
-          <tbody>{status.repositories.map(repo => {
+          <tbody>{ordered.map(repo => {
             const old=repo.lastSuccessAt ? Date.now()-Date.parse(repo.lastSuccessAt)>25*60*1000 : true;
             const state=repo.error || (old ? "Stale" : "Current");
             return <tr key={repo.name}>
