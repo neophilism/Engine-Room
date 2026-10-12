@@ -67,7 +67,7 @@ export function PortfolioHome({
       <p className="portfolio-progress-key" aria-label="Development status legend">
         <span className="planned-progress-legend">
           <span className="merged">Green: merged</span>
-          <span className="underway">Yellow: written / awaiting merge</span>
+          <span className="underway">Yellow: in progress / awaiting acceptance</span>
           <span className="unstarted">Empty: not started</span>
         </span>
         <span>Original and newly added work share the same total.</span>
