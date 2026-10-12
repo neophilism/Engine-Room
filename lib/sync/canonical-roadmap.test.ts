@@ -16,6 +16,17 @@ describe("canonical repository roadmap ingestion",()=>{
   expect(items.map(x=>x.scope)).toEqual(["original","original","addition"]);
   expect(items[1]).toMatchObject({ordinal:2,sourceItemId:"PDE-02",numbers:[]});
  });
+ it("retains contributing merged PRs without counting their package complete",()=>{
+  const body=JSON.stringify({...example,milestones:[
+    {...example.milestones[0],pullRequests:[],contributingPrs:[1,8]},
+    ...example.milestones.slice(1)
+  ]});
+  const item=parseCanonicalRoadmap(body,"Debate-Engine")[0];
+  expect(item).toMatchObject({numbers:[],contributions:[1,8]});
+  expect(()=>parseCanonicalRoadmap(JSON.stringify({...example,milestones:[
+    {...example.milestones[0],contributingPrs:[1]},...example.milestones.slice(1)
+  ]}),"Debate-Engine")).toThrow(/both accepted and contribution-only/);
+ });
  it("rejects a root total that disagrees with its explicit item list",()=>{
   expect(()=>parseCanonicalRoadmap(JSON.stringify({...example,plannedPrCount:4}),"Debate-Engine")).toThrow(/plannedPrCount/);
  });
