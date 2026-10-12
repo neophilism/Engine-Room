@@ -16,7 +16,7 @@
     "stop_on_credits_exhausted": true
   },
   "acceptance": {
-    "status": "pending-provider-run-verification",
+    "status": "pilot-heard-passed-other-projects-pending",
     "all_required_jobs_must_pass": true,
     "matching_tested_sha_required": true,
     "merges_blocked_on_failed_or_unrun_required_checks": true,
@@ -72,7 +72,33 @@
       "config_path": ".circleci/config.yml",
       "github_pr": "https://github.com/neophilism/HEARD/pull/3",
       "verification_scope": "full",
-      "provider_pipeline_state": "not_verified"
+      "provider_pipeline_state": "manual_full_pipeline_passed",
+      "verified_commit_sha": "a9d68b7d805bda436d333035a834041f68150ee9",
+      "verified_at_utc": "2026-10-12T20:40:43Z",
+      "verified_workflow": {
+        "provider": "CircleCI",
+        "trigger": "manual",
+        "duration_seconds": 50,
+        "jobs": [
+          {
+            "name": "full-verification",
+            "status": "success",
+            "seconds": 31,
+            "url": "https://app.circleci.com/workflow/c180c0c8-dedd-4936-8b30-aa16b7a3d186/job/9808fe2a-196a-46e6-bb45-7a5f5253fd5c"
+          },
+          {
+            "name": "security-status-record",
+            "status": "success",
+            "seconds": 1,
+            "url": "https://app.circleci.com/workflow/c180c0c8-dedd-4936-8b30-aa16b7a3d186/job/05120551-21c7-4d5f-ac1c-c65fdefa6cf0"
+          }
+        ],
+        "github_commit_statuses_verified": true,
+        "github_actions_failures_remain": true
+      },
+      "merge_state": "merged",
+      "merged_to_main_sha": "05e83c94a56c63788781ae62824f82eb27ec16f7",
+      "next_acceptance_gate": "Verify automatic push-to-open-PR trigger on new PR/commit and enable separate default-branch trigger; ensure main branch status checks use equivalent CircleCI checks."
     },
     {
       "name": "Justic-For-All",
