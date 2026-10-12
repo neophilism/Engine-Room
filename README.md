@@ -46,3 +46,7 @@ For production, the existing `npm start` launcher enforces migrations before sta
 
 Quality gates include typecheck, lint, migrations, roadmap checks, unit/integration tests, build, and browser acceptance. See [production-availability monitoring](docs/production-availability.md) for independent public checks and release-identity verification.
 
+
+## End-to-End Everywhere progress
+
+The canonical [security/e2eesa-status.json](security/e2eesa-status.json) tracks implementation, complete testing and independent expert review separately. Engine Room imports this file on source refresh. Read [adoption and independent-account instructions](docs/E2EESA_ADOPTION.md) and run `python3 scripts/validate_e2eesa_status.py`. Record integrity does not complete the three evidence stages or establish certification.

@@ -520,3 +520,12 @@ h2 { font: 680 clamp(1.06rem, 1.5vw, 1.35rem)/1.28 var(--er-font-body); letter-s
 }
 @media (max-width: 760px) { .live-readout { display: flex; } .live-refresh-trigger { padding: 8px; } }
 
+
+.project-security-status { margin: 8px 0 10px 34px; padding: 8px 10px; border: 1px solid #324b56; border-radius: 6px; font-size: .76rem; }
+.project-security-status strong { display: block; margin-bottom: 6px; color: #bedbe4; }
+.security-status-checkboxes { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-bottom: 5px; }
+.security-status-checkboxes label { display: inline-flex; align-items: center; gap: 5px; }
+.security-status-checkboxes input { accent-color: #69c8a1; }
+.project-security-status small { color: #a5bbc9; }
+.project-security-status a { color: #8ccfdf; }
+@media (max-width: 760px) { .project-last-update, .project-security-status { margin-inline-start: 0; } }

@@ -1,0 +1,12 @@
+import type {PoolClient} from 'pg';
+export type SecurityStatusRecord={schemaVersion:1;repository:string;updatedAt:string;standard:{repository:string;commit:string;basis:string};inventory:{path:string;reviewed:boolean};source:{algorithm:string;digest:string|null};implementation:{complete:boolean;evidence:string[];pending:string[];controls:Array<{id:string;state:string;evidence:string[]}>};testing:{complete:boolean;evidence:string[];pending:string[];checks:Array<{kind:string;status:string;sourceDigest:string;completedAt:string;toolDigest:string;configurationDigest:string;report:string}>};independentReview:{complete:boolean;evidence:string[];pending:string[];sourceDigest:string|null;reviewers:Array<{name:string;independent:boolean;qualified:boolean}>;ownerAccepted:boolean};observedSourcePaths?:string[]};
+export type SecurityEvaluation={implemented:boolean;tested:boolean;independentReview:boolean;certificationEligible:false;reasons:string[]};
+export const E2EESA_STATUS_PATH:string;
+export const SOURCE_DIGEST_ALGORITHM:string;
+export const REQUIRED_GATES:string[];
+export const REQUIRED_CONTROLS:string[];
+export function sourceFingerprint(tree:{tree:Array<{type:string;path:string;mode:string;sha:string}>;truncated?:boolean}):string;
+export function parseSecurityStatus(body:string,repository:string):SecurityStatusRecord;
+export function evaluateSecurityStatus(status:SecurityStatusRecord|null,options?:{fingerprint?:string|null;paths?:string[];now?:number;state?:string}):SecurityEvaluation;
+export function securityScopeIncluded(repo:Record<string,unknown>):boolean|null;
+export function syncSecurityStatus(db:Pick<PoolClient,'query'>,repo:Record<string,unknown>,get:(path:string)=>Promise<unknown>,head:Record<string,unknown>|null):Promise<string>;

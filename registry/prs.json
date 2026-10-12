@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "repository": "neophilism/Engine-Room",
-  "roadmapVersion": 7,
+  "roadmapVersion": 8,
   "planVerified": true,
-  "plannedPrCount": 51,
+  "plannedPrCount": 52,
   "observedAt": "2026-10-11T22:57:44.640Z",
   "units": [
     {
@@ -409,6 +409,12 @@
     {
       "id": "ER-051",
       "title": "Dismiss refresh feedback, nest engine implementations and sync GitHub About descriptions and latest source activity",
+      "origin": "addition",
+      "prs": []
+    },
+    {
+      "id": "ER-052",
+      "title": "Automatically import source-bound E2EESA implementation, testing and independent expert-review status records",
       "origin": "addition",
       "prs": []
     }
@@ -1691,4 +1697,3 @@
     }
   ]
 }
-

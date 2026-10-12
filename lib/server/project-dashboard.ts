@@ -9,6 +9,7 @@ import { loadProjectActivity } from "./development-activity";
 import { loadProjectMonitorData } from "./live-monitor";
 import { loadProjectReadiness } from "./project-readiness";
 import {loadProjectUpdates} from './project-update';
+import {loadProjectSecurityStatuses} from './security-status';
 
 type ProjectRow = { id: string; slug: string; display_name: string; summary: string | null; status: Project["status"] };
 type RepositoryRow = { id: string; github_repository_id: string | number; owner_login: string; name: string; full_name: string; html_url: string; default_branch: string; visibility: Repository["visibility"]; archived: boolean };
@@ -70,6 +71,7 @@ export async function loadProjectDashboard(slug: string, source: EnvironmentSour
       }
       const dashboard = normalizeProjectDashboard(project, repositories.rows, plan, milestones, plannedPrs);
       dashboard.latestUpdate=(await loadProjectUpdates(client,project.id)).get(project.id);
+      dashboard.securityStatuses=(await loadProjectSecurityStatuses(client,project.id)).get(project.id)||[];
       const monitor=await loadProjectMonitorData(client,project.id);
       dashboard.sourcePlan=monitor.plans.get(project.id);
       dashboard.pullRequests=monitor.pullRequests.get(project.id)||[];
