@@ -30,7 +30,7 @@ export async function loadProjectOrigins(db:Pick<PoolClient,"query">,projectId?:
     const origin:Origin={startedAt:iso(timestamp),
       startBasis:row.github_created_at?"repository-created":row.first_pr_created_at?"first-pr":undefined,
       syncedAt:iso(row.last_success_at)};
-    const record=byProject.get(row.project_id)??{project:{startedAt:null,startBasis:undefined,syncedAt:null},repositories:new Map<string,Origin>()};
+    const record:ProjectOrigin=byProject.get(row.project_id)??{project:{startedAt:null,startBasis:undefined,syncedAt:null},repositories:new Map<string,Origin>()};
     record.repositories.set(row.full_name,origin);
     const start=record.project.startedAt;
     if(origin.startedAt && (!start || origin.startedAt<start)){
