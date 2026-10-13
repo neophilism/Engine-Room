@@ -39,8 +39,8 @@ export async function loadProjectOrigins(db:Pick<PoolClient,"query">,projectId?:
     }
     // Oldest successful source refresh governs portfolio freshness. A missing
     // sync timestamp is unknown, not a fresh observation.
-    record.project.syncedAt=record.project.syncedAt===null?origin.syncedAt:
-      origin.syncedAt===null?null:origin.syncedAt<record.project.syncedAt?origin.syncedAt:record.project.syncedAt;
+    const times=[...record.repositories.values()].map(x=>x.syncedAt);
+    record.project.syncedAt=times.every((x):x is string=>!!x)?times.sort()[0]:null;
     byProject.set(row.project_id,record);
   }
   return byProject;
