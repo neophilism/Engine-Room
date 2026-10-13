@@ -1,4 +1,5 @@
 import type { SourcePlanSummary,PullRequestReadout } from "./live-monitor";
+import type { TimeForecast } from "./time-completion";
 import type { DevelopmentPlanGraph, Project, Repository, RoadmapProgress } from "./portfolio";
 import type { MilestoneProgress } from "./milestone-lifecycle";
 import type { PortfolioOverviewData } from "./portfolio-overview";
@@ -24,6 +25,8 @@ export type ProjectDashboardData = {
   readiness?: ProjectReadiness;
   sourcePlan?: SourcePlanSummary;
   pullRequests?: PullRequestReadout[];
+  timeForecast?: TimeForecast;
+  milestoneTimeForecasts?: Record<string, TimeForecast>;
 };
 
 export function projectDashboardHref(project: { id: string; slug?: string }) {
