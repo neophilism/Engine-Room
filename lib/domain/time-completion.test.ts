@@ -34,15 +34,14 @@ describe("elapsed-time estimation — distinct from completed-work progress",()=
     expect(late.calendarRemainingDays!).toBeGreaterThan(early.calendarRemainingDays!);
   });
   it("tracks separate PR-cycle pace and observed overlapping PR capacity",()=>{
-    const sequential=sample([5,6,7,8,9],0.4);
-    const overlap:TimeEvidence={...sequential,
-      accepted:[5,6,7,8,9].map(d=>({openedAt:at(3),completedAt:at(d)}))};
+    const sequential=sample([2,4,6,8,10],2);
+    const overlap=sample([5,6,7,8,9],2);
     const one=estimateTimeCompletion({planned:10,completed:5},sequential,at(11));
     const many=estimateTimeCompletion({planned:10,completed:5},overlap,at(11));
     expect(one.parallelPrSlots).toBe(1);
     expect(many.parallelPrSlots).toBeGreaterThan(1);
-    expect(one.prCycleRemainingDays).not.toBeNull();
-    expect(many.prCycleRemainingDays).not.toBeNull();
+    expect(one.prCycleRemainingDays).toBe(10);
+    expect(many.prCycleRemainingDays!).toBeLessThan(one.prCycleRemainingDays!);
   });
   it("shows unknown, not fabricated deadlines, without accepted units or verified timestamps",()=>{
     expect(estimateTimeCompletion({planned:10,completed:0},sample([]),at(11)).state).toBe("unavailable");
