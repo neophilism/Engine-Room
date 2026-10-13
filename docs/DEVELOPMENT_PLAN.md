@@ -6,7 +6,7 @@
 
 **Before continuing development:** read the whole plan; inspect the repository's current `main` branch, open/merged PRs, CI, available deployments, and configuration. A planned task is not evidence of completion, and a merged PR is not proof of production readiness. Consult [docs/approved-roadmap-mapping.md](../docs/approved-roadmap-mapping.md), [docs/plan-import-coverage.md](../docs/plan-import-coverage.md), [docs/production-release.md](../docs/production-release.md).
 
-**Important:** The 40-item approved roadmap is the original scope. Later PRs and production work may extend it; verify actual PR and deployment state independently.
+**Important:** The 40-item approved roadmap is the original scope. ER-053 adds independent project-time estimation without changing milestone progress semantics. Later PRs and production work may extend it; verify actual PR and deployment state independently.
 
 ---
 
