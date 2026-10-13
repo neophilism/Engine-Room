@@ -55,3 +55,26 @@ export function timeEvidenceFromPlan(
       (!repositoryFullName||item.repositoryFullName===repositoryFullName))
       .map(item=>({openedAt:item.openedAt,completedAt:item.completedAt!}))};
 }
+
+/** Fallback for projects still using the approved-plan tables rather than a
+ * repository-owned structured plan. Only explicitly linked GitHub merges count. */
+export async function loadLegacyAcceptedEvidence(db:Pick<PoolClient,"query">,projectId?:string){
+  type Row={project_id:string;full_name:string;opened_at:Date;completed_at:Date};
+  const res=await db.query<Row>(`SELECT dp.project_id,r.full_name,
+      g.created_at AS opened_at,g.merged_at AS completed_at
+    FROM development_plans dp
+    JOIN planned_pull_requests ppr ON ppr.development_plan_id=dp.id
+    JOIN repositories r ON r.id=ppr.repository_id
+    JOIN github_pull_requests g ON g.repository_id=r.id AND g.number=ppr.github_pr_number
+    WHERE dp.status='approved' AND g.merged_at IS NOT NULL AND
+      ($1::uuid IS NULL OR dp.project_id=$1)`,[projectId??null]);
+  const result=new Map<string,{repository:string;openedAt:string;completedAt:string}[]>();
+  for(const row of res.rows){
+    const previous=result.get(row.project_id)??[];
+    previous.push({repository:row.full_name,
+      openedAt:new Date(row.opened_at).toISOString(),
+      completedAt:new Date(row.completed_at).toISOString()});
+    result.set(row.project_id,previous);
+  }
+  return result;
+}
