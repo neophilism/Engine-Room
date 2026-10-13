@@ -24,7 +24,7 @@ export function TimeProgressTube({forecast,label,compact=false}:{
   forecast?:TimeForecast|null;label:string;compact?:boolean
 }){
   const available=forecast?.state==="forecast"||forecast?.state==="complete";
-  const timePercent=available?forecast.timePercent??0:0;
+  const timePercent=available?(forecast?.timePercent??0):0;
   const calendar=forecast?.state==="complete"?"Complete":
     forecast?.state==="forecast"?
       duration(forecast.calendarRemainingDays)+" remaining · "+date(forecast.calendarFinishAt):"Unavailable";
@@ -39,8 +39,8 @@ export function TimeProgressTube({forecast,label,compact=false}:{
     </div>
     {available?<div className="time-progress-tube" role="progressbar"
       aria-label={label} aria-valuemin={0} aria-valuemax={100} aria-valuenow={timePercent}
-      aria-valuetext={duration(forecast.elapsedDays)+" elapsed; calendar "+calendar+
-        "; PR-cycle "+cycle+"; estimate updated "+date(forecast.asOf)}
+      aria-valuetext={duration(forecast?.elapsedDays??null)+" elapsed; calendar "+calendar+
+        "; PR-cycle "+cycle+"; estimate updated "+date(forecast?.asOf??null)}
       title={"Calendar: "+calendar+". PR-cycle: "+cycle}>
       <span className="time-progress-chamber" aria-hidden="true">
         <span className="time-progress-fill" style={{width:timePercent+"%"}} />
@@ -60,6 +60,9 @@ export function TimeProgressTube({forecast,label,compact=false}:{
         "Project inception not independently recorded"}
       {" · "+(forecast?.sampleSize??0)+" accepted timestamps"}
       {forecast?.syncedAt?" · Source sync "+date(forecast.syncedAt):" · Source sync unverified"}
+      {forecast?.syncedAt&&Number.isFinite(Date.parse(forecast.asOf))&&
+        Date.parse(forecast.asOf)-Date.parse(forecast.syncedAt)>48*60*60*1000?
+        " · GitHub source observation may be stale":""}
       {forecast?.state==="unavailable"?" · "+(forecast.reason??"Unknown pace"):""}
     </div>}
   </div>;
