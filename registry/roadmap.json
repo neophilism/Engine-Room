@@ -1,9 +1,9 @@
 {
   "repository": "neophilism/Engine-Room",
   "title": "Engine Room",
-  "version": 8,
+  "version": 9,
   "planVerified": true,
-  "plannedPrCount": 52,
+  "plannedPrCount": 53,
   "sourceFiles": [
     ".exechub/project.yml",
     "docs/development-plan.md",
@@ -422,6 +422,14 @@
       "title": "Automatically import source-bound E2EESA implementation, testing and independent expert-review status records",
       "origin": "addition",
       "pullRequests": []
+    },
+    {
+      "id": "ER-053",
+      "title": "Separate elapsed-time bar with adaptive calendar and PR-cycle completion forecasts",
+      "origin": "addition",
+      "pullRequests": [
+        101
+      ]
     }
   ],
   "scopeNote": "40 original approved work packages, 3 independently documented portfolio-monitor additions (PRs #56–58), and 2 user-requested universal repository roadmap/synchronization work packages (#81–82). Source roadmap IDs and actual PR numbers remain separate."
