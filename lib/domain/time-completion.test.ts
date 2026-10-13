@@ -59,6 +59,13 @@ describe("elapsed-time estimation — distinct from completed-work progress",()=
     expect(result.sampleSize).toBe(0);
     expect(estimateTimeCompletion({planned:10,completed:11},sample([5]),at(11)).timePercent).toBeNull();
   });
+  it("never displays 100% elapsed while an approved unit remains",()=>{
+    const stale=estimateTimeCompletion({planned:500000,completed:499999},
+      {startedAt:"2000-01-01T00:00:00.000Z",
+       accepted:[{openedAt:"2026-01-01T00:00:00.000Z",completedAt:"2026-01-02T00:00:00.000Z"}]},
+      "2026-10-12T00:00:00.000Z");
+    if(stale.state==="forecast")expect(stale.timePercent).toBeLessThan(100);
+  });
   it("marks completed projects at 100% even when no active ETA remains",()=>{
     const result=estimateTimeCompletion({planned:10,completed:10},sample([]),at(11));
     expect(result).toMatchObject({state:"complete",timePercent:100,
