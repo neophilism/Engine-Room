@@ -60,7 +60,7 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
     pullRequests.set(row.project_id,prs);
   }
   const docResult=await db.query<{project_id:string;repository_id:string;repository_name:string;path:string;fingerprint:string;source_url:string;repository_url:string;title:string;imported_at:Date;versions:string}>(`SELECT DISTINCT ON(pr.project_id,d.repository_id,d.path)
-    pr.project_id,d.*,r.name AS repository_name,r.html_url AS repository_url,count(*) OVER(PARTITION BY d.repository_id,d.path) AS versions FROM project_plan_documents d
+    pr.project_id,d.*,r.full_name AS repository_name,r.html_url AS repository_url,count(*) OVER(PARTITION BY d.repository_id,d.path) AS versions FROM project_plan_documents d
     JOIN repositories r ON r.id=d.repository_id JOIN project_repositories pr ON pr.repository_id=d.repository_id WHERE ($1::uuid IS NULL OR pr.project_id=$1)
     ORDER BY pr.project_id,d.repository_id,d.path,d.version_id DESC`,[projectId||null]);
   const plans=new Map<string,SourcePlanSummary>();
@@ -90,7 +90,11 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
         UNION ALL
         SELECT c.ordinal,c.title,'addition',c.github_pr_numbers,c.contributing_pr_numbers,c.mapping_reason FROM additions c
       )`;
-    const result=await db.query<{ordinal:number;title:string;scope:PlanItemReadout['scope'];github_pr_numbers:number[];contributing_pr_numbers:number[];mapping_reason:string|null;completed:boolean;underway:boolean;unverified:boolean}>(`WITH ${unitsSql} SELECT u.*,
+    const result=await db.query<{ordinal:number;title:string;scope:PlanItemReadout['scope'];github_pr_numbers:number[];contributing_pr_numbers:number[];mapping_reason:string|null;completed:boolean;underway:boolean;unverified:boolean;opened_at:Date|null;completed_at:Date|null}>(`WITH ${unitsSql} SELECT u.*,
+      (SELECT min(g.created_at) FROM jsonb_array_elements_text(u.github_pr_numbers) n
+        JOIN github_pull_requests g ON g.repository_id=$1 AND g.number=n.value::integer) AS opened_at,
+      (SELECT max(g.merged_at) FROM jsonb_array_elements_text(u.github_pr_numbers) n
+        JOIN github_pull_requests g ON g.repository_id=$1 AND g.number=n.value::integer) AS completed_at,
       jsonb_array_length(github_pr_numbers)>0 AND NOT EXISTS(SELECT 1 FROM jsonb_array_elements_text(u.github_pr_numbers) n
         LEFT JOIN github_pull_requests g ON g.repository_id=$1 AND g.number=n.value::integer
         WHERE g.merged_at IS NULL) AS completed,
@@ -113,7 +117,8 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
       plan.items.push({ordinal:item.ordinal,title:item.title,scope:item.scope,numbers:item.github_pr_numbers,
         contributingNumbers:item.contributing_pr_numbers,
         state:completed?'merged':item.unverified?'unmapped':item.underway?'in-progress':item.github_pr_numbers.length?'planned':'unmapped',
-        reason:item.mapping_reason,sourceUrl:doc.source_url,repositoryUrl:doc.repository_url});
+        reason:item.mapping_reason,sourceUrl:doc.source_url,repositoryUrl:doc.repository_url,
+        repositoryFullName:doc.repository_name,openedAt:iso(item.opened_at),completedAt:completed?iso(item.completed_at):null});
     }
     plans.set(doc.project_id,plan);
   }
