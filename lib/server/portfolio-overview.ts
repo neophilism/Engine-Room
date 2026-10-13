@@ -12,6 +12,9 @@ export type {
   PortfolioStatistics
 } from "../domain/portfolio-overview";
 import { calculatePortfolioStatistics, effectiveProjectStatus } from "../domain/portfolio-statistics";
+import { summarizePlannedProgress } from "../domain/planned-progress";
+import { estimateTimeCompletion } from "../domain/time-completion";
+import { loadProjectOrigins, timeEvidenceFromPlan } from "./time-evidence";
 import aboutSeeds from "../config/repository-about-seed.json";
 export { calculatePortfolioStatistics } from "../domain/portfolio-statistics";
 import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
@@ -215,6 +218,8 @@ export async function loadPortfolioOverview(
     const features = await loadCurrentFeatures(client);
     projects = projects.map((project) => ({ ...project, features: features.filter((feature) => feature.projectId === project.id) }));
     const monitor=await loadProjectMonitorData(client);
+    const origins=await loadProjectOrigins(client);
+    const forecastAsOf=new Date().toISOString();
     const latestUpdates=await loadProjectUpdates(client);
     const securityStatuses=await loadProjectSecurityStatuses(client);
     const seededDescriptions=new Map(aboutSeeds.entries.map(entry=>[entry.repository,entry.description]));
@@ -241,6 +246,23 @@ export async function loadPortfolioOverview(
         activity:monitor.summaries.get(project.id),pullRequests:monitor.pullRequests.get(project.id)||[],sourcePlan:plan};
     });
 
+    projects=projects.map(project=>{
+      const progress=summarizePlannedProgress(project);
+      if(!progress)return project;
+      const origin=origins.get(project.id);
+      const timeForecast=estimateTimeCompletion(progress,
+        timeEvidenceFromPlan(project.sourcePlan,origin?.project),forecastAsOf);
+      // Repository-specific ETA must not reuse the project's entire history
+      // unless the plan is wholly allocated to that sole repository.
+      const fullyAllocated=project.repositories.reduce((n,r)=>n+r.planned,0)===progress.planned;
+      const repositories=project.repositories.map(repository=>{
+        const estimate=fullyAllocated&&repository.planned>0?
+          estimateTimeCompletion({planned:repository.planned,completed:repository.completed},
+            timeEvidenceFromPlan(project.sourcePlan,origin?.repositories.get(repository.fullName),repository.fullName),forecastAsOf):undefined;
+        return {...repository,timeForecast:project.repositories.length===1?timeForecast:estimate};
+      });
+      return {...project,timeForecast,repositories};
+    });
     const overview: PortfolioOverviewData = {
       source: "database",
       projects,
