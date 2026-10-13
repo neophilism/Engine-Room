@@ -14,7 +14,7 @@ export type {
 import { calculatePortfolioStatistics, effectiveProjectStatus } from "../domain/portfolio-statistics";
 import { summarizePlannedProgress } from "../domain/planned-progress";
 import { estimateTimeCompletion } from "../domain/time-completion";
-import { loadProjectOrigins, timeEvidenceFromPlan } from "./time-evidence";
+import { loadProjectOrigins, loadLegacyAcceptedEvidence, timeEvidenceFromPlan } from "./time-evidence";
 import aboutSeeds from "../config/repository-about-seed.json";
 export { calculatePortfolioStatistics } from "../domain/portfolio-statistics";
 import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
@@ -219,6 +219,7 @@ export async function loadPortfolioOverview(
     projects = projects.map((project) => ({ ...project, features: features.filter((feature) => feature.projectId === project.id) }));
     const monitor=await loadProjectMonitorData(client);
     const origins=await loadProjectOrigins(client);
+    const legacySamples=await loadLegacyAcceptedEvidence(client);
     const forecastAsOf=new Date().toISOString();
     const latestUpdates=await loadProjectUpdates(client);
     const securityStatuses=await loadProjectSecurityStatuses(client);
@@ -250,15 +251,20 @@ export async function loadPortfolioOverview(
       const progress=summarizePlannedProgress(project);
       if(!progress)return project;
       const origin=origins.get(project.id);
+      const fromSource=timeEvidenceFromPlan(project.sourcePlan,origin?.project);
+      const fallback=project.sourcePlan?.documents.length?[]:legacySamples.get(project.id)??[];
       const timeForecast=estimateTimeCompletion(progress,
-        timeEvidenceFromPlan(project.sourcePlan,origin?.project),forecastAsOf);
+        {...fromSource,accepted:fromSource.accepted.length?fromSource.accepted:fallback},forecastAsOf);
       // Repository-specific ETA must not reuse the project's entire history
       // unless the plan is wholly allocated to that sole repository.
       const fullyAllocated=project.repositories.reduce((n,r)=>n+r.planned,0)===progress.planned;
       const repositories=project.repositories.map(repository=>{
+        const repoSource=timeEvidenceFromPlan(project.sourcePlan,origin?.repositories.get(repository.fullName),repository.fullName);
+        const repoFallback=project.sourcePlan?.documents.length?[]:
+          (legacySamples.get(project.id)??[]).filter(x=>x.repository===repository.fullName);
         const estimate=fullyAllocated&&repository.planned>0?
           estimateTimeCompletion({planned:repository.planned,completed:repository.completed},
-            timeEvidenceFromPlan(project.sourcePlan,origin?.repositories.get(repository.fullName),repository.fullName),forecastAsOf):undefined;
+            {...repoSource,accepted:repoSource.accepted.length?repoSource.accepted:repoFallback},forecastAsOf):undefined;
         return {...repository,timeForecast:project.repositories.length===1?timeForecast:estimate};
       });
       return {...project,timeForecast,repositories};
