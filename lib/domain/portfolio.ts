@@ -80,6 +80,7 @@ export type PlannedPullRequest = {
   status: PlannedPullRequestStatus;
   githubPrNumber?: number;
   mergedAt?: string;
+  openedAt?: string;
 };
 
 export type DevelopmentPlanGraph = {

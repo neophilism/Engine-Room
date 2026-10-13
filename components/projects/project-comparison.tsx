@@ -7,7 +7,7 @@ import { projectDashboardHref } from "../../lib/domain/project-dashboard";
 import type { PortfolioOverviewData } from "../../lib/domain/portfolio-overview";
 import { defaultPortfolioQuery, githubRepositoryUrl, queryPortfolio } from "../../lib/domain/portfolio-query";
 import { BrassPanel } from "../machine";
-import { PlannedProgressTube } from "../portfolio/planned-progress-tube";
+import { DualProgress } from "../portfolio/dual-progress";
 import { summarizePlannedProgress } from "../../lib/domain/planned-progress";
 import { PortfolioControls } from "../portfolio/portfolio-controls";
 
@@ -65,8 +65,9 @@ export function ProjectComparison({ overview }: { overview: PortfolioOverviewDat
                     <td className="comparison-progress-cell">
                       {progress ?
                         <div className="comparison-progress">
-                          <PlannedProgressTube compact label={`${project.displayName} comparison progress`}
-                            progress={progress} />
+                          <DualProgress compact workLabel={`${project.displayName} comparison progress`}
+                            timeLabel={`${project.displayName} comparison time progress`}
+                            progress={progress} forecast={project.timeForecast} />
                           <strong>{progress.percent}%</strong>
                         </div>
                         : <span className="comparison-not-measured">N/A</span>}

@@ -1,5 +1,8 @@
 import type { DevelopmentPlanGraph, Project, Repository } from "../domain/portfolio";
 import { calculateRoadmapProgress } from "../domain/portfolio";
+import { summarizePlannedProgress } from "../domain/planned-progress";
+import { estimateTimeCompletion } from "../domain/time-completion";
+import { loadProjectOrigins, timeEvidenceFromPlan } from "./time-evidence";
 import { effectiveProjectStatus } from "../domain/portfolio-statistics";
 import aboutSeeds from "../config/repository-about-seed.json";
 import { calculateMilestoneProgress } from "../domain/milestone-lifecycle";
@@ -17,7 +20,7 @@ type ProjectRow = { id: string; slug: string; display_name: string; summary: str
 type RepositoryRow = { id: string; github_repository_id: string | number; owner_login: string; name: string; full_name: string; html_url: string; default_branch: string; visibility: Repository["visibility"]; archived: boolean };
 type PlanRow = { id: string; project_id: string; version: number; title: string; summary: string | null; planned_pr_total: number; approved_at: Date | string };
 type MilestoneRow = { id: string; development_plan_id: string; ordinal: number; name: string; description: string | null; planned_pr_total: number; status: DevelopmentPlanGraph["milestones"][number]["status"] };
-type PlannedPrRow = { id: string; development_plan_id: string; milestone_id: string | null; repository_id: string | null; ordinal: number; title: string; description: string | null; status: DevelopmentPlanGraph["plannedPullRequests"][number]["status"]; github_pr_number: number | null; merged_at: Date | string | null; completion_unverified?:boolean };
+type PlannedPrRow = { id: string; development_plan_id: string; milestone_id: string | null; repository_id: string | null; ordinal: number; title: string; description: string | null; status: DevelopmentPlanGraph["plannedPullRequests"][number]["status"]; github_pr_number: number | null; merged_at: Date | string | null; completion_unverified?:boolean; opened_at?:Date|string|null };
 
 function iso(value: Date | string | null) { return value === null ? undefined : new Date(value).toISOString(); }
 function empty(source: ProjectDashboardData["source"]): ProjectDashboardData { return { source, project: null, repositories: [], milestones: [] }; }
@@ -35,7 +38,7 @@ export function normalizeProjectDashboard(projectRow: ProjectRow, repositoryRows
       description: row.description ?? undefined, plannedPrTotal: row.planned_pr_total, status: row.status })),
     plannedPullRequests: plannedPrRows.map((row) => ({ id: row.id, developmentPlanId: row.development_plan_id, milestoneId: row.milestone_id ?? undefined,
       repositoryId: row.repository_id ?? undefined, ordinal: row.ordinal, title: row.title, description: row.description ?? undefined, status: row.status,
-      githubPrNumber: row.github_pr_number ?? undefined, mergedAt: iso(row.merged_at) }))
+      githubPrNumber: row.github_pr_number ?? undefined, mergedAt: iso(row.merged_at),openedAt:iso(row.opened_at??null) }))
   };
   const unverifiedRoadmapItems=plannedPrRows.filter(row=>!row.repository_id||!row.github_pr_number||row.completion_unverified).length;
   return { source: "database", project, repositories, graph, progress: calculateRoadmapProgress(graph),
@@ -63,7 +66,7 @@ export async function loadProjectDashboard(slug: string, source: EnvironmentSour
         plannedPrs = (await client.query<PlannedPrRow>(`select ppr.id, ppr.development_plan_id, ppr.milestone_id, ppr.repository_id, ppr.ordinal,
           ppr.title, ppr.description, ppr.github_pr_number,
           (gpr.id IS NULL) AS completion_unverified,
-          gpr.merged_at AS merged_at,
+          gpr.merged_at AS merged_at,gpr.created_at AS opened_at,
           CASE WHEN gpr.merged_at IS NOT NULL THEN 'merged'
             WHEN gpr.state = 'open' THEN 'in-progress'
             WHEN ppr.status = 'skipped' THEN 'skipped' ELSE 'planned' END AS status
@@ -86,6 +89,33 @@ export async function loadProjectDashboard(slug: string, source: EnvironmentSour
         }
       }
       dashboard.sourcePlan=monitor.plans.get(project.id);
+      const origins=await loadProjectOrigins(client,project.id);
+      const origin=origins.get(project.id)?.project;
+      const asOf=new Date().toISOString();
+      const planned=summarizePlannedProgress({
+        planned:dashboard.progress?.planned??0,completed:dashboard.progress?.completed??0,
+        inProgress:dashboard.graph?.plannedPullRequests.filter(p=>p.status==="in-progress").length??0,
+        sourcePlan:dashboard.sourcePlan
+      });
+      if(planned){
+        const sourceEvidence=timeEvidenceFromPlan(dashboard.sourcePlan,origin);
+        const fallback=dashboard.graph?.plannedPullRequests.filter(p=>p.status==="merged"&&p.mergedAt)
+          .map(p=>({openedAt:p.openedAt,completedAt:p.mergedAt!}))??[];
+        dashboard.timeForecast=estimateTimeCompletion(planned,
+          {...sourceEvidence,accepted:sourceEvidence.accepted.length?sourceEvidence.accepted:fallback},asOf);
+      }
+      if(dashboard.graph){
+        dashboard.milestoneTimeForecasts={};
+        for(const milestone of dashboard.graph.milestones){
+          const units=dashboard.graph.plannedPullRequests.filter(p=>p.milestoneId===milestone.id);
+          const merged=units.filter(p=>p.status==="merged"&&p.mergedAt);
+          const opened=units.map(p=>p.openedAt).filter((v):v is string=>!!v).sort()[0];
+          dashboard.milestoneTimeForecasts[milestone.id]=estimateTimeCompletion(
+            {planned:milestone.plannedPrTotal,completed:merged.length},
+            {startedAt:opened,startBasis:opened?"first-pr":undefined,syncedAt:origin?.syncedAt,
+              accepted:merged.map(p=>({openedAt:p.openedAt,completedAt:p.mergedAt!}))},asOf);
+        }
+      }
       dashboard.pullRequests=monitor.pullRequests.get(project.id)||[];
       dashboard.features = await loadCurrentFeatures(client, project.id);
       dashboard.activities = await loadProjectActivity(client, project.id);

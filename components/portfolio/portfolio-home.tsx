@@ -3,6 +3,7 @@ import { PodcastProductionAlert } from "../podcast-production-alert";
 import type { PodcastInquiryAlertSummary } from "../../lib/server/podcast-inquiry-alerts";
 import { BrassPanel } from "../machine";
 import { PortfolioBrowser } from "./portfolio-browser";
+import { PortfolioProgressMachine } from "./portfolio-progress-machine";
 import { PortfolioRefresh } from "./portfolio-refresh";
 import type { PortfolioOverviewData } from "../../lib/domain/portfolio-overview";
 import type { RenderReadout } from "../../lib/domain/render-deployments";
@@ -74,6 +75,7 @@ export function PortfolioHome({
       </p>
 
       <GitHubSourceReadout />
+      <PortfolioProgressMachine projects={projects} />
 
       <section className="dashboard-primary-section" aria-label="Project development progress">
         <BrassPanel

@@ -1,4 +1,5 @@
 import type { ProjectStatus } from "./portfolio";
+import type { TimeForecast } from "./time-completion";
 import type {ProjectUpdate} from './project-update';
 import type {RepositorySecurityStatus} from './security-status';
 import type { ProjectFeature } from "./project-features";
@@ -12,6 +13,7 @@ export type PortfolioRepositoryProgress = {
   inProgress: number;
   planned: number;
   percent: number;
+  timeForecast?: TimeForecast;
 };
 
 export type PortfolioProjectOverview = {
@@ -34,6 +36,7 @@ export type PortfolioProjectOverview = {
   pullRequests?: PullRequestReadout[];
   sourcePlan?: SourcePlanSummary;
   completionMeasured?: boolean;
+  timeForecast?: TimeForecast;
 };
 
 export type PortfolioStatistics = {

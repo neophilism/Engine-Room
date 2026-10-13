@@ -37,6 +37,10 @@ npm run dev
 
 For production, the existing `npm start` launcher enforces migrations before starting Next.js. The process can load the live-source worker when configured. Consult [production release](docs/production-release.md) for setup and [private registered-user access](docs/registered-user-access.md) for the first administrator and invitations.
 
+## Two independent progress bars
+
+Every roadmap progress readout retains its green/yellow/empty approved-work bar and now pairs it with a blue **elapsed-time bar**. The second bar tracks calendar time spent versus adaptive projected total time, with both **calendar-pace ETA** and **PR-cycle/observed-concurrency ETA**. Projections recalculate from verified GitHub events when the dashboard refreshes. Without sufficient history, the time ETA is explicitly unavailable. See [dual time estimation and methodology](docs/time-to-completion.md).
+
 ## Fresh data and operational boundaries
 
 - GitHub reconciliation reads real repository and PR identifiers; authenticated polling can refresh every 15 minutes on an awake instance, while anonymous polling is slower.

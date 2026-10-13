@@ -2,7 +2,9 @@ import React from "react";
 import type { PortfolioProjectOverview } from "../../lib/domain/portfolio-overview";
 import { calculatePortfolioWorkload } from "../../lib/domain/portfolio-statistics";
 import { BrassPanel, Gauge, IndicatorLamp, MachineGrid } from "../machine";
-import { PlannedProgressTube } from "./planned-progress-tube";
+import { DualProgress } from "./dual-progress";
+import { aggregateTimeCompletion } from "../../lib/domain/time-completion";
+import { summarizePlannedProgress } from "../../lib/domain/planned-progress";
 
 export function PortfolioProgressMachine({ projects }: { projects: readonly PortfolioProjectOverview[] }) {
   const workload = calculatePortfolioWorkload(projects);
@@ -13,6 +15,9 @@ export function PortfolioProgressMachine({ projects }: { projects: readonly Port
     planned, completed, inProgress:workload.underway, notStarted:workload.notStarted,
     remaining:planned-completed,percent:workload.percent
   };
+  const scopedProjects=projects.filter(p=>summarizePlannedProgress(p)!==null);
+  const at=scopedProjects.find(p=>p.timeForecast)?.timeForecast?.asOf??"1970-01-01T00:00:00.000Z";
+  const timeForecast=aggregateTimeCompletion(scopedProjects.map(p=>p.timeForecast),at);
   const covered = projects.filter(p=>p.planned>0&&p.completionMeasured!==false).length;
   const incomplete = covered < projects.length;
   const state = planned===0 ? "neutral" : completed===planned&&!incomplete ? "complete" : "active";
@@ -26,7 +31,9 @@ export function PortfolioProgressMachine({ projects }: { projects: readonly Port
           <Gauge label="Merged planned items" value={completed} max={planned} state={state} unit=" PRs" />
           <div className="portfolio-total-readout">
             <span className="machine-engraved-label">All planned work</span>
-            <PlannedProgressTube label="Total portfolio roadmap progress" progress={aggregate} />
+            <DualProgress workLabel="Total portfolio roadmap progress"
+              timeLabel="Total portfolio projected time progress"
+              progress={aggregate} forecast={timeForecast} />
             <strong>{workload.percent}% merged</strong>
             <span>{completed} merged · {workload.underway} open / unmerged · {workload.notStarted} not started</span>
           </div>
@@ -39,6 +46,7 @@ export function PortfolioProgressMachine({ projects }: { projects: readonly Port
       <p className="portfolio-calculation-note">{covered}/{projects.length} projects have complete roadmap mappings.
         The denominator includes original and newly added plan work equally. Green is merged;
         yellow is written but unmerged (regardless of CI); empty is unstarted.
+        The second bar measures elapsed time against a changeable completion estimate, not completed PRs.
         A merge does not establish production readiness.</p>
     </BrassPanel>
   );

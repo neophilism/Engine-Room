@@ -62,3 +62,25 @@
   background: repeating-linear-gradient(110deg, rgba(150,156,156,.09) 0 12px, rgba(150,156,156,.21) 12px 24px);
   color: var(--muted); font-size: .72rem; font-weight: 700; text-align: center;
 }
+
+/* Distinct, independently-valued elapsed-time rail paired below work units. */
+.dual-progress { display:grid; gap:8px; min-width:0; width:100%; }
+.time-progress-readout { display:grid; min-width:0; gap:3px; color:#bacbda; }
+.time-progress-heading { display:flex; align-items:baseline; justify-content:space-between; gap:10px; font-size:.69rem; }
+.time-progress-label { color:#a9d7e9; }
+.time-progress-heading strong { font-variant-numeric:tabular-nums; font-size:.7rem; color:#c6e1f9; }
+.time-progress-tube { display:block; height:12px; min-width:75px; overflow:hidden; border-radius:999px; background:#243347; border:1px solid #5d7188; }
+.time-progress-chamber { display:block; position:relative; width:100%; height:100%; }
+.time-progress-fill { display:block; height:100%; background:linear-gradient(90deg,#376f9c,#71b8e4 80%,#b5deff); box-shadow:0 0 8px #71b8e477; border-radius:999px; max-width:100%; }
+.time-progress-unmeasured { min-height:17px; border:1px dashed #5d7188; border-radius:6px; padding:2px 7px; background:#202e3d; color:#b0bdcc; font-size:.65rem; overflow-wrap:anywhere; }
+.time-forecast-details { display:flex; flex-wrap:wrap; gap:3px 14px; font-size:.66rem; line-height:1.3; color:#b5c9d9; }
+.time-forecast-details b { color:#d5e5f0; font-weight:620; }
+.time-forecast-provenance { color:#8ca4ba; font-size:.61rem; line-height:1.3; overflow-wrap:anywhere; }
+.time-progress-compact .time-progress-heading,.time-progress-compact .time-forecast-details { font-size:.62rem; }
+.repository-progress-row .dual-progress { min-width:0; }
+.comparison-progress .dual-progress { min-width:170px; flex:1 1 auto; }
+@media(max-width:760px) {
+  .repository-progress-row .dual-progress { grid-column:1/-1; }
+  .single-plan-progress-row .dual-progress { grid-column:1; }
+  .time-forecast-details { gap:2px 9px; }
+}

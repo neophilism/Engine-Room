@@ -68,6 +68,26 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     expect(data.milestones[0]).toMatchObject({ status: "active", completed: 1 });
     expect((await loadProjectDashboard("missing-project", source)).project).toBeNull();
   });
+  it("derives distinct time projections from authentic joined PostgreSQL timestamps",async()=>{
+    const pool=getDatabasePool(source);
+    const repo=(await pool.query<{id:string}>("SELECT id FROM repositories WHERE full_name='test/core'")).rows[0].id;
+    try{
+      await pool.query("UPDATE repositories SET github_created_at=now()-interval '15 days' WHERE id=$1",[repo]);
+      await pool.query("UPDATE github_pull_requests SET created_at=now()-interval '2 days' WHERE repository_id=$1 AND number=1",[repo]);
+      const overview=await loadPortfolioOverview(source);
+      const item=overview.projects.find(p=>p.slug==='database-fixture')!;
+      expect(item.timeForecast).toMatchObject({state:"forecast",sampleSize:1,startBasis:"repository-created"});
+      expect(item.timeForecast?.calendarRemainingDays).toBeGreaterThan(0);
+      expect(item.timeForecast?.prCycleRemainingDays).toBeGreaterThan(0);
+      expect(item.repositories[0].timeForecast?.state).toBe("forecast");
+      const details=await loadProjectDashboard("database-fixture",source);
+      expect(details.timeForecast?.state).toBe("forecast");
+      expect(details.milestoneTimeForecasts?.[details.graph!.milestones[0].id]?.state).toBe("forecast");
+    }finally{
+      await pool.query("UPDATE repositories SET github_created_at=NULL WHERE id=$1",[repo]);
+      await pool.query("UPDATE github_pull_requests SET created_at=updated_at WHERE repository_id=$1 AND number=1",[repo]);
+    }
+  });
   it("counts a planned GitHub PR merged into an intermediate branch without claiming release readiness", async () => {
     const pool = getDatabasePool(source);
     const id = (await pool.query("SELECT id FROM repositories WHERE full_name='test/core'")).rows[0].id;
