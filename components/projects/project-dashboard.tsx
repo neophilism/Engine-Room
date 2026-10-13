@@ -4,7 +4,7 @@ import type { ProjectDashboardData } from "../../lib/domain/project-dashboard";
 import { lifecycleStages } from "../../lib/domain/lifecycle-lanes";
 import { githubRepositoryUrl } from "../../lib/domain/portfolio-query";
 import { BrassPanel, IndicatorLamp } from "../machine";
-import { PlannedProgressTube } from "../portfolio/planned-progress-tube";
+import { DualProgress } from "../portfolio/dual-progress";
 import { summarizePlannedProgress } from "../../lib/domain/planned-progress";
 import { ProjectFeatures } from "./project-features";
 import { DevelopmentActivityTimeline } from "./development-activity";
@@ -38,7 +38,9 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
       <BrassPanel title="Approved roadmap" status={<IndicatorLamp state={stage.state} label={stage.label} />}>
         {planProgress ? <>
           <p>{data.graph ? `Plan version ${data.graph.plan.version}` : "Source development plan"} · {planProgress.completed}/{planProgress.planned} merged · {planProgress.inProgress} open / awaiting merge</p>
-          <PlannedProgressTube label={`${project.displayName} approved roadmap progress`} progress={planProgress} />
+          <DualProgress progress={planProgress} forecast={data.timeForecast}
+            workLabel={`${project.displayName} approved roadmap progress`}
+            timeLabel={`${project.displayName} approved roadmap projected time progress`} />
           <p className="planned-progress-legend">
             <span className="merged">Green: merged ({planProgress.completed})</span>
             <span className="underway">Yellow: written / unmerged ({planProgress.inProgress})</span>
@@ -71,8 +73,9 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
             const item = summarizePlannedProgress({
               planned: progress.planned, completed: progress.completed, inProgress:open
             });
-            return item ? <PlannedProgressTube
-              label={`${milestone.name} milestone progress`} progress={item}/> : null;
+            return item ? <DualProgress progress={item} forecast={data.milestoneTimeForecasts?.[milestone.id]}
+              workLabel={`${milestone.name} milestone progress`}
+              timeLabel={`${milestone.name} milestone projected time progress`} /> : null;
           })()}</li>;
       })}</ol> : <p>Milestones appear after a development plan is approved.</p>}
     </BrassPanel>
