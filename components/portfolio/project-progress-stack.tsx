@@ -4,7 +4,7 @@ import React, { useId, useState } from "react";
 import Link from "next/link";
 import { projectDashboardHref } from "../../lib/domain/project-dashboard";
 import type { PortfolioProjectOverview } from "../../lib/domain/portfolio-overview";
-import { PlannedProgressTube } from "./planned-progress-tube";
+import { DualProgress } from "./dual-progress";
 import { summarizePlannedProgress } from "../../lib/domain/planned-progress";
 import { ProjectAccordions } from "./project-accordions";
 import { githubRepositoryUrl } from "../../lib/domain/portfolio-query";
@@ -87,7 +87,9 @@ export function ProjectProgressStack({
       <div className="repository-progress-list" aria-label={`${project.displayName} repository progress`}>
         {isMultiRepository && progress && <div className="repository-progress-row planned-progress-aggregate-row">
           <span className="repository-progress-name">Full development plan</span>
-          <PlannedProgressTube progress={progress} label={`${project.displayName} development plan progress`} />
+          <DualProgress progress={progress} forecast={project.timeForecast} compact
+            workLabel={`${project.displayName} development plan progress`}
+            timeLabel={`${project.displayName} projected time progress`} />
           <span className="repository-pr-count">{progress.completed}/{progress.planned} planned</span>
           <span className="repository-percent">{progress.percent}%</span>
         </div>}
@@ -105,7 +107,10 @@ export function ProjectProgressStack({
                 : repository.fullName}
             </span>
             {repositoryProgress
-              ? <PlannedProgressTube progress={repositoryProgress} label={isMultiRepository ? `${repository.fullName} roadmap progress` : `${project.displayName} development plan progress`} />
+              ? <DualProgress progress={repositoryProgress} compact
+                  forecast={isMultiRepository?repository.timeForecast:project.timeForecast}
+                  workLabel={isMultiRepository ? `${repository.fullName} roadmap progress` : `${project.displayName} development plan progress`}
+                  timeLabel={isMultiRepository ? `${repository.fullName} projected time progress` : `${project.displayName} projected time progress`} />
               : <span className="repository-unmeasured-plan" role="status"
                   aria-label={aggregatorDeferred ? "Implementation deferred pending FOIA corpus" : "Plan allocation not measured"}>
                   {aggregatorDeferred ? "Deferred: FOIA corpus" : "Not yet measured"}</span>}
