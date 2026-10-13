@@ -1,8 +1,6 @@
 import type { PoolClient } from 'pg';
 import type { LiveSnapshot,ProjectActivitySummary,PullRequestReadout,SourcePlanSummary,PlanItemReadout } from '../domain/live-monitor';
 import { getDatabasePool } from './database';
-import planSources from '../config/portfolio-plan-sources.json';
-import { CANONICAL_ROADMAP_PATH, shouldImportPlanDocument } from '../sync/canonical-roadmap.mjs';
 import { STRUCTURED_PR_PATH } from '../sync/structured-pr-registry.mjs';
 
 const iso=(value:Date|string|null)=>value?new Date(value).toISOString():null;
@@ -64,13 +62,10 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
     JOIN repositories r ON r.id=d.repository_id JOIN project_repositories pr ON pr.repository_id=d.repository_id WHERE ($1::uuid IS NULL OR pr.project_id=$1)
     ORDER BY pr.project_id,d.repository_id,d.path,d.version_id DESC`,[projectId||null]);
   const plans=new Map<string,SourcePlanSummary>();
-  const canonicalRepositoryIds=new Set(docResult.rows.filter(doc=>doc.path===CANONICAL_ROADMAP_PATH).map(doc=>doc.repository_id));
-  const structuredRepositoryIds=new Set(docResult.rows.filter(doc=>doc.path===STRUCTURED_PR_PATH).map(doc=>doc.repository_id));
   for(const doc of docResult.rows){
     // Historical paths remain in the audit database but only authoritative current
     // plan sources contribute to the denominator (avoid README + canonical double-counting).
-    if(structuredRepositoryIds.has(doc.repository_id) ? doc.path!==STRUCTURED_PR_PATH :
-      !shouldImportPlanDocument(doc,canonicalRepositoryIds,planSources as Record<string,string[]>))continue;
+    if(doc.path!==STRUCTURED_PR_PATH)continue;
     const plan=plans.get(doc.project_id)||{original:0,originalComplete:0,added:0,addedComplete:0,unmapped:0,items:[],documents:[]};
     plan.documents.push({path:doc.path,url:doc.source_url,title:doc.title,importedAt:iso(doc.imported_at)!,versions:Number(doc.versions)});
     const unitsSql=doc.path===STRUCTURED_PR_PATH ? `
@@ -119,3 +114,4 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
   }
   return {summaries,pullRequests,plans};
 }
+

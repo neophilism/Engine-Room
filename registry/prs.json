@@ -1,9 +1,17 @@
 {
-  "schemaVersion": 1,
   "repository": "neophilism/Engine-Room",
-  "roadmapVersion": 8,
+  "title": "Engine Room",
   "planVerified": true,
   "plannedPrCount": 52,
+  "sourceFiles": [
+    ".exechub/project.yml",
+    "docs/development-plan.md",
+    ".exechub/approved-pr-mapping.json",
+    "docs/portfolio-monitor-additions.json"
+  ],
+  "scopeNote": "40 original approved work packages, 3 independently documented portfolio-monitor additions (PRs #56–58), and 2 user-requested universal repository roadmap/synchronization work packages (#81–82). Source roadmap IDs and actual PR numbers remain separate.",
+  "schemaVersion": 1,
+  "roadmapVersion": 8,
   "observedAt": "2026-10-11T22:57:44.640Z",
   "units": [
     {
@@ -12,7 +20,11 @@
       "origin": "original",
       "prs": [
         1
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-002",
@@ -20,7 +32,11 @@
       "origin": "original",
       "prs": [
         2
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-003",
@@ -28,7 +44,11 @@
       "origin": "original",
       "prs": [
         3
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-004",
@@ -36,7 +56,11 @@
       "origin": "original",
       "prs": [
         4
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-005",
@@ -44,7 +68,11 @@
       "origin": "original",
       "prs": [
         5
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-006",
@@ -52,7 +80,11 @@
       "origin": "original",
       "prs": [
         6
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-007",
@@ -60,7 +92,11 @@
       "origin": "original",
       "prs": [
         7
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-008",
@@ -68,7 +104,11 @@
       "origin": "original",
       "prs": [
         8
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-009",
@@ -76,7 +116,11 @@
       "origin": "original",
       "prs": [
         9
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-010",
@@ -84,7 +128,11 @@
       "origin": "original",
       "prs": [
         10
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-011",
@@ -92,7 +140,11 @@
       "origin": "original",
       "prs": [
         11
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-012",
@@ -100,7 +152,11 @@
       "origin": "original",
       "prs": [
         12
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-013",
@@ -108,7 +164,11 @@
       "origin": "original",
       "prs": [
         13
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-014",
@@ -116,7 +176,11 @@
       "origin": "original",
       "prs": [
         14
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-015",
@@ -124,7 +188,11 @@
       "origin": "original",
       "prs": [
         15
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-016",
@@ -132,7 +200,11 @@
       "origin": "original",
       "prs": [
         16
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-017",
@@ -140,7 +212,11 @@
       "origin": "original",
       "prs": [
         17
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-018",
@@ -148,7 +224,11 @@
       "origin": "original",
       "prs": [
         18
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-019",
@@ -156,7 +236,11 @@
       "origin": "original",
       "prs": [
         19
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-020",
@@ -164,7 +248,11 @@
       "origin": "original",
       "prs": [
         20
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-021",
@@ -172,7 +260,11 @@
       "origin": "original",
       "prs": [
         21
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-022",
@@ -180,7 +272,11 @@
       "origin": "original",
       "prs": [
         22
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-023",
@@ -188,7 +284,11 @@
       "origin": "original",
       "prs": [
         23
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-024",
@@ -196,7 +296,11 @@
       "origin": "original",
       "prs": [
         24
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-025",
@@ -204,7 +308,11 @@
       "origin": "original",
       "prs": [
         25
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-026",
@@ -212,7 +320,11 @@
       "origin": "original",
       "prs": [
         26
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-027",
@@ -220,7 +332,11 @@
       "origin": "original",
       "prs": [
         27
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-028",
@@ -228,7 +344,11 @@
       "origin": "original",
       "prs": [
         28
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-029",
@@ -236,7 +356,11 @@
       "origin": "original",
       "prs": [
         29
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-030",
@@ -244,7 +368,11 @@
       "origin": "original",
       "prs": [
         30
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-031",
@@ -252,7 +380,11 @@
       "origin": "original",
       "prs": [
         31
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-032",
@@ -260,7 +392,11 @@
       "origin": "original",
       "prs": [
         32
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-033",
@@ -268,7 +404,11 @@
       "origin": "original",
       "prs": [
         33
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-034",
@@ -276,7 +416,11 @@
       "origin": "original",
       "prs": [
         34
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-035",
@@ -284,7 +428,11 @@
       "origin": "original",
       "prs": [
         35
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-036",
@@ -292,7 +440,11 @@
       "origin": "original",
       "prs": [
         36
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-037",
@@ -300,7 +452,11 @@
       "origin": "original",
       "prs": [
         37
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-038",
@@ -308,7 +464,11 @@
       "origin": "original",
       "prs": [
         39
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-039",
@@ -316,7 +476,11 @@
       "origin": "original",
       "prs": [
         43
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-040",
@@ -324,7 +488,11 @@
       "origin": "original",
       "prs": [
         45
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-041",
@@ -332,7 +500,11 @@
       "origin": "addition",
       "prs": [
         81
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-042",
@@ -340,7 +512,11 @@
       "origin": "addition",
       "prs": [
         56
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-043",
@@ -348,7 +524,11 @@
       "origin": "addition",
       "prs": [
         57
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-044",
@@ -356,7 +536,11 @@
       "origin": "addition",
       "prs": [
         58
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-045",
@@ -364,7 +548,11 @@
       "origin": "addition",
       "prs": [
         82
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-046",
@@ -372,7 +560,11 @@
       "origin": "addition",
       "prs": [
         83
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-047",
@@ -380,7 +572,11 @@
       "origin": "addition",
       "prs": [
         84
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-048",
@@ -388,7 +584,11 @@
       "origin": "addition",
       "prs": [
         86
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-049",
@@ -396,7 +596,11 @@
       "origin": "addition",
       "prs": [
         87
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-050",
@@ -404,19 +608,31 @@
       "origin": "addition",
       "prs": [
         88
-      ]
+      ],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-051",
       "title": "Dismiss refresh feedback, nest engine implementations and sync GitHub About descriptions and latest source activity",
       "origin": "addition",
-      "prs": []
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "ER-052",
       "title": "Automatically import source-bound E2EESA implementation, testing and independent expert-review status records",
       "origin": "addition",
-      "prs": []
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     }
   ],
   "pullRequests": [

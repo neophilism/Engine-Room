@@ -8,3 +8,7 @@
 - The header **Refresh** action must really query all registered GitHub repositories and then recompute planned progress; it cannot only call `router.refresh()`. Never claim success if repositories are skipped, rate-limited, or historical snapshots are the only source.
 - Optional GitHub check/review/commit ancestry endpoints must not block the core PR list. Make failure provenance clear per repository.
 - Test new sync logic, run CI and deploy the code only after required gates succeed, and verify counts/freshness against live GitHub and Neon.
+
+## Shared PR registry
+
+Use `registry/prs.json` as the sole active PR plan for Boardroom and Engine Room. Follow `registry/PR_FORMAT.md` and run `node scripts/validate-pr-registry.mjs`. Preserve stable IDs, scope, counts, dependencies, acceptance and contribution-only evidence. `registry/roadmap.json` is retired; never recreate a duplicate milestone plan. This contract supersedes older file-path guidance.
