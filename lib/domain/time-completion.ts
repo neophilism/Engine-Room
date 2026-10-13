@@ -155,10 +155,10 @@ export function aggregateTimeCompletion(
   const calendarDates=known.filter(x=>x.state==="forecast").map(x=>instant(x.calendarFinishAt));
   if(now===null || !starts.length || calendarDates.some(x=>x===null))
     return {...estimateTimeCompletion({planned:0,completed:0},null,asOf),reason:"Portfolio start or an unfinished project forecast is unavailable."};
-  const startedAt=Math.min(...starts), latest=Math.max(...calendarDates as number[]);
+  const startedAt=Math.min(...starts), latest=Math.max(...(calendarDates as number[]));
   const elapsed=(now-startedAt)/DAY, calendarDays=(latest-now)/DAY;
   const cycleDates=known.filter(x=>x.state==="forecast").map(x=>instant(x.prCycleFinishAt));
-  const cycleFinish=cycleDates.some(x=>x===null)?null:Math.max(...cycleDates as number[]);
+  const cycleFinish=cycleDates.some(x=>x===null)?null:Math.max(...(cycleDates as number[]));
   const cycleDays=cycleFinish===null?null:(cycleFinish-now)/DAY;
   return {...known[0],state:"forecast",asOf,startedAt:new Date(startedAt).toISOString(),startBasis:undefined,
     syncedAt:known.map(f=>f.syncedAt).filter((s):s is string=>!!s).sort()[0]??null,
