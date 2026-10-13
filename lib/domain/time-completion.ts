@@ -117,7 +117,8 @@ export function estimateTimeCompletion(
   if (!safe(calendarDays)) return {...base,reason:"Calendar projection exceeds the supported horizon."};
   const calendarFinishAt=finish(now,calendarDays);
   if (!calendarFinishAt) return {...base,reason:"Invalid calendar projection."};
-  const timePercent=rounded(100*elapsed/(elapsed+calendarDays));
+  // Pending units must never render a false 100%-elapsed bar due to rounding.
+  const timePercent=Math.min(99.9,rounded(100*elapsed/(elapsed+calendarDays)));
 
   // This second model uses PR creation-to-merge cycles, not time since project
   // inception. It is optimistic when workflows are blocked or capacity falls.
@@ -130,7 +131,7 @@ export function estimateTimeCompletion(
   const size=completed.length;
   return {...base,state:"forecast",sampleSize:size,
     confidence:size>=8?"established":size>=3?"developing":"limited",
-    elapsedDays:rounded(elapsed),timePercent,
+    elapsedDays:Math.round(elapsed*1000)/1000,timePercent,
     calendarRemainingDays:rounded(calendarDays),calendarFinishAt,
     prCycleRemainingDays:validPrDays===null?null:rounded(validPrDays),
     prCycleFinishAt:validPrDays===null?null:finish(now,validPrDays),
