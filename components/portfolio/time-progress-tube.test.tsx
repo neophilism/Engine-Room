@@ -36,6 +36,6 @@ describe("time progress is an independent accessible bar",()=>{
     const complete=estimateTimeCompletion({planned:2,completed:2},null,at(11));
     render(<TimeProgressTube label="Completed project time" forecast={complete}/>);
     expect(screen.getByRole("progressbar",{name:"Completed project time"})).toHaveAttribute("aria-valuenow","100");
-    expect(screen.getAllByText("Complete")).toHaveLength(2);
+    expect(screen.getByText("100.0% of forecast duration")).toBeInTheDocument();
   });
 });
