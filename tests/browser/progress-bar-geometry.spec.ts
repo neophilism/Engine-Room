@@ -71,3 +71,26 @@ for (const width of [1440, 390]) {
     }
   });
 }
+
+for (const width of [1440, 390]) {
+  test("distinct elapsed-time rail fills to its projected-duration fraction at "+width+"px",async({page})=>{
+    await page.setViewportSize({width,height:800});
+    await page.setContent('<main class="content"><div class="repository-progress-row"><span class="repository-progress-name">Source</span>'+
+      '<div class="dual-progress">'+
+      '<div class="planned-progress-tube" role="progressbar" aria-label="Work" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span class="planned-progress-chamber"><span class="planned-progress-merged-fill" style="width:50%"></span></span></div>'+
+      '<div class="time-progress-readout"><div class="time-progress-heading"><span>Time elapsed</span><strong>65%</strong></div>'+
+      '<div class="time-progress-tube" role="progressbar" aria-label="Time" aria-valuemin="0" aria-valuemax="100" aria-valuenow="65"><span class="time-progress-chamber"><span class="time-progress-fill" style="width:65%"></span></span></div>'+
+      '<div class="time-forecast-details"><span>Calendar pace</span><span>PR-cycle pace</span></div></div></div></div></main>');
+    for(const path of sheets)await page.addStyleTag({content:readFileSync(resolve(process.cwd(),path),"utf8")});
+    const bounds=await page.getByRole("progressbar",{name:"Time"}).evaluate(bar=>{
+      const chamber=bar.querySelector(".time-progress-chamber")!.getBoundingClientRect();
+      const fill=bar.querySelector(".time-progress-fill")!.getBoundingClientRect();
+      const work=document.querySelector('[aria-label="Work"]')!.getBoundingClientRect();
+      const time=bar.getBoundingClientRect();
+      return {chamber:chamber.width, fill:fill.width, workBottom:work.bottom,timeTop:time.top};
+    });
+    expect(bounds.chamber).toBeGreaterThan(80);
+    expect(bounds.fill/bounds.chamber).toBeCloseTo(.65,2);
+    expect(bounds.timeTop).toBeGreaterThan(bounds.workBottom);
+  });
+}
