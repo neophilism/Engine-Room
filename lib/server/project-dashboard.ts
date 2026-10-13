@@ -112,7 +112,7 @@ export async function loadProjectDashboard(slug: string, source: EnvironmentSour
           const opened=units.map(p=>p.openedAt).filter((v):v is string=>!!v).sort()[0];
           dashboard.milestoneTimeForecasts[milestone.id]=estimateTimeCompletion(
             {planned:milestone.plannedPrTotal,completed:merged.length},
-            {startedAt:opened,startBasis:"first-pr",syncedAt:origin?.syncedAt,
+            {startedAt:opened,startBasis:opened?"first-pr":undefined,syncedAt:origin?.syncedAt,
               accepted:merged.map(p=>({openedAt:p.openedAt,completedAt:p.mergedAt!}))},asOf);
         }
       }
