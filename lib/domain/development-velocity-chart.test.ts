@@ -1,12 +1,14 @@
 import {describe,it,expect} from "vitest";
 import {normalizeVelocityRows} from "../server/development-velocity";
-import {dayAt,dayOrdinal,velocityBuckets,velocityStats,boardroomImpact,mergedByDay} from "./development-velocity-chart";
+import {dayAt,dayOrdinal,velocityBuckets,velocityStats,boardroomImpact,mergedByDay,lifetimePrRate} from "./development-velocity-chart";
 import type { VelocityProject } from "./development-velocity";
 const sample: VelocityProject[]=[
-  {id:"alpha",name:"Alpha",repositories:["org/alpha"],days:[
+  {id:"alpha",name:"Alpha",repositories:["org/alpha"],
+   lifetime:{startedOn:"2026-10-01",mergedPrs:16,startSource:"github",undatedRepositories:0},days:[
     {day:"2026-10-02",merges:1},{day:"2026-10-07",merges:2},{day:"2026-10-13",merges:4},{day:"2026-10-16",merges:9}
   ]},
-  {id:"beta",name:"Beta",repositories:["org/beta"],days:[
+  {id:"beta",name:"Beta",repositories:["org/beta"],
+   lifetime:{startedOn:"2026-10-02",mergedPrs:5,startSource:"github",undatedRepositories:0},days:[
     {day:"2026-10-02",merges:3},{day:"2026-10-13",merges:2}
   ]}
 ];
@@ -49,6 +51,36 @@ describe("development velocity by actual merge time",()=>{
     expect(boardroomImpact(sample,"alpha","2026-10-08","2026-10-16")).toEqual({
       before:3,after:4,percent:33,multiplier:1.33
     });
+  });
+  it("calculates lifetime PRs/day using full history and inclusive UTC calendar days",()=>{
+    const alpha=lifetimePrRate(sample,"alpha","2026-10-16");
+    expect(alpha).toEqual({
+      mergedPrs:16,startedOn:"2026-10-01",calendarDays:16,prsPerDay:1
+    });
+    const portfolio=lifetimePrRate(sample,"portfolio","2026-10-16");
+    // 21 merges / 16 portfolio days, NOT the mean of project averages.
+    expect(portfolio).toEqual({
+      mergedPrs:21,startedOn:"2026-10-01",calendarDays:16,prsPerDay:1.3125
+    });
+  });
+  it("uses all-time merges even when older than the chart's 365-day limit",()=>{
+    const historical:VelocityProject[]=[{id:"old",name:"Old",
+      repositories:["org/old"],days:[],
+      lifetime:{startedOn:"2025-01-01",mergedPrs:365,startSource:"github",undatedRepositories:0}}];
+    expect(lifetimePrRate(historical,"old","2026-01-01").prsPerDay).toBeCloseTo(365/366);
+  });
+  it("gives zero for a genuinely empty repository and N/A when start dates are absent",()=>{
+    const empty:VelocityProject={id:"empty",name:"Empty",repositories:["org/empty"],
+      days:[],lifetime:{startedOn:"2026-10-16",mergedPrs:0,startSource:"github",undatedRepositories:0}};
+    expect(lifetimePrRate([empty],"empty","2026-10-16")).toEqual({
+      mergedPrs:0,startedOn:"2026-10-16",calendarDays:1,prsPerDay:0
+    });
+    const undated:VelocityProject={...empty,id:"missing",lifetime:{
+      startedOn:null,mergedPrs:9,startSource:"unavailable",undatedRepositories:1
+    }};
+    expect(lifetimePrRate([undated],"missing","2026-10-16").prsPerDay).toBeNull();
+    expect(lifetimePrRate([empty,undated],"portfolio","2026-10-16").prsPerDay).toBeNull();
+    expect(lifetimePrRate([],"portfolio","2026-10-16").prsPerDay).toBeNull();
   });
   it("validates date boundaries and never multiplies data from unrelated projects",()=>{
     expect(dayAt(dayOrdinal("2026-10-16"))).toBe("2026-10-16");
