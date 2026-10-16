@@ -84,8 +84,8 @@ export function ControlConsole() {
       <h3>Integration readiness</h3>
       <ul>{Object.entries(snapshot.integration).map(([key, value]) => <li key={key}>{key}: {value ? "Configured" : "Not configured"}</li>)}</ul>
       <p>Configured means environment variables are present, not that the provider connection has been verified.</p>
-      <h3>GitHub reconciliation</h3>
-      <label><input type="checkbox" checked={enabled} onChange={e => setEnabled(e.target.checked)} /> Enable scheduled reconciliation</label>
+      <h3>Refresh mode — Manual or Automatic</h3>
+      <label><input type="checkbox" checked={enabled} onChange={e => setEnabled(e.target.checked)} /> Automatic refresh (off means Manual)</label>
       <label className="activity-filter">Minimum interval (minutes)
         <select value={interval} onChange={e => setInterval(Number(e.target.value))}>
           {reconciliationIntervals.map(value => <option key={value} value={value}>{value}</option>)}

@@ -7,8 +7,10 @@ import {seedRepositoryAbout} from '../lib/sync/repository-about.mjs';
 
 const pool=new Pool({connectionString:process.env.DATABASE_URL||process.env.DATABASE_URL_UNPOOLED,max:3,connectionTimeoutMillis:10000});
 let stopping=false,inboxBusy=false,syncBusy=false,plansBusy=false;
+async function isAutomatic(){try{const result=await pool.query('select github_reconciliation_enabled from engine_room_control_settings where singleton=true');return result.rows[0]?.github_reconciliation_enabled===true;}catch{return false;}}
 async function inbox(){
   if(stopping||inboxBusy)return;
+  if(!await isAutomatic())return;
   inboxBusy=true;
   try{await processWebhookInbox(pool);await pool.query('UPDATE engine_room_live_state SET last_worker_at=now() WHERE singleton=true');}
   catch{console.error('Webhook worker unavailable; durable inbox preserved.');}
@@ -16,6 +18,7 @@ async function inbox(){
 }
 async function sync(force=false){
   if(stopping||syncBusy)return;
+  if(!await isAutomatic())return;
   syncBusy=true;
   try{console.info('Portfolio reconciliation',await reconcilePortfolio(pool,force?{force:true,quick:true,repositoryLimit:100,concurrency:5}:{}));}
   catch{console.error('Portfolio reconciliation unavailable; existing source records preserved.');
@@ -26,6 +29,7 @@ async function sync(force=false){
 // the documented denominator populated even when PR evidence is stale.
 async function plans() {
   if(stopping||plansBusy)return;
+  if(!await isAutomatic())return;
   plansBusy=true;
   try {
     const result=await reconcilePlanSources(pool);
@@ -38,14 +42,15 @@ async function plans() {
     console.error('Source plan refresh failed; existing documented work preserved.');
   } finally {plansBusy=false;}
 }
-const plansTimer=setInterval(plans,5*60*1000);
-const inboxTimer=setInterval(inbox,2000);
-const syncTimer=setInterval(sync,60000);
+const plansTimer=setInterval(plans,60*60*1000);
+const inboxTimer=setInterval(inbox,15*60*1000);
+const syncTimer=setInterval(sync,30*60*1000);
 // A deployment must not start with the previous container's stale PR counts.
 // Force one bounded, PR-only GitHub reconciliation, then import current plan files.
-void inbox();
+// Manual mode skips startup inbox replay.
 const hasAuth=!!(process.env.GITHUB_READ_TOKEN||process.env.GITHUB_APP_ID&&process.env.GITHUB_INSTALLATION_ID);
 void (async()=>{
+  if(!await isAutomatic())return;
   try{
     // HTTP codes only; no token, identities or response bodies in logs.
     console.info('GitHub read access diagnostic',JSON.stringify(await probeGitHubAccess()));

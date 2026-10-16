@@ -3,7 +3,7 @@
 import React, { useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
-export const PORTFOLIO_REFRESH_MS = 30_000;
+export const PORTFOLIO_REFRESH_MS = 600_000;
 
 export function PortfolioRefresh() {
   const router = useRouter();
@@ -12,17 +12,16 @@ export function PortfolioRefresh() {
     const refresh = () => {
       if (document.visibilityState === "visible" && !pending) startTransition(() => router.refresh());
     };
-    const timer = window.setInterval(refresh, PORTFOLIO_REFRESH_MS);
-    document.addEventListener("visibilitychange", refresh);
+    // Manual is the default: no unattended periodic dashboard refresh.
+    const timer = undefined as ReturnType<typeof setInterval> | undefined;
     window.addEventListener('engine-room-data-changed',refresh);
     return () => {
-      window.clearInterval(timer);
-      document.removeEventListener("visibilitychange", refresh);
+      if(timer)window.clearInterval(timer);
       window.removeEventListener('engine-room-data-changed',refresh);
     };
   }, [router, pending]);
 
   return <div className="portfolio-refresh">
-    <span aria-live="polite">{pending ? "Updating the dashboard…" : "Dashboard updates every 30 seconds · use Refresh in the header to fetch GitHub"}</span>
+    <span aria-live="polite">{pending ? "Updating the dashboard…" : "Manual refresh · click Refresh in the header to fetch GitHub"}</span>
   </div>;
 }

@@ -53,6 +53,7 @@ export function LiveConnection() {
   const [expired, setExpired] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
   const [syncing, setSyncing] = useState(false);
+  const [savingMode,setSavingMode]=useState(false);
   const [feedback, setFeedback] = useState<SyncFeedback | null>(null);
 
   useEffect(() => {
@@ -91,7 +92,7 @@ export function LiveConnection() {
         if (active) { setConnected(false); setUnavailable(true); }
       }
     };
-    if (typeof EventSource !== "undefined") {
+    if (snapshot?.reconciliationEnabled && typeof EventSource !== "undefined") {
       source = new EventSource("/api/live/events");
       source.addEventListener("portfolio", event => {
         if (!active) return;
@@ -108,9 +109,25 @@ export function LiveConnection() {
       };
     }
     void poll();
-    const timer = setInterval(() => { void poll(); }, 15000);
+    const timer = snapshot?.reconciliationEnabled ? setInterval(() => { void poll(); }, 600000) : undefined;
     return () => { active = false; source?.close(); clearInterval(timer); };
-  }, []);
+  }, [snapshot?.reconciliationEnabled]);
+
+  async function setRefreshMode(automatic:boolean){
+    setSavingMode(true);
+    try{
+      const current=await fetch('/api/admin/settings',{cache:'no-store'});
+      if(!current.ok)throw Error('Administrator access required');
+      const controls=await current.json();
+      const response=await fetch('/api/admin/settings',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        expectedRevision:controls.revision,settings:{...controls.settings,githubReconciliationEnabled:automatic}
+      })});
+      if(!response.ok)throw Error('Unable to save refresh mode');
+      setSnapshot(previous=>previous?{...previous,reconciliationEnabled:automatic}:previous);
+      setFeedback({kind:'success',message:automatic?'Automatic synchronization enabled. Budget guard stays in effect.':'Manual refresh enabled. Click Refresh to fetch current GitHub data.'});
+    }catch(error){setFeedback({kind:'error',message:error instanceof Error?error.message:'Refresh mode unavailable'});}
+    finally{setSavingMode(false);}
+  }
 
   async function refreshFromGitHub() {
     if (syncing || expired) return;
@@ -154,7 +171,7 @@ export function LiveConnection() {
     }
   }
 
-  const state = expired ? "Session expired" : unavailable ? "Disconnected" : snapshot ?
+  const state = expired ? "Session expired" : snapshot?.reconciliationEnabled===false ? "Manual" : unavailable ? "Disconnected" : snapshot ?
     ({ live: "Live", "catching-up": "Catching up", stale: "Stale", disconnected: "Disconnected" }[snapshot.state]) : "Connecting";
 
   const title = snapshot ?
@@ -165,6 +182,7 @@ export function LiveConnection() {
 
   return (
     <div className="live-readout" aria-label="Portfolio data status" title={title}>
+      <label className="activity-filter">Refresh mode <select aria-label="Refresh mode" disabled={savingMode} value={snapshot?.reconciliationEnabled?"automatic":"manual"} onChange={event=>{void setRefreshMode(event.target.value==="automatic");}}><option value="manual">Manual</option><option value="automatic">Automatic</option></select></label>
       <button
         type="button"
         className="live-refresh-trigger"
