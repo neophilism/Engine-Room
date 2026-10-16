@@ -249,7 +249,9 @@ export function DevelopmentVelocity({ data }: {data: DevelopmentVelocityData}) {
           lifetime.mergedPrs.toLocaleString("en-US") + " merged PRs ÷ " +
           lifetime.calendarDays?.toLocaleString("en-US") + " UTC calendar days"}
         {lifetime.startedOn ? " · Since " + lifetime.startedOn : ""}
-        {" · Since the first repository in the current development push, including today"}
+        {" · " + (selectedId === "portfolio" ?
+          "From the first repository in this development push" :
+          "From this project's creation, or the current development push if later") + " · Including today"}
       </p>
     </div>
     <div className="velocity-stat-grid" aria-label={selectedName + " development rate"}>
