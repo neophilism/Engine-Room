@@ -21,7 +21,7 @@ export async function GET(request:Request){
       };
       function stop(){if(closed)return;closed=true;if(timer)clearInterval(timer);try{controller.close();}catch{/* Client cancelled. */}}
       request.signal.addEventListener('abort',stop,{once:true});
-      timer=setInterval(()=>{void send();},5000);void send();
+      timer=setInterval(()=>{void send();},30000);void send();
     },
     cancel(){closed=true;if(timer)clearInterval(timer);}
   });
