@@ -28,6 +28,21 @@ describe("development velocity dashboard",()=>{
     expect(screen.getByText(/manual Refresh updates this graph/)).toBeInTheDocument();
     expect(screen.getByText(/Not activated yet/)).toBeInTheDocument();
   });
+  it("shows all-time PRs/day for the selected portfolio and every individual project",()=>{
+    render(<DevelopmentVelocity data={data}/>);
+    // Two repositories: 3 lifetime merges since Oct 12 inclusive (5 days).
+    expect(screen.getByTestId("velocity-lifetime-prs-per-day")).toHaveTextContent("0.60");
+    expect(screen.getByLabelText("Entire portfolio lifetime merged PRs per day")).toBeInTheDocument();
+    expect(screen.getByText(/3 merged PRs ÷ 5 UTC calendar days/)).toBeInTheDocument();
+    expect(screen.getByRole("columnheader",{name:"Lifetime PRs/day"})).toBeInTheDocument();
+    expect(screen.getByRole("row",{name:/Example Engine/})).toHaveTextContent("1.00");
+    expect(screen.getByRole("row",{name:/Second Service/})).toHaveTextContent("0.00");
+    fireEvent.change(screen.getByLabelText("Project development velocity"),{target:{value:"one"}});
+    expect(screen.getByTestId("velocity-lifetime-prs-per-day")).toHaveTextContent("1.00");
+    expect(screen.getByText(/3 merged PRs ÷ 3 UTC calendar days/)).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText("Project development velocity"),{target:{value:"two"}});
+    expect(screen.getByTestId("velocity-lifetime-prs-per-day")).toHaveTextContent("0.00");
+  });
   it("switches a selected project and changes time windows in the graph",()=>{
     render(<DevelopmentVelocity data={data}/>);
     fireEvent.change(screen.getByLabelText("Project development velocity"),{target:{value:"one"}});
