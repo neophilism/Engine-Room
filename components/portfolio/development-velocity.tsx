@@ -147,10 +147,16 @@ export function DevelopmentVelocity({ data }: {data: DevelopmentVelocityData}) {
   const [markerFeedback,setMarkerFeedback] = useState("");
   const today = data.observedAt.slice(0,10);
   const stats = velocityStats(data.projects,selectedId,today);
-  const impact = boardroomImpact(data.projects,selectedId,data.boardroomStartDate,today);
+  // Compare the rest of the portfolio: Boardroom's own development must not
+  // masquerade as productivity gains delivered to other projects.
+  const nonBoardroom = useMemo(()=>data.projects.filter(project=>
+    !project.repositories.some(repository=>repository.toLowerCase()==="neophilism/boardroom")
+  ),[data.projects]);
+  const comparisonProjects = selectedId==="portfolio" ? nonBoardroom : data.projects;
+  const impact = boardroomImpact(comparisonProjects,selectedId,data.boardroomStartDate,today);
   const cohort = useMemo(()=>data.boardroomStartDate ?
-    data.projects.filter(project=>project.days.some(point=>point.day < data.boardroomStartDate!)) : [],
-  [data.projects,data.boardroomStartDate]);
+    comparisonProjects.filter(project=>project.days.some(point=>point.day < data.boardroomStartDate!)) : [],
+  [comparisonProjects,data.boardroomStartDate]);
   const cohortImpact = data.boardroomStartDate ?
     boardroomImpact(cohort,"portfolio",data.boardroomStartDate,today) : null;
   const selectedName = selectedId === "portfolio" ? "Entire portfolio" :
@@ -240,7 +246,7 @@ export function DevelopmentVelocity({ data }: {data: DevelopmentVelocityData}) {
           "Not activated yet"}</span>
       </div>
       {impact ? <>
-        <p>Matched full weeks for <b>{selectedName}</b>, excluding the activation day:
+        <p>Matched full weeks for <b>{selectedId==="portfolio" ? "all projects except Boardroom itself" : selectedName}</b>, excluding the activation day:
           <strong> {impact.before} PRs before → {impact.after} PRs after</strong>
           {" · " + trendLabel(impact.after,impact.before)}
           {impact.multiplier !== null ? " · " + impact.multiplier.toFixed(2) + "× throughput" : ""}.
@@ -296,7 +302,7 @@ export function DevelopmentVelocity({ data }: {data: DevelopmentVelocityData}) {
       <summary>How development speed is measured</summary>
       <p>Only GitHub PR records with a non-null <code>merged_at</code> timestamp count. One merged PR counts once per linked primary repository, irrespective of size or number of commits. Open, draft and unmerged PRs do not count. Chart dates use UTC.</p>
       <p>The history is reconstructed from saved GitHub metadata. It only becomes more current when Engine Room&#39;s manual Refresh is used, or if you explicitly re-enable Automatic. No extra GitHub fetch or scheduled database poll is added by this graph.</p>
-      <p>Week-over-week uses seven completed UTC days versus the preceding seven, excluding today&#39;s partial results. Boardroom comparisons use seven completed days before and seven after the recorded start; new projects and changes in PR size can affect aggregate counts. The pre-active cohort is shown separately to help distinguish new-project expansion from greater output in existing projects.</p>
+      <p>Week-over-week uses seven completed UTC days versus the preceding seven, excluding today&#39;s partial results. Boardroom comparisons use seven completed days before and seven after the recorded start; new projects and changes in PR size can affect aggregate counts. Boardroom&#39;s own repository is excluded from the portfolio-wide rollout comparison. The pre-active cohort is shown separately to help distinguish new-project expansion from greater output in existing projects.</p>
       <p>PR throughput is not a measure of accepted roadmap work. Consult the project progress bars for verified milestone completion and release acceptance.</p>
     </details>
   </section>;
