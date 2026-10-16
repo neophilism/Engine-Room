@@ -171,7 +171,7 @@ export function LiveConnection() {
     }
   }
 
-  const state = expired ? "Session expired" : unavailable ? "Disconnected" : snapshot ?
+  const state = expired ? "Session expired" : snapshot?.reconciliationEnabled===false ? "Manual" : unavailable ? "Disconnected" : snapshot ?
     ({ live: "Live", "catching-up": "Catching up", stale: "Stale", disconnected: "Disconnected" }[snapshot.state]) : "Connecting";
 
   const title = snapshot ?
