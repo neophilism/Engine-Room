@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const budget=await readNeonBudget();
-  if(budget.paused && process.env.ENGINE_ROOM_TEST_SERVER !== '1')return <main className="content dashboard-home"><h1>Engine Room</h1><BudgetAlert/><p>Cost protection is active. Expensive portfolio and external-service reads are disabled until usage can be verified and the budget is authorized.</p></main>;
+  if(budget.paused && budget.status !== "unconfigured" && process.env.ENGINE_ROOM_TEST_SERVER !== '1')return <main className="content dashboard-home"><h1>Engine Room</h1><BudgetAlert/><p>Cost protection is active. Expensive portfolio and external-service reads are disabled until usage can be verified and the budget is authorized.</p></main>;
   const [overview, renderServices, inquiryAlerts] = await Promise.all([loadPortfolioOverview(), loadRenderDeployments(), loadPodcastInquiryAlerts()]);
   return <PortfolioHome overview={overview} renderServices={renderServices} inquiryAlerts={inquiryAlerts} />;
 }
