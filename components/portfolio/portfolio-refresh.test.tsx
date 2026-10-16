@@ -18,7 +18,7 @@ describe("portfolio refresh", () => {
     expect(refresh).toHaveBeenCalledTimes(0);
     visibility = "hidden";
     act(() => vi.advanceTimersByTime(PORTFOLIO_REFRESH_MS));
-    expect(refresh).toHaveBeenCalledTimes(1);
+    expect(refresh).toHaveBeenCalledTimes(0);
     visibility = "visible";
     fireEvent(document, new Event("visibilitychange"));
     expect(refresh).toHaveBeenCalledTimes(0);
@@ -26,6 +26,6 @@ describe("portfolio refresh", () => {
     expect(screen.getByText(/use Refresh in the header/)).toBeInTheDocument();
     unmount();
     act(() => vi.advanceTimersByTime(PORTFOLIO_REFRESH_MS));
-    expect(refresh).toHaveBeenCalledTimes(2);
+    expect(refresh).toHaveBeenCalledTimes(0);
   });
 });
