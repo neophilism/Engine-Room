@@ -113,6 +113,22 @@ export function LiveConnection() {
     return () => { active = false; source?.close(); clearInterval(timer); };
   }, []);
 
+  async function setRefreshMode(automatic:boolean){
+    setSavingMode(true);
+    try{
+      const current=await fetch('/api/admin/settings',{cache:'no-store'});
+      if(!current.ok)throw Error('Administrator access required');
+      const controls=await current.json();
+      const response=await fetch('/api/admin/settings',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        expectedRevision:controls.revision,settings:{...controls.settings,githubReconciliationEnabled:automatic}
+      })});
+      if(!response.ok)throw Error('Unable to save refresh mode');
+      setSnapshot(previous=>previous?{...previous,reconciliationEnabled:automatic}:previous);
+      setFeedback({kind:'success',message:automatic?'Automatic synchronization enabled. Budget guard stays in effect.':'Manual refresh enabled. Click Refresh to fetch current GitHub data.'});
+    }catch(error){setFeedback({kind:'error',message:error instanceof Error?error.message:'Refresh mode unavailable'});}
+    finally{setSavingMode(false);}
+  }
+
   async function refreshFromGitHub() {
     if (syncing || expired) return;
     setSyncing(true);
