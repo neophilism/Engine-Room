@@ -1,12 +1,12 @@
 /** GitHub merge history as last observed by Engine Room's manual source sync. */
 export type VelocityDay = { day: string; merges: number };
 export type VelocityLifetime = {
-  /** Earliest actual GitHub repository creation day across this project's repositories. */
+  /** Effective first day for this project: latest of its GitHub creation and current development-wave launch. */
   startedOn: string | null;
-  /** All recorded merges, including those outside the 365-day graph window. */
+  /** Merges since the current development-wave launch, including those outside the 365-day graph window. */
   mergedPrs: number;
-  /** GitHub repo creation preferred; first PR creation is a documented fallback. */
-  startSource: "github" | "first-pr" | "unavailable";
+  /** A launch-window value means an older repository's initial date was clamped to the new development wave. */
+  startSource: "github" | "first-pr" | "launch-window" | "unavailable";
   undatedRepositories: number;
 };
 export type VelocityProject = {

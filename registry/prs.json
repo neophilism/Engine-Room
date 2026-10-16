@@ -2,16 +2,16 @@
   "repository": "neophilism/Engine-Room",
   "title": "Engine Room",
   "planVerified": true,
-  "plannedPrCount": 54,
+  "plannedPrCount": 55,
   "sourceFiles": [
     ".exechub/project.yml",
     "docs/development-plan.md",
     ".exechub/approved-pr-mapping.json",
     "docs/portfolio-monitor-additions.json"
   ],
-  "scopeNote": "40 original approved work packages, 3 independently documented portfolio-monitor additions (PRs #56–58), and 2 user-requested universal repository roadmap/synchronization work packages (#81–82). Source roadmap IDs and actual PR numbers remain separate. Additional owner-approved unit ER-053 tracks time-series development velocity and the Boardroom rollout benchmark; PR #109 implements it. User-approved unit ER-054 adds true repository-lifetime merged PR/day throughput rates to the existing velocity display; PR #110 implements it.",
+  "scopeNote": "40 original approved work packages, 3 independently documented portfolio-monitor additions (PRs #56–58), and 2 user-requested universal repository roadmap/synchronization work packages (#81–82). Source roadmap IDs and actual PR numbers remain separate. Additional owner-approved unit ER-053 tracks time-series development velocity and the Boardroom rollout benchmark; PR #109 implements it. User-approved unit ER-054 adds true repository-lifetime merged PR/day throughput rates to the existing velocity display; PR #110 implements it. User-requested correction ER-055 changes PRs/day from November 2025 inherited repository lifetimes to the first new repository of the October 2026 development wave; PR #111 implements it.",
   "schemaVersion": 1,
-  "roadmapVersion": 10,
+  "roadmapVersion": 11,
   "observedAt": "2026-10-11T22:57:44.640Z",
   "units": [
     {
@@ -658,6 +658,20 @@
       "contributingPrs": [],
       "dependsOn": [
         "ER-053"
+      ],
+      "externalDependencies": [],
+      "externalPrerequisites": []
+    },
+    {
+      "id": "ER-055",
+      "title": "Anchor portfolio and per-project merged PRs per day to the current 2026 development push",
+      "origin": "addition",
+      "prs": [
+        111
+      ],
+      "contributingPrs": [],
+      "dependsOn": [
+        "ER-054"
       ],
       "externalDependencies": [],
       "externalPrerequisites": []
