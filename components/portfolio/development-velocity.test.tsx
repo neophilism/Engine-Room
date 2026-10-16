@@ -20,7 +20,7 @@ describe("development velocity dashboard",()=>{
     render(<DevelopmentVelocity data={data}/>);
     expect(screen.getByText("Development velocity")).toBeInTheDocument();
     expect(screen.getAllByText("Example Engine").length).toBeGreaterThan(0);
-    expect(screen.getByText("Second Service")).toBeInTheDocument();
+    expect(screen.getAllByText("Second Service").length).toBeGreaterThan(0);
     expect(screen.getByLabelText("Project development velocity")).toHaveValue("portfolio");
     expect(screen.getByRole("img",{name:/Entire portfolio development history/})).toBeInTheDocument();
     expect(screen.getByText(/manual Refresh updates this graph/)).toBeInTheDocument();
