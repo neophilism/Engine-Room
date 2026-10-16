@@ -21,10 +21,9 @@ export async function saveBoardroomActivation(date: string | null, actor: string
   try {
     await client.query("BEGIN");
     const current = await client.query<{ effective_date: Date | string }>(
-      "SELECT effective_date FROM development_velocity_markers WHERE key='boardroom-rollout' FOR UPDATE"
+      "SELECT to_char(effective_date,'YYYY-MM-DD') AS effective_date FROM development_velocity_markers WHERE key='boardroom-rollout' FOR UPDATE"
     );
-    const oldDate = current.rows[0] ?
-      new Date(current.rows[0].effective_date).toISOString().slice(0, 10) : null;
+    const oldDate = current.rows[0]?.effective_date ?? null;
     if (oldDate !== date) {
       if (date === null) {
         await client.query("DELETE FROM development_velocity_markers WHERE key='boardroom-rollout'");
