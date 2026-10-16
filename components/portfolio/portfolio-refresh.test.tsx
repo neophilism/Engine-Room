@@ -15,13 +15,13 @@ describe("portfolio refresh", () => {
     Object.defineProperty(document, "visibilityState", { configurable: true, get: () => visibility });
     const { unmount } = render(<PortfolioRefresh />);
     act(() => vi.advanceTimersByTime(PORTFOLIO_REFRESH_MS));
-    expect(refresh).toHaveBeenCalledTimes(1);
+    expect(refresh).toHaveBeenCalledTimes(0);
     visibility = "hidden";
     act(() => vi.advanceTimersByTime(PORTFOLIO_REFRESH_MS));
     expect(refresh).toHaveBeenCalledTimes(1);
     visibility = "visible";
     fireEvent(document, new Event("visibilitychange"));
-    expect(refresh).toHaveBeenCalledTimes(2);
+    expect(refresh).toHaveBeenCalledTimes(0);
     expect(screen.queryByRole("button", { name: "Reload display" })).not.toBeInTheDocument();
     expect(screen.getByText(/use Refresh in the header/)).toBeInTheDocument();
     unmount();
