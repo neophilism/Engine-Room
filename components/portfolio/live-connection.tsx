@@ -53,6 +53,7 @@ export function LiveConnection() {
   const [expired, setExpired] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
   const [syncing, setSyncing] = useState(false);
+  const [savingMode,setSavingMode]=useState(false);
   const [feedback, setFeedback] = useState<SyncFeedback | null>(null);
 
   useEffect(() => {
