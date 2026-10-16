@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { normalizeVelocityRows } from "./development-velocity";
+import { lifetimePrRate } from "../domain/development-velocity-chart";
 import { InvalidVelocityMarker, parseVelocityMarkerDate } from "./development-velocity-markers";
 
 describe("velocity source normalization", () => {
@@ -41,6 +42,12 @@ describe("velocity source normalization", () => {
     expect(rows[1].days).toEqual([
       {day:"2026-10-10",merges:4},{day:"2026-10-11",merges:5}
     ]);
+    expect(lifetimePrRate(rows,"p","2026-10-16")).toEqual({
+      mergedPrs:11,startedOn:"2026-10-05",calendarDays:12,prsPerDay:11/12
+    });
+    expect(lifetimePrRate(rows,"portfolio","2026-10-16")).toEqual({
+      mergedPrs:11,startedOn:"2026-10-05",calendarDays:12,prsPerDay:11/12
+    });
   });
   it("does not invent an inception date if the repository has no usable start",()=>{
     const projects=normalizeVelocityRows([{project_id:"no-date",display_name:"Unknown",repository_full_name:"org/no-date",
