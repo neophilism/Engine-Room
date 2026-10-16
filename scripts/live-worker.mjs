@@ -38,9 +38,9 @@ async function plans() {
     console.error('Source plan refresh failed; existing documented work preserved.');
   } finally {plansBusy=false;}
 }
-const plansTimer=setInterval(plans,5*60*1000);
-const inboxTimer=setInterval(inbox,2000);
-const syncTimer=setInterval(sync,60000);
+const plansTimer=setInterval(plans,30*60*1000);
+const inboxTimer=setInterval(inbox,15000);
+const syncTimer=setInterval(sync,5*60*1000);
 // A deployment must not start with the previous container's stale PR counts.
 // Force one bounded, PR-only GitHub reconciliation, then import current plan files.
 void inbox();
