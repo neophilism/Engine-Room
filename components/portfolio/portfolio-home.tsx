@@ -10,6 +10,8 @@ import { RenderServiceReadouts } from "./render-service-readouts";
 import { GitHubSourceReadout } from "./github-source-readout";
 import { ActivityMonitor } from "./activity-monitor";
 import { PlatformMetrics } from "./platform-metrics";
+import { DevelopmentVelocity } from "./development-velocity";
+import type { DevelopmentVelocityData } from "../../lib/domain/development-velocity";
 
 function sourceLabel(source: PortfolioOverviewData["source"]) {
   if (source === "database") return "Data connected";
@@ -20,11 +22,13 @@ function sourceLabel(source: PortfolioOverviewData["source"]) {
 export function PortfolioHome({
   overview,
   renderServices = [],
-  inquiryAlerts = null
+  inquiryAlerts = null,
+  velocity
 }: {
   overview: PortfolioOverviewData;
   renderServices?: readonly RenderReadout[];
   inquiryAlerts?: PodcastInquiryAlertSummary | null;
+  velocity?: DevelopmentVelocityData;
 }) {
   const { projects, statistics } = overview;
   const sourced = projects.filter(p => p.planned > 0 || p.sourcePlan?.documents.length).length;
@@ -74,6 +78,8 @@ export function PortfolioHome({
       </p>
 
       <GitHubSourceReadout />
+
+      {velocity && <DevelopmentVelocity data={velocity} />}
 
       <section className="dashboard-primary-section" aria-label="Project development progress">
         <BrassPanel
