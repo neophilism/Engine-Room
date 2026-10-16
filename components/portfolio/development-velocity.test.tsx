@@ -34,6 +34,22 @@ describe("development velocity dashboard",()=>{
     fireEvent.change(screen.getByLabelText("Velocity graph measure"),{target:{value:"cumulative"}});
     expect(screen.getByRole("img",{name:/Example Engine development history/})).toBeInTheDocument();
   });
+
+  it("excludes Boardroom's own merges from the portfolio adoption comparison",()=>{
+    const benchmark:DevelopmentVelocityData={
+      ...data, boardroomStartDate:"2026-10-08",
+      projects:[
+        {id:"boardroom",name:"Boardroom",repositories:["neophilism/Boardroom"],
+          days:[{day:"2026-10-07",merges:1},{day:"2026-10-15",merges:80}]},
+        {id:"outside",name:"Outside Project",repositories:["neophilism/Outside-Project"],
+          days:[{day:"2026-10-07",merges:2},{day:"2026-10-15",merges:5}]}
+      ]
+    };
+    render(<DevelopmentVelocity data={benchmark}/>);
+    expect(screen.getByText(/all projects except Boardroom itself/i)).toBeInTheDocument();
+    expect(screen.getByText(/2 PRs before/i)).toBeInTheDocument();
+    expect(screen.getByText(/5 PRs after/i)).toBeInTheDocument();
+  });
   it("shows honest unavailable state rather than artificial zero history",()=>{
     render(<DevelopmentVelocity data={{...data,source:"error",projects:[]}}/>);
     expect(screen.getByText(/Merge history unavailable/)).toBeInTheDocument();
