@@ -213,6 +213,12 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     html_url:'https://github.com/test/core/pull/'+number,user:{login:'test'},created_at:'2026-10-01T00:00:00Z',
     updated_at:new Date().toISOString(),head:{sha:'a'.repeat(40)},base:{ref:'main'},...overrides});
   const syncEnv:NodeJS.ProcessEnv={NODE_ENV:'test',ENGINE_ROOM_GITHUB_OWNER:'test',GITHUB_READ_TOKEN:'synthetic-read-token'};
+  const registryBody=(version:number,items:Array<{ordinal:number;title:string;scope:string;numbers:number[]}>) =>
+    JSON.stringify({schemaVersion:1,repository:'test/core',roadmapVersion:version,planVerified:items.length>0,
+      plannedPrCount:items.length,observedAt:'2026-10-13T00:00:00Z',
+      units:items.map(item=>({id:`TEST-${String(item.ordinal).padStart(2,'0')}`,title:item.title,
+        origin:item.scope==='addition'?'addition':'original',prs:item.numbers,
+        dependsOn:[],externalDependencies:[],externalPrerequisites:[]})),pullRequests:[]});
 
   it('applies and acknowledges durable events atomically, ignores replay, and retries malformed deliveries',async()=>{
     const pool=getDatabasePool(source);
@@ -251,23 +257,23 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     const repo={id:row.id,full_name:'test/core'};
     const one={ordinal:1,title:'Foundation',numbers:[1],reason:'Explicit source evidence',scope:'original'};
     const two={ordinal:2,title:'Future work',numbers:[],reason:null,scope:'original'};
-    await persistPlanDocument(pool,repo,{path:'docs/roadmap.md',body:'Original',ref:'original-sha',items:[one,two]});
+    await persistPlanDocument(pool,repo,{path:'registry/prs.json',body:registryBody(1,[one,two]),ref:'original-sha',items:[one,two]});
     await persistPullRequest(pool,row.id,prPayload(80,{state:'closed',merged_at:new Date().toISOString(),updated_at:new Date(Date.now()+2000).toISOString(),base:{ref:'integration'}}));
-    const added={ordinal:3,title:'Later work',numbers:[80,81],reason:'Explicit multi-PR source evidence',scope:'original'};
+    const added={ordinal:3,title:'Later work',numbers:[80,81],reason:'Explicit multi-PR source evidence',scope:'addition'};
     await persistPullRequest(pool,row.id,prPayload(81));
-    await persistPlanDocument(pool,repo,{path:'docs/roadmap.md',body:'Revision 2',ref:'second-sha',items:[one,two,added]});
+    await persistPlanDocument(pool,repo,{path:'registry/prs.json',body:registryBody(2,[one,two,added]),ref:'second-sha',items:[one,two,added]});
     let plan=(await loadProjectMonitorData(pool,row.project_id)).plans.get(row.project_id)!;
     expect(plan).toMatchObject({original:2,originalComplete:1,added:1,addedComplete:0,unmapped:1});
     expect(plan.items.find(x=>x.ordinal===3)?.state).toBe('in-progress');
     await persistPullRequest(pool,row.id,prPayload(80,{state:'closed',merged_at:new Date().toISOString(),updated_at:new Date(Date.now()+3000).toISOString()}));
     await persistPullRequest(pool,row.id,prPayload(81,{state:'closed',merged_at:new Date().toISOString(),updated_at:new Date(Date.now()+3000).toISOString()}));
     const revision=(await pool.query('SELECT revision FROM engine_room_live_state')).rows[0].revision;
-    await persistPlanDocument(pool,repo,{path:'docs/roadmap.md',body:'Revision 2',ref:'second-sha',items:[one,two,added]});
+    await persistPlanDocument(pool,repo,{path:'registry/prs.json',body:registryBody(2,[one,two,added]),ref:'second-sha',items:[one,two,added]});
     expect((await pool.query('SELECT revision FROM engine_room_live_state')).rows[0].revision).toBe(revision);
-    await persistPlanDocument(pool,repo,{path:'docs/roadmap.md',body:'Revision 3',ref:'third-sha',items:[{...one,title:'Replacement scope'},two]});
-    await persistPlanDocument(pool,repo,{path:'docs/roadmap.md',body:'Revision 4',ref:'fourth-sha',items:[one,two]});
+    await persistPlanDocument(pool,repo,{path:'registry/prs.json',body:registryBody(3,[one,two,{...added,title:'Later work refined'}]),ref:'third-sha',items:[one,two,{...added,title:'Later work refined'}]});
+    await persistPlanDocument(pool,repo,{path:'registry/prs.json',body:registryBody(4,[one,two,{...added,title:'Later work refined'}]),ref:'fourth-sha',items:[one,two,{...added,title:'Later work refined'}]});
     plan=(await loadProjectMonitorData(pool,row.project_id)).plans.get(row.project_id)!;
-    expect(plan).toMatchObject({original:2,originalComplete:1,added:2,addedComplete:2});
+    expect(plan).toMatchObject({original:2,originalComplete:1,added:1,addedComplete:1});
     expect(plan.items.some(x=>x.title==='Foundation'&&x.scope==='original')).toBe(true);
     expect(plan.documents[0].versions).toBe(4);
   });
@@ -276,7 +282,7 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     const pool=getDatabasePool(source),row=(await pool.query("SELECT id FROM repositories WHERE full_name='test/core'")).rows[0];
     const repo={id:row.id,full_name:'test/core'},item={ordinal:2,title:'Future work',numbers:[81],reason:'Reviewed source evidence',scope:'original'};
     const revision=BigInt((await pool.query('SELECT revision FROM engine_room_live_state')).rows[0].revision);
-    await persistPlanDocument(pool,repo,{path:'docs/roadmap.md',body:'Revision 4',ref:'fourth-sha',items:[item]});
+    await persistPlanDocument(pool,repo,{path:'registry/prs.json',body:registryBody(5,[item]),ref:'fifth-sha',items:[item]});
     expect(BigInt((await pool.query('SELECT revision FROM engine_room_live_state')).rows[0].revision)).toBeGreaterThan(revision);
   });
 
@@ -288,7 +294,10 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
       if(u.includes('/repos/test/core/pulls?'))return new Response('Unavailable',{status:503});
       if(u.includes('/repos/test/second/pulls?'))return Response.json([]);
       if(u.includes('/repos/test/second/commits/main'))return Response.json({sha:'c'.repeat(40)});
-      if(u.startsWith('https://raw.githubusercontent.com/') && u.endsWith('/registry/roadmap.json')) { const name=u.includes('/test/second/')?'second':'core'; return Response.json({repository:'neophilism/'+name,version:1,planVerified:true,plannedPrCount:1,milestones:[{id:'TEST-01',title:'Fixture work',pullRequests:[]}]}); }
+      if(u.startsWith('https://raw.githubusercontent.com/') && u.endsWith('/registry/prs.json')) { const name=u.includes('/test/second/')?'second':'core'; return Response.json({schemaVersion:1,repository:'neophilism/'+name,roadmapVersion:1,
+        planVerified:true,plannedPrCount:1,observedAt:'2026-10-13T00:00:00Z',
+        units:[{id:'TEST-01',title:'Fixture work',origin:'original',prs:[],dependsOn:[],
+          externalDependencies:[],externalPrerequisites:[]}],pullRequests:[]}); }
       if(u.startsWith('https://raw.githubusercontent.com/'))return new Response('',{status:404});
       throw new Error('Unexpected fixture request '+u);
     };
@@ -321,17 +330,19 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
       if(u.includes('/repos/test/core/pulls?'))return Response.json([pr]);
       if(u.includes('/repos/test/core/commits/main'))return Response.json({sha:'c'.repeat(40)});
       if(u.includes('/compare/'))return Response.json({status:'behind'});
-      if(u.startsWith('https://raw.githubusercontent.com/') && u.endsWith('/registry/roadmap.json')) { const name=u.includes('/test/second/')?'second':'core'; return Response.json({repository:'neophilism/'+name,version:1,planVerified:true,plannedPrCount:1,milestones:[{id:'TEST-01',title:'Fixture work',pullRequests:[]}]}); }
+      if(u.startsWith('https://raw.githubusercontent.com/') && u.endsWith('/registry/prs.json')) { const name=u.includes('/test/second/')?'second':'core'; return Response.json({schemaVersion:1,repository:'neophilism/'+name,roadmapVersion:1,
+        planVerified:true,plannedPrCount:1,observedAt:'2026-10-13T00:00:00Z',
+        units:[{id:'TEST-01',title:'Fixture work',origin:'original',prs:[],dependsOn:[],
+          externalDependencies:[],externalPrerequisites:[]}],pullRequests:[]}); }
       if(u.startsWith('https://raw.githubusercontent.com/'))return new Response('',{status:404});
       throw new Error('Unexpected ancestry request '+u);
     };
     expect(await reconcilePortfolio(pool,{env:syncEnv,fetcher})).toMatchObject({repositories:1,failed:0});
     // Revisions must remain in the canonical roadmap; legacy plan files are intentionally ignored.
     // Preserve baseline work and add an explicitly mapped item without treating a merge as release proof.
-    const revised=JSON.stringify({repository:'neophilism/core',version:2,planVerified:true,plannedPrCount:2,
-      milestones:[{id:'TEST-01',title:'Fixture work',pullRequests:[]},
-        {id:'TEST-02',title:'Ancestry work',origin:'addition',pullRequests:[85]}]});
-    await persistPlanDocument(pool,{id:row.id,full_name:'test/core'},{path:'registry/roadmap.json',body:revised,ref:'fixture',items:[
+    const revised=registryBody(6,[{ordinal:1,title:'Fixture work',scope:'original',numbers:[]},
+      {ordinal:2,title:'Ancestry work',scope:'addition',numbers:[85]}]);
+    await persistPlanDocument(pool,{id:row.id,full_name:'test/core'},{path:'registry/prs.json',body:revised,ref:'fixture',items:[
       {ordinal:1,title:'Fixture work',numbers:[],reason:null,scope:'original'},
       {ordinal:2,title:'Ancestry work',numbers:[85],reason:'Explicit canonical PR mapping',scope:'addition'}]});
     let data=await loadProjectMonitorData(pool,row.project_id);
