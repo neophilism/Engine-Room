@@ -272,7 +272,7 @@ export function DevelopmentVelocity({ data }: {data: DevelopmentVelocityData}) {
     </div>
     <div className="velocity-project-list">
       <div className="velocity-project-heading">
-        <div><h3>Every project's development trend</h3>
+        <div><h3>Every project&#39;s development trend</h3>
           <p>Seven-day rates and daily history. Select a project to inspect the graph above.</p></div>
         <label>Find a project <input type="search" value={search} placeholder="Search all projects"
           onChange={event=>setSearch(event.target.value)} aria-label="Filter development velocity projects"/></label>
@@ -295,8 +295,8 @@ export function DevelopmentVelocity({ data }: {data: DevelopmentVelocityData}) {
     <details className="velocity-methodology">
       <summary>How development speed is measured</summary>
       <p>Only GitHub PR records with a non-null <code>merged_at</code> timestamp count. One merged PR counts once per linked primary repository, irrespective of size or number of commits. Open, draft and unmerged PRs do not count. Chart dates use UTC.</p>
-      <p>The history is reconstructed from saved GitHub metadata. It only becomes more current when Engine Room's manual Refresh is used, or if you explicitly re-enable Automatic. No extra GitHub fetch or scheduled database poll is added by this graph.</p>
-      <p>Week-over-week uses seven completed UTC days versus the preceding seven, excluding today's partial results. Boardroom comparisons use seven completed days before and seven after the recorded start; new projects and changes in PR size can affect aggregate counts. The pre-active cohort is shown separately to help distinguish new-project expansion from greater output in existing projects.</p>
+      <p>The history is reconstructed from saved GitHub metadata. It only becomes more current when Engine Room&#39;s manual Refresh is used, or if you explicitly re-enable Automatic. No extra GitHub fetch or scheduled database poll is added by this graph.</p>
+      <p>Week-over-week uses seven completed UTC days versus the preceding seven, excluding today&#39;s partial results. Boardroom comparisons use seven completed days before and seven after the recorded start; new projects and changes in PR size can affect aggregate counts. The pre-active cohort is shown separately to help distinguish new-project expansion from greater output in existing projects.</p>
       <p>PR throughput is not a measure of accepted roadmap work. Consult the project progress bars for verified milestone completion and release acceptance.</p>
     </details>
   </section>;
