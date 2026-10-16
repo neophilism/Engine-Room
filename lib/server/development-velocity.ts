@@ -68,7 +68,7 @@ export async function loadDevelopmentVelocity(): Promise<DevelopmentVelocityData
       pool.query<VelocityRow>(
         'SELECT p.id::text AS project_id, p.display_name, ' +
         'r.full_name AS repository_full_name, ' +
-        "(g.merged_at AT TIME ZONE 'UTC')::date AS day, " +
+        "to_char(g.merged_at AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS day, " +
         'count(g.id)::integer AS merged_count ' +
         'FROM projects p ' +
         "JOIN project_repositories pr ON pr.project_id=p.id AND pr.relationship='primary' " +
@@ -88,7 +88,7 @@ export async function loadDevelopmentVelocity(): Promise<DevelopmentVelocityData
         'WHERE NOT r.archived'
       ),
       pool.query<{ effective_date: Date | string }>(
-        "SELECT effective_date FROM development_velocity_markers WHERE key='boardroom-rollout'"
+        "SELECT to_char(effective_date,'YYYY-MM-DD') AS effective_date FROM development_velocity_markers WHERE key='boardroom-rollout'"
       )
     ]);
     const sync = checkpoint.rows[0];
