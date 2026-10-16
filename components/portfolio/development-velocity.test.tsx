@@ -32,9 +32,10 @@ describe("development velocity dashboard",()=>{
     render(<DevelopmentVelocity data={data}/>);
     // Two repositories: 3 lifetime merges since Oct 12 inclusive (5 days).
     expect(screen.getByTestId("velocity-lifetime-prs-per-day")).toHaveTextContent("0.60");
-    expect(screen.getByLabelText("Entire portfolio lifetime merged PRs per day")).toBeInTheDocument();
+    expect(screen.getByLabelText("Entire portfolio development-period merged PRs per day")).toBeInTheDocument();
     expect(screen.getByText(/3 merged PRs ÷ 5 UTC calendar days/)).toBeInTheDocument();
-    expect(screen.getByRole("columnheader",{name:"Lifetime PRs/day"})).toBeInTheDocument();
+    expect(screen.getByText("Average since development launch")).toBeInTheDocument();
+    expect(screen.getByRole("columnheader",{name:"PRs/day since launch"})).toBeInTheDocument();
     expect(screen.getByRole("row",{name:/Example Engine/})).toHaveTextContent("1.00");
     expect(screen.getByRole("row",{name:/Second Service/})).toHaveTextContent("0.00");
     fireEvent.change(screen.getByLabelText("Project development velocity"),{target:{value:"one"}});
