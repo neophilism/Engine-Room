@@ -19,10 +19,10 @@ export async function loadLiveSnapshot():Promise<LiveSnapshot>{
     (SELECT count(*) FROM github_pull_requests WHERE state='open' AND checks_state='failing') AS failed_checks
     FROM engine_room_live_state l CROSS JOIN engine_room_control_settings c WHERE l.singleton=true AND c.singleton=true`)).rows[0];
   const authenticated=!!(process.env.GITHUB_READ_TOKEN?.trim()||process.env.GITHUB_APP_ID&&process.env.GITHUB_APP_PRIVATE_KEY&&process.env.GITHUB_INSTALLATION_ID);
-  const pollingMinutes=Math.max(authenticated?15:120,row.github_reconciliation_interval_minutes);
+  const pollingMinutes=Math.max(authenticated?30:120,row.github_reconciliation_interval_minutes);
   const oldest=iso(row.oldest_sync);
   const fresh=oldest && Date.now()-Date.parse(oldest)<(pollingMinutes+5)*60000;
-  const workerFresh=row.last_worker_at && Date.now()-new Date(row.last_worker_at).getTime()<90000;
+  const workerFresh=row.last_worker_at && Date.now()-new Date(row.last_worker_at).getTime()<45*60000;
   return {revision:String(row.revision),state:!workerFresh?'disconnected':Number(row.pending)>0?'catching-up':
     !fresh||row.last_error||!row.github_reconciliation_enabled||Number(row.unsynchronized)>0||Number(row.failed_repositories)>0?'stale':'live',checkedAt:new Date().toISOString(),
     oldestSyncAt:oldest,latestSyncAt:iso(row.latest_sync),workerAt:iso(row.last_worker_at),repositories:Number(row.repositories),unsynchronized:Number(row.unsynchronized),
