@@ -11,8 +11,10 @@ const data:DevelopmentVelocityData={
  oldestSuccessfulSyncAt:"2026-10-16T20:00:00Z",
  trackedRepositories:2,synchronizedRepositories:2,boardroomStartDate:null,
  projects:[
-  {id:"one",name:"Example Engine",repositories:["org/engine"],days:[{day:"2026-10-15",merges:3}]},
-  {id:"two",name:"Second Service",repositories:["org/service"],days:[]}
+  {id:"one",name:"Example Engine",repositories:["org/engine"],
+   lifetime:{startedOn:"2026-10-14",mergedPrs:3,startSource:"github",undatedRepositories:0},days:[{day:"2026-10-15",merges:3}]},
+  {id:"two",name:"Second Service",repositories:["org/service"],
+   lifetime:{startedOn:"2026-10-12",mergedPrs:0,startSource:"github",undatedRepositories:0},days:[]}
  ]
 };
 describe("development velocity dashboard",()=>{
@@ -40,8 +42,10 @@ describe("development velocity dashboard",()=>{
       ...data, boardroomStartDate:"2026-10-08",
       projects:[
         {id:"boardroom",name:"Boardroom",repositories:["neophilism/Boardroom"],
+          lifetime:{startedOn:"2026-10-06",mergedPrs:81,startSource:"github",undatedRepositories:0},
           days:[{day:"2026-10-07",merges:1},{day:"2026-10-15",merges:80}]},
         {id:"outside",name:"Outside Project",repositories:["neophilism/Outside-Project"],
+          lifetime:{startedOn:"2026-10-04",mergedPrs:7,startSource:"github",undatedRepositories:0},
           days:[{day:"2026-10-07",merges:2},{day:"2026-10-15",merges:5}]}
       ]
     };
