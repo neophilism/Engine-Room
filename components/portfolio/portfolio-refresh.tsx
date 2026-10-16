@@ -3,7 +3,7 @@
 import React, { useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
-export const PORTFOLIO_REFRESH_MS = 120_000;
+export const PORTFOLIO_REFRESH_MS = 600_000;
 
 export function PortfolioRefresh() {
   const router = useRouter();
@@ -23,6 +23,6 @@ export function PortfolioRefresh() {
   }, [router, pending]);
 
   return <div className="portfolio-refresh">
-    <span aria-live="polite">{pending ? "Updating the dashboard…" : "Dashboard updates every 2 minutes · use Refresh in the header to fetch GitHub"}</span>
+    <span aria-live="polite">{pending ? "Updating the dashboard…" : "Dashboard updates every 10 minutes · use Refresh in the header to fetch GitHub"}</span>
   </div>;
 }
