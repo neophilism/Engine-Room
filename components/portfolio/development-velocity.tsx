@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import type { DevelopmentVelocityData, VelocityProject } from "../../lib/domain/development-velocity";
 import {
   boardroomImpact, dayAt, dayOrdinal, mergedByDay,
-  velocityBuckets, velocityStats, type ChartRange, type VelocityMeasure
+  velocityBuckets, velocityStats, lifetimePrRate, type ChartRange, type VelocityMeasure
 } from "../../lib/domain/development-velocity-chart";
 
 function formatDay(day: string): string {
@@ -19,6 +19,12 @@ function formatDateTime(value: string | null): string {
     dateStyle: "medium", timeStyle: "short", timeZone: "UTC"
   }) + " UTC";
 }
+function rateLabel(rate: number | null): string {
+  return rate === null ? "N/A" : rate.toLocaleString("en-US",{
+    minimumFractionDigits:2,maximumFractionDigits:2
+  });
+}
+
 function trendLabel(now: number, before: number): string {
   if (before === 0) return now === 0 ? "No change" : "New activity";
   const percentage = Math.round((now / before - 1) * 100);
@@ -147,6 +153,7 @@ export function DevelopmentVelocity({ data }: {data: DevelopmentVelocityData}) {
   const [markerFeedback,setMarkerFeedback] = useState("");
   const today = data.observedAt.slice(0,10);
   const stats = velocityStats(data.projects,selectedId,today);
+  const lifetime = lifetimePrRate(data.projects,selectedId,today);
   // Compare the rest of the portfolio: Boardroom's own development must not
   // masquerade as productivity gains delivered to other projects.
   const nonBoardroom = useMemo(()=>data.projects.filter(project=>
@@ -162,7 +169,8 @@ export function DevelopmentVelocity({ data }: {data: DevelopmentVelocityData}) {
   const selectedName = selectedId === "portfolio" ? "Entire portfolio" :
     data.projects.find(project=>project.id===selectedId)?.name || "Project";
   const ranked = useMemo(()=>data.projects.map(project=>({
-    project, stats:velocityStats([project],"portfolio",today)
+    project, stats:velocityStats([project],"portfolio",today),
+    lifetime:lifetimePrRate([project],"portfolio",today)
   })).sort((a,b)=>b.stats.last7-a.stats.last7 || b.stats.last28-a.stats.last28 ||
     a.project.name.localeCompare(b.project.name)),[data.projects,today]);
   const visible = ranked.filter(row=>
@@ -229,6 +237,21 @@ export function DevelopmentVelocity({ data }: {data: DevelopmentVelocityData}) {
         </select>
       </label>
     </div>
+    <div className="velocity-lifetime-summary" aria-label={selectedName + " lifetime merged PRs per day"}>
+      <div>
+        <span>Lifetime development average</span>
+        <strong data-testid="velocity-lifetime-prs-per-day">{rateLabel(lifetime.prsPerDay)}</strong>
+        <span className="velocity-lifetime-unit">merged PRs / day</span>
+      </div>
+      <p>
+        {lifetime.prsPerDay === null ?
+          "Unavailable until each tracked repository has an observed creation date." :
+          lifetime.mergedPrs.toLocaleString("en-US") + " merged PRs ÷ " +
+          lifetime.calendarDays?.toLocaleString("en-US") + " UTC calendar days"}
+        {lifetime.startedOn ? " · Since " + lifetime.startedOn : ""}
+        {" · All recorded history, including today"}
+      </p>
+    </div>
     <div className="velocity-stat-grid" aria-label={selectedName + " development rate"}>
       <div><small>Last 7 completed days</small><strong>{stats.last7}</strong><span>merged PRs</span></div>
       <div><small>Previous 7 completed days</small><strong>{stats.previous7}</strong><span>merged PRs</span></div>
@@ -285,11 +308,17 @@ export function DevelopmentVelocity({ data }: {data: DevelopmentVelocityData}) {
       </div>
       <div className="velocity-table-scroll">
         <table className="velocity-table">
-          <thead><tr><th scope="col">Project</th><th scope="col">Last 7 days</th>
+          <thead><tr><th scope="col">Project</th><th scope="col">Lifetime PRs/day</th><th scope="col">Last 7 days</th>
             <th scope="col">Previous 7 days</th><th scope="col">Change</th><th scope="col">28-day history</th></tr></thead>
-          <tbody>{visible.map(({project,stats:row})=><tr key={project.id} className={selectedId===project.id ? "velocity-row-selected" : ""}>
+          <tbody>{visible.map(({project,stats:row,lifetime:projectLifetime})=><tr key={project.id} className={selectedId===project.id ? "velocity-row-selected" : ""}>
             <td><button type="button" aria-pressed={selectedId===project.id} onClick={()=>setSelectedId(project.id)}>
               {project.name}</button></td>
+            <td className="velocity-lifetime-cell" title={projectLifetime.startedOn ?
+              "Since " + projectLifetime.startedOn + ": " + projectLifetime.mergedPrs +
+              " merged PRs over " + projectLifetime.calendarDays + " UTC calendar days" :
+              "Start date not observed"}>
+              {rateLabel(projectLifetime.prsPerDay)}
+            </td>
             <td>{row.last7}</td><td>{row.previous7}</td><td>{trendLabel(row.last7,row.previous7)}</td>
             <td><MiniTrend projects={data.projects} id={project.id} today={today}/></td>
           </tr>)}</tbody>
@@ -301,6 +330,7 @@ export function DevelopmentVelocity({ data }: {data: DevelopmentVelocityData}) {
     <details className="velocity-methodology">
       <summary>How development speed is measured</summary>
       <p>Only GitHub PR records with a non-null <code>merged_at</code> timestamp count. One merged PR counts once per linked primary repository, irrespective of size or number of commits. Open, draft and unmerged PRs do not count. Chart dates use UTC.</p>
+      <p>Lifetime average = every recorded merged PR, including those older than the 365-day chart window, divided by inclusive UTC calendar days from the actual GitHub repository creation date through today. A project with no merges shows 0.00; a missing inception date shows N/A. For the portfolio, all project merge counts are divided by the single elapsed period from the oldest tracked repository, never by the mean of project rates. This is an age-of-repository proxy, not necessarily when conceptual development began.</p>
       <p>The history is reconstructed from saved GitHub metadata. It only becomes more current when Engine Room&#39;s manual Refresh is used, or if you explicitly re-enable Automatic. No extra GitHub fetch or scheduled database poll is added by this graph.</p>
       <p>Week-over-week uses seven completed UTC days versus the preceding seven, excluding today&#39;s partial results. Boardroom comparisons use seven completed days before and seven after the recorded start; new projects and changes in PR size can affect aggregate counts. Boardroom&#39;s own repository is excluded from the portfolio-wide rollout comparison. The pre-active cohort is shown separately to help distinguish new-project expansion from greater output in existing projects.</p>
       <p>PR throughput is not a measure of accepted roadmap work. Consult the project progress bars for verified milestone completion and release acceptance.</p>

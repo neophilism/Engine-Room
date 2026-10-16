@@ -85,6 +85,41 @@ export function velocityBuckets(
   }
   return result;
 }
+/** Lifetime merged-PR rate. The portfolio is one continuous time span from
+ * the earliest primary repository; NEVER sum or average per-project rates. */
+export type LifetimePrRate = {
+  mergedPrs: number;
+  startedOn: string | null;
+  calendarDays: number | null;
+  prsPerDay: number | null;
+};
+export function lifetimePrRate(
+  projects: readonly VelocityProject[],
+  selectedId = "portfolio",
+  today: string = utcToday()
+): LifetimePrRate {
+  const selected = selectedId === "portfolio"
+    ? projects : projects.filter(project => project.id === selectedId);
+  const mergedPrs = selected.reduce((sum, project) => sum + project.lifetime.mergedPrs, 0);
+  const startedOn = selected.reduce<string | null>((earliest, project) => {
+    const start = project.lifetime.startedOn;
+    return start && (!earliest || start < earliest) ? start : earliest;
+  }, null);
+  // Do not produce a reassuring zero, nor an exaggerated rate, when a
+  // repository's true inception date has not been observed.
+  if (selected.length === 0 || !startedOn ||
+      selected.some(project => project.lifetime.undatedRepositories > 0 ||
+        project.lifetime.startedOn === null)) {
+    return {mergedPrs, startedOn, calendarDays: null, prsPerDay: null};
+  }
+  const elapsed = dayOrdinal(today) - dayOrdinal(startedOn) + 1;
+  if (elapsed < 1) return {mergedPrs, startedOn, calendarDays: null, prsPerDay: null};
+  // Inclusive calendar days (in UTC), including the start date and today.
+  // Today can be partial, just as the stored lifetime merged count can be.
+  const calendarDays = Math.max(1, elapsed);
+  return {mergedPrs, startedOn, calendarDays, prsPerDay: mergedPrs / calendarDays};
+}
+
 export type BoardroomImpact = {
   before: number;
   after: number;

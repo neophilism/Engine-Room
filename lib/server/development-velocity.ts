@@ -8,6 +8,10 @@ type VelocityRow = {
   repository_full_name: string;
   day: Date | string | null;
   merged_count: number | string;
+  /** Historical lifetime summary repeats for every daily row of one repository. */
+  repository_started_on?: string | null;
+  lifetime_merged_count?: number | string;
+  start_source?: "github" | "first-pr" | "unavailable";
 };
 type SyncRow = {
   total: number | string;
@@ -33,11 +37,30 @@ export function normalizeVelocityRows(rows: readonly VelocityRow[]): VelocityPro
   for (const row of rows) {
     let project = projects.get(row.project_id);
     if (!project) {
-      project = { id: row.project_id, name: row.display_name, repositories: [], days: [] };
+      project = {
+        id: row.project_id, name: row.display_name, repositories: [], days: [],
+        lifetime: {startedOn: null, mergedPrs: 0, startSource: "unavailable", undatedRepositories: 0}
+      };
       projects.set(row.project_id, project);
     }
     if (!project.repositories.includes(row.repository_full_name)) {
+      // Count the lifetime aggregate only once per repository: it is repeated
+      // on each chart-day SQL row and must not multiply the all-time total.
       project.repositories.push(row.repository_full_name);
+      const mergedPrs = Number(row.lifetime_merged_count ?? 0);
+      if (!Number.isSafeInteger(mergedPrs) || mergedPrs < 0) {
+        throw new Error("Invalid lifetime merged PR count.");
+      }
+      project.lifetime.mergedPrs += mergedPrs;
+      if (row.repository_started_on) {
+        const startedOn = utcDay(row.repository_started_on);
+        if (!project.lifetime.startedOn || startedOn < project.lifetime.startedOn) {
+          project.lifetime.startedOn = startedOn;
+          project.lifetime.startSource = row.start_source === "first-pr" ? "first-pr" : "github";
+        }
+      } else {
+        project.lifetime.undatedRepositories++;
+      }
     }
     if (row.day !== null) {
       const day = utcDay(row.day);
@@ -66,17 +89,30 @@ export async function loadDevelopmentVelocity(): Promise<DevelopmentVelocityData
     const pool = getDatabasePool();
     const [history, checkpoint, marker] = await Promise.all([
       pool.query<VelocityRow>(
-        'SELECT p.id::text AS project_id, p.display_name, ' +
-        'r.full_name AS repository_full_name, ' +
+        // One query: an all-time merged-PR aggregate joined to the existing
+        // bounded day-by-day chart history. No extra provider/API requests.
+        'WITH lifetime AS (' +
+        'SELECT repository_id, count(merged_at)::integer AS lifetime_merged_count, ' +
+        "to_char(min(created_at) AT TIME ZONE 'UTC','YYYY-MM-DD') AS first_pr_created " +
+        'FROM github_pull_requests GROUP BY repository_id) ' +
+        'SELECT p.id::text AS project_id, p.display_name, r.full_name AS repository_full_name, ' +
+        "COALESCE(to_char(r.github_created_at AT TIME ZONE 'UTC','YYYY-MM-DD'), " +
+        'l.first_pr_created) AS repository_started_on, ' +
+        "CASE WHEN r.github_created_at IS NOT NULL THEN 'github' " +
+        "WHEN l.first_pr_created IS NOT NULL THEN 'first-pr' " +
+        "ELSE 'unavailable' END AS start_source, " +
+        'COALESCE(l.lifetime_merged_count,0)::integer AS lifetime_merged_count, ' +
         "to_char(g.merged_at AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS day, " +
         'count(g.id)::integer AS merged_count ' +
         'FROM projects p ' +
         "JOIN project_repositories pr ON pr.project_id=p.id AND pr.relationship='primary' " +
         'JOIN repositories r ON r.id=pr.repository_id AND NOT r.archived ' +
+        'LEFT JOIN lifetime l ON l.repository_id=r.id ' +
         'LEFT JOIN github_pull_requests g ON g.repository_id=r.id ' +
         "AND g.merged_at >= (current_date - interval '364 days') " +
         "AND g.merged_at < (current_date + interval '1 day') " +
-        'GROUP BY p.id,p.display_name,r.full_name,day ORDER BY p.display_name,day'
+        'GROUP BY p.id,p.display_name,r.full_name,r.github_created_at, ' +
+        'l.lifetime_merged_count,l.first_pr_created,day ORDER BY p.display_name,day'
       ),
       pool.query<SyncRow>(
         'SELECT count(*)::integer AS total, ' +

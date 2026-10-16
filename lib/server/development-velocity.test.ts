@@ -14,6 +14,39 @@ describe("velocity source normalization", () => {
     expect(rows[1].days).toEqual([{day:"2026-10-13",merges:3}]);
     expect(rows[1].repositories).toHaveLength(2);
   });
+  it("counts lifetime merges once per repository across repeated UTC daily chart rows",()=>{
+    const rows=normalizeVelocityRows([
+      {project_id:"p",display_name:"Project",repository_full_name:"org/core",
+        repository_started_on:"2025-11-18",start_source:"github",
+        lifetime_merged_count:47,day:"2026-10-10",merged_count:8},
+      {project_id:"p",display_name:"Project",repository_full_name:"org/core",
+        repository_started_on:"2025-11-18",start_source:"github",
+        lifetime_merged_count:47,day:"2026-10-11",merged_count:6},
+      {project_id:"p",display_name:"Project",repository_full_name:"org/helper",
+        repository_started_on:"2026-10-01",start_source:"first-pr",
+        lifetime_merged_count:"5",day:"2026-10-11",merged_count:3},
+      {project_id:"empty",display_name:"Empty",repository_full_name:"org/new",
+        repository_started_on:"2026-10-16",start_source:"github",
+        lifetime_merged_count:0,day:null,merged_count:0}
+    ]);
+    expect(rows[0].lifetime).toEqual({
+      startedOn:"2026-10-16",mergedPrs:0,startSource:"github",undatedRepositories:0
+    });
+    expect(rows[1].lifetime).toEqual({
+      startedOn:"2025-11-18",mergedPrs:52,startSource:"github",undatedRepositories:0
+    });
+    expect(rows[1].repositories).toEqual(["org/core","org/helper"]);
+    expect(rows[1].days).toEqual([
+      {day:"2026-10-10",merges:8},{day:"2026-10-11",merges:9}
+    ]);
+  });
+  it("does not invent an inception date if the repository has no usable start",()=>{
+    const projects=normalizeVelocityRows([{project_id:"no-date",display_name:"Unknown",repository_full_name:"org/no-date",
+      lifetime_merged_count:2,day:null,merged_count:0}]);
+    expect(projects[0].lifetime).toEqual({
+      startedOn:null,mergedPrs:2,startSource:"unavailable",undatedRepositories:1
+    });
+  });
   it("rejects invalid persisted counts",()=>{
     expect(()=>normalizeVelocityRows([
       {project_id:"a",display_name:"Alpha",repository_full_name:"org/a",day:"2026-10-12",merged_count:-1}
