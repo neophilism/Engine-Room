@@ -14,18 +14,20 @@ describe("velocity source normalization", () => {
     expect(rows[1].days).toEqual([{day:"2026-10-13",merges:3}]);
     expect(rows[1].repositories).toHaveLength(2);
   });
-  it("counts lifetime merges once per repository across repeated UTC daily chart rows",()=>{
+  it("counts current-wave merged PRs once per repository and clamps legacy project starts",()=>{
+    // SQL has already removed pre-2026-10-05 mergers from legacy repos and
+    // clamped their effective rate start to the first current-wave launch.
     const rows=normalizeVelocityRows([
-      {project_id:"p",display_name:"Project",repository_full_name:"org/core",
-        repository_started_on:"2025-11-18",start_source:"github",
-        lifetime_merged_count:47,day:"2026-10-10",merged_count:8},
-      {project_id:"p",display_name:"Project",repository_full_name:"org/core",
-        repository_started_on:"2025-11-18",start_source:"github",
-        lifetime_merged_count:47,day:"2026-10-11",merged_count:6},
-      {project_id:"p",display_name:"Project",repository_full_name:"org/helper",
-        repository_started_on:"2026-10-01",start_source:"first-pr",
+      {project_id:"p",display_name:"Project",repository_full_name:"org/legacy",
+        repository_started_on:"2026-10-05",start_source:"launch-window",
+        lifetime_merged_count:6,day:"2026-10-10",merged_count:4},
+      {project_id:"p",display_name:"Project",repository_full_name:"org/legacy",
+        repository_started_on:"2026-10-05",start_source:"launch-window",
+        lifetime_merged_count:6,day:"2026-10-11",merged_count:2},
+      {project_id:"p",display_name:"Project",repository_full_name:"org/new",
+        repository_started_on:"2026-10-08",start_source:"github",
         lifetime_merged_count:"5",day:"2026-10-11",merged_count:3},
-      {project_id:"empty",display_name:"Empty",repository_full_name:"org/new",
+      {project_id:"empty",display_name:"Empty",repository_full_name:"org/empty",
         repository_started_on:"2026-10-16",start_source:"github",
         lifetime_merged_count:0,day:null,merged_count:0}
     ]);
@@ -33,11 +35,11 @@ describe("velocity source normalization", () => {
       startedOn:"2026-10-16",mergedPrs:0,startSource:"github",undatedRepositories:0
     });
     expect(rows[1].lifetime).toEqual({
-      startedOn:"2025-11-18",mergedPrs:52,startSource:"github",undatedRepositories:0
+      startedOn:"2026-10-05",mergedPrs:11,startSource:"launch-window",undatedRepositories:0
     });
-    expect(rows[1].repositories).toEqual(["org/core","org/helper"]);
+    expect(rows[1].repositories).toEqual(["org/legacy","org/new"]);
     expect(rows[1].days).toEqual([
-      {day:"2026-10-10",merges:8},{day:"2026-10-11",merges:9}
+      {day:"2026-10-10",merges:4},{day:"2026-10-11",merges:5}
     ]);
   });
   it("does not invent an inception date if the repository has no usable start",()=>{
