@@ -8,6 +8,7 @@ import {seedRepositoryAbout} from '../lib/sync/repository-about.mjs';
 
 const pool=new Pool({connectionString:process.env.DATABASE_URL||process.env.DATABASE_URL_UNPOOLED,max:3,connectionTimeoutMillis:10000});
 let stopping=false,inboxBusy=false,syncBusy=false,plansBusy=false;
+async function isAutomatic(){const result=await pool.query('select github_reconciliation_enabled from engine_room_control_settings where singleton=true');return result.rows[0]?.github_reconciliation_enabled===true;}
 async function inbox(){
   if(stopping||inboxBusy)return;
   if((await readNeonBudget()).paused)return;
