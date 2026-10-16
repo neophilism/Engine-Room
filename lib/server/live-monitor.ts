@@ -37,7 +37,10 @@ type RawPr={project_id:string;number:number;title:string;html_url:string;state:s
   default_branch_sha:string|null;release_included:boolean|null;release_target_sha:string|null};
 
 export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,projectId?:string){
-  const raw=await db.query<RawPr>(`SELECT pr.project_id,g.*,r.default_branch,s.default_branch_sha FROM github_pull_requests g
+  const raw=await db.query<RawPr>(`SELECT pr.project_id,g.number,g.title,g.html_url,g.state,g.draft,g.head_sha,g.base_ref,
+    g.checks_state,g.checks_observed_at,g.checks_url,g.mergeable,g.updated_at,g.merged_at,
+    g.review_summary,g.release_included,g.release_target_sha,r.default_branch,s.default_branch_sha
+    FROM github_pull_requests g
     JOIN repositories r ON r.id=g.repository_id JOIN project_repositories pr ON pr.repository_id=r.id
     LEFT JOIN github_repository_sync s ON s.repository_id=r.id
     WHERE ($1::uuid IS NULL OR pr.project_id=$1) ORDER BY (g.state='open') DESC,g.updated_at DESC`,[projectId||null]);
@@ -58,7 +61,8 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
     pullRequests.set(row.project_id,prs);
   }
   const docResult=await db.query<{project_id:string;repository_id:string;repository_name:string;path:string;fingerprint:string;source_url:string;repository_url:string;title:string;imported_at:Date;versions:string}>(`SELECT DISTINCT ON(pr.project_id,d.repository_id,d.path)
-    pr.project_id,d.*,r.name AS repository_name,r.html_url AS repository_url,count(*) OVER(PARTITION BY d.repository_id,d.path) AS versions FROM project_plan_documents d
+    pr.project_id,d.repository_id,d.path,d.fingerprint,d.source_url,d.title,d.imported_at,
+    r.name AS repository_name,r.html_url AS repository_url,count(*) OVER(PARTITION BY d.repository_id,d.path) AS versions FROM project_plan_documents d
     JOIN repositories r ON r.id=d.repository_id JOIN project_repositories pr ON pr.repository_id=d.repository_id WHERE ($1::uuid IS NULL OR pr.project_id=$1)
     ORDER BY pr.project_id,d.repository_id,d.path,d.version_id DESC`,[projectId||null]);
   const plans=new Map<string,SourcePlanSummary>();
