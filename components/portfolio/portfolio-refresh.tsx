@@ -14,11 +14,9 @@ export function PortfolioRefresh() {
     };
     // Manual is the default: no unattended periodic dashboard refresh.
     const timer = undefined as ReturnType<typeof setInterval> | undefined;
-    document.addEventListener("visibilitychange", refresh);
     window.addEventListener('engine-room-data-changed',refresh);
     return () => {
       if(timer)window.clearInterval(timer);
-      document.removeEventListener("visibilitychange", refresh);
       window.removeEventListener('engine-room-data-changed',refresh);
     };
   }, [router, pending]);
