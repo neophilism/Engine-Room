@@ -54,6 +54,7 @@ const syncTimer=setInterval(sync,30*60*1000);
 // Inbox runs on its regular cadence.
 const hasAuth=!!(process.env.GITHUB_READ_TOKEN||process.env.GITHUB_APP_ID&&process.env.GITHUB_INSTALLATION_ID);
 void (async()=>{
+  if(!await isAutomatic())return;
   try{
     // HTTP codes only; no token, identities or response bodies in logs.
     console.info('GitHub read access diagnostic',JSON.stringify(await probeGitHubAccess()));
