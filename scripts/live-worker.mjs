@@ -11,6 +11,7 @@ let stopping=false,inboxBusy=false,syncBusy=false,plansBusy=false;
 async function isAutomatic(){const result=await pool.query('select github_reconciliation_enabled from engine_room_control_settings where singleton=true');return result.rows[0]?.github_reconciliation_enabled===true;}
 async function inbox(){
   if(stopping||inboxBusy)return;
+  if(!await isAutomatic())return;
   if((await readNeonBudget()).paused)return;
   inboxBusy=true;
   try{await processWebhookInbox(pool);await pool.query('UPDATE engine_room_live_state SET last_worker_at=now() WHERE singleton=true');}
@@ -19,6 +20,7 @@ async function inbox(){
 }
 async function sync(force=false){
   if(stopping||syncBusy)return;
+  if(!await isAutomatic())return;
   if((await readNeonBudget()).paused)return;
   syncBusy=true;
   try{console.info('Portfolio reconciliation',await reconcilePortfolio(pool,force?{force:true,quick:true,repositoryLimit:100,concurrency:5}:{}));}
@@ -30,6 +32,7 @@ async function sync(force=false){
 // the documented denominator populated even when PR evidence is stale.
 async function plans() {
   if(stopping||plansBusy)return;
+  if(!await isAutomatic())return;
   if((await readNeonBudget()).paused)return;
   plansBusy=true;
   try {
