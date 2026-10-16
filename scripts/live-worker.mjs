@@ -47,7 +47,7 @@ const inboxTimer=setInterval(inbox,15*60*1000);
 const syncTimer=setInterval(sync,30*60*1000);
 // A deployment must not start with the previous container's stale PR counts.
 // Force one bounded, PR-only GitHub reconciliation, then import current plan files.
-void inbox();
+// Inbox runs on its regular cadence.
 const hasAuth=!!(process.env.GITHUB_READ_TOKEN||process.env.GITHUB_APP_ID&&process.env.GITHUB_INSTALLATION_ID);
 void (async()=>{
   try{
