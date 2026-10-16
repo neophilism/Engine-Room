@@ -182,6 +182,7 @@ export function LiveConnection() {
 
   return (
     <div className="live-readout" aria-label="Portfolio data status" title={title}>
+      <label className="activity-filter">Refresh mode <select aria-label="Refresh mode" disabled={savingMode} value={snapshot?.reconciliationEnabled?"automatic":"manual"} onChange={event=>{void setRefreshMode(event.target.value==="automatic");}}><option value="manual">Manual</option><option value="automatic">Automatic</option></select></label>
       <button
         type="button"
         className="live-refresh-trigger"
