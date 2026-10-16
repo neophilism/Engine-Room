@@ -108,7 +108,7 @@ export function LiveConnection() {
       };
     }
     void poll();
-    const timer = setInterval(() => { void poll(); }, 120000);
+    const timer = setInterval(() => { void poll(); }, 600000);
     return () => { active = false; source?.close(); clearInterval(timer); };
   }, []);
 
