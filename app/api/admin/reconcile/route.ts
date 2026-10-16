@@ -5,12 +5,14 @@ import { getDatabasePool } from "../../../../lib/server/database";
 import { reconcilePortfolio } from "../../../../lib/sync/reconcile.mjs";
 import { reconcilePlanSources } from "../../../../lib/sync/plan-source-sync.mjs";
 import { processWebhookInbox } from "../../../../lib/sync/github-runtime.mjs";
+import {readNeonBudget} from "../../../../lib/budget/neon-budget.mjs";
 export const runtime="nodejs";
 export const maxDuration=120;
 export async function POST(request:Request){
  const reply=(body:unknown,status=200)=>NextResponse.json(body,{status,headers:{"Cache-Control":"no-store"}});
  if(!await isRequestAdmin(request))return reply({error:"Administrator required"},401);
  if(!trustedWriteOrigin(request))return reply({error:"Untrusted origin"},403);
+ if((await readNeonBudget()).paused)return reply({error:"Budget guard paused synchronization"},503);
  let mode:string;
  try{const raw=await request.text();if(raw.length>256)return reply({error:"Request too large"},413);
   const value=JSON.parse(raw);if(!value||Object.keys(value).join(",")!=="mode"||!["manual","scheduled"].includes(value.mode))throw new Error();mode=value.mode;
