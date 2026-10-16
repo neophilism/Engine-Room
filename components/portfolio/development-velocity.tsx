@@ -237,19 +237,19 @@ export function DevelopmentVelocity({ data }: {data: DevelopmentVelocityData}) {
         </select>
       </label>
     </div>
-    <div className="velocity-lifetime-summary" aria-label={selectedName + " lifetime merged PRs per day"}>
+    <div className="velocity-lifetime-summary" aria-label={selectedName + " development-period merged PRs per day"}>
       <div>
-        <span>Lifetime development average</span>
+        <span>Average since development launch</span>
         <strong data-testid="velocity-lifetime-prs-per-day">{rateLabel(lifetime.prsPerDay)}</strong>
         <span className="velocity-lifetime-unit">merged PRs / day</span>
       </div>
       <p>
         {lifetime.prsPerDay === null ?
-          "Unavailable until each tracked repository has an observed creation date." :
+          "Unavailable until the launch-period start and each repository's effective start are known." :
           lifetime.mergedPrs.toLocaleString("en-US") + " merged PRs ÷ " +
           lifetime.calendarDays?.toLocaleString("en-US") + " UTC calendar days"}
         {lifetime.startedOn ? " · Since " + lifetime.startedOn : ""}
-        {" · All recorded history, including today"}
+        {" · Since the first repository in the current development push, including today"}
       </p>
     </div>
     <div className="velocity-stat-grid" aria-label={selectedName + " development rate"}>
@@ -308,7 +308,7 @@ export function DevelopmentVelocity({ data }: {data: DevelopmentVelocityData}) {
       </div>
       <div className="velocity-table-scroll">
         <table className="velocity-table">
-          <thead><tr><th scope="col">Project</th><th scope="col">Lifetime PRs/day</th><th scope="col">Last 7 days</th>
+          <thead><tr><th scope="col">Project</th><th scope="col">PRs/day since launch</th><th scope="col">Last 7 days</th>
             <th scope="col">Previous 7 days</th><th scope="col">Change</th><th scope="col">28-day history</th></tr></thead>
           <tbody>{visible.map(({project,stats:row,lifetime:projectLifetime})=><tr key={project.id} className={selectedId===project.id ? "velocity-row-selected" : ""}>
             <td><button type="button" aria-pressed={selectedId===project.id} onClick={()=>setSelectedId(project.id)}>
@@ -330,7 +330,7 @@ export function DevelopmentVelocity({ data }: {data: DevelopmentVelocityData}) {
     <details className="velocity-methodology">
       <summary>How development speed is measured</summary>
       <p>Only GitHub PR records with a non-null <code>merged_at</code> timestamp count. One merged PR counts once per linked primary repository, irrespective of size or number of commits. Open, draft and unmerged PRs do not count. Chart dates use UTC.</p>
-      <p>Lifetime average = every recorded merged PR, including those older than the 365-day chart window, divided by inclusive UTC calendar days from the actual GitHub repository creation date through today. A project with no merges shows 0.00; a missing inception date shows N/A. For the portfolio, all project merge counts are divided by the single elapsed period from the oldest tracked repository, never by the mean of project rates. This is an age-of-repository proxy, not necessarily when conceptual development began.</p>
+      <p>The development-period average begins on the date of the first primary repository created in the new development push (from September 20, 2026 forward; currently October 5, 2026). Older repositories count only their merges on or after that day, and their daily rate starts at that same cutoff. New projects use their later GitHub creation date. The portfolio rate is all post-launch merged PRs divided by calendar days since the first new repository launched—not the average of individual projects. The 365-day graph and its earlier history remain unchanged. A project with no merges shows 0.00; an unavailable start date shows N/A.</p>
       <p>The history is reconstructed from saved GitHub metadata. It only becomes more current when Engine Room&#39;s manual Refresh is used, or if you explicitly re-enable Automatic. No extra GitHub fetch or scheduled database poll is added by this graph.</p>
       <p>Week-over-week uses seven completed UTC days versus the preceding seven, excluding today&#39;s partial results. Boardroom comparisons use seven completed days before and seven after the recorded start; new projects and changes in PR size can affect aggregate counts. Boardroom&#39;s own repository is excluded from the portfolio-wide rollout comparison. The pre-active cohort is shown separately to help distinguish new-project expansion from greater output in existing projects.</p>
       <p>PR throughput is not a measure of accepted roadmap work. Consult the project progress bars for verified milestone completion and release acceptance.</p>
