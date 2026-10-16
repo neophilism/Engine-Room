@@ -18,7 +18,13 @@ test.beforeAll(async()=>{
   await db.query("INSERT INTO project_repositories(project_id,repository_id,relationship) VALUES($1,$2,'primary')",[projectId,repoId]);
   await db.query("INSERT INTO github_repository_sync(repository_id,last_success_at) VALUES($1,now())",[repoId]);
   await db.query("INSERT INTO github_pull_requests(github_pull_request_id,repository_id,number,title,state,draft,html_url,created_at,updated_at,head_sha,base_ref) VALUES($1,$2,81,'Original browser work','open',false,'https://github.com/browser-fixture/live/pull/81',now(),now(),$3,'main')",[githubPrId,repoId,'a'.repeat(40)]);
-  await persistPlanDocument(db,{id:repoId,full_name:'browser-fixture/live'},{path:'docs/roadmap.md',body:'# Browser plan\n1. Original browser work',ref:'fixture',items:[{ordinal:1,title:'Original browser work',numbers:[81],reason:'Explicit test mapping',scope:'original'}]});
+  const registry={schemaVersion:1,repository:'browser-fixture/live',roadmapVersion:1,planVerified:true,
+    plannedPrCount:1,observedAt:'2026-10-13T00:00:00Z',pullRequests:[],units:[{id:'BRW-01',
+      title:'Original browser work',origin:'original',prs:[81],dependsOn:[],
+      externalDependencies:[],externalPrerequisites:[]}]};
+  await persistPlanDocument(db,{id:repoId,full_name:'browser-fixture/live'},
+    {path:'registry/prs.json',body:JSON.stringify(registry),ref:'fixture',
+      items:[{ordinal:1,title:'Original browser work',numbers:[81],reason:'Explicit test mapping',scope:'original'}]});
   await db.query('UPDATE engine_room_live_state SET last_worker_at=now(),last_error=NULL');
 });
 test.beforeEach(async({context})=>{
