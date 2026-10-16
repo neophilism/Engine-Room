@@ -2,16 +2,16 @@
   "repository": "neophilism/Engine-Room",
   "title": "Engine Room",
   "planVerified": true,
-  "plannedPrCount": 52,
+  "plannedPrCount": 53,
   "sourceFiles": [
     ".exechub/project.yml",
     "docs/development-plan.md",
     ".exechub/approved-pr-mapping.json",
     "docs/portfolio-monitor-additions.json"
   ],
-  "scopeNote": "40 original approved work packages, 3 independently documented portfolio-monitor additions (PRs #56–58), and 2 user-requested universal repository roadmap/synchronization work packages (#81–82). Source roadmap IDs and actual PR numbers remain separate.",
+  "scopeNote": "40 original approved work packages, 3 independently documented portfolio-monitor additions (PRs #56–58), and 2 user-requested universal repository roadmap/synchronization work packages (#81–82). Source roadmap IDs and actual PR numbers remain separate. Additional owner-approved unit ER-053 tracks time-series development velocity and the Boardroom rollout benchmark; PR #109 implements it.",
   "schemaVersion": 1,
-  "roadmapVersion": 8,
+  "roadmapVersion": 9,
   "observedAt": "2026-10-11T22:57:44.640Z",
   "units": [
     {
@@ -631,6 +631,20 @@
       "prs": [],
       "contributingPrs": [],
       "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
+    },
+    {
+      "id": "ER-053",
+      "title": "Historical per-project merged-PR development velocity dashboard and Boardroom activation baseline",
+      "origin": "addition",
+      "prs": [
+        109
+      ],
+      "contributingPrs": [],
+      "dependsOn": [
+        "ER-048"
+      ],
       "externalDependencies": [],
       "externalPrerequisites": []
     }
