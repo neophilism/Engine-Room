@@ -6,6 +6,7 @@ import {
   verifyGitHubWebhookSignature
 } from "../../../../lib/github/webhook";
 import { recordGitHubWebhookDelivery } from "../../../../lib/server/github-webhooks";
+import {getDatabasePool} from "../../../../lib/server/database";
 
 export const runtime = "nodejs";
 
