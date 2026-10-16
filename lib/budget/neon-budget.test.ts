@@ -12,7 +12,7 @@ describe('Neon budget safeguard',()=>{
   expect(result?.lastObserved).toBe('2026-10-16T21:00:00Z');
  });
  it('fails closed without a configured Neon API credential',async()=>{
-  const result=await readNeonBudget({});
+  const result=await readNeonBudget({NODE_ENV:'test'});
   expect(result.paused).toBe(true);
   expect(result.spentUSD).toBeNull();
  });
