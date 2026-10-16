@@ -69,6 +69,55 @@
 .velocity-controls label:first-child { flex: 1 1 265px; }
 .velocity-controls label:first-child select { width: 100%; }
 .velocity-controls label:not(:first-child) { flex: 0 1 175px; }
+.velocity-lifetime-summary {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--er-border-glass);
+  background: linear-gradient(115deg, rgba(32,234,210,.085), rgba(227,174,88,.035));
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 14px;
+}
+.velocity-lifetime-summary > div {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.velocity-lifetime-summary > div > span:first-child {
+  font-size: .74rem;
+  color: var(--er-brass-200);
+}
+.velocity-lifetime-summary strong {
+  font-family: var(--er-font-instrument);
+  font-size: clamp(1.65rem, 3vw, 2.5rem);
+  line-height: 1;
+  color: var(--er-teal-250);
+  font-variant-numeric: tabular-nums;
+}
+.velocity-lifetime-unit {
+  color: var(--er-text-secondary);
+  font-size: .85rem;
+  white-space: nowrap;
+}
+.velocity-lifetime-summary p {
+  color: var(--er-text-secondary);
+  font-size: .74rem;
+  margin: 0;
+  line-height: 1.45;
+}
+.velocity-lifetime-cell {
+  color: var(--er-teal-250);
+  font-weight: 700;
+}
+@media(max-width: 600px) {
+  .velocity-lifetime-summary { padding: 13px; gap: 8px; }
+  .velocity-lifetime-summary > div { gap: 7px; }
+}
+
 .velocity-stat-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
