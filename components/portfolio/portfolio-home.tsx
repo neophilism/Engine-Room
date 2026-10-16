@@ -10,6 +10,7 @@ import { RenderServiceReadouts } from "./render-service-readouts";
 import { GitHubSourceReadout } from "./github-source-readout";
 import { ActivityMonitor } from "./activity-monitor";
 import { PlatformMetrics } from "./platform-metrics";
+import { BudgetAlert } from "./budget-alert";
 
 function sourceLabel(source: PortfolioOverviewData["source"]) {
   if (source === "database") return "Data connected";
@@ -42,6 +43,7 @@ export function PortfolioHome({
         </span>
       </header>
 
+      <BudgetAlert />
       <PodcastProductionAlert summary={inquiryAlerts} />
 
       <section className="portfolio-stat-grid" aria-label="Live portfolio statistics">
