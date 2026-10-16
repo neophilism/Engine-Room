@@ -92,7 +92,7 @@ export function LiveConnection() {
         if (active) { setConnected(false); setUnavailable(true); }
       }
     };
-    if (typeof EventSource !== "undefined") {
+    if (snapshot?.reconciliationEnabled && typeof EventSource !== "undefined") {
       source = new EventSource("/api/live/events");
       source.addEventListener("portfolio", event => {
         if (!active) return;
@@ -109,9 +109,9 @@ export function LiveConnection() {
       };
     }
     void poll();
-    const timer = setInterval(() => { void poll(); }, 600000);
+    const timer = snapshot?.reconciliationEnabled ? setInterval(() => { void poll(); }, 600000) : undefined;
     return () => { active = false; source?.close(); clearInterval(timer); };
-  }, []);
+  }, [snapshot?.reconciliationEnabled]);
 
   async function setRefreshMode(automatic:boolean){
     setSavingMode(true);
