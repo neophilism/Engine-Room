@@ -119,7 +119,7 @@ describe("ProjectProgressStack", () => {
     render(<ProjectProgressStack project={missing} />);
     expect(screen.getByText(/30 work packages still require scope completion/)).toBeInTheDocument();
     expect(screen.getByText(/0 full packages/)).toBeInTheDocument();
-    expect(screen.getByText(/26 GitHub PRs accepted (merged)/)).toBeInTheDocument();
+    expect(screen.getByText(/26 GitHub PRs accepted \\(merged\\)/)).toBeInTheDocument();
     expect(screen.queryByText(/30 not started/)).not.toBeInTheDocument();
   });
 
@@ -133,7 +133,7 @@ describe("ProjectProgressStack", () => {
           title:"Unverified source",importedAt:"2026-10-11T18:03:06.242Z",versions:1}]}
     };
     render(<ProjectProgressStack project={unpublished} />);
-    expect(screen.getByText(/Plan unverified · 11 GitHub PRs accepted (merged)/)).toBeInTheDocument();
+    expect(screen.getByText(/Plan unverified · 11 GitHub PRs accepted \\(merged\\)/)).toBeInTheDocument();
     expect(screen.getByText("Plan unavailable")).toBeInTheDocument();
   });
 
