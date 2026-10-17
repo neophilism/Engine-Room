@@ -1,0 +1,11 @@
+[Unit]
+Description=Hourly OCI A1 capacity status reporting
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+RandomizedDelaySec=120
+Unit=oci-a1-watch.service
+
+[Install]
+WantedBy=timers.target
