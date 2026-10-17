@@ -22,7 +22,7 @@ describe("unified development plan progress bar", () => {
     expect(tube).toHaveAttribute("aria-valuenow","60");
     expect(tube).toHaveAttribute("aria-valuemax","100");
     expect(tube).toHaveAttribute("aria-valuetext",
-      "60 accepted and merged, 10 underway or awaiting acceptance, 30 not started; 100 planned units total");
+      "60 full-scope packages complete, 10 packages in progress, 30 not started; 100 planned packages total");
     expect(container.querySelector(".planned-progress-merged-fill")).toHaveStyle({width:"60%"});
     expect(container.querySelector(".planned-progress-open-fill")).toHaveStyle({left:"60%",width:"10%"});
   });

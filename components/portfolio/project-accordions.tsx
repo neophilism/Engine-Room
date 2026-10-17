@@ -55,11 +55,11 @@ export function ProjectAccordions({
               <dd>{repositoryCount}</dd>
             </div>
             <div>
-              <dt>Planned work complete</dt>
+              <dt>Full-scope work packages complete</dt>
               <dd>{progress ? `${progress.completed}/${progress.planned}` : "N/A"}</dd>
             </div>
             <div>
-              <dt>PRs remaining</dt>
+              <dt>Planned work packages remaining</dt>
               <dd>{progress?.remaining ?? "N/A"}</dd>
             </div>
           </dl>
