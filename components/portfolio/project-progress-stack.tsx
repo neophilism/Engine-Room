@@ -63,24 +63,24 @@ export function ProjectProgressStack({
         </button>
         <strong><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>
         <span className="count">
-          {progress ? `${progress.completed}/${progress.planned} planned` : aggregatorDeferred ? "Awaiting corpus" : "Plan unavailable"}
+          {progress ? `${progress.completed}/${progress.planned} packages fully complete` : aggregatorDeferred ? "Awaiting corpus" : "Plan unavailable"}
         </span>
-        <span className="percentage" title={progress ? "Completed planned units divided by all planned units" : "No documented development plan"}>{progress ? `${progress.percent}%` : "N/A"}</span>
+        <span className="percentage" title={progress ? "Entire work-package scope verified, not the percentage of accepted PRs" : "No documented development plan"}>{progress ? `${progress.percent}%` : "N/A"}</span>
       </header>
       <ProjectLastUpdate update={project.latestUpdate}/>
 
       <div className="project-quick-links">
-        {mergedGitHubPrs > 0 && <strong className="project-merged-count">{mergedGitHubPrs} GitHub PRs merged overall</strong>}
+        {mergedGitHubPrs > 0 && <strong className="project-merged-count">{mergedGitHubPrs} GitHub PRs accepted (merged)</strong>}
         <span className="project-activity">{unverifiedEvidence
-          ? `${unmappedUnits} packages await accepted completion evidence · ${contributingPackages} show contributing PR activity · ${progress?.inProgress ?? 0} underway · ${progress?.completed ?? 0} accepted`
+          ? `${unmappedUnits} work packages still require scope completion · ${contributingPackages} have accepted or open contributing PR activity · ${progress?.inProgress ?? 0} underway · ${progress?.completed ?? 0} full packages`
           : progress
             ? `${progress.notStarted} not started · ${progress.inProgress} underway · ${progress.completed} accepted`
             : missingPlanWithWork
-              ? `Plan unverified · ${mergedGitHubPrs} GitHub PRs merged · progress not measurable`
+              ? `Plan unverified · ${mergedGitHubPrs} GitHub PRs accepted (merged) · package progress not measurable`
               : aggregatorDeferred
                 ? "Development deferred until FOIA Aggregator reaches broad source coverage"
                 : "Source plan not yet verified"}</span>
-        {progress?.inProgress ? <span className="project-open-count">{progress.inProgress} packages underway / awaiting acceptance</span> : null}
+        {progress?.inProgress ? <span className="project-open-count">{progress.inProgress} work packages still underway</span> : null}
         {githubRepositoryUrl(project.repositoryFullName) && <a href={githubRepositoryUrl(project.repositoryFullName)} target="_blank" rel="noopener noreferrer">Open repository ↗</a>}
       </div>
 

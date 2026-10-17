@@ -9,7 +9,7 @@ describe("portfolio progress machine", () => {
     const tube = screen.getByRole("progressbar", { name: "Total portfolio roadmap progress" });
     expect(tube).toHaveAttribute("aria-valuenow", "7");
     expect(tube).toHaveAttribute("aria-valuemax", "20");
-    expect(screen.getByText("35% merged")).toBeInTheDocument();
+    expect(screen.getByText("35% full-scope complete")).toBeInTheDocument();
     expect(screen.getByText("13")).toBeInTheDocument();
   });
   it("shows the unified 60 merged, 10 open, 30 unstarted portfolio summary", () => {
@@ -21,9 +21,9 @@ describe("portfolio progress machine", () => {
     expect(bar).toHaveAttribute("aria-valuenow","60");
     expect(bar).toHaveAttribute("aria-valuemax","100");
     expect(bar).toHaveAttribute("aria-valuetext",
-      "60 accepted and merged, 10 underway or awaiting acceptance, 30 not started; 100 planned units total");
-    expect(screen.getByText("60% merged")).toBeInTheDocument();
-    expect(screen.getByText("60 merged · 10 open / unmerged · 30 not started")).toBeInTheDocument();
+      "60 full-scope packages complete, 10 packages in progress, 30 not started; 100 planned packages total");
+    expect(screen.getByText("60% full-scope complete")).toBeInTheDocument();
+    expect(screen.getByText("60 full packages · 10 underway · 30 not started")).toBeInTheDocument();
   });
 
   it("does not label an empty portfolio complete", () => {
@@ -38,7 +38,7 @@ describe("portfolio progress machine", () => {
     const tube = screen.getByRole("progressbar", { name: "Total portfolio roadmap progress" });
     expect(tube).toHaveAttribute("aria-valuenow", "9");
     expect(tube).toHaveAttribute("aria-valuemax", "100");
-    expect(screen.getByText("9% merged")).toBeInTheDocument();
+    expect(screen.getByText("9% full-scope complete")).toBeInTheDocument();
   });
 
 });

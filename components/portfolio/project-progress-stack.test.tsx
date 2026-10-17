@@ -74,7 +74,7 @@ describe("ProjectProgressStack", () => {
       repositories: [{ ...project.repositories[0], id: "partially-mapped", planned: 10, completed: 9, percent: 90 }]
     };
     render(<ProjectProgressStack project={partial} />);
-    expect(screen.getAllByText("9/100 planned").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("9/100 packages fully complete").length).toBeGreaterThan(0);
     expect(screen.getAllByText("9%").length).toBeGreaterThan(0);
     const tube = screen.getByRole("progressbar", { name: "Hundred Item Plan development plan progress" });
     expect(tube).toHaveAttribute("aria-valuemax", "100");
@@ -97,8 +97,8 @@ describe("ProjectProgressStack", () => {
     expect(bar).toHaveAttribute("aria-valuenow","60");
     expect(bar).toHaveAttribute("aria-valuemax","100");
     expect(bar).toHaveAttribute("aria-valuetext",
-      "60 accepted and merged, 10 underway or awaiting acceptance, 30 not started; 100 planned units total");
-    expect(screen.getAllByText("60/100 planned")).toHaveLength(1);
+      "60 full-scope packages complete, 10 packages in progress, 30 not started; 100 planned packages total");
+    expect(screen.getAllByText("60/100 packages fully complete")).toHaveLength(1);
     expect(screen.getByText("60%")).toBeInTheDocument();
     expect(screen.queryByText(/Original 50\/50/)).not.toBeInTheDocument();
   });
@@ -117,9 +117,9 @@ describe("ProjectProgressStack", () => {
       }
     };
     render(<ProjectProgressStack project={missing} />);
-    expect(screen.getByText(/30 packages await accepted completion evidence/)).toBeInTheDocument();
-    expect(screen.getByText(/0 accepted/)).toBeInTheDocument();
-    expect(screen.getByText(/26 GitHub PRs merged overall/)).toBeInTheDocument();
+    expect(screen.getByText(/30 work packages still require scope completion/)).toBeInTheDocument();
+    expect(screen.getByText(/0 full packages/)).toBeInTheDocument();
+    expect(screen.getByText(/26 GitHub PRs accepted \(merged\)/)).toBeInTheDocument();
     expect(screen.queryByText(/30 not started/)).not.toBeInTheDocument();
   });
 
@@ -133,7 +133,7 @@ describe("ProjectProgressStack", () => {
           title:"Unverified source",importedAt:"2026-10-11T18:03:06.242Z",versions:1}]}
     };
     render(<ProjectProgressStack project={unpublished} />);
-    expect(screen.getByText(/Plan unverified · 11 GitHub PRs merged/)).toBeInTheDocument();
+    expect(screen.getByText(/Plan unverified · 11 GitHub PRs accepted \(merged\)/)).toBeInTheDocument();
     expect(screen.getByText("Plan unavailable")).toBeInTheDocument();
   });
 
@@ -144,7 +144,7 @@ describe("ProjectProgressStack", () => {
       repositories: [{ ...project.repositories[0], planned: 10, completed: 10, percent: 100 }]
     };
     render(<ProjectProgressStack project={mapped} />);
-    expect(screen.getAllByText("10/10 planned").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("10/10 packages fully complete").length).toBeGreaterThan(0);
     expect(screen.queryByText(/1 open GitHub PR/)).not.toBeInTheDocument();
   });
 

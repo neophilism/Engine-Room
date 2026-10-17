@@ -18,17 +18,17 @@ export function PortfolioProgressMachine({ projects }: { projects: readonly Port
   const state = planned===0 ? "neutral" : completed===planned&&!incomplete ? "complete" : "active";
 
   return (
-    <BrassPanel title="Development plan progress" eyebrow="All documented work" className="portfolio-total-machine"
+    <BrassPanel title="Full work-package completion" eyebrow="All documented work" className="portfolio-total-machine"
       status={<IndicatorLamp state={state} label={planned===0?"Awaiting documented plans":
-        incomplete?"Mapping incomplete":completed===planned?"All plan work merged":"Work in progress"} />}>
+        incomplete?"Mapping incomplete":completed===planned?"All scoped package work complete":"Unfinished work-package scope"} />}>
       {planned===0 ? <p>No approved roadmap work is available yet.</p> : (
         <MachineGrid label="Portfolio progress instruments" columns={3}>
-          <Gauge label="Merged planned items" value={completed} max={planned} state={state} unit=" PRs" />
+          <Gauge label="Fully complete work packages" value={completed} max={planned} state={state} unit=" PRs" />
           <div className="portfolio-total-readout">
             <span className="machine-engraved-label">All planned work</span>
             <PlannedProgressTube label="Total portfolio roadmap progress" progress={aggregate} />
-            <strong>{workload.percent}% merged</strong>
-            <span>{completed} merged · {workload.underway} open / unmerged · {workload.notStarted} not started</span>
+            <strong>{workload.percent}% full-scope complete</strong>
+            <span>{completed} full packages · {workload.underway} underway · {workload.notStarted} not started</span>
           </div>
           <dl className="portfolio-workload">
             <div><dt>Planned items remaining</dt><dd>{workload.remaining}</dd></div>
@@ -37,9 +37,7 @@ export function PortfolioProgressMachine({ projects }: { projects: readonly Port
         </MachineGrid>
       )}
       <p className="portfolio-calculation-note">{covered}/{projects.length} projects have complete roadmap mappings.
-        The denominator includes original and newly added plan work equally. Green is merged;
-        yellow is written but unmerged (regardless of CI); empty is unstarted.
-        A merge does not establish production readiness.</p>
+        The denominator includes original and newly added plan work equally. Green is fully completed package scope; yellow is incomplete scope with accepted or open contributing PRs; empty is unstarted. Merged PRs are accepted immediately regardless of package completion. Production readiness is separate.</p>
     </BrassPanel>
   );
 }
