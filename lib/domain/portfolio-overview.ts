@@ -31,6 +31,7 @@ export type PortfolioProjectOverview = {
   repositories: PortfolioRepositoryProgress[];
   features?: ProjectFeature[];
   activity?: ProjectActivitySummary;
+  planReconciliation?:import("../server/plan-reconciliation").PlanReconciliation;
   dependencyReadiness?: import("./dependency-readiness").ProjectDependencies;
   prSummary?: import("./pr-summary").PullRequestSummary;
   pullRequests?: PullRequestReadout[];

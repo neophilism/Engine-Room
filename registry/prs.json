@@ -755,7 +755,9 @@
       "id": "ER-061",
       "title": "Separate local work from upstream and production readiness",
       "origin": "addition",
-      "prs": [],
+      "prs": [
+        119
+      ],
       "contributingPrs": [],
       "dependsOn": [
         "ER-060"
@@ -778,7 +780,21 @@
       "externalDependencies": [],
       "externalPrerequisites": [],
       "source": "docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md",
-      "acceptance": "Complete the scoped changes and evidence requirements under this unit in docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md; passing required tests and verified production status remain distinct."
+      "acceptance": "Complete the scoped changes and evidence requirements under this unit in docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md; passing required tests and verified production status remain distinct.",
+      "sourceRepairPullRequests": [
+        {
+          "repository": "neophilism/Galinsky-2028",
+          "number": 126
+        },
+        {
+          "repository": "neophilism/Secure-Intake-Case-Workflow-Engine",
+          "number": 44
+        },
+        {
+          "repository": "neophilism/National-Secure-Ideas-Submission",
+          "number": 28
+        }
+      ]
     },
     {
       "id": "ER-063",

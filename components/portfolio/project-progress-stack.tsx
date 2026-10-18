@@ -69,6 +69,7 @@ export function ProjectProgressStack({
       <DependencyReadout data={project.dependencyReadiness}/>
       <ProjectLastUpdate update={project.latestUpdate}/>
       <details className="planning-details"><summary>Planning records · {progress ? `${progress.completed}/${progress.planned} packages mapped to merged PRs` : "plan unavailable"}</summary>
+      {project.planReconciliation&&<p>{project.planReconciliation.mergedUnlinked} accepted merged PRs have no current planning link · {project.planReconciliation.mergedContributions} accepted merged PRs contribute to larger packages. Missing links are reconciliation work, not evidence that implementation never began.</p>}
       <p>Planning mappings are not an estimate of how much of the application is finished. Unmapped work requires reconciliation; upstream and deployment readiness are separate.</p>
 
       <div className="project-quick-links">
