@@ -31,6 +31,12 @@ describe("portfolio queries", () => {
     expect(queryPortfolio(mixed, { ...defaultPortfolioQuery, sort: "completion-desc" }).map(p => p.id)).toEqual(["parent", "child", "b"]);
     expect(queryPortfolio(mixed, { ...defaultPortfolioQuery, search: "Surveillance" }).map(p => p.id)).toEqual(["child"]);
   });
+  it("uses the same activity-derived lifecycle as the active-project counter", () => {
+    const started = { ...projects[2], activity: {total:1,merged:1,open:0,drafts:0,failedChecks:0,runningChecks:0,lastObservedAt:null} };
+    expect(queryPortfolio([started], {...defaultPortfolioQuery,status:"active-development"})).toEqual([started]);
+    expect(queryPortfolio([started], {...defaultPortfolioQuery,status:"planned"})).toEqual([]);
+    expect(queryPortfolio([{...started,status:"paused"}], {...defaultPortfolioQuery,status:"active-development"})).toEqual([]);
+  });
   it("only builds GitHub links from valid repository coordinates", () => {
     expect(githubRepositoryUrl("neophilism/Engine-Room")).toBe("https://github.com/neophilism/Engine-Room");
     for (const value of [undefined, "javascript:alert(1)", "https://evil.test/path", "owner/repo?redirect=x", "../x/y"]) expect(githubRepositoryUrl(value)).toBeUndefined();
