@@ -26,12 +26,16 @@ test.beforeAll(async()=>{
 });
 test.afterAll(async()=>{
  if(!db)return;
+ try{
+ await db.query('DELETE FROM project_plan_items WHERE repository_id=$1',[repoId]);
+ await db.query('DELETE FROM project_plan_documents WHERE repository_id=$1',[repoId]);
  await db.query('DELETE FROM engine_room_users WHERE id=$1',[userId]);
  await db.query('DELETE FROM github_pull_requests WHERE repository_id=$1',[repoId]);
  await db.query('DELETE FROM github_repository_sync WHERE repository_id=$1',[repoId]);
  await db.query('DELETE FROM project_repositories WHERE project_id=$1',[projectId]);
  await db.query('DELETE FROM projects WHERE id=$1',[projectId]);
- await db.query('DELETE FROM repositories WHERE id=$1',[repoId]);await db.end();
+ await db.query('DELETE FROM repositories WHERE id=$1',[repoId]);
+ }finally{await db.end();}
 });
 test('renders actual GitHub counters before planning, at desktop and mobile widths',async({page,context})=>{
  await context.addCookies([{name:'engine_room_session',value:token,domain:'127.0.0.1',path:'/',httpOnly:true,sameSite:'Strict',secure:false}]);
