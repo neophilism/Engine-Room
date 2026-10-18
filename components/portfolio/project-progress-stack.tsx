@@ -122,6 +122,7 @@ export function ProjectProgressStack({
         })}
       </div>
 
+      </details>
       <div
         id={drawerId}
         className={`project-expansion-drawer${expanded ? " open" : ""}`}
@@ -132,7 +133,6 @@ export function ProjectProgressStack({
           <ProjectAccordions project={project} />
         </div>
       </div>
-      </details>
     </article>
   );
 }

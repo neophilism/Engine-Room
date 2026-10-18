@@ -17,7 +17,8 @@
     "verify:production": "node scripts/verify-production.mjs",
     "test:roadmap": "node scripts/test-roadmap-import.mjs",
     "sync:roadmap": "node scripts/sync-approved-roadmap.mjs",
-    "test:sync-policy": "node scripts/test-public-sync-policy.mjs"
+    "test:sync-policy": "node scripts/test-public-sync-policy.mjs",
+    "audit:accuracy": "node scripts/audit-accuracy.mjs"
   },
   "dependencies": {
     "next": "^15.5.4",

@@ -53,12 +53,12 @@ export function PortfolioHome({
       <section className="portfolio-stat-grid" aria-label="Live portfolio statistics">
         <article className="portfolio-stat">
           <span>Projects tracked</span>
-          <strong>{statistics.projects}</strong>
+          <strong>{overview.source==="database"?statistics.projects:"N/A"}</strong>
           <small>Registered projects, including separately tracked implementations.</small>
         </article>
         <article className="portfolio-stat">
           <span>Active projects</span>
-          <strong>{statistics.activeProjects}</strong>
+          <strong>{overview.source==="database"?statistics.activeProjects:"N/A"}</strong>
           <small>Development, beta, live, or maintenance. PR activity starts planned projects; paused, archived, and complete projects are excluded.</small>
         </article>
         <article className="portfolio-stat">
@@ -68,21 +68,22 @@ export function PortfolioHome({
         </article>
         <article className="portfolio-stat">
           <span>GitHub PRs open / closed</span>
-          <strong>{projects.every(p=>p.prSummary) ? `${projects.reduce((n,p)=>n+(p.prSummary?.open??0),0)} / ${projects.reduce((n,p)=>n+(p.prSummary?.closed??0),0)}` : "N/A"}</strong>
+          <strong>{overview.prSummary ? `${overview.prSummary.open} / ${overview.prSummary.closed}` : "N/A"}</strong>
         </article>
       </section>
 
       <p className="portfolio-progress-key" aria-label="Development status legend">
         <span className="planned-progress-legend">
-          <span className="merged">Green: merged</span>
+          <span className="merged">Green: mapped merged work</span>
           <span className="underway">Yellow: in progress / awaiting acceptance</span>
-          <span className="unstarted">Empty: not started</span>
+          <span className="unstarted">Empty: not reconciled or unstarted</span>
         </span>
         <span>Original and newly added work share the same total.</span>
       </p>
 
       {overview.observationId&&<p className="metric-freshness">Observation {overview.observationId} · {overview.checkedAt}</p>}
       {overview.reconciliation&&<p className="metric-freshness" role="status">Refresh {overview.reconciliation.id}: {overview.reconciliation.status} · {overview.reconciliation.completed}/{overview.reconciliation.requested} repositories completed · {overview.reconciliation.deferred} deferred. Last complete publication: {overview.reconciliation.publishedAt??"none"}. Counts show persisted observations; each repository retains its own source time.</p>}
+      <p><a href="/api/admin/accuracy" target="_blank" rel="noopener noreferrer">Run read-only GitHub accuracy report</a> · Explicitly compares every tracked repository; no background schedule.</p>
       <InventoryReadout projects={projects}/>
       <GitHubSourceReadout initialStatus={githubStatus}/>
 

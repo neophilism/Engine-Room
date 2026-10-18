@@ -26,7 +26,7 @@ export function ProjectComparison({ overview }: { overview: PortfolioOverviewDat
         <div className="comparison-table-scroll" tabIndex={0} role="region"
           aria-label="Scrollable project comparison">
           <table className="comparison-table">
-            <caption>Project stages and progress against documented development plans</caption>
+            <caption>GitHub PR facts and secondary planning records</caption>
             <thead>
               <tr>
                 <th scope="col">Project</th>
@@ -87,7 +87,7 @@ export function ProjectComparison({ overview }: { overview: PortfolioOverviewDat
         <span className="planned-progress-legend">
           <span className="merged">Green: merged</span>
           <span className="underway">Yellow: open / unmerged</span>
-          <span className="unstarted">Empty: not started</span>
+          <span className="unstarted">Empty: not reconciled or unstarted</span>
         </span>
         All planned work, including additions, shares the same denominator.
         An open PR counts yellow regardless of whether its tests are still running or already passing.

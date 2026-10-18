@@ -18,3 +18,18 @@ export async function loadPrSummaries(db:Pick<PoolClient,'query'>,projectId?:str
   return new Map<string,PullRequestSummary>(result.rows.map(row=>[row.project_id,normalizePrSummary({...row,
     observedAt:row.observed_at?new Date(row.observed_at).toISOString():null})]));
 }
+
+/** Portfolio totals count each repository once even when it supports several projects. */
+export async function loadPortfolioPrSummary(db:Pick<PoolClient,'query'>):Promise<PullRequestSummary>{
+ const row=(await db.query(`SELECT count(g.id)::integer AS total,
+  count(g.id) FILTER(WHERE g.state='open')::integer AS open,
+  count(g.id) FILTER(WHERE g.state='closed')::integer AS closed,
+  count(g.id) FILTER(WHERE g.merged_at IS NOT NULL)::integer AS merged,
+  count(g.id) FILTER(WHERE g.state='closed' AND g.merged_at IS NULL)::integer AS "closedWithoutMerge",
+  count(g.id) FILTER(WHERE g.state='open' AND g.draft)::integer AS drafts,
+  CASE WHEN count(DISTINCT s.repository_id) FILTER(WHERE s.last_success_at IS NOT NULL)=count(DISTINCT r.id) THEN min(s.last_success_at) END AS observed_at
+  FROM repositories r LEFT JOIN github_pull_requests g ON g.repository_id=r.id
+  LEFT JOIN github_repository_sync s ON s.repository_id=r.id
+  WHERE EXISTS(SELECT 1 FROM project_repositories pr WHERE pr.repository_id=r.id)`)).rows[0];
+ return normalizePrSummary({...row,observedAt:row.observed_at?new Date(row.observed_at).toISOString():null});
+}

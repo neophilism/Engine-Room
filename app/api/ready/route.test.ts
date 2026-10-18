@@ -11,13 +11,16 @@ describe("production readiness for live monitoring", () => {
     vi.mocked(getDatabasePool).mockReturnValue({ query } as unknown as ReturnType<typeof getDatabasePool>);
   });
 
-  it("requires migration 0017 and the durable monitoring tables", async () => {
-    query.mockResolvedValue({ rows: [{ ready: true }] });
+  it("requires the current migration inventory and reports actual applied schema", async () => {
+    query.mockResolvedValue({ rows: [{ ready: true,schema_version:"0025" }] });
     const response = await GET();
     expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ status: "ready", schemaVersion: "0017" });
+    expect(await response.json()).toEqual({ status: "ready", schemaVersion: "0025" });
     const sql = String(query.mock.calls[0]?.[0]);
-    expect(sql).toContain("version = '0017'");
+    expect(sql).toContain("version = $1");
+    expect(query.mock.calls[0][1]).toEqual(["0025"]);
+    expect(sql).toContain("external_dependencies");
+    expect(sql).toContain("runtime_evidence");
     for (const table of ["github_repository_sync", "github_check_runs", "engine_room_live_state", "project_plan_documents", "project_plan_items"]) {
       expect(sql).toContain("public." + table);
     }

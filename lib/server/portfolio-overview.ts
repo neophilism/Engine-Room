@@ -14,7 +14,7 @@ export type {
 import { calculatePortfolioStatistics, effectiveProjectStatus } from "../domain/portfolio-statistics";
 import {loadPlanReconciliation} from "./plan-reconciliation";
 import { loadDependencyReadiness } from "./dependency-readiness";
-import { loadPrSummaries } from "./pr-summary";
+import { loadPrSummaries,loadPortfolioPrSummary } from "./pr-summary";
 import aboutSeeds from "../config/repository-about-seed.json";
 export { calculatePortfolioStatistics } from "../domain/portfolio-statistics";
 import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
@@ -256,7 +256,8 @@ export async function loadPortfolioOverview(
     const overview: PortfolioOverviewData = {
       source: "database",
       projects,
-      statistics: calculatePortfolioStatistics(projects)
+      statistics: calculatePortfolioStatistics(projects),
+      prSummary:await loadPortfolioPrSummary(client)
     };
     if(!sharedClient)await client.query("commit");
     return overview;
