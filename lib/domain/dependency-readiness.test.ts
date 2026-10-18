@@ -16,4 +16,30 @@ describe('upstream-first prerequisite evaluation',()=>{
   for(const patch of [{releaseIncluded:false},{sourceCommit:null},{prerequisites:['Live flow evidence']},{merged:false}])
    expect(evaluateDependencies([node('o/a#A-1',patch)],['o/a#A-1'])[0].state).not.toBe('satisfied');
  });
+ it('evaluates shared prerequisite graphs without exponential repeated traversal',()=>{
+  let reads=0;
+  const nodes=Array.from({length:80},(_,i)=>{
+   const value=node('o/dense#U-'+i);
+   Object.defineProperty(value,'dependencies',{get(){
+    if(++reads>1000)throw new Error('Repeated dependency traversal exceeded the workload budget');
+    return Array.from({length:i},(_,j)=>'o/dense#U-'+j);
+   }});
+   return value;
+  });
+  expect(evaluateDependencies(nodes,['o/dense#U-79'])).toMatchObject([{state:'satisfied',reasons:[]}]);
+  expect(reads).toBeLessThan(1000);
+ });
+ it('handles deep source plans without recursive call-stack exhaustion',()=>{
+  const nodes=Array.from({length:6000},(_,i)=>node('o/deep#U-'+i,{dependencies:i?['o/deep#U-'+(i-1)]:[]}));
+  expect(evaluateDependencies(nodes,['o/deep#U-5999'])[0].state).toBe('satisfied');
+ });
+ it('propagates concrete failures throughout cycles and to their dependents',()=>{
+  const nodes=[node('o/cycle#A',{dependencies:['o/cycle#B']}),node('o/cycle#B',{dependencies:['o/cycle#A','o/engine#blocked']}),
+   node('o/engine#blocked',{merged:false}),node('o/app#consumer',{dependencies:['o/cycle#A']})];
+  for(const result of evaluateDependencies(nodes,['o/cycle#A','o/cycle#B','o/app#consumer'])){
+   expect(result.state).toBe('incomplete');
+   expect(result.reasons.join(' ')).toContain('cycle');
+   expect(result.reasons.join(' ')).toContain('unmerged PRs');
+  }
+ });
 });

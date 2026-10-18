@@ -422,4 +422,26 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
       .toMatchObject({source_item_id:'NSI-001',external_dependencies:[dependency]});
   });
 
+  it('loads a large canonical source once while preserving every unit and runtime prerequisite',async()=>{
+    const pool=getDatabasePool(source);
+    const repository=await ensureRepository(pool,{id:888004,owner:{login:'accuracy'},name:'large-plan',full_name:'accuracy/large-plan',html_url:'https://github.com/accuracy/large-plan',default_branch:'main'},{...process.env,ENGINE_ROOM_GITHUB_OWNER:'accuracy'});
+    if(!repository)throw new Error('Isolated large-plan registration failed');
+    const projectId=(await pool.query('SELECT project_id FROM project_repositories WHERE repository_id=$1',[repository])).rows[0].project_id;
+    const items=Array.from({length:210},(_,i)=>({ordinal:i+1,sourceItemId:'MEM-'+(i+1),title:'Large source fixture '+i,scope:'original',numbers:[],reason:null,
+      externalDependencies:[{repository:'accuracy/upstream',unitId:'SI-42'}]}));
+    const body=JSON.stringify({units:items.map(item=>({id:item.sourceItemId,title:item.title})),padding:'x'.repeat(600000),
+      runtimeDependencies:[{repository:'accuracy/upstream',version:'1.0.0-rc.9',requireStableRelease:true}]});
+    await persistPlanDocument(pool,{id:repository,full_name:'accuracy/large-plan'},{path:'registry/prs.json',body,ref:'c'.repeat(40),items});
+    let copies=0,bytes=0;
+    const db={query:async(text:string,values?:unknown[])=>{
+      const result=await pool.query(text,values);
+      for(const row of result.rows)if(row.full_name==='accuracy/large-plan'&&typeof row.body==='string'){copies++;bytes+=Buffer.byteLength(row.body);}
+      return result;
+    }};
+    const readiness=(await loadDependencyReadiness(db as unknown as Pick<import('pg').PoolClient,'query'>)).get(projectId)!;
+    expect(copies).toBe(1);expect(bytes).toBe(Buffer.byteLength(body));
+    expect(readiness.status).toBe('unknown');
+    expect(readiness.requirements).toEqual(expect.arrayContaining([expect.objectContaining({key:'accuracy/upstream#SI-42',state:'satisfied'}),expect.objectContaining({key:'runtime:accuracy/upstream',state:'unknown'})]));
+    expect((await pool.query('SELECT count(*)::integer AS units FROM project_plan_items WHERE repository_id=$1',[repository])).rows[0].units).toBe(210);
+  });
 });
