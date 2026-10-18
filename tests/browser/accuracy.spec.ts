@@ -49,6 +49,15 @@ test('renders actual GitHub counters before planning, at desktop and mobile widt
    await expect(pair.locator('dd')).toHaveText(count);
   }
   await expect(card.locator('details.planning-details')).not.toHaveAttribute('open','');
+  const progress=card.getByRole('progressbar',{name:'GitHub Count Fixture development plan progress'});
+  await expect(progress).toBeVisible();
+  await expect(progress).toHaveAttribute('aria-valuenow','111');
+  await expect(progress).toHaveAttribute('aria-valuemax','210');
+  await expect(card.getByText('Planned PRs', {exact:true}).locator('..').locator('dd')).toHaveText('210');
+  await expect(card.locator('.repository-percent')).toHaveText('52.9%');
+  await expect(card.locator('.repository-pr-count')).toHaveText('111/210 planned');
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1)).toBe(true);
+  await expect(page.locator('.portfolio-stat').filter({hasText:'Planned PRs completed'}).locator('strong')).toContainText('%');
   await expect(card.getByText('120 total PRs',{exact:false})).toBeVisible();
   await card.getByRole('button',{name:'Expand GitHub Count Fixture'}).click();
   await expect(card.locator('.project-expansion-drawer')).toBeVisible();

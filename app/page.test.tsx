@@ -56,7 +56,7 @@ describe("portfolio home", () => {
 
     expect(screen.getByText("Projects tracked").nextSibling).toHaveTextContent("2");
     expect(screen.getByText("21/45")).toBeInTheDocument();
-    expect(screen.queryByText("46.7%")).not.toBeInTheDocument();
+    expect(screen.getByText("Planned PRs completed").nextSibling).toHaveTextContent("46.7%");
     expect(screen.getByText("GitHub PRs open / closed").nextSibling).toHaveTextContent("N/A");
   });
 

@@ -65,28 +65,6 @@ export function ProjectProgressStack({
         </button>
         <strong><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>
       </header>
-      <PrFacts summary={project.prSummary} repository={project.repositoryFullName}/>
-      <DependencyReadout data={project.dependencyReadiness}/>
-      <ProjectLastUpdate update={project.latestUpdate}/>
-      <details className="planning-details"><summary>Planning records · {progress ? `${progress.completed}/${progress.planned} packages mapped to merged PRs` : "plan unavailable"}</summary>
-      {project.planReconciliation&&<p>{project.planReconciliation.mergedUnlinked} accepted merged PRs have no current planning link · {project.planReconciliation.mergedContributions} accepted merged PRs contribute to larger packages. Missing links are reconciliation work, not evidence that implementation never began.</p>}
-      <p>Planning mappings are not an estimate of how much of the application is finished. Unmapped work requires reconciliation; upstream and deployment readiness are separate.</p>
-
-      <div className="project-quick-links">
-        {mergedGitHubPrs > 0 && <strong className="project-merged-count">{mergedGitHubPrs} GitHub PRs accepted (merged)</strong>}
-        <span className="project-activity">{unverifiedEvidence
-          ? `${unmappedUnits} work packages still require scope completion · ${contributingPackages} have accepted or open contributing PR activity · ${progress?.inProgress ?? 0} underway · ${progress?.completed ?? 0} full packages`
-          : progress
-            ? `${progress.notStarted} not reconciled or unstarted · ${progress.inProgress} underway · ${progress.completed} accepted`
-            : missingPlanWithWork
-              ? `Plan unverified · ${mergedGitHubPrs} GitHub PRs accepted (merged) · package progress not measurable`
-              : aggregatorDeferred
-                ? "Development deferred until FOIA Aggregator reaches broad source coverage"
-                : "Source plan not yet verified"}</span>
-        {progress?.inProgress ? <span className="project-open-count">{progress.inProgress} work packages still underway</span> : null}
-        {githubRepositoryUrl(project.repositoryFullName) && <a href={githubRepositoryUrl(project.repositoryFullName)} target="_blank" rel="noopener noreferrer">Open repository ↗</a>}
-      </div>
-
       <div className="repository-progress-list" aria-label={`${project.displayName} repository progress`}>
         {isMultiRepository && progress && <div className="repository-progress-row planned-progress-aggregate-row">
           <span className="repository-progress-name">Full development plan</span>
@@ -112,15 +90,38 @@ export function ProjectProgressStack({
               : <span className="repository-unmeasured-plan" role="status"
                   aria-label={aggregatorDeferred ? "Implementation deferred pending FOIA corpus" : "Plan allocation not measured"}>
                   {aggregatorDeferred ? "Deferred: FOIA corpus" : "Not yet measured"}</span>}
-            {(isMultiRepository || !progress) && <>
+            <>
               <span className="repository-pr-count">{repositoryProgress
                 ? `${repositoryProgress.completed}/${repositoryProgress.planned} planned`
                 : "Plan allocation N/A"}</span>
               <span className="repository-percent">{repositoryProgress ? `${repositoryProgress.percent}%` : "—"}</span>
-            </>}
+            </>
           </div>;
         })}
       </div>
+
+      <PrFacts summary={project.prSummary} repository={project.repositoryFullName} planned={progress?.planned ?? null}/>
+      <DependencyReadout data={project.dependencyReadiness}/>
+      <ProjectLastUpdate update={project.latestUpdate}/>
+      <details className="planning-details"><summary>Planning records · {progress ? `${progress.completed}/${progress.planned} packages mapped to merged PRs` : "plan unavailable"}</summary>
+      {project.planReconciliation&&<p>{project.planReconciliation.mergedUnlinked} accepted merged PRs have no current planning link · {project.planReconciliation.mergedContributions} accepted merged PRs contribute to larger packages. Missing links are reconciliation work, not evidence that implementation never began.</p>}
+      <p>Planning mappings are not an estimate of how much of the application is finished. Unmapped work requires reconciliation; upstream and deployment readiness are separate.</p>
+
+      <div className="project-quick-links">
+        {mergedGitHubPrs > 0 && <strong className="project-merged-count">{mergedGitHubPrs} GitHub PRs accepted (merged)</strong>}
+        <span className="project-activity">{unverifiedEvidence
+          ? `${unmappedUnits} work packages still require scope completion · ${contributingPackages} have accepted or open contributing PR activity · ${progress?.inProgress ?? 0} underway · ${progress?.completed ?? 0} full packages`
+          : progress
+            ? `${progress.notStarted} not reconciled or unstarted · ${progress.inProgress} underway · ${progress.completed} accepted`
+            : missingPlanWithWork
+              ? `Plan unverified · ${mergedGitHubPrs} GitHub PRs accepted (merged) · package progress not measurable`
+              : aggregatorDeferred
+                ? "Development deferred until FOIA Aggregator reaches broad source coverage"
+                : "Source plan not yet verified"}</span>
+        {progress?.inProgress ? <span className="project-open-count">{progress.inProgress} work packages still underway</span> : null}
+        {githubRepositoryUrl(project.repositoryFullName) && <a href={githubRepositoryUrl(project.repositoryFullName)} target="_blank" rel="noopener noreferrer">Open repository ↗</a>}
+      </div>
+
 
       </details>
       <div

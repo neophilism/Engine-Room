@@ -75,10 +75,12 @@ describe("ProjectProgressStack", () => {
     };
     render(<ProjectProgressStack project={partial} />);
     expect(screen.getAllByText(/9\/100 packages mapped to merged PRs/).length).toBeGreaterThan(0);
-    expect(screen.queryByText("9%")).not.toBeInTheDocument();
+    expect(screen.getByText("9%")).toBeInTheDocument();
     const tube = screen.getByRole("progressbar", { name: "Hundred Item Plan development plan progress" });
     expect(tube).toHaveAttribute("aria-valuemax", "100");
     expect(tube).toHaveAttribute("aria-valuenow", "9");
+    expect(tube.closest("details")).toBeNull();
+    expect(screen.getByText("9/100 planned")).toBeInTheDocument();
     expect(screen.queryByText("90%")).not.toBeInTheDocument();
   });
 
@@ -99,7 +101,8 @@ describe("ProjectProgressStack", () => {
     expect(bar).toHaveAttribute("aria-valuetext",
       "60 full-scope packages complete, 10 packages in progress, 30 not started; 100 planned packages total");
     expect(screen.getAllByText(/60\/100 packages mapped to merged PRs/)).toHaveLength(1);
-    expect(screen.queryByText("60%")).not.toBeInTheDocument();
+    expect(screen.getByText("60%")).toBeInTheDocument();
+    expect(bar.closest("details")).toBeNull();
     expect(screen.queryByText(/Original 50\/50/)).not.toBeInTheDocument();
   });
 

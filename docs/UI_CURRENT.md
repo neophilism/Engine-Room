@@ -4,6 +4,7 @@
 
 ## Current production presentation
 
+- Owner direction, October 18: keep the portfolio's planned-PR completion percentage and each project's progress bar, completed/total and percentage visible by default. Planning explanations may be collapsed; measured progress must not be hidden in them. Preserve the complete approved denominator, visible raw GitHub counts, explicit N/A for unavailable plans, and separate upstream/deployment readiness. ER-067 restores these readouts after the accuracy refactor hid them.
 - `app/workspace.css` is intentionally imported **after** the previous tokens, global styles, machine components and progress CSS. It is the current UI skin. Do not remove or reorder it without designing an equivalent replacement.
 - The common application shell uses a compact left navigation, practical route title, working global search, GitHub source-state indicator, Alerts and Account links. Animation pause controls and decorative CONTROL BUS readouts are removed.
 - `/` shows concise real portfolio totals and the searchable, filterable project-progress list immediately. An optional **Activity and connected services** section contains open-PR monitoring, deployment details, GitHub status and individual platform metrics.
