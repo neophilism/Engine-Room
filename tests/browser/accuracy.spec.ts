@@ -15,7 +15,7 @@ test.beforeAll(async()=>{
  await db.query("INSERT INTO project_repositories(project_id,repository_id,relationship) VALUES($1,$2,'primary')",[projectId,repoId]);
  await db.query("INSERT INTO github_repository_sync(repository_id,last_success_at) VALUES($1,now())",[repoId]);
  await db.query(`INSERT INTO github_pull_requests(github_pull_request_id,repository_id,number,title,state,draft,html_url,created_at,updated_at,merged_at,base_ref)
-  SELECT 891000+n,$1,n,'Browser accuracy fixture',CASE WHEN n<=4 THEN 'open' ELSE 'closed' END,n=1,
+  SELECT 891000+n,$1,n,'Browser accuracy fixture',(CASE WHEN n<=4 THEN 'open' ELSE 'closed' END)::github_pull_request_state,n=1,
   'https://github.com/accuracy/browser/pull/'||n,now(),now(),CASE WHEN n>9 THEN now() ELSE NULL END,'main' FROM generate_series(1,120) n`,[repoId]);
 });
 test.afterAll(async()=>{
