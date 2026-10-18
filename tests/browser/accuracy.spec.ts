@@ -2,6 +2,7 @@ import {expect} from '@playwright/test';
 import {test} from './fixtures';
 import {Pool} from 'pg';
 import {createHash,randomBytes,randomUUID} from 'node:crypto';
+import {persistPlanDocument} from '../../lib/sync/plan-import.mjs';
 const repoId=randomUUID(),projectId=randomUUID(),userId=randomUUID(),token=randomBytes(32).toString('base64url');
 let db:Pool;
 test.beforeAll(async()=>{
@@ -17,6 +18,11 @@ test.beforeAll(async()=>{
  await db.query(`INSERT INTO github_pull_requests(github_pull_request_id,repository_id,number,title,state,draft,html_url,created_at,updated_at,merged_at,base_ref)
   SELECT 891000+n,$1,n,'Browser accuracy fixture',(CASE WHEN n<=4 THEN 'open' ELSE 'closed' END)::github_pull_request_state,n=1,
   'https://github.com/accuracy/browser/pull/'||n,now(),now(),CASE WHEN n>9 THEN now() ELSE NULL END,'main' FROM generate_series(1,120) n`,[repoId]);
+ // Production-shaped source payload: the old per-unit document join transferred
+ // this large body 210 times and exceeded the web server's 256 MB heap.
+ const items=Array.from({length:210},(_,i)=>({ordinal:i+1,sourceItemId:'MEM-'+(i+1),title:'Memory fixture '+i,scope:'original',numbers:i<120?[i+1]:[],reason:'Explicit browser fixture mapping'}));
+ await persistPlanDocument(db,{id:repoId,full_name:'accuracy/browser'},{path:'registry/prs.json',ref:'d'.repeat(40),items,
+  body:JSON.stringify({units:items.map(item=>({id:item.sourceItemId,title:item.title,prs:item.numbers})),padding:'x'.repeat(900000)})});
 });
 test.afterAll(async()=>{
  if(!db)return;

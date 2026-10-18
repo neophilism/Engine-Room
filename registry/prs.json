@@ -2,16 +2,16 @@
   "repository": "neophilism/Engine-Room",
   "title": "Engine Room",
   "planVerified": true,
-  "plannedPrCount": 65,
+  "plannedPrCount": 66,
   "sourceFiles": [
     ".exechub/project.yml",
     "docs/development-plan.md",
     ".exechub/approved-pr-mapping.json",
     "docs/portfolio-monitor-additions.json"
   ],
-  "scopeNote": "40 original approved work packages, 3 independently documented portfolio-monitor additions (PRs #56–58), and 2 user-requested universal repository roadmap/synchronization work packages (#81–82). Source roadmap IDs and actual PR numbers remain separate. Additional owner-approved unit ER-053 tracks time-series development velocity and the Boardroom rollout benchmark; PR #109 implements it. User-approved unit ER-054 adds true repository-lifetime merged PR/day throughput rates to the existing velocity display; PR #110 implements it. User-requested correction ER-055 changes PRs/day from November 2025 inherited repository lifetimes to the first new repository of the October 2026 development wave; PR #111 implements it. Owner-requested 18 October 2026 accuracy-recovery work adds ER-056–ER-063; all eight units are proposed and unmapped, not complete.",
+  "scopeNote": "40 original approved work packages, 3 independently documented portfolio-monitor additions (PRs #56–58), and 2 user-requested universal repository roadmap/synchronization work packages (#81–82). Source roadmap IDs and actual PR numbers remain separate. Additional owner-approved unit ER-053 tracks time-series development velocity and the Boardroom rollout benchmark; PR #109 implements it. User-approved unit ER-054 adds true repository-lifetime merged PR/day throughput rates to the existing velocity display; PR #110 implements it. User-requested correction ER-055 changes PRs/day from November 2025 inherited repository lifetimes to the first new repository of the October 2026 development wave; PR #111 implements it. Owner-requested 18 October 2026 accuracy-recovery work adds ER-056–ER-063; observed completion comes from current GitHub PR state. ER-064 retires CircleCI, ER-065 handles idle database disconnects, and ER-066 repairs the runtime memory incident without dropping source units or raising the owner budget.",
   "schemaVersion": 1,
-  "roadmapVersion": 14,
+  "roadmapVersion": 15,
   "observedAt": "2026-10-11T22:57:44.640Z",
   "units": [
     {
@@ -841,6 +841,20 @@
       "externalPrerequisites": [],
       "source": "docs/runtime-database-recovery.md",
       "acceptance": "Handle discarded idle database connection errors without process termination, preserve query failures and credential redaction, and pass real PostgreSQL backend termination and reconnect regression coverage. Do not claim the reported Render crash cause without its runtime logs."
+    },
+    {
+      "id": "ER-066",
+      "title": "Eliminate repeated source documents and dependency traversal causing runtime heap exhaustion",
+      "origin": "addition",
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [
+        "ER-065"
+      ],
+      "externalDependencies": [],
+      "externalPrerequisites": [],
+      "source": "docs/runtime-memory-recovery.md",
+      "acceptance": "Read canonical source bodies once per repository, preserve all work units and prerequisite states, pass a 256 MB authenticated browser workload and actual PostgreSQL transfer budget regression, then verify the exact Render release and runtime health within the owner-controlled $7 build limit."
     }
   ],
   "pullRequests": [

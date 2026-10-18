@@ -2,9 +2,9 @@ import type {PoolClient} from 'pg';
 import {evaluateDependencies,type DependencyNode,type ProjectDependencies,type DependencyResult} from '../domain/dependency-readiness';
 import {IMPLEMENTATION_PARENTS} from '../domain/project-hierarchy';
 export async function loadDependencyReadiness(db:Pick<PoolClient,'query'>){
- const rows=(await db.query(`WITH latest AS (SELECT DISTINCT ON(repository_id) * FROM project_plan_documents
+ const rows=(await db.query(`WITH latest AS (SELECT DISTINCT ON(repository_id) repository_id,path,fingerprint,source_commit FROM project_plan_documents
   WHERE path='registry/prs.json' ORDER BY repository_id,version_id DESC)
-  SELECT pr.project_id,r.full_name,r.name,d.source_commit,d.runtime_evidence,d.body,i.source_item_id,i.github_pr_numbers,
+  SELECT pr.project_id,r.full_name,r.name,d.source_commit,i.source_item_id,i.github_pr_numbers,
    i.depends_on,i.external_dependencies,i.external_prerequisites,
    jsonb_array_length(i.github_pr_numbers)>0 AND NOT EXISTS(SELECT 1 FROM jsonb_array_elements_text(i.github_pr_numbers) n
     LEFT JOIN github_pull_requests g ON g.repository_id=r.id AND g.number=n.value::integer WHERE g.merged_at IS NULL) AS merged,
@@ -16,20 +16,30 @@ export async function loadDependencyReadiness(db:Pick<PoolClient,'query'>){
   FROM project_repositories pr JOIN repositories r ON r.id=pr.repository_id
   LEFT JOIN github_repository_sync s ON s.repository_id=r.id LEFT JOIN latest d ON d.repository_id=r.id
   LEFT JOIN project_plan_items i ON i.repository_id=r.id AND i.path=d.path AND i.fingerprint=d.fingerprint`)).rows;
+ // Large plan bodies must cross the wire once per repository, never once per unit.
+ // Both queries use the caller's repeatable-read transaction when one is supplied.
+ const documentRows=(await db.query(`WITH latest AS (SELECT DISTINCT ON(repository_id) repository_id,body,runtime_evidence FROM project_plan_documents
+  WHERE path='registry/prs.json' ORDER BY repository_id,version_id DESC)
+  SELECT r.full_name,r.name,d.body,d.runtime_evidence
+  FROM repositories r LEFT JOIN latest d ON d.repository_id=r.id
+  WHERE EXISTS(SELECT 1 FROM project_repositories pr WHERE pr.repository_id=r.id)`)).rows;
+ const sourceDocuments=new Map(documentRows.map(row=>[row.full_name,row]));
  const nodes:DependencyNode[]=rows.filter(row=>row.source_item_id).map(row=>({key:row.full_name+'#'+row.source_item_id,
   repository:row.full_name,unitId:row.source_item_id,mapped:row.github_pr_numbers?.length>0,merged:row.merged,
   releaseIncluded:row.release_included,sourceCommit:row.source_commit,
   dependencies:[...(row.depends_on??[]).map((id:string)=>row.full_name+'#'+id),...(row.external_dependencies??[]).map((d:{repository:string;unitId:string})=>d.repository+'#'+d.unitId)],prerequisites:row.external_prerequisites??[]}));
+ const allRequested=rows.flatMap(row=>[...(row.depends_on??[]).map((id:string)=>row.full_name+'#'+id),...(row.external_dependencies??[]).map((d:{repository:string;unitId:string})=>d.repository+'#'+d.unitId)]);
+ const evaluated=new Map(evaluateDependencies(nodes,allRequested).map(value=>[value.key,value]));
  const result=new Map<string,ProjectDependencies>();
  for(const projectId of new Set<string>(rows.map(row=>row.project_id))){
   const own=rows.filter(row=>row.project_id===projectId);
   const requested=own.flatMap(row=>[...(row.depends_on??[]).map((id:string)=>row.full_name+'#'+id),...(row.external_dependencies??[]).map((d:{repository:string;unitId:string})=>d.repository+'#'+d.unitId)]);
-  const requirements:DependencyResult[]=evaluateDependencies(nodes,requested);
+  const requirements:DependencyResult[]=[...new Set<string>(requested)].map(key=>evaluated.get(key)!);
   for(const row of own){
    for(const text of row.external_prerequisites??[])requirements.push({key:row.full_name+'#'+row.source_item_id,state:'incomplete',reasons:['Unresolved prerequisite: '+text]});
   }
   // Runtime lock evidence is imported once per source document, not repeated per unit.
-  const documents=new Map(own.map(row=>[row.full_name,row]));
+  const documents=new Map(own.map(row=>[row.full_name,sourceDocuments.get(row.full_name)!]));
   for(const row of documents.values()){
    let declarations:unknown=[];try{declarations=JSON.parse(row.body??'{}').runtimeDependencies??[];}catch{/* Remains unknown below. */}
    if(Array.isArray(declarations))for(const declared of declarations){
