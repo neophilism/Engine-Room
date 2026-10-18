@@ -22,6 +22,9 @@ import {persistPullRequest,persistChecks,processWebhookInbox} from '../../lib/sy
 import {persistPlanDocument} from '../../lib/sync/plan-import.mjs';
 import {reconcilePortfolio} from '../../lib/sync/reconcile.mjs';
 import {loadProjectMonitorData} from '../../lib/server/live-monitor';
+import {loadPrSummaries} from '../../lib/server/pr-summary';
+import {loadDependencyReadiness} from '../../lib/server/dependency-readiness';
+import {ensureRepository} from '../../lib/sync/github-runtime.mjs';
 import {loadDatabaseReadout} from '../../lib/server/database-readout';
 
 const url = process.env.ENGINE_ROOM_TEST_DATABASE_URL;
@@ -372,4 +375,35 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     expect(result.sizeBytes).toBeGreaterThan(0);
     expect(result.probeMs).toBeGreaterThanOrEqual(0);
   });
+  it('reproduces the 120 total, 4 open, 116 closed incident in real PostgreSQL without cross-repository PR collisions',async()=>{
+    const pool=getDatabasePool(source);
+    const repoId=await ensureRepository(pool,{id:888001,owner:{login:'accuracy'},name:'counts',full_name:'accuracy/counts',html_url:'https://github.com/accuracy/counts',default_branch:'main'},{...process.env,ENGINE_ROOM_GITHUB_OWNER:'accuracy'});
+    const projectId=(await pool.query('SELECT project_id FROM project_repositories WHERE repository_id=$1',[repoId])).rows[0].project_id;
+    await pool.query(`INSERT INTO github_pull_requests(github_pull_request_id,repository_id,number,title,state,draft,html_url,created_at,updated_at,merged_at,base_ref)
+      SELECT 880000+n,$1,n,'Accuracy fixture',(CASE WHEN n<=4 THEN 'open' ELSE 'closed' END)::github_pull_request_state,n=1,
+      'https://github.com/accuracy/counts/pull/'||n,now(),now(),CASE WHEN n>9 THEN now() ELSE NULL END,'main' FROM generate_series(1,120) n`,[repoId]);
+    await pool.query('UPDATE github_repository_sync SET last_success_at=now() WHERE repository_id=$1',[repoId]);
+    expect((await loadPrSummaries(pool,projectId)).get(projectId)).toMatchObject({total:120,open:4,closed:116,merged:111,closedWithoutMerge:5,drafts:1,observedAt:expect.any(String)});
+  });
+  it('round-trips real upstream prerequisite edges and refuses readiness until their mapped release work merges',async()=>{
+    const pool=getDatabasePool(source);
+    const upstreamId=await ensureRepository(pool,{id:888002,owner:{login:'accuracy'},name:'upstream',full_name:'accuracy/upstream',html_url:'https://github.com/accuracy/upstream',default_branch:'main'},{...process.env,ENGINE_ROOM_GITHUB_OWNER:'accuracy'});
+    const consumerId=await ensureRepository(pool,{id:888003,owner:{login:'accuracy'},name:'consumer',full_name:'accuracy/consumer',html_url:'https://github.com/accuracy/consumer',default_branch:'main'},{...process.env,ENGINE_ROOM_GITHUB_OWNER:'accuracy'});
+    if(!upstreamId||!consumerId)throw new Error('Isolated dependency fixture registration failed');
+    const projectId=(await pool.query('SELECT project_id FROM project_repositories WHERE repository_id=$1',[consumerId])).rows[0].project_id;
+    const dependency={repository:'accuracy/upstream',unitId:'SI-42'};
+    const item={ordinal:1,sourceItemId:'NSI-001',title:'Consumer',scope:'original',numbers:[],reason:null,dependsOn:[],externalDependencies:[dependency],externalPrerequisites:[]};
+    await persistPlanDocument(pool,{id:consumerId,full_name:'accuracy/consumer'},{path:'registry/prs.json',body:JSON.stringify({units:[{id:'NSI-001',externalDependencies:[dependency]}]}),ref:'a'.repeat(40),items:[item]});
+    let data=(await loadDependencyReadiness(pool)).get(projectId)!;
+    expect(data.status).toBe('unknown');expect(data.requirements[0].key).toBe('accuracy/upstream#SI-42');
+    const upstream={ordinal:1,sourceItemId:'SI-42',title:'Required engine',scope:'original',numbers:[1],reason:'Source evidence'};
+    await persistPlanDocument(pool,{id:upstreamId,full_name:'accuracy/upstream'},{path:'registry/prs.json',body:JSON.stringify({units:[{id:'SI-42',prs:[1]}]}),ref:'b'.repeat(40),items:[upstream]});
+    expect((await loadDependencyReadiness(pool)).get(projectId)?.status).not.toBe('satisfied');
+    await persistPullRequest(pool,upstreamId,{...prPayload(1),id:888881,state:'closed',merged_at:new Date().toISOString(),html_url:'https://github.com/accuracy/upstream/pull/1'});
+    data=(await loadDependencyReadiness(pool)).get(projectId)!;
+    expect(data.status).toBe('satisfied');
+    expect((await pool.query('SELECT source_item_id,external_dependencies FROM project_plan_items WHERE repository_id=$1',[consumerId])).rows[0])
+      .toMatchObject({source_item_id:'NSI-001',external_dependencies:[dependency]});
+  });
+
 });

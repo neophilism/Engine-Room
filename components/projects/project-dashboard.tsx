@@ -48,7 +48,7 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
             <span className="underway">Yellow: written / unmerged ({planProgress.inProgress})</span>
             <span className="unstarted">Empty: not reconciled or unstarted ({planProgress.notStarted})</span>
           </p>
-          <p>{planProgress.percent}% merged · {planProgress.remaining} unmerged · {planProgress.notStarted} not started</p>
+          <p>{planProgress.percent}% merged · {planProgress.remaining} unmerged · {planProgress.notStarted} not reconciled or unstarted</p>
           <p className="portfolio-calculation-note">{unmapped} items await mapping or release evidence; all remain in the planned denominator.</p>
         </> : <p>No approved development plan has been registered.</p>}
       </BrassPanel>

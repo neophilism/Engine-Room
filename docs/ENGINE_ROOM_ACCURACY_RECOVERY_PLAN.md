@@ -1,6 +1,6 @@
 # Engine Room accuracy recovery: diagnosis and PR delivery plan
 
-Owner request: 18 October 2026. Status: proposed implementation plan; no production fix or deployment claimed.
+Owner request: 18 October 2026. Status: implementation written as the ER-056–ER-063 chain. See `ACCURACY_VERIFICATION.md` and the actual PR/CI observations for validation and rollout status; production acceptance is not inferred from this document.
 
 ## Verified incident and immediate answer
 
@@ -138,3 +138,8 @@ Every implementation PR records its exact tests, remaining evidence and deployme
 ## Validation performed during diagnosis
 
 A local Engine Room checkout passed typecheck, lint, migration-file checks, **335 unit/component tests** and production build with exploratory fixes present. **22 PostgreSQL integration tests were skipped because an isolated test database was not configured.** Those exploratory results neither verify this plan's future implementation nor certify production. Live GitHub and read-only production SQL comparisons above establish the reported incident counts. No database rows were changed during diagnosis.
+
+
+## Implementation PR chain
+
+ER-056 #114 → ER-057 #115 → ER-058 #116 → ER-059 #117 → ER-060 #118 → ER-061 #119 → ER-062 #120 → ER-063 (this final verification/audit PR). The three source repair PRs are Galinsky #126, Secure Intake #44 and National Secure Ideas #28. Chained PRs are retargeted to main after each parent merges.

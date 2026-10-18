@@ -14,7 +14,7 @@ export function PortfolioControls({ query, onChange }: { query: PortfolioQuery; 
     </select></label>
     <label>Sort projects<select value={query.sort} onChange={(event) => onChange({ ...query, sort: event.target.value as PortfolioSort })}>
       <option value="portfolio">Portfolio order</option><option value="name">Name</option>
-      <option value="completion-desc">Most complete</option><option value="completion-asc">Least complete</option>
+      <option value="completion-desc">Most mapped plan work</option><option value="completion-asc">Least mapped plan work</option>
       <option value="underway">Most PRs underway</option>
     </select></label>
     {(query.search.trim() !== "" || query.status !== "all") && <button className="portfolio-control-button" type="button" onClick={() => onChange(defaultPortfolioQuery)}>Clear filters</button>}
