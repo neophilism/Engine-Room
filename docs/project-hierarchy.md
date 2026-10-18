@@ -10,6 +10,7 @@ Mappings are explicit by normalized GitHub repository name, not inferred from
 text similarity, PR counts, or broad keyword matching.
 
 Relationships currently covered:
+- Distributed Governance Engine -> CharterQuill; CivicQuill
 - Civic Registry Transparency Engine -> Smart Cities Surveillance Registry
 - Compliance Authorization Immutable Audit Engine -> Algorithmic Accountability; Federal Encryption Compliance
 - Live Competition Engine -> MMS; Rap Battle Platform
