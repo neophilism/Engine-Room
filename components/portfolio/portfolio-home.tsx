@@ -1,4 +1,5 @@
 import React from "react";
+import {InventoryReadout} from "./inventory-readout";
 import { PodcastProductionAlert } from "../podcast-production-alert";
 import type { PodcastInquiryAlertSummary } from "../../lib/server/podcast-inquiry-alerts";
 import { BrassPanel } from "../machine";
@@ -79,6 +80,7 @@ export function PortfolioHome({
         <span>Original and newly added work share the same total.</span>
       </p>
 
+      <InventoryReadout projects={projects}/>
       <GitHubSourceReadout />
 
       {velocity && <DevelopmentVelocity data={velocity} />}

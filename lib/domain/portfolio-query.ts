@@ -1,3 +1,4 @@
+import { effectiveProjectStatus } from "./portfolio-statistics";
 import { orderProjectsByHierarchy } from "./project-hierarchy";
 import type { PortfolioProjectOverview } from "./portfolio-overview";
 import type { ProjectStatus } from "./portfolio";
@@ -11,7 +12,7 @@ export const defaultPortfolioQuery: PortfolioQuery = { search: "", status: "all"
 export function queryPortfolio(projects: readonly PortfolioProjectOverview[], query: PortfolioQuery) {
   const terms = query.search.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
   const filtered = projects.filter((project) => {
-    if (query.status !== "all" && project.status !== query.status) return false;
+    if (query.status !== "all" && effectiveProjectStatus(project.status, project.activity?.total ?? 0) !== query.status) return false;
     const searchable = [project.displayName, project.summary, project.repositoryFullName,
       ...project.repositories.map((repository) => repository.fullName),
       ...(project.features ?? []).flatMap((feature) => [feature.title, feature.description])].filter(Boolean).join(" ").toLocaleLowerCase();

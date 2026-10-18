@@ -680,7 +680,9 @@
       "id": "ER-056",
       "title": "Make GitHub PR facts the primary project summary",
       "origin": "addition",
-      "prs": [],
+      "prs": [
+        114
+      ],
       "contributingPrs": [],
       "dependsOn": [],
       "externalDependencies": [],

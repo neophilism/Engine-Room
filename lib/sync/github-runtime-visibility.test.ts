@@ -39,3 +39,18 @@ describe("GitHub repository metadata reconciliation",()=>{
   });
 });
 
+
+describe('discovery project identity collision',()=>{
+ it('uses an immutable repository suffix when a normalized slug already owns another repository',async()=>{
+  const candidates:string[]=[];
+  const db={query:vi.fn(async(sql:string,params:unknown[]=[])=>{
+   if(sql.startsWith('INSERT INTO repositories'))return {rows:[{id:'new-repo'}],rowCount:1};
+   if(sql.startsWith('SELECT project_id'))return {rows:[],rowCount:0};
+   if(sql.startsWith('INSERT INTO projects')){candidates.push(String(params[0]));return {rows:[{id:params[0]}],rowCount:1};}
+   if(sql.startsWith('INSERT INTO project_repositories'))return {rows:params[0]==='foo-bar'?[]:[{project_id:params[0]}],rowCount:params[0]==='foo-bar'?0:1};
+   return {rows:[],rowCount:1};
+  })};
+  await ensureRepository(db,{id:987,owner:{login:'neophilism'},name:'foo_bar',full_name:'neophilism/foo_bar',html_url:'https://github.com/neophilism/foo_bar'},{ENGINE_ROOM_GITHUB_OWNER:'neophilism'});
+  expect(candidates).toEqual(['foo-bar','foo-bar-987']);
+ });
+});

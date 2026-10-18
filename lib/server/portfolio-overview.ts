@@ -31,6 +31,7 @@ export type PortfolioOverviewRow = {
   repository_full_name: string | null;
   repository_html_url: string | null;
   github_description?: string | null;
+  repository_archived?: boolean;
   planned_pr_total: number | null;
   completed_count: string | number;
   in_progress_count: string | number;
@@ -65,7 +66,7 @@ export function normalizePortfolioRows(
       displayName: row.display_name,
       slug: row.slug,
       summary: row.github_description?.trim() || row.summary?.trim() || undefined,
-      status: row.status,
+      status: row.repository_archived ? "archived" : row.status,
       repositoryFullName: row.repository_full_name ?? undefined,
       repositoryUrl: row.repository_html_url ?? undefined,
       completed,
@@ -145,6 +146,7 @@ export async function loadPortfolioOverview(
            p.summary,
            p.status,
            r.github_description,
+           r.archived as repository_archived,
            r.full_name as repository_full_name,
            r.html_url as repository_html_url,
            dp.planned_pr_total,
@@ -173,6 +175,7 @@ export async function loadPortfolioOverview(
            r.github_description,
            r.full_name,
            r.default_branch,
+           r.archived,
            r.html_url,
            dp.planned_pr_total
          order by
