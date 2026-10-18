@@ -11,6 +11,7 @@ The owner explicitly directs all projects to continue implementation, testing, m
 
 # Engine Room repository instructions
 
+- CI provider policy (owner direction, 2026-10-18): use GitHub Actions for this public repository. CircleCI and the former private-repository runner/quota workarounds are retired. Do not add CircleCI jobs or wait for obsolete CircleCI statuses. Preserve all substantive CI coverage and require successful current GitHub Actions checks before merging. A later visibility change is not authorization to switch providers or buy runner capacity.
 - Read `docs/STRUCTURED_PR_REGISTRY.md` and `docs/REPOSITORY_ROADMAP_CONTRACT.md` before changing roadmap integration.
 - The source repository owns its approved work units (`registry/prs.json`). GitHub's actual Pull Requests API owns observed PR status. Engine Room only joins them into a database-derived, refreshable progress view.
 - Never open an Engine Room PR merely to recopy another repository's `registry/prs.json` or refresh a bundled `registry/pr-snapshots` file. A progress change must be reflected by a live source fetch and GitHub API reconciliation.
