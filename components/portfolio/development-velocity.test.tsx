@@ -70,6 +70,11 @@ describe("development velocity dashboard",()=>{
     expect(screen.getByText(/2 PRs before/i)).toBeInTheDocument();
     expect(screen.getByText(/5 PRs after/i)).toBeInTheDocument();
   });
+  it("identifies partial recent synchronization without claiming all repositories are current",()=>{
+    render(<DevelopmentVelocity data={{...data,synchronizedRepositories:0}}/>);
+    expect(screen.getByText("0/2 repositories synchronized recently")).toBeInTheDocument();
+    expect(screen.getByText(/observations are stale, missing, or have synchronization errors/)).toBeInTheDocument();
+  });
   it("shows honest unavailable state rather than artificial zero history",()=>{
     render(<DevelopmentVelocity data={{...data,source:"error",projects:[]}}/>);
     expect(screen.getByText(/Merge history unavailable/)).toBeInTheDocument();

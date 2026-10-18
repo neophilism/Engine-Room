@@ -9,6 +9,7 @@ export type RepositoryGitHubStatus = {
   visibility: "private" | "public";
 };
 
+import {pollingMinutes} from "../domain/source-freshness";
 import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
 import { getDatabasePool } from "./database";
 
@@ -22,6 +23,7 @@ export type PublicGitHubStatus = {
   githubCredentialConfigured?: boolean;
   observationId?:string;
   checkedAt?:string;
+  pollingMinutes?:number;
 };
 
 type ObservationRow = {
@@ -63,7 +65,9 @@ export async function loadPublicGitHubStatus(env: EnvironmentSource = process.en
       [owner]
     );
     if (!result.rows[0]) return unavailable("error");
-    const status=normalizePublicGitHubObservation(result.rows[0]);
+    const authenticated=Boolean(env.GITHUB_READ_TOKEN?.trim()||env.GITHUB_APP_ID&&env.GITHUB_APP_PRIVATE_KEY&&env.GITHUB_INSTALLATION_ID);
+    const controls=await (sharedClient??getDatabasePool(env)).query("SELECT github_reconciliation_interval_minutes FROM engine_room_control_settings WHERE singleton=true");
+    const status={...normalizePublicGitHubObservation(result.rows[0]),checkedAt:new Date().toISOString(),pollingMinutes:pollingMinutes(authenticated,Number(controls.rows[0]?.github_reconciliation_interval_minutes??15))};
     // Expose source provenance and actual GitHub refresh time for every repo.
     // This is read-only, and contains no provider tokens or private materials.
     try {

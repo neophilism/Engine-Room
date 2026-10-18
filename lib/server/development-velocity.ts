@@ -88,6 +88,7 @@ export async function loadDevelopmentVelocity(sharedClient?:import("pg").PoolCli
   if (!getRuntimeConfig().databaseUrl) return empty("unconfigured");
   try {
     const pool = sharedClient ?? getDatabasePool();
+    const authenticated=Boolean(process.env.GITHUB_READ_TOKEN?.trim()||process.env.GITHUB_APP_ID&&process.env.GITHUB_APP_PRIVATE_KEY&&process.env.GITHUB_INSTALLATION_ID);
     const [history, checkpoint, marker] = await Promise.all([
       pool.query<VelocityRow>(
         // Anchor the current development wave to its earliest tracked new
@@ -131,12 +132,12 @@ export async function loadDevelopmentVelocity(sharedClient?:import("pg").PoolCli
       ),
       pool.query<SyncRow>(
         'SELECT count(*)::integer AS total, ' +
-        "count(*) FILTER (WHERE s.last_error IS NULL AND s.last_success_at > now() - interval '25 minutes' AND s.last_success_at <= now())::integer AS synchronized, " +
+        "count(*) FILTER (WHERE s.last_error IS NULL AND s.last_success_at > now() - ((greatest($1::integer,c.github_reconciliation_interval_minutes)+5) * interval '1 minute') AND s.last_success_at <= now()+interval '2 minutes')::integer AS synchronized, " +
         'max(s.last_success_at) AS latest, min(s.last_success_at) AS oldest ' +
         'FROM repositories r ' +
         "JOIN project_repositories pr ON pr.repository_id=r.id AND pr.relationship='primary' " +
         'LEFT JOIN github_repository_sync s ON s.repository_id=r.id ' +
-        'WHERE NOT r.archived'
+        'CROSS JOIN engine_room_control_settings c WHERE NOT r.archived AND c.singleton=true', [authenticated?15:120]
       ),
       pool.query<{ effective_date: Date | string }>(
         "SELECT to_char(effective_date,'YYYY-MM-DD') AS effective_date FROM development_velocity_markers WHERE key='boardroom-rollout'"

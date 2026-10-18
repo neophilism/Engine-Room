@@ -1,6 +1,7 @@
 import type { PoolClient } from 'pg';
 import type { LiveSnapshot,ProjectActivitySummary,PullRequestReadout,SourcePlanSummary,PlanItemReadout } from '../domain/live-monitor';
 import { getDatabasePool } from './database';
+import {pollingMinutes as effectivePollingMinutes,sourceFreshness} from '../domain/source-freshness';
 import { STRUCTURED_PR_PATH } from '../sync/structured-pr-registry.mjs';
 
 const iso=(value:Date|string|null)=>value?new Date(value).toISOString():null;
@@ -19,9 +20,9 @@ export async function loadLiveSnapshot():Promise<LiveSnapshot>{
     (SELECT count(*) FROM github_pull_requests WHERE state='open' AND checks_state='failing') AS failed_checks
     FROM engine_room_live_state l CROSS JOIN engine_room_control_settings c WHERE l.singleton=true AND c.singleton=true`)).rows[0];
   const authenticated=!!(process.env.GITHUB_READ_TOKEN?.trim()||process.env.GITHUB_APP_ID&&process.env.GITHUB_APP_PRIVATE_KEY&&process.env.GITHUB_INSTALLATION_ID);
-  const pollingMinutes=Math.max(authenticated?15:120,row.github_reconciliation_interval_minutes);
+  const pollingMinutes=effectivePollingMinutes(authenticated,row.github_reconciliation_interval_minutes);
   const oldest=iso(row.oldest_sync);
-  const fresh=oldest && Date.now()-Date.parse(oldest)<(pollingMinutes+5)*60000;
+  const fresh=sourceFreshness(oldest,row.last_error,Date.now(),pollingMinutes)==='current';
   const workerFresh=row.last_worker_at && Date.now()-new Date(row.last_worker_at).getTime()<90000;
   return {revision:String(row.revision),state:!workerFresh?'disconnected':Number(row.pending)>0?'catching-up':
     !fresh||row.last_error||!row.github_reconciliation_enabled||Number(row.unsynchronized)>0||Number(row.failed_repositories)>0?'stale':'live',checkedAt:new Date().toISOString(),
