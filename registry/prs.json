@@ -694,7 +694,9 @@
       "id": "ER-057",
       "title": "Establish auditable project inventory and lifecycle counts",
       "origin": "addition",
-      "prs": [],
+      "prs": [
+        115
+      ],
       "contributingPrs": [],
       "dependsOn": [],
       "externalDependencies": [],

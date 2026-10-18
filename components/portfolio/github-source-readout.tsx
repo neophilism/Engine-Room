@@ -2,26 +2,37 @@
 import React, { useEffect, useState } from "react";
 import type { PublicGitHubStatus } from "../../lib/server/public-github-status";
 
-export function GitHubSourceReadout() {
-  const [status, setStatus] = useState<PublicGitHubStatus | null>(null);
+export function GitHubSourceReadout({initialStatus}:{initialStatus?:PublicGitHubStatus}={}) {
+  const [status, setStatus] = useState<PublicGitHubStatus | null>(initialStatus??null);
+  useEffect(()=>{if(initialStatus)setStatus(initialStatus);},[initialStatus]);
   useEffect(() => {
+    if(initialStatus)return; // Parent refresh supplies one transaction-bound observation.
     let mounted = true;
+    let inFlight = false;
     const refresh = async () => {
+      if (inFlight) return;
+      inFlight = true;
       try {
         const response = await fetch("/api/public-github-status", { cache: "no-store" });
-        if (!response.ok) return;
+        if (!response.ok) throw new Error("GitHub status unavailable");
         const data: PublicGitHubStatus = await response.json();
         if (mounted) setStatus(data);
       } catch { if (mounted) setStatus(null); }
+      finally { inFlight = false; }
     };
+    const onVisible = () => { if (document.visibilityState === "visible") void refresh(); };
     void refresh();
     const interval = setInterval(() => { void refresh(); }, 5 * 60 * 1000);
     window.addEventListener("engine-room-github-sync-complete", refresh);
+    window.addEventListener("engine-room-data-changed", refresh);
+    document.addEventListener("visibilitychange", onVisible);
     return () => {
       mounted = false; clearInterval(interval);
       window.removeEventListener("engine-room-github-sync-complete", refresh);
+      window.removeEventListener("engine-room-data-changed", refresh);
+      document.removeEventListener("visibilitychange", onVisible);
     };
-  }, []);
+  }, [initialStatus]);
   const observed = status?.source === "database" && status.mostRecentObservation;
   const repositories = status?.repositories ?? [];
   const failures = repositories.filter(repo => Boolean(repo.error));

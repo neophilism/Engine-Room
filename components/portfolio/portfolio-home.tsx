@@ -24,12 +24,13 @@ export function PortfolioHome({
   overview,
   renderServices = [],
   inquiryAlerts = null,
-  velocity
+  velocity, githubStatus
 }: {
   overview: PortfolioOverviewData;
   renderServices?: readonly RenderReadout[];
   inquiryAlerts?: PodcastInquiryAlertSummary | null;
   velocity?: DevelopmentVelocityData;
+  githubStatus?: import("../../lib/server/public-github-status").PublicGitHubStatus;
 }) {
   const { projects, statistics } = overview;
   const sourced = projects.filter(p => p.planned > 0 || p.sourcePlan?.documents.length).length;
@@ -80,8 +81,10 @@ export function PortfolioHome({
         <span>Original and newly added work share the same total.</span>
       </p>
 
+      {overview.observationId&&<p className="metric-freshness">Observation {overview.observationId} · {overview.checkedAt}</p>}
+      {overview.reconciliation&&<p className="metric-freshness" role="status">Refresh {overview.reconciliation.id}: {overview.reconciliation.status} · {overview.reconciliation.completed}/{overview.reconciliation.requested} repositories completed · {overview.reconciliation.deferred} deferred. Last complete publication: {overview.reconciliation.publishedAt??"none"}. Counts show persisted observations; each repository retains its own source time.</p>}
       <InventoryReadout projects={projects}/>
-      <GitHubSourceReadout />
+      <GitHubSourceReadout initialStatus={githubStatus}/>
 
       {velocity && <DevelopmentVelocity data={velocity} />}
 

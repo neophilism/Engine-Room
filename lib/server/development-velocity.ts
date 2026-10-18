@@ -84,10 +84,10 @@ export function normalizeVelocityRows(rows: readonly VelocityRow[]): VelocityPro
  * the explicit Refresh operation (or automatic sync, if the owner enables it).
  * Grouping in PostgreSQL avoids reading every historical PR row into Next.js.
  */
-export async function loadDevelopmentVelocity(): Promise<DevelopmentVelocityData> {
+export async function loadDevelopmentVelocity(sharedClient?:import("pg").PoolClient): Promise<DevelopmentVelocityData> {
   if (!getRuntimeConfig().databaseUrl) return empty("unconfigured");
   try {
-    const pool = getDatabasePool();
+    const pool = sharedClient ?? getDatabasePool();
     const [history, checkpoint, marker] = await Promise.all([
       pool.query<VelocityRow>(
         // Anchor the current development wave to its earliest tracked new
@@ -131,7 +131,7 @@ export async function loadDevelopmentVelocity(): Promise<DevelopmentVelocityData
       ),
       pool.query<SyncRow>(
         'SELECT count(*)::integer AS total, ' +
-        'count(s.last_success_at)::integer AS synchronized, ' +
+        "count(*) FILTER (WHERE s.last_error IS NULL AND s.last_success_at > now() - interval '25 minutes' AND s.last_success_at <= now())::integer AS synchronized, " +
         'max(s.last_success_at) AS latest, min(s.last_success_at) AS oldest ' +
         'FROM repositories r ' +
         "JOIN project_repositories pr ON pr.repository_id=r.id AND pr.relationship='primary' " +

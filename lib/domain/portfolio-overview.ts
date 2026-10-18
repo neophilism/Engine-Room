@@ -49,5 +49,7 @@ export type PortfolioOverviewData = {
   source: "database" | "unconfigured" | "error";
   projects: PortfolioProjectOverview[];
   statistics: PortfolioStatistics;
+  observationId?: string; checkedAt?:string;
+  reconciliation?:{id:string;status:string;requested:number;completed:number;deferred:number;publishedAt:string|null};
 };
 
