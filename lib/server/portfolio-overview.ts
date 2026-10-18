@@ -12,6 +12,7 @@ export type {
   PortfolioStatistics
 } from "../domain/portfolio-overview";
 import { calculatePortfolioStatistics, effectiveProjectStatus } from "../domain/portfolio-statistics";
+import { loadDependencyReadiness } from "./dependency-readiness";
 import { loadPrSummaries } from "./pr-summary";
 import aboutSeeds from "../config/repository-about-seed.json";
 export { calculatePortfolioStatistics } from "../domain/portfolio-statistics";
@@ -220,6 +221,7 @@ export async function loadPortfolioOverview(
     projects = projects.map((project) => ({ ...project, features: features.filter((feature) => feature.projectId === project.id) }));
     const monitor=await loadProjectMonitorData(client);
     const prSummaries=await loadPrSummaries(client);
+    const dependencies=await loadDependencyReadiness(client);
     const latestUpdates=await loadProjectUpdates(client);
     const securityStatuses=await loadProjectSecurityStatuses(client);
     const seededDescriptions=new Map(aboutSeeds.entries.map(entry=>[entry.repository,entry.description]));
@@ -228,6 +230,7 @@ export async function loadPortfolioOverview(
       summary:project.summary?.trim() || (project.repositoryFullName ? seededDescriptions.get(project.repositoryFullName) : undefined),
       latestUpdate:latestUpdates.get(project.id),
       prSummary:prSummaries.get(project.id),
+      dependencyReadiness:dependencies.get(project.id),
       securityStatuses:securityStatuses.get(project.id)||[]
     }));
     projects=projects.map(project=>{

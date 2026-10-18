@@ -8,6 +8,7 @@ import { PlannedProgressTube } from "./planned-progress-tube";
 import { summarizePlannedProgress } from "../../lib/domain/planned-progress";
 import { ProjectAccordions } from "./project-accordions";
 import { githubRepositoryUrl } from "../../lib/domain/portfolio-query";
+import {DependencyReadout} from "../projects/dependency-readiness";
 import {PrFacts} from "../projects/pr-facts";
 import {ProjectLastUpdate} from '../projects/project-last-update';
 
@@ -65,6 +66,7 @@ export function ProjectProgressStack({
         <strong><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>
       </header>
       <PrFacts summary={project.prSummary} repository={project.repositoryFullName}/>
+      <DependencyReadout data={project.dependencyReadiness}/>
       <ProjectLastUpdate update={project.latestUpdate}/>
       <details className="planning-details"><summary>Planning records · {progress ? `${progress.completed}/${progress.planned} packages mapped to merged PRs` : "plan unavailable"}</summary>
       <p>Planning mappings are not an estimate of how much of the application is finished. Unmapped work requires reconciliation; upstream and deployment readiness are separate.</p>
