@@ -1,16 +1,17 @@
 import { Pool } from "pg";
 import { requireDatabaseUrl, type EnvironmentSource } from "../config/env";
+import { handleIdlePoolErrors } from "./database-pool-errors.mjs";
 
 let sharedPool: Pool | undefined;
 
 export function getDatabasePool(source: EnvironmentSource = process.env) {
   if (!sharedPool) {
-    sharedPool = new Pool({
+    sharedPool = handleIdlePoolErrors(new Pool({
       connectionString: requireDatabaseUrl(source),
       max: 10,
       idleTimeoutMillis: 30_000,
       connectionTimeoutMillis: 5_000
-    });
+    }));
   }
   return sharedPool;
 }

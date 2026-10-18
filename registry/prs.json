@@ -2,7 +2,7 @@
   "repository": "neophilism/Engine-Room",
   "title": "Engine Room",
   "planVerified": true,
-  "plannedPrCount": 64,
+  "plannedPrCount": 65,
   "sourceFiles": [
     ".exechub/project.yml",
     "docs/development-plan.md",
@@ -11,7 +11,7 @@
   ],
   "scopeNote": "40 original approved work packages, 3 independently documented portfolio-monitor additions (PRs #56–58), and 2 user-requested universal repository roadmap/synchronization work packages (#81–82). Source roadmap IDs and actual PR numbers remain separate. Additional owner-approved unit ER-053 tracks time-series development velocity and the Boardroom rollout benchmark; PR #109 implements it. User-approved unit ER-054 adds true repository-lifetime merged PR/day throughput rates to the existing velocity display; PR #110 implements it. User-requested correction ER-055 changes PRs/day from November 2025 inherited repository lifetimes to the first new repository of the October 2026 development wave; PR #111 implements it. Owner-requested 18 October 2026 accuracy-recovery work adds ER-056–ER-063; all eight units are proposed and unmapped, not complete.",
   "schemaVersion": 1,
-  "roadmapVersion": 13,
+  "roadmapVersion": 14,
   "observedAt": "2026-10-11T22:57:44.640Z",
   "units": [
     {
@@ -829,6 +829,18 @@
       "externalPrerequisites": [],
       "source": "docs/ci-provider.md",
       "acceptance": "Remove the duplicate CircleCI configuration, preserve all full-suite and security-integrity checks in GitHub Actions, retire the obsolete migration PR, and verify the replacement PR with current GitHub Actions CI. Provider settings and runtime outage evidence remain explicit."
+    },
+    {
+      "id": "ER-065",
+      "title": "Keep web and worker processes alive after idle database disconnects",
+      "origin": "addition",
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": [],
+      "source": "docs/runtime-database-recovery.md",
+      "acceptance": "Handle discarded idle database connection errors without process termination, preserve query failures and credential redaction, and pass real PostgreSQL backend termination and reconnect regression coverage. Do not claim the reported Render crash cause without its runtime logs."
     }
   ],
   "pullRequests": [
