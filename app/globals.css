@@ -1086,3 +1086,10 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 @media (max-width: 700px) { .podcast-production-alert-header { gap: 12px; }
   .podcast-production-alarm { width: 47px; height: 47px; font-size: 2rem; }
 }
+
+.pr-fact-counts { display:flex; flex-wrap:wrap; gap:1rem 2rem; margin:.5rem 0; }
+.pr-fact-counts > div { min-width:4rem; }
+.pr-fact-counts dt { font-size:.85rem; color:var(--text-muted,#a9bbc9); }
+.pr-fact-counts dd { margin:0; font-size:1.35rem; font-weight:700; }
+.planning-details { margin-top:.75rem; }
+.planning-details > summary { cursor:pointer; }

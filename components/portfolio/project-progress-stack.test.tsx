@@ -74,8 +74,8 @@ describe("ProjectProgressStack", () => {
       repositories: [{ ...project.repositories[0], id: "partially-mapped", planned: 10, completed: 9, percent: 90 }]
     };
     render(<ProjectProgressStack project={partial} />);
-    expect(screen.getAllByText("9/100 packages fully complete").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("9%").length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/9\/100 packages mapped to merged PRs/).length).toBeGreaterThan(0);
+    expect(screen.queryByText("9%")).not.toBeInTheDocument();
     const tube = screen.getByRole("progressbar", { name: "Hundred Item Plan development plan progress" });
     expect(tube).toHaveAttribute("aria-valuemax", "100");
     expect(tube).toHaveAttribute("aria-valuenow", "9");
@@ -98,8 +98,8 @@ describe("ProjectProgressStack", () => {
     expect(bar).toHaveAttribute("aria-valuemax","100");
     expect(bar).toHaveAttribute("aria-valuetext",
       "60 full-scope packages complete, 10 packages in progress, 30 not started; 100 planned packages total");
-    expect(screen.getAllByText("60/100 packages fully complete")).toHaveLength(1);
-    expect(screen.getByText("60%")).toBeInTheDocument();
+    expect(screen.getAllByText(/60\/100 packages mapped to merged PRs/)).toHaveLength(1);
+    expect(screen.queryByText("60%")).not.toBeInTheDocument();
     expect(screen.queryByText(/Original 50\/50/)).not.toBeInTheDocument();
   });
 
@@ -134,7 +134,7 @@ describe("ProjectProgressStack", () => {
     };
     render(<ProjectProgressStack project={unpublished} />);
     expect(screen.getByText(/Plan unverified · 11 GitHub PRs accepted \(merged\)/)).toBeInTheDocument();
-    expect(screen.getByText("Plan unavailable")).toBeInTheDocument();
+    expect(screen.getByText(/Planning records · plan unavailable/)).toBeInTheDocument();
   });
 
   it("does not infer added planned work from an unrelated open GitHub PR", () => {
@@ -144,7 +144,7 @@ describe("ProjectProgressStack", () => {
       repositories: [{ ...project.repositories[0], planned: 10, completed: 10, percent: 100 }]
     };
     render(<ProjectProgressStack project={mapped} />);
-    expect(screen.getAllByText("10/10 packages fully complete").length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/10\/10 packages mapped to merged PRs/).length).toBeGreaterThan(0);
     expect(screen.queryByText(/1 open GitHub PR/)).not.toBeInTheDocument();
   });
 

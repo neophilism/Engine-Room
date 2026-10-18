@@ -9,6 +9,7 @@ import { defaultPortfolioQuery, githubRepositoryUrl, queryPortfolio } from "../.
 import { BrassPanel } from "../machine";
 import { PlannedProgressTube } from "../portfolio/planned-progress-tube";
 import { summarizePlannedProgress } from "../../lib/domain/planned-progress";
+import {PrFacts} from "./pr-facts";
 import { PortfolioControls } from "../portfolio/portfolio-controls";
 
 export function ProjectComparison({ overview }: { overview: PortfolioOverviewData }) {
@@ -30,8 +31,8 @@ export function ProjectComparison({ overview }: { overview: PortfolioOverviewDat
               <tr>
                 <th scope="col">Project</th>
                 <th scope="col">Stage</th>
-                <th scope="col">Plan work</th>
-                <th scope="col">Progress</th>
+                <th scope="col">GitHub PRs</th>
+                <th scope="col">Planning mappings</th>
               </tr>
             </thead>
             <tbody>
@@ -56,18 +57,14 @@ export function ProjectComparison({ overview }: { overview: PortfolioOverviewDat
                     </th>
                     <td><span className="comparison-stage">{project.status.replaceAll("-", " ")}</span></td>
                     <td className="comparison-work-count">
-                      {progress ?
-                        <><strong>{progress.completed}/{progress.planned}</strong>
-                          <small>{progress.remaining} remaining</small>
-                          {progress.inProgress>0 && <small className="project-open-count">{progress.inProgress} open / unmerged</small>}</>
-                        : <span className="comparison-not-measured">N/A</span>}
+                      <PrFacts summary={project.prSummary} repository={project.repositoryFullName}/>
                     </td>
                     <td className="comparison-progress-cell">
                       {progress ?
                         <div className="comparison-progress">
                           <PlannedProgressTube compact label={`${project.displayName} comparison progress`}
                             progress={progress} />
-                          <strong>{progress.percent}%</strong>
+                          <small>{progress.completed}/{progress.planned} mapped to merged PRs · {progress.remaining} remaining</small>
                         </div>
                         : <span className="comparison-not-measured">N/A</span>}
                     </td>

@@ -77,3 +77,8 @@ Engine Room is tracked against a 40-PR approved development plan. Roadmap comple
 
 39. Responsive/accessibility/performance/security acceptance suite.
 40. Production deployment, observability, backup/restore, release documentation and Engine Room 1.0.
+
+
+## Owner-requested accuracy recovery — 18 October 2026
+
+See [the diagnosed accuracy recovery plan](ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md) for ER-056–ER-063: factual GitHub counters, inventory reconciliation, coherent refresh observations, freshness, plan/dependency preservation, source repair and production acceptance. This is proposed work, not completed functionality.
