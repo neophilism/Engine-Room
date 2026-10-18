@@ -12,6 +12,7 @@ export type {
   PortfolioStatistics
 } from "../domain/portfolio-overview";
 import { calculatePortfolioStatistics, effectiveProjectStatus } from "../domain/portfolio-statistics";
+import {loadPlanReconciliation} from "./plan-reconciliation";
 import { loadDependencyReadiness } from "./dependency-readiness";
 import { loadPrSummaries } from "./pr-summary";
 import aboutSeeds from "../config/repository-about-seed.json";
@@ -222,6 +223,7 @@ export async function loadPortfolioOverview(
     const monitor=await loadProjectMonitorData(client);
     const prSummaries=await loadPrSummaries(client);
     const dependencies=await loadDependencyReadiness(client);
+    const planReconciliation=await loadPlanReconciliation(client);
     const latestUpdates=await loadProjectUpdates(client);
     const securityStatuses=await loadProjectSecurityStatuses(client);
     const seededDescriptions=new Map(aboutSeeds.entries.map(entry=>[entry.repository,entry.description]));
@@ -231,6 +233,7 @@ export async function loadPortfolioOverview(
       latestUpdate:latestUpdates.get(project.id),
       prSummary:prSummaries.get(project.id),
       dependencyReadiness:dependencies.get(project.id),
+      planReconciliation:planReconciliation.get(project.id),
       securityStatuses:securityStatuses.get(project.id)||[]
     }));
     projects=projects.map(project=>{
