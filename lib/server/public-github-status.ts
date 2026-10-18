@@ -20,6 +20,8 @@ export type PublicGitHubStatus = {
   mostRecentObservation: string | null;
   repositories?: RepositoryGitHubStatus[];
   githubCredentialConfigured?: boolean;
+  observationId?:string;
+  checkedAt?:string;
 };
 
 type ObservationRow = {
@@ -45,11 +47,11 @@ export function normalizePublicGitHubObservation(row: ObservationRow): PublicGit
 const unavailable = (source: "unconfigured" | "error"): PublicGitHubStatus =>
   ({ source, repositoryCount: null, pullRequestCount: null, mergedPullRequestCount: null, mostRecentObservation: null });
 
-export async function loadPublicGitHubStatus(env: EnvironmentSource = process.env): Promise<PublicGitHubStatus> {
+export async function loadPublicGitHubStatus(env: EnvironmentSource = process.env, sharedClient?:import("pg").PoolClient): Promise<PublicGitHubStatus> {
   if (!getRuntimeConfig(env).databaseUrl) return unavailable("unconfigured");
   try {
     const owner = env.ENGINE_ROOM_GITHUB_OWNER?.trim() || "neophilism";
-    const result = await getDatabasePool(env).query<ObservationRow>(
+    const result = await (sharedClient??getDatabasePool(env)).query<ObservationRow>(
       `select
         count(distinct r.id)::integer as repo_count,
         count(gpr.id)::integer as pr_count,
@@ -65,10 +67,10 @@ export async function loadPublicGitHubStatus(env: EnvironmentSource = process.en
     // Expose source provenance and actual GitHub refresh time for every repo.
     // This is read-only, and contains no provider tokens or private materials.
     try {
-      const rows=await getDatabasePool(env).query<{
+      const rows=await (sharedClient??getDatabasePool(env)).query<{
         name:string; visibility:"public"|"private"; merged:string|number; total:string|number;
         last_success_at:Date|null;last_attempt_at:Date|null;last_error:string|null;source_ref:string|null
-      }>(`select r.name,
+      }>(`select r.name,r.visibility,
         count(g.id)::integer as total,
         count(g.id) filter(where g.merged_at is not null)::integer as merged,
         s.last_success_at,s.last_attempt_at,s.last_error,

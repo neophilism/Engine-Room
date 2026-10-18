@@ -128,16 +128,16 @@ function emptyOverview(
 }
 
 export async function loadPortfolioOverview(
-  source: EnvironmentSource = process.env
+  source: EnvironmentSource = process.env, sharedClient?: import("pg").PoolClient
 ): Promise<PortfolioOverviewData> {
   if (!getRuntimeConfig(source).databaseUrl) {
     return emptyOverview("unconfigured");
   }
 
   try {
-    const client = await getDatabasePool(source).connect();
+    const client = sharedClient ?? await getDatabasePool(source).connect();
     try {
-      await client.query("begin isolation level repeatable read read only");
+      if(!sharedClient)await client.query("begin isolation level repeatable read read only");
       const projectResult = await client.query<PortfolioOverviewRow>(
         `select
            p.id,
@@ -252,10 +252,10 @@ export async function loadPortfolioOverview(
       projects,
       statistics: calculatePortfolioStatistics(projects)
     };
-    await client.query("commit");
+    if(!sharedClient)await client.query("commit");
     return overview;
-    } catch (error) { await client.query("rollback"); throw error; }
-    finally { client.release(); }
+    } catch (error) { if(!sharedClient)await client.query("rollback"); throw error; }
+    finally { if(!sharedClient)client.release(); }
   } catch {
     return emptyOverview("error");
   }
