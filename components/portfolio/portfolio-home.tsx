@@ -62,9 +62,11 @@ export function PortfolioHome({
           <small>Development, beta, live, or maintenance. PR activity starts planned projects; paused, archived, and complete projects are excluded.</small>
         </article>
         <article className="portfolio-stat">
-          <span>Planning mappings to merged PRs</span>
-          <strong>{statistics.plannedRoadmapPrs > 0 ?
-            `${statistics.completedRoadmapPrs}/${statistics.plannedRoadmapPrs}` : "N/A"}</strong>
+          <span>Planned PRs completed</span>
+          <strong>{overview.source==="database"&&statistics.plannedRoadmapPrs > 0 ? `${statistics.percent}%` : "N/A"}</strong>
+          {overview.source==="database"&&statistics.plannedRoadmapPrs > 0 && <small>
+            <span>{statistics.completedRoadmapPrs}/{statistics.plannedRoadmapPrs}</span> planned work units mapped to merged PRs.
+          </small>}
         </article>
         <article className="portfolio-stat">
           <span>GitHub PRs open / closed</span>
