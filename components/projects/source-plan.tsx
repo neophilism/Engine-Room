@@ -17,6 +17,7 @@ export function SourcePlan({ plan, historyHref }: { plan: SourcePlanSummary | un
     <ul>{plan.documents.map(doc=><li key={doc.path}>
       {/^https:\/\//.test(doc.url)?
         <a href={doc.url} target="_blank" rel="noopener noreferrer">{doc.title}</a>:doc.title}
+      {doc.sourceCommit?` · Source commit ${doc.sourceCommit}`:" · Immutable source commit not observed"}{` · Imported ${doc.importedAt}`}
       {" · "}{doc.versions} stored version{doc.versions===1?"":"s"}
     </li>)}</ul>
     {historyHref&&<p><Link href={historyHref}>View stored plan history</Link></p>}
@@ -24,9 +25,12 @@ export function SourcePlan({ plan, historyHref }: { plan: SourcePlanSummary | un
       <ol className="source-plan-items">
         {plan.items.map((item,index)=><li className={item.state==="merged"?"source-work-merged":
           item.state==="in-progress"?"source-work-open":"source-work-remaining"} key={index}>
-          <strong>{item.ordinal}. {item.title}</strong>
-          <span>{item.state==="unmapped"?"Completion evidence not mapped":
-            item.state==="in-progress"?"Open / awaiting merge":
+          <strong>{item.sourceItemId??item.ordinal}. {item.title}</strong>
+          {!!item.dependsOn?.length&&<span>Local prerequisites: {item.dependsOn.join(", ")}</span>}
+          {!!item.externalDependencies?.length&&<span>Upstream prerequisites: {item.externalDependencies.map(d=>d.repository+"#"+d.unitId).join(", ")}</span>}
+          {!!item.externalPrerequisites?.length&&<span>External prerequisites: {item.externalPrerequisites.join("; ")}</span>}
+          <span>{item.state==="unmapped"?"Not reconciled: completion evidence not mapped":
+            item.state==="in-progress"?"Contributing or open PR activity; package scope unresolved":
             item.state==="merged"?"Merged":item.state}</span>
           {item.numbers.map(number=><a key={number}
             href={(item.repositoryUrl||item.sourceUrl.split("/blob/")[0])+"/pull/"+number}
