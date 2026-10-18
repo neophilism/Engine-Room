@@ -4,8 +4,9 @@ import { probeGitHubAccess } from '../lib/sync/github-access-probe.mjs';
 import { reconcilePortfolio } from '../lib/sync/reconcile.mjs';
 import { reconcilePlanSources } from '../lib/sync/plan-source-sync.mjs';
 import {seedRepositoryAbout} from '../lib/sync/repository-about.mjs';
+import {handleIdlePoolErrors} from '../lib/server/database-pool-errors.mjs';
 
-const pool=new Pool({connectionString:process.env.DATABASE_URL||process.env.DATABASE_URL_UNPOOLED,max:3,connectionTimeoutMillis:10000});
+const pool=handleIdlePoolErrors(new Pool({connectionString:process.env.DATABASE_URL||process.env.DATABASE_URL_UNPOOLED,max:3,connectionTimeoutMillis:10000}));
 let stopping=false,inboxBusy=false,syncBusy=false,plansBusy=false;
 async function isAutomatic(){try{const result=await pool.query('select github_reconciliation_enabled from engine_room_control_settings where singleton=true');return result.rows[0]?.github_reconciliation_enabled===true;}catch{return false;}}
 async function inbox(){

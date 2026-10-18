@@ -1,7 +1,9 @@
 // @vitest-environment node
 import { readFile, readdir } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { Pool } from "pg";
+import { handleIdlePoolErrors } from "../../lib/server/database-pool-errors.mjs";
 import { getDatabasePool, closeDatabasePool } from "../../lib/server/database";
 import { registerApprovedProject } from "../../lib/server/project-registration";
 import { loadPortfolioOverview } from "../../lib/server/portfolio-overview";
@@ -374,6 +376,20 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     expect(result.state).toBe('observed');
     expect(result.sizeBytes).toBeGreaterThan(0);
     expect(result.probeMs).toBeGreaterThanOrEqual(0);
+  });
+  it('reconnects after PostgreSQL terminates an idle pooled backend without an unhandled pool error',async()=>{
+    const failures:string[]=[];
+    const pool=handleIdlePoolErrors(new Pool({connectionString:url,max:1}),(_message,details)=>{failures.push(details.code);});
+    try{
+      const client=await pool.connect();
+      const backend=(await client.query('SELECT pg_backend_pid() AS pid')).rows[0].pid;
+      client.release();
+      expect((await getDatabasePool(source).query('SELECT pg_terminate_backend($1) AS terminated',[backend])).rows[0].terminated).toBe(true);
+      await vi.waitFor(()=>expect(failures).toContain('57P01'),{timeout:3000});
+      const recovered=(await pool.query('SELECT pg_backend_pid() AS pid,1 AS ok')).rows[0];
+      expect(recovered.ok).toBe(1);
+      expect(recovered.pid).not.toBe(backend);
+    }finally{await pool.end();}
   });
   it('reproduces the 120 total, 4 open, 116 closed incident in real PostgreSQL without cross-repository PR collisions',async()=>{
     const pool=getDatabasePool(source);
