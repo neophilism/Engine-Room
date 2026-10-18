@@ -41,7 +41,7 @@ test('push updates refresh data without reloading or losing filters and expansio
   await expect(page.getByLabel('Portfolio data status')).toContainText('PUSH CONNECTED');
   await page.getByRole('searchbox',{name:'Search projects',exact:true}).fill('Live Monitor Fixture');
   await page.getByRole('button',{name:'Expand Live Monitor Fixture',exact:true}).click();
-  await page.locator('.dashboard-operations-details summary').click();
+  await page.locator('.dashboard-operations-details > summary').click();
   await page.getByRole('button',{name:'Compact monitor',exact:true}).click();
   const marker=randomUUID();
   await page.evaluate(value=>{(window as unknown as Record<string,unknown>).liveMarker=value;},marker);

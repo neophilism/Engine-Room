@@ -59,7 +59,7 @@ test("primary portfolio progress is immediately available without the legacy ani
 test("operational and deployment detail remains accessible on demand", async ({ page }) => {
   await page.goto("/");
   const advanced = page.locator(".dashboard-operations-details");
-  await advanced.locator("summary").click();
+  await advanced.locator(":scope > summary").click();
   await expect(advanced).toHaveAttribute("open", "");
   await expect(page.getByRole("heading", { name: "Current development activity" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Compact monitor" })).toBeVisible();
