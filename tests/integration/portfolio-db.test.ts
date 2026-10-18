@@ -380,7 +380,7 @@ describe.skipIf(!url)("PostgreSQL portfolio queries", () => {
     const repoId=await ensureRepository(pool,{id:888001,owner:{login:'accuracy'},name:'counts',full_name:'accuracy/counts',html_url:'https://github.com/accuracy/counts',default_branch:'main'},{...process.env,ENGINE_ROOM_GITHUB_OWNER:'accuracy'});
     const projectId=(await pool.query('SELECT project_id FROM project_repositories WHERE repository_id=$1',[repoId])).rows[0].project_id;
     await pool.query(`INSERT INTO github_pull_requests(github_pull_request_id,repository_id,number,title,state,draft,html_url,created_at,updated_at,merged_at,base_ref)
-      SELECT 880000+n,$1,n,'Accuracy fixture',CASE WHEN n<=4 THEN 'open' ELSE 'closed' END,n=1,
+      SELECT 880000+n,$1,n,'Accuracy fixture',(CASE WHEN n<=4 THEN 'open' ELSE 'closed' END)::github_pull_request_state,n=1,
       'https://github.com/accuracy/counts/pull/'||n,now(),now(),CASE WHEN n>9 THEN now() ELSE NULL END,'main' FROM generate_series(1,120) n`,[repoId]);
     await pool.query('UPDATE github_repository_sync SET last_success_at=now() WHERE repository_id=$1',[repoId]);
     expect((await loadPrSummaries(pool,projectId)).get(projectId)).toMatchObject({total:120,open:4,closed:116,merged:111,closedWithoutMerge:5,drafts:1,observedAt:expect.any(String)});
