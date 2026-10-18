@@ -15,7 +15,7 @@ export async function loadPortfolioSnapshot():Promise<{overview:import("../domai
   const velocity=await loadDevelopmentVelocity(client);
   const github={...await loadPublicGitHubStatus(process.env,client),observationId,checkedAt};
   await client.query('COMMIT');
-  return {overview:{...overview,observationId,checkedAt,reconciliation:refresh?{id:refresh.observation_id,status:refresh.coverage?.status??refresh.status,requested:refresh.coverage?.requested??0,completed:refresh.coverage?.repositories??0,deferred:refresh.coverage?.deferred??0,publishedAt:refresh.published_at?new Date(refresh.published_at).toISOString():null}:undefined},velocity,github};
+  return {overview:{...overview,observationId,checkedAt,reconciliation:refresh?{id:refresh.observation_id,status:refresh.coverage?.status??refresh.status,requested:refresh.coverage?.requested??0,completed:refresh.coverage?.repositories??0,deferred:refresh.coverage?.deferred??0,publishedAt:refresh.published_at?new Date(refresh.published_at).toISOString():null}:undefined},velocity:velocity?{...velocity,observationId,observedAt:checkedAt}:undefined,github};
  }catch{await client.query('ROLLBACK');return {overview:{source:"error" as const,projects:[],statistics:{projects:0,activeProjects:0,completedRoadmapPrs:0,plannedRoadmapPrs:0,percent:0}},velocity:undefined,github:{source:"error" as const,repositoryCount:null,pullRequestCount:null,mergedPullRequestCount:null,mostRecentObservation:null}};}
  finally{client.release();}
 }

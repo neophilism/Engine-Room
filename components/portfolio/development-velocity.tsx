@@ -208,12 +208,12 @@ export function DevelopmentVelocity({ data }: {data: DevelopmentVelocityData}) {
         <p>Compare verified merges over time, project by project. Your manual Refresh updates this graph.</p>
       </div>
       <span className="velocity-source-chip">
-        {data.synchronizedRepositories + "/" + data.trackedRepositories + " repositories synced"}
+        {data.synchronizedRepositories + "/" + data.trackedRepositories + " repositories synchronized recently"}
       </span>
     </div>
     <p className="velocity-observed">
-      Latest successful GitHub synchronization: <strong>{formatDateTime(data.latestSuccessfulSyncAt)}</strong>
-      {data.trackedRepositories !== data.synchronizedRepositories ? " · Some repositories have not synced successfully." : ""}
+      {data.observationId?`Observation ${data.observationId} · `:""}Latest successful GitHub synchronization: <strong>{formatDateTime(data.latestSuccessfulSyncAt)}</strong>
+      {data.trackedRepositories !== data.synchronizedRepositories ? " · Some repository observations are stale, missing, or have synchronization errors." : ""}
       {data.oldestSuccessfulSyncAt && data.oldestSuccessfulSyncAt !== data.latestSuccessfulSyncAt ?
         " · Oldest checkpoint: " + formatDateTime(data.oldestSuccessfulSyncAt) : ""}
     </p>

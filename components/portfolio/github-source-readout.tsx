@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import {sourceFreshness} from "../../lib/domain/source-freshness";
 import type { PublicGitHubStatus } from "../../lib/server/public-github-status";
 
 export function GitHubSourceReadout({initialStatus}:{initialStatus?:PublicGitHubStatus}={}) {
@@ -16,6 +17,7 @@ export function GitHubSourceReadout({initialStatus}:{initialStatus?:PublicGitHub
         const response = await fetch("/api/public-github-status", { cache: "no-store" });
         if (!response.ok) throw new Error("GitHub status unavailable");
         const data: PublicGitHubStatus = await response.json();
+        if(data.source!=="database" || ![data.repositoryCount,data.pullRequestCount,data.mergedPullRequestCount].every(n=>Number.isSafeInteger(n)&&Number(n)>=0) || Number(data.mergedPullRequestCount)>Number(data.pullRequestCount))throw new Error("Invalid source observation");
         if (mounted) setStatus(data);
       } catch { if (mounted) setStatus(null); }
       finally { inFlight = false; }
@@ -36,8 +38,9 @@ export function GitHubSourceReadout({initialStatus}:{initialStatus?:PublicGitHub
   const observed = status?.source === "database" && status.mostRecentObservation;
   const repositories = status?.repositories ?? [];
   const failures = repositories.filter(repo => Boolean(repo.error));
-  const fresh = repositories.filter(repo => !repo.error && repo.lastSuccessAt &&
-    Date.now() - Date.parse(repo.lastSuccessAt) < 25 * 60_000).length;
+  const checkedTime=status?.checkedAt?Date.parse(status.checkedAt):Date.now();
+  const freshness=(repo:typeof repositories[number])=>sourceFreshness(repo.lastSuccessAt,repo.error,checkedTime,status?.pollingMinutes??15);
+  const fresh = repositories.filter(repo=>freshness(repo)==="current").length;
   const denied = failures.filter(repo => repo.error?.includes("HTTP 404") || repo.error?.includes("HTTP 403")).length;
   const ordered = [...repositories].sort((a, b) =>
     Number(Boolean(b.error)) - Number(Boolean(a.error)) || a.name.localeCompare(b.name));
@@ -47,6 +50,7 @@ export function GitHubSourceReadout({initialStatus}:{initialStatus?:PublicGitHub
       <a href="https://github.com/neophilism" target="_blank" rel="noopener noreferrer">GitHub portfolio ↗</a>
     </div>
     {status?.source === "database" ? <>
+      {status.checkedAt&&<p className="metric-freshness">Source observation: {status.checkedAt}{status.observationId?` · ${status.observationId}`:""}. Freshness is assessed at this observation; Refresh obtains new evidence.</p>}
       {repositories.length > 0 && <p role="status" className="metric-freshness">
         <strong>{fresh} of {repositories.length} repositories synchronized recently.</strong>
         {failures.length > 0 ? ` ${failures.length} have synchronization errors; their counts may be historical.` : " No repository synchronization errors are recorded."}
@@ -71,8 +75,7 @@ export function GitHubSourceReadout({initialStatus}:{initialStatus?:PublicGitHub
         <table className="monitor-table" aria-label="GitHub repository synchronization diagnostics">
           <thead><tr><th>Repository</th><th>Access</th><th>Merged PRs</th><th>GitHub PR sync</th><th>Plan source</th></tr></thead>
           <tbody>{ordered.map(repo => {
-            const old=repo.lastSuccessAt ? Date.now()-Date.parse(repo.lastSuccessAt)>25*60*1000 : true;
-            const state=repo.error || (old ? "Stale" : "Current");
+            const state=repo.error || freshness(repo);
             return <tr key={repo.name}>
               <td><a href={"https://github.com/neophilism/"+repo.name} target="_blank" rel="noopener noreferrer">{repo.name}</a></td>
               <td>{repo.visibility === "private" ? "Private" : repo.error?.includes("HTTP 404") ? "Access unknown (404)" : "Public"}</td>

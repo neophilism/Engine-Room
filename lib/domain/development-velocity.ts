@@ -17,6 +17,7 @@ export type VelocityProject = {
   lifetime: VelocityLifetime;
 };
 export type DevelopmentVelocityData = {
+  observationId?:string;
   source: "database" | "unconfigured" | "error";
   projects: VelocityProject[];
   boardroomStartDate: string | null;
