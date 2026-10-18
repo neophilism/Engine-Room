@@ -4,6 +4,8 @@
  * based on similar names. Extend only for documented parent/child projects.
  */
 export const IMPLEMENTATION_PARENTS: Readonly<Record<string, string>> = {
+  "charterquill": "distributed-governance-engine",
+  "civicquill": "distributed-governance-engine",
   "algorithmic-accountability": "compliance-authorization-immutable-audit-engine",
   "federal-encryption-compliance": "compliance-authorization-immutable-audit-engine",
   "smart-cities-surveillance-registry": "civic-registry-transparency-engine",
