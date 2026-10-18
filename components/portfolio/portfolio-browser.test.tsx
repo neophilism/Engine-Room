@@ -17,8 +17,8 @@ describe("portfolio controls", () => {
     expect(headings[1].textContent).toContain("Smart Cities Surveillance Registry");
     expect(headings[0].closest("article")).toHaveAttribute("data-hierarchy-depth","0");
     expect(headings[1].closest("article")).toHaveAttribute("data-hierarchy-depth","1");
-    expect(headings[1].querySelector(".count")).not.toHaveClass("project-name-indent");
-    expect(headings[1].querySelector(".percentage")).not.toHaveClass("project-name-indent");
+    expect(headings[1].querySelector(".count")).toBeNull();
+    expect(headings[1].querySelector(".percentage")).toBeNull();
     expect(container.querySelector(".repository-progress-row")).not.toHaveClass("project-name-indent");
   });
   it("keeps Superintelligence applications nested below their engine", () => {

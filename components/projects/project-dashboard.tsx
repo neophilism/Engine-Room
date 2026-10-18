@@ -12,6 +12,7 @@ import { SourcePlan } from "./source-plan";
 import { ActivityMonitor } from "../portfolio/activity-monitor";
 import { PortfolioRefresh } from "../portfolio/portfolio-refresh";
 import { ProjectReadinessPanel } from "./project-readiness";
+import {PrFacts} from "./pr-facts";
 import {ProjectLastUpdate} from './project-last-update';
 import {SecurityStandardStatus} from './security-standard-status';
 
@@ -32,17 +33,18 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
   return <main className="content">
     <header className="hero"><p className="eyebrow">Project intelligence</p><h1>{project.displayName}</h1><p>{project.summary || "No project summary has been registered yet."}</p>
       <Link href="/projects">← Compare projects</Link></header>
+    <PrFacts summary={data.prSummary} repository={data.repositories[0]?.fullName}/>
     <ProjectLastUpdate update={data.latestUpdate}/>
       <SecurityStandardStatus statuses={data.securityStatuses}/>
     <div className="project-dashboard-grid">
-      <BrassPanel title="Approved roadmap" status={<IndicatorLamp state={stage.state} label={stage.label} />}>
+      <BrassPanel title="Planning records" status={<IndicatorLamp state={stage.state} label={stage.label} />}>
         {planProgress ? <>
           <p>{data.graph ? `Plan version ${data.graph.plan.version}` : "Source development plan"} · {planProgress.completed}/{planProgress.planned} merged · {planProgress.inProgress} open / awaiting merge</p>
           <PlannedProgressTube label={`${project.displayName} approved roadmap progress`} progress={planProgress} />
           <p className="planned-progress-legend">
             <span className="merged">Green: merged ({planProgress.completed})</span>
             <span className="underway">Yellow: written / unmerged ({planProgress.inProgress})</span>
-            <span className="unstarted">Empty: not started ({planProgress.notStarted})</span>
+            <span className="unstarted">Empty: not reconciled or unstarted ({planProgress.notStarted})</span>
           </p>
           <p>{planProgress.percent}% merged · {planProgress.remaining} unmerged · {planProgress.notStarted} not started</p>
           <p className="portfolio-calculation-note">{unmapped} items await mapping or release evidence; all remain in the planned denominator.</p>

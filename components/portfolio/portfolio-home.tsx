@@ -52,19 +52,21 @@ export function PortfolioHome({
         <article className="portfolio-stat">
           <span>Projects tracked</span>
           <strong>{statistics.projects}</strong>
+          <small>Registered projects, including separately tracked implementations.</small>
         </article>
         <article className="portfolio-stat">
           <span>Active projects</span>
           <strong>{statistics.activeProjects}</strong>
+          <small>Development, beta, live, or maintenance. PR activity starts planned projects; paused, archived, and complete projects are excluded.</small>
         </article>
         <article className="portfolio-stat">
-          <span>Completed plan items</span>
+          <span>Planning mappings to merged PRs</span>
           <strong>{statistics.plannedRoadmapPrs > 0 ?
             `${statistics.completedRoadmapPrs}/${statistics.plannedRoadmapPrs}` : "N/A"}</strong>
         </article>
         <article className="portfolio-stat">
-          <span>Portfolio progress</span>
-          <strong>{statistics.plannedRoadmapPrs > 0 ? `${statistics.percent}%` : "N/A"}</strong>
+          <span>GitHub PRs open / closed</span>
+          <strong>{projects.every(p=>p.prSummary) ? `${projects.reduce((n,p)=>n+(p.prSummary?.open??0),0)} / ${projects.reduce((n,p)=>n+(p.prSummary?.closed??0),0)}` : "N/A"}</strong>
         </article>
       </section>
 

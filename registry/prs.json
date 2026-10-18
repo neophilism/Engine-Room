@@ -2,16 +2,16 @@
   "repository": "neophilism/Engine-Room",
   "title": "Engine Room",
   "planVerified": true,
-  "plannedPrCount": 55,
+  "plannedPrCount": 63,
   "sourceFiles": [
     ".exechub/project.yml",
     "docs/development-plan.md",
     ".exechub/approved-pr-mapping.json",
     "docs/portfolio-monitor-additions.json"
   ],
-  "scopeNote": "40 original approved work packages, 3 independently documented portfolio-monitor additions (PRs #56–58), and 2 user-requested universal repository roadmap/synchronization work packages (#81–82). Source roadmap IDs and actual PR numbers remain separate. Additional owner-approved unit ER-053 tracks time-series development velocity and the Boardroom rollout benchmark; PR #109 implements it. User-approved unit ER-054 adds true repository-lifetime merged PR/day throughput rates to the existing velocity display; PR #110 implements it. User-requested correction ER-055 changes PRs/day from November 2025 inherited repository lifetimes to the first new repository of the October 2026 development wave; PR #111 implements it.",
+  "scopeNote": "40 original approved work packages, 3 independently documented portfolio-monitor additions (PRs #56\u201358), and 2 user-requested universal repository roadmap/synchronization work packages (#81\u201382). Source roadmap IDs and actual PR numbers remain separate. Additional owner-approved unit ER-053 tracks time-series development velocity and the Boardroom rollout benchmark; PR #109 implements it. User-approved unit ER-054 adds true repository-lifetime merged PR/day throughput rates to the existing velocity display; PR #110 implements it. User-requested correction ER-055 changes PRs/day from November 2025 inherited repository lifetimes to the first new repository of the October 2026 development wave; PR #111 implements it. Owner-requested 18 October 2026 accuracy-recovery work adds ER-056\u2013ER-063; all eight units are proposed and unmapped, not complete.",
   "schemaVersion": 1,
-  "roadmapVersion": 11,
+  "roadmapVersion": 12,
   "observedAt": "2026-10-11T22:57:44.640Z",
   "units": [
     {
@@ -675,6 +675,120 @@
       ],
       "externalDependencies": [],
       "externalPrerequisites": []
+    },
+    {
+      "id": "ER-056",
+      "title": "Make GitHub PR facts the primary project summary",
+      "origin": "addition",
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": [],
+      "source": "docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md",
+      "acceptance": "Complete the scoped changes and evidence requirements under this unit in docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md; passing required tests and verified production status remain distinct."
+    },
+    {
+      "id": "ER-057",
+      "title": "Establish auditable project inventory and lifecycle counts",
+      "origin": "addition",
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": [],
+      "source": "docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md",
+      "acceptance": "Complete the scoped changes and evidence requirements under this unit in docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md; passing required tests and verified production status remain distinct."
+    },
+    {
+      "id": "ER-058",
+      "title": "Make refresh coherent and complete in coverage",
+      "origin": "addition",
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [
+        "ER-056",
+        "ER-057"
+      ],
+      "externalDependencies": [],
+      "externalPrerequisites": [],
+      "source": "docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md",
+      "acceptance": "Complete the scoped changes and evidence requirements under this unit in docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md; passing required tests and verified production status remain distinct."
+    },
+    {
+      "id": "ER-059",
+      "title": "Fix stale UI, sync health and source provenance",
+      "origin": "addition",
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": [],
+      "source": "docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md",
+      "acceptance": "Complete the scoped changes and evidence requirements under this unit in docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md; passing required tests and verified production status remain distinct."
+    },
+    {
+      "id": "ER-060",
+      "title": "Preserve plan scope, dependencies and uncertainty end to end",
+      "origin": "addition",
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [
+        "ER-058"
+      ],
+      "externalDependencies": [],
+      "externalPrerequisites": [],
+      "source": "docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md",
+      "acceptance": "Complete the scoped changes and evidence requirements under this unit in docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md; passing required tests and verified production status remain distinct."
+    },
+    {
+      "id": "ER-061",
+      "title": "Separate local work from upstream and production readiness",
+      "origin": "addition",
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [
+        "ER-060"
+      ],
+      "externalDependencies": [],
+      "externalPrerequisites": [],
+      "source": "docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md",
+      "acceptance": "Complete the scoped changes and evidence requirements under this unit in docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md; passing required tests and verified production status remain distinct."
+    },
+    {
+      "id": "ER-062",
+      "title": "Repair implicated source plans with reviewed evidence",
+      "origin": "addition",
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [
+        "ER-060",
+        "ER-061"
+      ],
+      "externalDependencies": [],
+      "externalPrerequisites": [],
+      "source": "docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md",
+      "acceptance": "Complete the scoped changes and evidence requirements under this unit in docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md; passing required tests and verified production status remain distinct."
+    },
+    {
+      "id": "ER-063",
+      "title": "Full accuracy acceptance and production rollout",
+      "origin": "addition",
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [
+        "ER-056",
+        "ER-057",
+        "ER-058",
+        "ER-059",
+        "ER-060",
+        "ER-061",
+        "ER-062"
+      ],
+      "externalDependencies": [],
+      "externalPrerequisites": [],
+      "source": "docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md",
+      "acceptance": "Complete the scoped changes and evidence requirements under this unit in docs/ENGINE_ROOM_ACCURACY_RECOVERY_PLAN.md; passing required tests and verified production status remain distinct."
     }
   ],
   "pullRequests": [

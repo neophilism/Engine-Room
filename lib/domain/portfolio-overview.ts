@@ -31,6 +31,7 @@ export type PortfolioProjectOverview = {
   repositories: PortfolioRepositoryProgress[];
   features?: ProjectFeature[];
   activity?: ProjectActivitySummary;
+  prSummary?: import("./pr-summary").PullRequestSummary;
   pullRequests?: PullRequestReadout[];
   sourcePlan?: SourcePlanSummary;
   completionMeasured?: boolean;

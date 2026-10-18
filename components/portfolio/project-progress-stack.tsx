@@ -8,6 +8,7 @@ import { PlannedProgressTube } from "./planned-progress-tube";
 import { summarizePlannedProgress } from "../../lib/domain/planned-progress";
 import { ProjectAccordions } from "./project-accordions";
 import { githubRepositoryUrl } from "../../lib/domain/portfolio-query";
+import {PrFacts} from "../projects/pr-facts";
 import {ProjectLastUpdate} from '../projects/project-last-update';
 
 export function ProjectProgressStack({
@@ -62,19 +63,18 @@ export function ProjectProgressStack({
           </span>
         </button>
         <strong><Link href={projectDashboardHref(project)}>{project.displayName}</Link></strong>
-        <span className="count">
-          {progress ? `${progress.completed}/${progress.planned} packages fully complete` : aggregatorDeferred ? "Awaiting corpus" : "Plan unavailable"}
-        </span>
-        <span className="percentage" title={progress ? "Entire work-package scope verified, not the percentage of accepted PRs" : "No documented development plan"}>{progress ? `${progress.percent}%` : "N/A"}</span>
       </header>
+      <PrFacts summary={project.prSummary} repository={project.repositoryFullName}/>
       <ProjectLastUpdate update={project.latestUpdate}/>
+      <details className="planning-details"><summary>Planning records · {progress ? `${progress.completed}/${progress.planned} packages mapped to merged PRs` : "plan unavailable"}</summary>
+      <p>Planning mappings are not an estimate of how much of the application is finished. Unmapped work requires reconciliation; upstream and deployment readiness are separate.</p>
 
       <div className="project-quick-links">
         {mergedGitHubPrs > 0 && <strong className="project-merged-count">{mergedGitHubPrs} GitHub PRs accepted (merged)</strong>}
         <span className="project-activity">{unverifiedEvidence
           ? `${unmappedUnits} work packages still require scope completion · ${contributingPackages} have accepted or open contributing PR activity · ${progress?.inProgress ?? 0} underway · ${progress?.completed ?? 0} full packages`
           : progress
-            ? `${progress.notStarted} not started · ${progress.inProgress} underway · ${progress.completed} accepted`
+            ? `${progress.notStarted} not reconciled or unstarted · ${progress.inProgress} underway · ${progress.completed} accepted`
             : missingPlanWithWork
               ? `Plan unverified · ${mergedGitHubPrs} GitHub PRs accepted (merged) · package progress not measurable`
               : aggregatorDeferred
@@ -129,6 +129,7 @@ export function ProjectProgressStack({
           <ProjectAccordions project={project} />
         </div>
       </div>
+      </details>
     </article>
   );
 }

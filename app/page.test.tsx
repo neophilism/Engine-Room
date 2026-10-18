@@ -56,7 +56,8 @@ describe("portfolio home", () => {
 
     expect(screen.getByText("Projects tracked").nextSibling).toHaveTextContent("2");
     expect(screen.getByText("21/45")).toBeInTheDocument();
-    expect(screen.getByText("46.7%")).toBeInTheDocument();
+    expect(screen.queryByText("46.7%")).not.toBeInTheDocument();
+    expect(screen.getByText("GitHub PRs open / closed").nextSibling).toHaveTextContent("N/A");
   });
 
   it("removes animation testing and makes secondary monitoring optional", () => {
