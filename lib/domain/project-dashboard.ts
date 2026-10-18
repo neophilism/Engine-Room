@@ -23,6 +23,7 @@ export type ProjectDashboardData = {
   activities?: DevelopmentActivity[];
   readiness?: ProjectReadiness;
   sourcePlan?: SourcePlanSummary;
+  dependencyReadiness?: import("./dependency-readiness").ProjectDependencies;
   prSummary?: import("./pr-summary").PullRequestSummary;
   pullRequests?: PullRequestReadout[];
 };

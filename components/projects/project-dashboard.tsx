@@ -12,6 +12,7 @@ import { SourcePlan } from "./source-plan";
 import { ActivityMonitor } from "../portfolio/activity-monitor";
 import { PortfolioRefresh } from "../portfolio/portfolio-refresh";
 import { ProjectReadinessPanel } from "./project-readiness";
+import {DependencyReadout} from "./dependency-readiness";
 import {PrFacts} from "./pr-facts";
 import {ProjectLastUpdate} from './project-last-update';
 import {SecurityStandardStatus} from './security-standard-status';
@@ -34,6 +35,7 @@ export function ProjectDashboard({ data }: { data: ProjectDashboardData }) {
     <header className="hero"><p className="eyebrow">Project intelligence</p><h1>{project.displayName}</h1><p>{project.summary || "No project summary has been registered yet."}</p>
       <Link href="/projects">← Compare projects</Link></header>
     <PrFacts summary={data.prSummary} repository={data.repositories[0]?.fullName}/>
+    <DependencyReadout data={data.dependencyReadiness}/>
     <ProjectLastUpdate update={data.latestUpdate}/>
       <SecurityStandardStatus statuses={data.securityStatuses}/>
     <div className="project-dashboard-grid">

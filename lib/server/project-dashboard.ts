@@ -8,6 +8,7 @@ import { getRuntimeConfig, type EnvironmentSource } from "../config/env";
 import { getDatabasePool } from "./database";
 import { loadCurrentFeatures } from "./project-features";
 import { loadProjectActivity } from "./development-activity";
+import { loadDependencyReadiness } from "./dependency-readiness";
 import { loadPrSummaries } from "./pr-summary";
 import { loadProjectMonitorData } from "./live-monitor";
 import { loadProjectReadiness } from "./project-readiness";
@@ -86,6 +87,7 @@ export async function loadProjectDashboard(slug: string, source: EnvironmentSour
           dashboard.project.summary=dashboard.project.summary?.trim()||description||undefined;
         }
       }
+      dashboard.dependencyReadiness=(await loadDependencyReadiness(client)).get(project.id);
       dashboard.prSummary=(await loadPrSummaries(client,project.id)).get(project.id);
       dashboard.sourcePlan=monitor.plans.get(project.id);
       dashboard.pullRequests=monitor.pullRequests.get(project.id)||[];
