@@ -50,7 +50,7 @@ describe('discovery project identity collision',()=>{
    if(sql.startsWith('INSERT INTO project_repositories'))return {rows:params[0]==='foo-bar'?[]:[{project_id:params[0]}],rowCount:params[0]==='foo-bar'?0:1};
    return {rows:[],rowCount:1};
   })};
-  await ensureRepository(db as unknown as Pick<PoolClient,'query'>,{id:987,owner:{login:'neophilism'},name:'foo_bar',full_name:'neophilism/foo_bar',html_url:'https://github.com/neophilism/foo_bar'},{ENGINE_ROOM_GITHUB_OWNER:'neophilism'});
+  await ensureRepository(db as unknown as Pick<PoolClient,'query'>,{id:987,owner:{login:'neophilism'},name:'foo_bar',full_name:'neophilism/foo_bar',html_url:'https://github.com/neophilism/foo_bar'},{...process.env,ENGINE_ROOM_GITHUB_OWNER:'neophilism'});
   expect(candidates).toEqual(['foo-bar','foo-bar-987']);
  });
 });
