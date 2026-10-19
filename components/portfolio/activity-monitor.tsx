@@ -18,6 +18,7 @@ export function ActivityMonitor({projects}:{projects:readonly PortfolioProjectOv
   return <BrassPanel title="Current development activity" eyebrow="All tracked repositories" className={compact?'activity-monitor compact':'activity-monitor'}>
     <div className="monitor-toolbar"><p>{rows.length} open PRs · {rows.filter(x=>x.pr.checks==='failing').length} with failed checks · {rows.filter(x=>x.pr.draft).length} drafts</p>
       <button type="button" className="portfolio-control-button" onClick={toggle} aria-pressed={compact}>Compact monitor</button></div>
+    <p className="metric-freshness">These are GitHub PR observations, not active agent sessions. An agent can be coding before its work appears here. For live leases see <a href="https://boardroom-iamn.onrender.com/work-board" target="_blank" rel="noopener noreferrer">Boardroom work board ↗</a>.</p>
     {rows.length?<div className="monitor-table-wrap"><table className="monitor-table"><thead><tr><th>Project</th><th>Pull request</th><th>Checks</th><th>Merge / review</th></tr></thead>
       <tbody>{rows.map(({project,pr})=><tr key={project.id+':'+pr.number} className={pr.checks==='failing'?'monitor-failing':undefined}>
         <td><Link href={projectDashboardHref(project)}>{project.displayName}</Link></td>
