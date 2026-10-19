@@ -1,3 +1,4 @@
+import {workerHeartbeatFresh} from '../domain/worker-freshness.mjs';
 import {sourceImplementationReview} from '../domain/implementation-review';
 import type { PoolClient } from 'pg';
 import type { LiveSnapshot,ProjectActivitySummary,PullRequestReadout,SourcePlanSummary,PlanItemReadout } from '../domain/live-monitor';
@@ -24,7 +25,7 @@ export async function loadLiveSnapshot():Promise<LiveSnapshot>{
   const pollingMinutes=effectivePollingMinutes(authenticated,row.github_reconciliation_interval_minutes);
   const oldest=iso(row.oldest_sync);
   const fresh=sourceFreshness(oldest,row.last_error,Date.now(),pollingMinutes)==='current';
-  const workerFresh=row.last_worker_at && Date.now()-new Date(row.last_worker_at).getTime()<90000;
+  const workerFresh=workerHeartbeatFresh(row.last_worker_at);
   return {revision:String(row.revision),state:!workerFresh?'disconnected':Number(row.pending)>0?'catching-up':
     !fresh||row.last_error||!row.github_reconciliation_enabled||Number(row.unsynchronized)>0||Number(row.failed_repositories)>0?'stale':'live',checkedAt:new Date().toISOString(),
     oldestSyncAt:oldest,latestSyncAt:iso(row.latest_sync),workerAt:iso(row.last_worker_at),repositories:Number(row.repositories),unsynchronized:Number(row.unsynchronized),

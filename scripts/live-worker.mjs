@@ -1,3 +1,4 @@
+import {WORKER_HEARTBEAT_INTERVAL_MS} from '../lib/domain/worker-freshness.mjs';
 import { Pool } from 'pg';
 import { processWebhookInbox } from '../lib/sync/github-runtime.mjs';
 import { probeGitHubAccess } from '../lib/sync/github-access-probe.mjs';
@@ -44,7 +45,9 @@ async function plans() {
   } finally {plansBusy=false;}
 }
 const plansTimer=setInterval(plans,60*60*1000);
-const inboxTimer=setInterval(inbox,15*60*1000);
+// Inbox processing also updates the heartbeat. A fifteen-minute cadence
+// made the healthy worker look disconnected for most of each interval.
+const inboxTimer=setInterval(inbox,WORKER_HEARTBEAT_INTERVAL_MS);
 const syncTimer=setInterval(sync,30*60*1000);
 // A deployment must not start with the previous container's stale PR counts.
 // Force one bounded, PR-only GitHub reconciliation, then import current plan files.
