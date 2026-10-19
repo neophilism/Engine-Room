@@ -99,7 +99,7 @@ describe("ProjectProgressStack", () => {
     expect(bar).toHaveAttribute("aria-valuenow","60");
     expect(bar).toHaveAttribute("aria-valuemax","100");
     expect(bar).toHaveAttribute("aria-valuetext",
-      "60 full-scope packages complete, 10 packages in progress, 30 not started; 100 planned packages total");
+      "60 packages mapped to merged PRs, 10 with linked PR activity, 30 without a verified full-scope merge mapping; 100 planned packages total");
     expect(screen.getAllByText(/60\/100 packages mapped to merged PRs/)).toHaveLength(1);
     expect(screen.getByText("60%")).toBeInTheDocument();
     expect(bar.closest("details")).toBeNull();
@@ -120,8 +120,8 @@ describe("ProjectProgressStack", () => {
       }
     };
     render(<ProjectProgressStack project={missing} />);
-    expect(screen.getByText(/30 work packages still require scope completion/)).toBeInTheDocument();
-    expect(screen.getByText(/0 full packages/)).toBeInTheDocument();
+    expect(screen.getByText(/30 packages lack a verified full-scope merge mapping/)).toBeInTheDocument();
+    expect(screen.getByText(/0 mapped to merged PRs/)).toBeInTheDocument();
     expect(screen.getByText(/26 GitHub PRs accepted \(merged\)/)).toBeInTheDocument();
     expect(screen.queryByText(/30 not started/)).not.toBeInTheDocument();
   });

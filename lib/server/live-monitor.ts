@@ -1,3 +1,4 @@
+import {sourceImplementationReview} from '../domain/implementation-review';
 import type { PoolClient } from 'pg';
 import type { LiveSnapshot,ProjectActivitySummary,PullRequestReadout,SourcePlanSummary,PlanItemReadout } from '../domain/live-monitor';
 import { getDatabasePool } from './database';
@@ -74,7 +75,7 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
     const plan=plans.get(doc.project_id)||{original:0,originalComplete:0,added:0,addedComplete:0,unmapped:0,items:[],documents:[]};
     plan.documents.push({sourceCommit:doc.source_commit,path:doc.path,url:doc.source_url,title:doc.title,importedAt:iso(doc.imported_at)!,versions:Number(doc.versions)});
     const unitsSql=doc.path===STRUCTURED_PR_PATH ? `
-      units AS (SELECT ordinal,title,scope,github_pr_numbers,contributing_pr_numbers,mapping_reason,source_item_id,depends_on,external_dependencies,external_prerequisites
+      units AS (SELECT ordinal,title,scope,github_pr_numbers,contributing_pr_numbers,mapping_reason,source_item_id,depends_on,external_dependencies,external_prerequisites,source_metadata
         FROM project_plan_items WHERE repository_id=$1 AND path=$2 AND fingerprint=$3)` : `
       baseline AS (SELECT fingerprint FROM project_plan_documents WHERE repository_id=$1 AND path=$2 ORDER BY version_id LIMIT 1),
       additions AS (SELECT DISTINCT ON(c.ordinal,c.title) c.ordinal,c.title,c.github_pr_numbers,c.contributing_pr_numbers,c.mapping_reason
@@ -90,7 +91,7 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
         UNION ALL
         SELECT c.ordinal,c.title,'addition',c.github_pr_numbers,c.contributing_pr_numbers,c.mapping_reason FROM additions c
       )`;
-    const result=await db.query<{source_item_id:string|null;depends_on:string[];external_dependencies:{repository:string;unitId:string}[];external_prerequisites:string[];ordinal:number;title:string;scope:PlanItemReadout['scope'];github_pr_numbers:number[];contributing_pr_numbers:number[];mapping_reason:string|null;completed:boolean;underway:boolean;unverified:boolean}>(`WITH ${unitsSql} SELECT u.*,
+    const result=await db.query<{source_metadata?:unknown;source_item_id:string|null;depends_on:string[];external_dependencies:{repository:string;unitId:string}[];external_prerequisites:string[];ordinal:number;title:string;scope:PlanItemReadout['scope'];github_pr_numbers:number[];contributing_pr_numbers:number[];mapping_reason:string|null;completed:boolean;underway:boolean;unverified:boolean}>(`WITH ${unitsSql} SELECT u.*,
       jsonb_array_length(github_pr_numbers)>0 AND NOT EXISTS(SELECT 1 FROM jsonb_array_elements_text(u.github_pr_numbers) n
         LEFT JOIN github_pull_requests g ON g.repository_id=$1 AND g.number=n.value::integer
         WHERE g.merged_at IS NULL) AS completed,
@@ -110,7 +111,7 @@ export async function loadProjectMonitorData(db:Pick<PoolClient,'query'>,project
       if(item.scope==='original'){plan.original++;plan.originalComplete+=Number(completed);}
       else{plan.added++;plan.addedComplete+=Number(completed);}
       if(!item.github_pr_numbers.length||item.unverified)plan.unmapped++;
-      plan.items.push({sourceItemId:item.source_item_id??undefined,dependsOn:item.depends_on??[],externalDependencies:item.external_dependencies??[],externalPrerequisites:item.external_prerequisites??[],sourceCommit:doc.source_commit,ordinal:item.ordinal,title:item.title,scope:item.scope,numbers:item.github_pr_numbers,
+      plan.items.push({implementationReview:sourceImplementationReview(item.source_metadata),sourceItemId:item.source_item_id??undefined,dependsOn:item.depends_on??[],externalDependencies:item.external_dependencies??[],externalPrerequisites:item.external_prerequisites??[],sourceCommit:doc.source_commit,ordinal:item.ordinal,title:item.title,scope:item.scope,numbers:item.github_pr_numbers,
         contributingNumbers:item.contributing_pr_numbers,
         state:completed?'merged':item.unverified?'unmapped':item.underway?'in-progress':item.github_pr_numbers.length?'planned':'unmapped',
         reason:item.mapping_reason,sourceUrl:doc.source_url,repositoryUrl:doc.repository_url});

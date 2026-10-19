@@ -24,8 +24,10 @@ export function ProjectProgressStack({
   const unmappedUnits = project.sourcePlan?.unmapped ?? 0;
   const mergedGitHubPrs = project.activity?.merged ?? 0;
   const unverifiedEvidence = Boolean(progress && unmappedUnits > 0);
-  const contributingPackages=project.sourcePlan?.items.filter(item=>
-    item.state==="in-progress" && (item.contributingNumbers?.length??0)>0).length??0;
+  const reviews=project.sourcePlan?.items.flatMap(item=>item.implementationReview?[item.implementationReview]:[])??[];
+  const implemented=reviews.filter(r=>r.implementation==='implemented').length;
+  const remainingSoftware=reviews.length-implemented;
+  const unreviewed=(project.sourcePlan?.items.length??0)-reviews.length;
   const missingPlanWithWork = !progress && mergedGitHubPrs > 0;
   const drawerId = useId();
   const aggregatorDeferred = ["FOIA_Bias_Analysis", "Send_FOIA_Log_Requests"]
@@ -100,6 +102,7 @@ export function ProjectProgressStack({
         })}
       </div>
 
+      {reviews.length>0&&<p className="source-implementation-summary">Source implementation review: {implemented} software units implemented · {remainingSoftware} with specific software work remaining · {unreviewed} without an implementation review. Release inputs and deployment are tracked separately.</p>}
       <PrFacts summary={project.prSummary} repository={project.repositoryFullName} planned={progress?.planned ?? null}/>
       <DependencyReadout data={project.dependencyReadiness}/>
       <ProjectLastUpdate update={project.latestUpdate}/>
@@ -110,15 +113,15 @@ export function ProjectProgressStack({
       <div className="project-quick-links">
         {mergedGitHubPrs > 0 && <strong className="project-merged-count">{mergedGitHubPrs} GitHub PRs accepted (merged)</strong>}
         <span className="project-activity">{unverifiedEvidence
-          ? `${unmappedUnits} work packages still require scope completion · ${contributingPackages} have accepted or open contributing PR activity · ${progress?.inProgress ?? 0} underway · ${progress?.completed ?? 0} full packages`
+          ? `${unmappedUnits} packages lack a verified full-scope merge mapping · ${progress?.inProgress ?? 0} have PR activity · ${progress?.completed ?? 0} mapped to merged PRs`
           : progress
-            ? `${progress.notStarted} not reconciled or unstarted · ${progress.inProgress} underway · ${progress.completed} accepted`
+            ? `${progress.notStarted} without a full-scope merge mapping · ${progress.inProgress} with PR activity · ${progress.completed} mapped to merged PRs`
             : missingPlanWithWork
               ? `Plan unverified · ${mergedGitHubPrs} GitHub PRs accepted (merged) · package progress not measurable`
               : aggregatorDeferred
                 ? "Development deferred until FOIA Aggregator reaches broad source coverage"
                 : "Source plan not yet verified"}</span>
-        {progress?.inProgress ? <span className="project-open-count">{progress.inProgress} work packages still underway</span> : null}
+        {progress?.inProgress ? <span className="project-open-count">{progress.inProgress} packages with linked PR activity</span> : null}
         {githubRepositoryUrl(project.repositoryFullName) && <a href={githubRepositoryUrl(project.repositoryFullName)} target="_blank" rel="noopener noreferrer">Open repository ↗</a>}
       </div>
 

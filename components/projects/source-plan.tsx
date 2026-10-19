@@ -12,7 +12,7 @@ export function SourcePlan({ plan, historyHref }: { plan: SourcePlanSummary | un
   const otherUnfinished=remaining-unlinked;
   return <div className="source-plan">
     <p><strong>{completed}/{planned} merged</strong> · {inProgress} mapped open / unmerged ·
-      {" "}{unlinked} missing verified PR mapping · {otherUnfinished} other unfinished / unverified units.
+      {" "}{unlinked} missing verified PR mapping · {otherUnfinished} other units without a verified full-scope merge mapping.
       All original and later work counts in one roadmap total.</p>
     <ul>{plan.documents.map(doc=><li key={doc.path}>
       {/^https:\/\//.test(doc.url)?
@@ -21,16 +21,21 @@ export function SourcePlan({ plan, historyHref }: { plan: SourcePlanSummary | un
       {" · "}{doc.versions} stored version{doc.versions===1?"":"s"}
     </li>)}</ul>
     {historyHref&&<p><Link href={historyHref}>View stored plan history</Link></p>}
-    <details><summary>Merged, open, and remaining work</summary>
+    <details><summary>PR mappings and source implementation findings</summary>
       <ol className="source-plan-items">
         {plan.items.map((item,index)=><li className={item.state==="merged"?"source-work-merged":
           item.state==="in-progress"?"source-work-open":"source-work-remaining"} key={index}>
           <strong>{item.sourceItemId??item.ordinal}. {item.title}</strong>
+          {item.implementationReview&&<div>
+            <p><strong>{item.implementationReview.implementation==='implemented'?'Software implemented':'Specific software work remains'}</strong>{item.implementationReview.softwareGap?`: ${item.implementationReview.softwareGap}`:''}</p>
+            <p>Release or activation: {item.implementationReview.activationRequirement}</p>
+            <small>Source review {item.implementationReview.reviewedAt}; source hashes retained in the registry. Deployment and GitHub acceptance are recorded separately.</small>
+          </div>}
           {!!item.dependsOn?.length&&<span>Local prerequisites: {item.dependsOn.join(", ")}</span>}
           {!!item.externalDependencies?.length&&<span>Upstream prerequisites: {item.externalDependencies.map(d=>d.repository+"#"+d.unitId).join(", ")}</span>}
           {!!item.externalPrerequisites?.length&&<span>External prerequisites: {item.externalPrerequisites.join("; ")}</span>}
           <span>{item.state==="unmapped"?"Not reconciled: completion evidence not mapped":
-            item.state==="in-progress"?"Contributing or open PR activity; package scope unresolved":
+            item.state==="in-progress"?"Contributing or open PR activity; full-scope merge mapping unresolved":
             item.state==="merged"?"Merged":item.state}</span>
           {item.numbers.map(number=><a key={number}
             href={(item.repositoryUrl||item.sourceUrl.split("/blob/")[0])+"/pull/"+number}
