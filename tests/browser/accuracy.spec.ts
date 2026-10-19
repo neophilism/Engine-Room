@@ -54,8 +54,8 @@ test('renders actual GitHub counters before planning, at desktop and mobile widt
   await expect(progress).toHaveAttribute('aria-valuenow','111');
   await expect(progress).toHaveAttribute('aria-valuemax','210');
   await expect(card.getByText('Planned PRs', {exact:true}).locator('..').locator('dd')).toHaveText('210');
-  await expect(card.locator('.repository-percent')).toHaveText('52.9%');
-  await expect(card.locator('.repository-pr-count')).toHaveText('111/210 planned');
+  await expect(card.locator('.repository-percent')).toHaveText('52.9% mapped');
+  await expect(card.locator('.repository-pr-count')).toHaveText('111/210 mapped');
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1)).toBe(true);
   await expect(page.locator('.portfolio-stat').filter({hasText:'Planned PRs completed'}).locator('strong')).toContainText('%');
   await expect(card.getByText('120 total PRs',{exact:false})).toBeVisible();
