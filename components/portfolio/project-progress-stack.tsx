@@ -105,6 +105,10 @@ export function ProjectProgressStack({
 
       {reviews.length>0&&<p className="source-implementation-summary">Source implementation review: {implemented}/{project.sourcePlan?.items.length??0} software units implemented{reviewedImplementationPercent!==null?` (${reviewedImplementationPercent}%)`:""} · {remainingSoftware} with specific software work remaining · {unreviewed} without an implementation review. Release inputs and deployment are tracked separately.</p>}
       <PrFacts summary={project.prSummary} repository={project.repositoryFullName} planned={progress?.planned ?? null}/>
+      {progress && progress.completed>0 && project.dependencyReadiness &&
+        project.dependencyReadiness.status!=="satisfied" && <p className="portfolio-calculation-note" role="status">
+          {progress.completed}/{progress.planned} work packages are mapped to merged PRs, but upstream integration/release readiness is {project.dependencyReadiness.status}. This bar does not establish that the dependent engine or application works end to end.
+        </p>}
       <DependencyReadout data={project.dependencyReadiness}/>
       <ProjectLastUpdate update={project.latestUpdate}/>
       <details className="planning-details"><summary>Planning records · {progress ? `${progress.completed}/${progress.planned} packages mapped to merged PRs` : "plan unavailable"}</summary>

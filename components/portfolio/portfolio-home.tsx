@@ -42,6 +42,7 @@ export function PortfolioHome({
           <p className="eyebrow">Portfolio overview</p>
           <h1>Engine Room</h1>
           <p>Projects, delivery progress, and source-backed status in one place.</p>
+          <p className="metric-freshness">Engine Room measures GitHub work, not live agent sessions. <a href="https://boardroom-iamn.onrender.com/work-board" target="_blank" rel="noopener noreferrer">View live Boardroom assignments and heartbeats ↗</a> (owner sign-in required).</p>
         </div>
         <span className={`dashboard-data-chip${overview.source === "database" ? " is-connected" : ""}`}>
           {sourceLabel(overview.source)}
