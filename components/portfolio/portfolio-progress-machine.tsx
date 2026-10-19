@@ -27,8 +27,8 @@ export function PortfolioProgressMachine({ projects }: { projects: readonly Port
           <div className="portfolio-total-readout">
             <span className="machine-engraved-label">All planned work</span>
             <PlannedProgressTube label="Total portfolio roadmap progress" progress={aggregate} />
-            <strong>{workload.percent}% full-scope complete</strong>
-            <span>{completed} full packages · {workload.underway} underway · {workload.notStarted} not started</span>
+            <strong>{workload.percent}% mapped to merged PRs</strong>
+            <span>{completed} merged package mappings · {workload.underway} with PR activity · {workload.notStarted} mappings unverified</span>
           </div>
           <dl className="portfolio-workload">
             <div><dt>Planned items remaining</dt><dd>{workload.remaining}</dd></div>

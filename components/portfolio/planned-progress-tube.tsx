@@ -3,8 +3,8 @@ import type { PlannedProgress } from "../../lib/domain/planned-progress";
 
 /**
  * One unified planned-work denominator:
- * green = completed work-package scope; yellow = package scope still in progress (possibly with accepted merged PR contributions);
- * unfilled = not started. PR acceptance is counted separately. Original work and later additions have identical
+ * green = verified full-scope merged PR mappings; yellow = linked PR activity;
+ * unfilled = no verified full-scope mapping. Software implementation is a separate source finding. PR acceptance is counted separately. Original work and later additions have identical
  * completion semantics and are never separate color categories.
  */
 export function PlannedProgressTube({
@@ -20,8 +20,8 @@ export function PlannedProgressTube({
     aria-valuemin={0}
     aria-valuemax={progress.planned}
     aria-valuenow={progress.completed}
-    aria-valuetext={`${progress.completed} full-scope packages complete, ${progress.inProgress} packages in progress, ${progress.notStarted} not started; ${progress.planned} planned packages total`}
-    title={`Fully complete packages: ${progress.completed}/${progress.planned}; unfinished scope: ${progress.inProgress}; not started: ${progress.notStarted}`}
+    aria-valuetext={`${progress.completed} packages mapped to merged PRs, ${progress.inProgress} with linked PR activity, ${progress.notStarted} without a verified full-scope merge mapping; ${progress.planned} planned packages total`}
+    title={`Merged package mappings: ${progress.completed}/${progress.planned}; linked PR activity: ${progress.inProgress}; other mappings unverified: ${progress.notStarted}`}
   >
     <span className="planned-progress-chamber" aria-hidden="true">
       <span className="planned-progress-merged-fill" style={{ width: `${mergedWidth}%` }} />
