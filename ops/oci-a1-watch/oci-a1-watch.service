@@ -1,0 +1,21 @@
+[Unit]
+Description=Check OCI Ampere A1 capacity and update the private Engine Room issue
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=a1watch
+Group=a1watch
+EnvironmentFile=/etc/oci-a1-watch/agent.env
+ExecStart=/opt/oci-a1-watch/venv/bin/python /opt/oci-a1-watch/report_capacity.py
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectControlGroups=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+RestrictSUIDSGID=true
+LockPersonality=true
+TimeoutStartSec=240
