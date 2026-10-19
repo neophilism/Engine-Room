@@ -27,6 +27,7 @@ export function ProjectProgressStack({
   const reviews=project.sourcePlan?.items.flatMap(item=>item.implementationReview?[item.implementationReview]:[])??[];
   const implemented=reviews.filter(r=>r.implementation==='implemented').length;
   const remainingSoftware=reviews.length-implemented;
+  const reviewedImplementationPercent=reviews.length>0&&reviews.length===(project.sourcePlan?.items.length??0)?Math.round(implemented*1000/reviews.length)/10:null;
   const unreviewed=(project.sourcePlan?.items.length??0)-reviews.length;
   const missingPlanWithWork = !progress && mergedGitHubPrs > 0;
   const drawerId = useId();
@@ -69,10 +70,10 @@ export function ProjectProgressStack({
       </header>
       <div className="repository-progress-list" aria-label={`${project.displayName} repository progress`}>
         {isMultiRepository && progress && <div className="repository-progress-row planned-progress-aggregate-row">
-          <span className="repository-progress-name">Full development plan</span>
+          <span className="repository-progress-name">Full plan PR mappings</span>
           <PlannedProgressTube progress={progress} label={`${project.displayName} development plan progress`} />
-          <span className="repository-pr-count">{progress.completed}/{progress.planned} planned</span>
-          <span className="repository-percent">{progress.percent}%</span>
+          <span className="repository-pr-count">{progress.completed}/{progress.planned} mapped</span>
+          <span className="repository-percent">{progress.percent}% mapped</span>
         </div>}
         {repositories.map((repository) => {
           const repositoryProgress = !isMultiRepository
@@ -94,15 +95,15 @@ export function ProjectProgressStack({
                   {aggregatorDeferred ? "Deferred: FOIA corpus" : "Not yet measured"}</span>}
             <>
               <span className="repository-pr-count">{repositoryProgress
-                ? `${repositoryProgress.completed}/${repositoryProgress.planned} planned`
+                ? `${repositoryProgress.completed}/${repositoryProgress.planned} mapped`
                 : "Plan allocation N/A"}</span>
-              <span className="repository-percent">{repositoryProgress ? `${repositoryProgress.percent}%` : "—"}</span>
+              <span className="repository-percent">{repositoryProgress ? `${repositoryProgress.percent}% mapped` : "—"}</span>
             </>
           </div>;
         })}
       </div>
 
-      {reviews.length>0&&<p className="source-implementation-summary">Source implementation review: {implemented} software units implemented · {remainingSoftware} with specific software work remaining · {unreviewed} without an implementation review. Release inputs and deployment are tracked separately.</p>}
+      {reviews.length>0&&<p className="source-implementation-summary">Source implementation review: {implemented}/{project.sourcePlan?.items.length??0} software units implemented{reviewedImplementationPercent!==null?` (${reviewedImplementationPercent}%)`:""} · {remainingSoftware} with specific software work remaining · {unreviewed} without an implementation review. Release inputs and deployment are tracked separately.</p>}
       <PrFacts summary={project.prSummary} repository={project.repositoryFullName} planned={progress?.planned ?? null}/>
       <DependencyReadout data={project.dependencyReadiness}/>
       <ProjectLastUpdate update={project.latestUpdate}/>

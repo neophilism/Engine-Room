@@ -810,7 +810,7 @@ h2 { font-size: clamp(1.5rem, 3vw, 2.3rem); }
 
 .repository-progress-row {
   display: grid;
-  grid-template-columns: minmax(150px, .9fr) minmax(200px, 2.4fr) auto 54px;
+  grid-template-columns: minmax(150px, .9fr) minmax(200px, 2.4fr) auto 94px;
   gap: 12px;
   align-items: center;
 }

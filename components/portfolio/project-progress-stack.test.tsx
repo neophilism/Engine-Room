@@ -39,8 +39,8 @@ describe("ProjectProgressStack", () => {
 
     expect(screen.getByText("owner/core")).toBeInTheDocument();
     expect(screen.getByText("owner/web")).toBeInTheDocument();
-    expect(screen.getByText("3/6 planned")).toBeInTheDocument();
-    expect(screen.getByText("1/4 planned")).toBeInTheDocument();
+    expect(screen.getByText("3/6 mapped")).toBeInTheDocument();
+    expect(screen.getByText("1/4 mapped")).toBeInTheDocument();
     expect(
       screen.getByRole("progressbar", { name: "owner/core roadmap progress" })
     ).toHaveAttribute("aria-valuenow", "3");
@@ -75,12 +75,12 @@ describe("ProjectProgressStack", () => {
     };
     render(<ProjectProgressStack project={partial} />);
     expect(screen.getAllByText(/9\/100 packages mapped to merged PRs/).length).toBeGreaterThan(0);
-    expect(screen.getByText("9%")).toBeInTheDocument();
+    expect(screen.getByText("9% mapped")).toBeInTheDocument();
     const tube = screen.getByRole("progressbar", { name: "Hundred Item Plan development plan progress" });
     expect(tube).toHaveAttribute("aria-valuemax", "100");
     expect(tube).toHaveAttribute("aria-valuenow", "9");
     expect(tube.closest("details")).toBeNull();
-    expect(screen.getByText("9/100 planned")).toBeInTheDocument();
+    expect(screen.getByText("9/100 mapped")).toBeInTheDocument();
     expect(screen.queryByText("90%")).not.toBeInTheDocument();
   });
 
@@ -101,7 +101,7 @@ describe("ProjectProgressStack", () => {
     expect(bar).toHaveAttribute("aria-valuetext",
       "60 packages mapped to merged PRs, 10 with linked PR activity, 30 without a verified full-scope merge mapping; 100 planned packages total");
     expect(screen.getAllByText(/60\/100 packages mapped to merged PRs/)).toHaveLength(1);
-    expect(screen.getByText("60%")).toBeInTheDocument();
+    expect(screen.getByText("60% mapped")).toBeInTheDocument();
     expect(bar.closest("details")).toBeNull();
     expect(screen.queryByText(/Original 50\/50/)).not.toBeInTheDocument();
   });
@@ -151,4 +151,11 @@ describe("ProjectProgressStack", () => {
     expect(screen.queryByText(/1 open GitHub PR/)).not.toBeInTheDocument();
   });
 
+});
+
+it("labels mapping percentages explicitly and shows the separate source implementation percentage",()=>{
+ const review={implementation:'implemented' as const,reviewedAt:'2026-10-19T00:00:00Z',softwareGap:null,activationRequirement:'Supply final content.',sourceFiles:[{path:'page.mjs',sha256:'a'.repeat(64)}]};
+ const units=[{ordinal:1,title:'Page',scope:'original' as const,numbers:[],state:'unmapped' as const,reason:null,sourceUrl:'https://github.com/neophilism/Galinsky-2028',implementationReview:review}];
+ const sample={...project,id:'source-reviewed',displayName:'Reviewed',planned:1,completed:0,inProgress:0,percent:0,repositories:[{...project.repositories[0],planned:1,completed:0,inProgress:0}],sourcePlan:{original:1,originalComplete:0,added:0,addedComplete:0,unmapped:1,items:units,documents:[]}};
+ render(<ProjectProgressStack project={sample}/>);expect(screen.getByText(/1\/1 software units implemented \(100%\)/)).toBeInTheDocument();expect(screen.getByText('0% mapped')).toBeInTheDocument();expect(screen.queryByText(/scope completion|not started/)).not.toBeInTheDocument();
 });

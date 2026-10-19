@@ -2,8 +2,8 @@ import type { SourcePlanSummary } from "./live-monitor";
 
 /**
  * Every planned unit contributes to the same denominator, including newly
- * documented additions. Progress is: merged (green), written and open (yellow),
- * and not started/unverified (empty). Never confuse a passing check with merge.
+ * documented additions. Progress is: verified merge mappings (green), linked PR activity
+ * (yellow), and unverified mappings (empty). Source software findings are separate.
  */
 export type PlannedTrack = { planned: number; completed: number };
 export type PlannedProgress = {
